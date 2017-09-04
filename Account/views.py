@@ -1,6 +1,6 @@
 from Error_Page import *
 from ClassLibrary.UserClass.User import _User
-
+from ClassLibrary.ShopClass.SettleInApplication import SettleInApplication
 
 
 @require_http_methods(['POST'])
@@ -71,9 +71,16 @@ def profile(request):
     :return: 
     """
     # 得到返回角色的主页
+    current_user = leancloud.User.get_current()
     user = _User()
-    user.set_instance(leancloud.User.get_current())
+    user.set_instance(current_user)
     userData = user.output_User()
+    role = user.get_attribute_role()
+    if role and 'ProductAdmin' in role:
+        settleInApplication = SettleInApplication()
+        if not settleInApplication.find_User(current_user):
+            settleInApplication.create_Object()
+            settleInApplication.set_attribute_user(user.get_instance())
     return render(request, 'index.html', {'User': userData})
 
 

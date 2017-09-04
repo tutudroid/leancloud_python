@@ -77,3 +77,9 @@ class SettleInApplication(Object):
                 attribute_infoCompany: self.get_attribute_infoCompany(),
             }
             return data
+
+    def find_User(self, user):
+        result = Base.queryInstanceAttribute(self.__class__.__name__, attribute_user, user)
+        if result:
+            return True
+        return None

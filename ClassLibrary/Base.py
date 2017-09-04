@@ -352,7 +352,6 @@ def query_relation_data_greater_and_less_attribute(objectId, className, queryCla
     :param className: 
     :param objectId:
     :param value2: 
-    :param attribute2: 
     :return:如果object为空，则返回空，否则，返回关联数据的json格式数据。
     """
     if objectId and className and queryClassName:

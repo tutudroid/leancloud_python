@@ -188,10 +188,10 @@ def SysUserManager(request):
     :param request: 
     :return: 
     """
-    objectId = request.GET.get(attribute_objectId, '')
+    objectId = request.POST.get(attribute_objectId, '')
     if objectId:
-        forbidden = request.GET.get(attribute_forbidden, '')
-        state = request.GET.get(attribute_state, '')
+        forbidden = request.POST.get(attribute_forbidden, '')
+        state = request.POST.get(attribute_state, '')
         user = _User()
         user.get_Object(objectId)
         role = user.get_attribute_role()

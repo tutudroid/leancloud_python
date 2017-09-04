@@ -189,6 +189,7 @@ class _User(Object):
                 attribute_sex: self.get_attribute_sex(),
                 attribute_birthday: self.get_attribute_birthday(),
                 attribute_createdAt: self.get_attribute_createdAt(),
+                attribute_objectId: self.get_attribute_objectId(),
             }
             return data
 

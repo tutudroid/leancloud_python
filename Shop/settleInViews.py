@@ -47,7 +47,7 @@ def CreateSettleIn(request):
     :return: 
     """
     type = request.POST.get(attribute_type, -1)
-    settleInApplicationObjectId = request.POST.get('settleInApplicationObjectId', '')
+    settleInApplicationObjectId = request.POST.get(attribute_objectId, '')
     if settleInApplicationObjectId and int(type) == 1 or int(type) == 0:
         if int(type) == 1:
             settleIn = SettleInUser()

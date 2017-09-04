@@ -1,0 +1,10 @@
+{% extends 'ProfilePage.html' %}
+
+{% block middleTag %}
+    {{ content.data.return.message }}
+    <div>
+        {% if content.data.return.page %}
+        <a onclick="return multiClick();" href="{% url content.data.return.page %}" > 返回 </a>
+        {% endif %}
+    </div>
+{% endblock %}

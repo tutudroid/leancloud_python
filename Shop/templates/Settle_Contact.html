@@ -1,0 +1,61 @@
+{% extends 'ProductAdminPage.html' %}
+{% load static %}
+{% block content %}
+
+    <script type="text/javascript">
+        $(function () {
+           $('#id_nextUser').click(function () {
+                if($('#id_checkbox').is(':checked')){
+                    window.location.href="/Shop/SettleInUser/";
+                }else{
+                    alert('请同意协议');
+                }
+           });
+
+            $('#id_nextCompany').click(function () {
+                if($('#id_checkbox').is(':checked')){
+                    window.location.href="/Shop/SettleInCompany/";
+                }else{
+                    alert('请同意协议');
+                }
+           });
+        });
+    </script>
+    <div style="margin:auto">
+
+        <h2 style="margin:auto">
+        “萌趣”开放平台服务协议
+        </h2>
+        {% if content.settleIn.user %}
+            <div>
+                <textarea style="width: 900px;height: 900px;" >
+    {% include 'Contact.html' %}
+               </textarea>
+
+            </div>
+
+            <div><input type="checkbox" id="id_checkbox" checked>同意协议</div>
+
+            <div>
+            <a class="btn" href="javascript:void(0);" id="id_nextUser">下一步</a>
+            </div>
+        {% endif %}
+
+        {% if content.settleIn.company %}
+            <div>
+                <textarea style="width: 900px;height: 900px;" >
+    {% include 'Contact.html' %}
+                </textarea>
+
+            </div>
+
+            <div style="margin: 10px;"><input type="checkbox" id="id_checkbox" checked>同意协议</div>
+
+            <div style="margin: 10px;">
+            <a class="btn" href="javascript:void(0);"  id="id_nextCompany">下一步</a>
+            </div>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

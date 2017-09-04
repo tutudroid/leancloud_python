@@ -1,0 +1,322 @@
+<template>
+  <div class="companySettledVue">
+    <table class="table table-striped one shown">
+      <thead>
+        <tr><td>商家名</td><td>品牌名</td><td>品牌LOGO</td><td>入驻类型</td><td>状态</td></tr>
+      </thead>
+
+      <tbody>
+        <tr class="personRow pointer" @click='settledCompanyDetail(1,"asha","18816500304","asha","289574827@qq.com","18816500304","ashaShop","ashaBrand","品牌Logo","asha company going well","214231413434134","营业执照","asha","18816500304","330327199402112931","法人身份证正面","法人身份证反面","2008-09-01","2009-09-09","289574827@qq.com",0,"company")'><td>asha</td><td>ashaBrand</td><td>sunasha</td><td>company</td><td>normal</td></tr>
+        <tr class="personRow pointer" @click='settledCompanyDetail(2,"peter","34324324325","peter","peter@qq.com","34234341","peterShop","peterBrand","品牌Logo","peter company going well","214231413434134","营业执照","peter","4545454545","334545345435345","法人身份证正面","法人身份证反面","2008-09-01","2009-09-09","peter@qq.com",1,"company")'><td>peter</td><td>peterBrand</td><td>sunpeter</td><td>company</td><td>forbidden</td></tr>
+      </tbody>
+    </table>
+
+    <div class="settledPersonDetail hide">
+      <div class="container">
+        <div class="name">
+          账号：{{name}} 
+	</div>
+
+	<div class="managePhoneNumber">
+          手机号：{{managerPhoneNumber}}<span class="modifyPhoneNum link margin-left " @click="modifyPhoneNum()">修改</span>
+	</div>
+	
+	<hr>
+
+	<div class="shopName">
+          店铺名：{{shopName}}
+	</div>
+
+	<div class="brandName">
+          品牌名：{{brandName}}
+	</div>
+
+	<div class="brandLogo">
+          品牌Logo：{{brandLogo}}
+	</div>
+
+	<div class="brandDescription">
+          品牌简介：{{brandDescription}}
+	</div>
+
+	<hr>
+
+	<div class="type">
+          入驻类型：{{type}}<span class="checkSettledInfo link margin-left "  @click="checkSettledCompanyMaterial()">查看入驻材料</span>
+	</div>
+
+	<div class="state">
+          状态：<span :class='[state==0?"normal":"forbidden"]'>正常</span><span :class='[state==1?"normal":"forbidden"]'>禁用</span>
+	</div>
+
+	<div class="link" @click="toggleShow">
+	  返回
+	</div>
+      </div>
+    </div>
+    
+   
+    <div class="modifyPhoneNumDetail hideSecond">
+	 <form class="form-horizontal">
+	  <div class="control-group">
+	    <label class="control-label" for="newPhone">新的手机号</label>
+	    <div class="controls">
+	      <input type="text" id="newPhone" v-model="newPhoneNumber">
+	    </div>
+	  </div>
+	  <div class="control-group">
+	    <label class="control-label" for="confirmPhone">确认手机号</label>
+	    <div class="controls">
+	      <input type="input" id="confirmPhone" v-model="confirmPhoneNumber">
+	    </div>
+	  </div>
+	  <div class="control-group">
+	    <div class="controls">
+	      <button class="btn myBtn" @click="modifyPhoneNumToDB">确认</button>
+	      <button class="btn myBtn" @click="toggleSecond">取消</button>
+	    </div>
+	  </div>
+	</form>     
+  </div>
+
+  <div class="checkSettledCompanyMaterial hideSecond">
+    <h2>入驻资料</h2>
+    <hr>
+
+    <div class="uniformSocialCreditCode">
+    统一社会信用代码: <span class="answer">{{uniformSocialCreditCode}}</span>
+    </div>
+    <div class="bussinessLicense">
+    营业执照: <span class="answer">{{bussinessLicense}}</span>
+    </div>
+    <div class="legalPersonName">
+    法人姓名: <span class="answer">{{legalPersonName}}</span>
+    </div>
+    <div class="legalPhoneNumber">
+    法人手机号: <span class="answer">{{legalPersonPhoneNumber}}</span>
+    </div>
+    <div class="legalPersonEmail">
+    法人邮箱: <span class="answer">{{legalPersonEmail}}</span>
+    </div>
+    <div class="legalPersonIdCard">
+    法人身份证号: <span class="answer">{{legalPersonIdCard}}</span>
+    </div>
+    <div class="legalPersonidCardTime">
+    法人身份证有效期: <span class="answer">{{legalPersonExpireTimeStart}}至{{legalPersonExpireTimeEnd}}</span>
+    </div>
+    <div class="legalPersonFrontIdCard">
+    法人身份证正面: <span class="answer">{{legalPersonFrontIdCard}}</span>
+    </div>
+    <div class="legalPersonBackIdCard">
+    法人身份证反面: <span class="answer">{{legalPersonBackIdCard}}</span>
+    </div>
+    <div class="alipay">
+    支付宝账号: <span class="answer">{{alipay}}</span>
+    </div>
+
+    <hr>
+    
+    <div class="managerRealName">
+    管理人真实姓名: <span class="answer">{{managerRealName}}</span>
+    </div>
+    <div class="managerEmail">
+    管理人邮箱: <span class="answer">{{managerEmail}}</span>
+    </div>
+    <div class="managerPhoneNumber">
+    管理人手机号: <span class="answer">{{managerPhoneNumber}}</span>
+    </div>
+
+    <hr>
+
+    <div class="shopName">
+    店铺名称: <span class="answer">{{shopName}}</span>
+    </div>
+    <div class="brandName">
+    品牌名称: <span class="answer">{{brandName}}</span>
+    </div>
+    <div class="brandLogo">
+    品牌Logo: <span class="answer">{{brandLogo}}</span>
+    </div>
+    <div class="brandDescription">
+    品牌简介: <span class="answer">{{brandDescription}}</span>
+    </div>
+
+    <div class="link" @click="toggleSecond">
+      返回
+    </div>
+
+    <hr>
+
+  </div>
+
+
+  </div>
+
+
+</template>
+
+<script>
+  export default {
+    data:function(){
+      return {
+        settledPersonId:-1,
+	name:"",
+	type:"",
+	managerPhoneNumber:"",
+	managerRealName:"",
+	managerEmail:"",
+	alipay:"",
+	shopName:"",
+	brandName:"",
+	brandLogo:"",
+	brandDescription:"",
+	bussinessLicense:"",
+	uniformSocialCreditCode:"",
+	legalPersonName:"",
+	legalPersonPhoneNumber:"",
+	legalPersonIdCard:"",
+	legalPersonFrontIdCard:"",
+	legalPersonBackIdCard:"",
+	legalPersonExpireTimeStart:"",
+	legalPersonExpireTimeEnd:"",
+	legalPersonEmail:"",
+	state:-1,
+	newPhoneNumber:"",
+	confirmPhoneNumber:""
+      }
+    },
+    props:["listofsettledperson"],
+    methods: {
+      settledCompanyDetail(settledCompanyId,name,managerPhoneNumber,managerRealName,managerEmail,alipay,shopName,brandName,brandLogo,brandDescription,bussinessLicense,uniformSocialCreditCode,legalPersonName,legalPersonPhoneNumber,legalPersonIdCard,legalPersonFrontIdCard,legalPersonBackIdCard,legalPersonExpireTimeStart,legalPersonExpireTimeEnd,legalPersonEmail,state,type){
+        this.settledCompanyId = settledCompanyId;
+	this.name = name;
+	this.managerPhoneNumber = managerPhoneNumber;
+	this.managerRealName = managerRealName;
+	this.managerEmail = managerEmail;
+	this.alipay = alipay;
+	this.shopName = shopName;
+	this.brandName = brandName;
+	this.brandLogo = brandLogo;
+	this.brandDescription = brandDescription;
+	this.bussinessLicense = bussinessLicense;
+	this.uniformSocialCreditCode = uniformSocialCreditCode;
+	this.legalPersonName = legalPersonName;
+	this.legalPersonPhoneNumber = legalPersonPhoneNumber;
+	this.legalPersonIdCard = legalPersonIdCard;
+	this.legalPersonFrontIdCard = legalPersonFrontIdCard;
+	this.legalPersonBackIdCard = legalPersonBackIdCard;
+	this.legalPersonExpireTimeStart = legalPersonExpireTimeStart;
+	this.legalPersonExpireTimeEnd = legalPersonExpireTimeEnd;
+	this.legalPersonEmail = legalPersonEmail;
+	this.state = state;
+	this.type = type;
+	this.toggleShow();
+
+      },
+     toggleShow(){
+       var show = $(".companySettledVue .shown");
+       var hide = $(".companySettledVue .hide");
+       if(show != null){
+         show.removeClass("shown").addClass("hide");
+         if(hide != null){
+           hide.removeClass("hide").addClass("shown");
+         }
+       }
+     },
+     modifyPhoneNum(){
+       var show = $(".companySettledVue .shown");
+       var hide = $(".companySettledVue .hide");
+       var hideSecond = $(".companySettledVue .modifyPhoneNumDetail.hideSecond");
+       if(show != null){
+         show.addClass("prev");
+	 if(hide != null){
+	   hide.addClass("prev");
+	 }
+       }
+       if(hideSecond != null){
+         hideSecond.removeClass("hideSecond").addClass("shownSecond");
+       }
+     },
+     checkSettledCompanyMaterial(){
+       var show = $(".companySettledVue .shown");
+       var hide = $(".companySettledVue .hide");
+       var hideSecond = $(".checkSettledCompanyMaterial.hideSecond");
+       if(show != null){
+         show.addClass("prev");
+	 if(hide != null){
+	   hide.addClass("prev");
+	 }
+       }
+       if(hideSecond != null){
+         hideSecond.removeClass("hideSecond").addClass("shownSecond");
+       }
+     },
+     toggleSecond(){
+       var shownSecond = $('.companySettledVue .modifyPhoneNumDetail.shownSecond');
+       var shownSecondMaterial = $('.checkSettledCompanyMaterial.shownSecond');
+       var hidePrev = $('.companySettledVue .hide.prev');
+       var shownPrev = $('.companySettledVue .shown.prev');
+       if(shownSecond != null){
+         shownSecond.removeClass('shownSecond').addClass('hideSecond');
+	 if(hidePrev != null){
+	   hidePrev.removeClass('prev');
+
+	 }
+	 if(shownPrev != null){
+	  shownPrev.removeClass('prev');
+	 }
+       }
+
+       if(shownSecondMaterial != null){
+         shownSecondMaterial.removeClass('shownSecond').addClass('hideSecond');
+	 if(hidePrev != null){
+	   hidePrev.removeClass('prev');
+
+	 }
+	 if(shownPrev != null){
+	  shownPrev.removeClass('prev');
+	 }
+       }
+     },
+     modifyPhoneNumToDB(){
+       alert(" id: "+this.settledCompanyId+" newPhoneNumber: "+this.newPhoneNumber+" confirmPhoneNumber: "+this.confirmPhoneNumber);
+     },
+
+
+    }
+  }
+</script>
+
+<style>
+  .settledCompanyDetail div{
+    margin: 20px;
+    font-size: 18px;
+  }
+  hr{
+    border-top:3px solid #cabdbd;
+  }
+  .normal{
+    border: 2px solid;
+    background-color: cyan;
+    padding: 2px;
+    margin: 0 5px;
+  }
+  .prev{
+    display:none;
+  }
+  .settledPersonDetail div{
+    margin: 20px;
+    font-size: 18px;
+  }
+  hr{
+    border-top:3px solid #cabdbd;
+  }
+  .checkSettledCompanyMaterial div{
+    margin: 20px;
+    font-size: 18px;
+  }
+  .answer{
+    position: absolute;
+    left: 450px;
+  }
+</style>

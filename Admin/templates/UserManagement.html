@@ -1,0 +1,179 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% load mytags %}
+
+{% block content %}
+    <style>
+
+    </style>
+    {% if content.app %}
+    <hr>
+        {% if not content.app.userList %}
+            未查询到数据
+            {% endif%}
+        <div class="table-responsive">
+            <table class="table table-striped">
+            {% if content.app.userList %}
+                 <thead>
+                    <tr>
+                        <td>用户名</td>
+                        <td>角色</td>
+                        <td>状态</td>
+                        <td>修改密码</td>
+                        <td>删除用户</td>
+                    </tr>
+                  </thead>
+            {% endif %}
+
+              <tbody>
+                {% for user in content.app.userList %}
+                    <tr>
+                        <td><label>{{ user.username }}</label></td>
+                        <td>App用户</td>
+                        <form enctype="multipart/form-data" method="POST" action="{% url 'Admin:ForbidUser' %}" onsubmit="return multiClick();" >
+                        {% csrf_token %}
+                            <input type="hidden" name="_objectId" value="{{ user.objectId }}">
+                            {% if user.state == 2 %}
+                            <td><input class="btn btn-default" type="submit" name="_banOff" value="禁止"></td>
+                            {% elif user.state == 0 %}
+                            <td><input class="btn btn-default" type="submit" name="_banOn" value="正常"></td>
+                            {% endif %}
+                        </form>
+                        <td><a class="table_td_a" onclick="return multiClick();" href="{% url 'Admin:ResetUserPassword' %}?_objectId={{ user.objectId }}">修改密码</a></td>
+                        <td><a class="table_td_a" onclick="return multiClick();" href="{% url 'Admin:DeleteUser' %}?_objectId={{ user.objectId }}">删除用户</a></td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    {% if content.shop %}
+
+
+        <div>
+            <a class="btn" href="{% url 'Admin:AllAuditShop' %}">等待审核的手机用户</a>
+        </div>
+        <hr>
+        {% if not content.shop.userList %}
+            未查询到数据
+        {% endif%}
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+            {% if content.shop.userList %}
+                 <thead>
+                    <tr>
+                    <td>用户名</td>
+                    <td>角色</td>
+                    <td>状态</td>
+                    <td>修改密码</td>
+                    <td>删除用户</td>
+                    </tr>
+                  </thead>
+            {% endif %}
+
+              <tbody>
+                {% for user in content.shop.userList %}
+                    <tr>
+                        <td><label>{{ user.username }}</label></td>
+                        <td>商家</td>
+                        <form enctype="multipart/form-data" method="POST" action="{% url 'Admin:ForbidUser' %}" onsubmit="return multiClick();" >
+                        {% csrf_token %}
+                            <input type="hidden" name="_objectId" value="{{ user.objectId }}">
+                            {% if user.state == 2 %}
+                            <td><input class="btn btn-default" type="submit" name="_banOff" value="禁止"></td>
+                            {% elif user.state == 0 %}
+                            <td><input class="btn btn-default" type="submit" name="_banOn" value="正常"></td>
+                            {% endif %}
+                        </form>
+                        <td><a class="table_td_a" onclick="return multiClick();" href="{% url 'Admin:ResetUserPassword' %}?_objectId={{ user.objectId }}">修改密码</a></td>
+                        <td><a class="table_td_a" onclick="return multiClick();" href="{% url 'Admin:DeleteUser' %}?_objectId={{ user.objectId }}">删除用户</a></td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    {% if content.sys %}
+        <div>
+            <form method="post" enctype="multipart/form-data" action="{% url 'Admin:AddUser' %}" onsubmit="return multiClick();">
+                {% csrf_token %}
+                <input class="btn btn-default" type="submit" name="addUser" value="增加账户">
+            </form>
+        </div>
+        <hr>
+        {% if not content.sys.userList %}
+            未查询到数据
+        {% endif%}
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+            {% if content.sys.userList %}
+                 <thead>
+                    <tr>
+                    <td>用户名</td>
+                    <td>角色</td>
+                    <td>状态</td>
+                    <td>修改密码</td>
+                    <td>删除用户</td>
+                    </tr>
+                  </thead>
+            {% endif %}
+
+              <tbody>
+                {% for user in content.sys.userList %}
+                    <tr>
+                        <td><a class="table_td_a" href="{% url 'Admin:UserDetail' user.objectId %}">{{ user.username }}</a></td>
+                        <td>
+                            {% for role in user.role %}
+                                {% if role == 'BusinessOperation' %}
+                                    运营管理员
+                                {% elif role == 'ProductAdmin' %}
+                                    商户管理员
+                                {% elif role == 'CustomService' %}
+                                    客服
+                                {% elif role == 'NewUser' %}
+                                {% else %}
+                                    <a class="table_td_a" href="{% url 'Admin:UserDetail' user.objectId %}">设置角色</a>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <form enctype="multipart/form-data" method="POST" action="{% url 'Admin:ForbidUser' %}" onsubmit="return multiClick();" >
+                        {% csrf_token %}
+                            <input type="hidden" name="_objectId" value="{{ user.objectId }}">
+                            {% if user.state == 2 %}
+                            <td><input class="btn btn-default" type="submit" name="_banOff" value="禁止"></td>
+                            {% elif user.state == 0 %}
+                            <td><input class="btn btn-default" type="submit" name="_banOn" value="正常"></td>
+                            {% endif %}
+                        </form>
+                        <td><label><a class="table_td_a" onclick="return multiClick();" href="{% url 'Admin:ResetUserPassword' %}?_objectId={{ user.objectId }}">修改密码</a></label></td>
+                        <td><a class="table_td_a" onclick="return multiClick();" href="{% url 'Admin:DeleteUser' %}?_objectId={{ user.objectId }}">删除用户</a></td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    {% endif %}
+    <p>
+    {% if content.shop.userList or content.app.userList %}
+    {% include 'paginator_page.html' %}
+
+    {% else %}
+        {% if content.object_list.has_previous %}
+        <a href="?page=1">首页</a>
+          <a href="?page={{ content.object_list.previous_page_number }}">上一页</a>
+          {% endif %}
+          {# topics.paginator.number_pages 返回总页数 #}
+            {% if content.paginator.num_pages %}
+                当前页 {{ content.object_list.number }} 总页数 {{ content.paginator.num_pages }}.
+            {% endif %}
+        {% if content.object_list.has_next %}
+          <a href="?page={{ content.object_list.next_page_number }}">下一页</a>
+            <a href="?page={{ content.paginator.num_pages }}">末页</a>
+        {% endif %}
+    {% endif %}
+    </p>
+{% endblock %}

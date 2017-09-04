@@ -1,0 +1,139 @@
+{% extends 'ProductAdminPage.html' %}
+
+
+{% block content %}
+    <script type="text/javascript">
+        function clickFirstLevel1(number) {
+            var list = document.getElementsByName('_First');
+            /*控制分类标签的显示*/
+            number = number - 1;
+            var i;
+            for( i=0; i<list.length; i++)
+                if (i === number)
+                {
+                    list[i].style.display = 'block';
+                    try {
+                        var firstElement = list[i].firstElementChild.lastElementChild.lastElementChild.firstElementChild;
+                        firstElement.checked = true;
+                    } catch(err) {
+
+                    }
+                }
+                else
+                    list[i].style.display = 'none';
+        }
+        function sort_Second_Sale(objectId){
+            var address = window.location.href;
+            window.location.href = address.split('/Product/')[0] + '/Product/ShowSaleCategory/?objectId=' + objectId;
+        }
+    </script>
+    <style>
+
+        .btn-upload input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0px 50px 0px 0px;
+            padding: 0px 0px 0px 0px;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            width: 50px;
+            height: 40px;
+        }
+
+    </style>
+    <div >
+        <label>
+            编辑销售分类表
+        </label>
+        <div>
+            <a class="btn btn-default" href="{% url 'Product:EditSaleCategory' %}">编辑销售分类表</a>
+        </div>
+        <hr>
+    </div>
+    <div>
+        销售表
+        <hr>
+        {% if content.data.saleCategory  %}
+        <div id="id_productSale">
+            <form enctype="multipart/form-data" onsubmit="return multiClick();" method="POST" action="{% url 'Product:ShowSaleCategory' %}" >
+            {% csrf_token %}
+                <div id="id_SaleTag" class="row" >
+
+                        <div id="id_SaleTag_{{ firstlevel.name }}" class="span5" style="border: 1px solid;">
+                        {% for firstlevel in content.data.saleCategory %}
+                            <div class="row" >
+                                <div class="span2">
+                                <img src="{{ firstlevel.mainImage.url }}" width="100px" height="100px">
+                                </div>
+                                <div class="span3">
+                                    <div>{{ firstlevel.name }}</div>
+                                    <div>{{ firstlevel.briefDescription }}</div>
+                                    <div>
+                                        {% if forloop.first %}
+                                            <input type="radio" name="_SaleCategoryFirst" value="{{ firstlevel.name }}::{{ firstlevel.objectId }}" onclick="clickFirstLevel1({{ forloop.counter }})" checked>
+                                        {% else %}
+                                            <input type="radio" name="_SaleCategoryFirst" value="{{ firstlevel.name }}::{{ firstlevel.objectId }}" onclick="clickFirstLevel1({{ forloop.counter }})" >
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="clear:both;"></div>
+                            {% endfor %}
+
+                            <a class="btn" href="{% url 'Product:sortSaleCategoryFirst' %}">编辑分类顺序</a>
+                        </div>
+                        <div id="id_SaleTag_{{ firstlevel.name }}_Son" class="span5" name="_secondShow" style="border: 1px solid;">
+                        {% for firstlevel in content.data.saleCategory %}
+                                {% if forloop.first %}
+                                        <div  id="_secondLevel{{ forloop.counter }}" style="display: block;" name="_First">
+                                        {% else %}
+                                        <div  id="_secondLevel{{ forloop.counter }}" style="display: none;" name="_First" >
+                                    {% endif %}
+                                {% for secondlevel in firstlevel.value %}
+
+
+                                    <div class="row" id="id_SaleTag_{{ firstlevel.name }}_Son_{{ secondlevel.name }}">
+                                        <div class="span2">
+                                            <img src="{{ secondlevel.mainImage.url }}" width="100px" height="100px">
+                                        </div>
+                                        <div class="span3">
+                                            <div>{{ secondlevel.name }}</div>
+                                            <div>{{ secondlevel.briefDescription }}</div>
+                                            <div>
+                                                {% if forloop.first and forloop.parentloop.first %}
+                                                    <input type="radio" name="_SaleCategorySecond" value="{{ secondlevel.name }}::{{ secondlevel.objectId }}" checked>
+                                                {% else %}
+                                                    <input type="radio" name="_SaleCategorySecond" value="{{ secondlevel.name }}::{{ secondlevel.objectId }}">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                {% endfor %}
+                                    <a class="btn" href="{% url 'Product:sortSaleCategorySecond' %}?objectId={{ firstlevel.objectId }}">编辑分类顺序</a>
+
+                                      {% if forloop.first %}
+                                        </div>
+                                        {% else %}
+                                        </div>
+                                      {% endif %}
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+                <input class="btn btn-default" type="submit" name="_search" value="搜索">
+            </form>
+        </div>
+    {% else %}
+
+    {% endif %}
+    </div>
+
+
+{% endblock %}

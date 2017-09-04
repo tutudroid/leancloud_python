@@ -1,0 +1,49 @@
+
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+
+    {% if content.modifyPassword %}
+        {% include 'ModifyPassword.html' %}
+    {% elif content.modifyPhoneNumber %}
+        {% include 'ChangePhoneNumber.html' %}
+    {% else %}
+        <div class="div_main">
+            <div style="margin: 0 auto; width: 600px; text-align: left">
+                {{ content.message }}
+                {% if content.profile.current_role == 'Shop' %}
+                    <div>
+                        手机号：{{ content.phoneNumber }}
+                    </div>
+                    {% else %}
+                    <div>
+                        <label>账号： {{ content.profile.username }}</label>
+                    </div>
+                    <div>
+                        <label>
+                            类型：
+                            {% if content.profile.current_role == 'CustomService' %}
+                                客服
+                            {% elif content.profile.current_role == 'ProductAdmin' %}
+                                商品管理
+                            {% elif content.profile.current_role == 'BusinessOperation' %}
+                                产品运营
+                            {% elif content.profile.current_role == 'Administrator' %}
+                                管理员
+                            {% endif %}
+                        </label>
+                    </div>
+                {% endif %}
+                 <form enctype="multipart/form-data" method="post" action="{% url 'Account:Profile' %}" name="form1" onsubmit="return multiClick();"  >
+                {% csrf_token %}
+                    <div>
+                        {% if content.profile.current_role == 'Shop' %}
+                            <input class="btn btn-default" type="submit" name="modifyPhoneNumber" value="修改手机号">
+                        {% endif %}
+                        <input class="btn btn-default" type="submit" name="modifyPassword" value="修改密码">
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

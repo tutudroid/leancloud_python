@@ -1,0 +1,79 @@
+
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+    <style>
+
+        .sonTagLeft1 div{
+            margin: 10px;
+        }
+
+        .sonTagLeft1 image{
+            width: 200px;
+            height: 200px;
+        }
+        .orderStateTag label{
+            margin: 20px;
+        }
+        .orderStateTag a{
+            margin: 20px;
+        }
+    .label1{
+        display: block;
+        width: 150px;
+        float: left;
+    }
+    </style>
+    <script type="text/javascript">
+        function show_radio(name){
+            var tmp = document.getElementById('id_checkbox_orderstate');
+            if (tmp.checked === true){
+                document.getElementById(name).style = "display: block";
+            }else{
+                document.getElementById(name).style = 'display: none';
+            }
+        }
+    </script>
+    <div>
+        <form enctype="multipart/form-data" method="POST" action="{% url 'Order:SearchOrder' %}" onsubmit="return multiClick();" >
+            {% csrf_token %}
+            <div>
+                <label class="label1 checkbox"><input type="checkbox" name="checkbox_search" value="orderId">订单号ID：&nbsp;</label>
+                <label><input type="number" name="orderId"></label>
+            </div>
+            <div>
+                <label class="label1 checkbox"><input type="checkbox" name="checkbox_search" value="shopId">商家ID：&nbsp;&nbsp;</label>
+                <label><input type="number" name="shopId"></label>
+            </div>
+            <div>
+                <label class="label1 checkbox"><input type="checkbox" name="checkbox_search" value="userId">用户ID：&nbsp;&nbsp;</label>
+                <label><input type="number" name="userId"></label>
+            </div>
+            <div>
+                <label class="label1 checkbox"><input type="checkbox" name="checkbox_search1" value="productId">商品ID：&nbsp;&nbsp;</label>
+                <label><input type="number" name="productId" disabled></label>
+            </div>
+            <div>
+                <label class="label1 checkbox"><input type="checkbox" name="checkbox_search" value="orderTime">订单时间：&nbsp;&nbsp;</label>
+                <label><input type="date" name="orderTime_start"> 至 <input type="date" name="orderTime_end"></label>
+            </div>
+            <div>
+                <label style="display: block; width: 150px;" class="checkbox">
+                    <input type="checkbox" id="id_checkbox_orderstate" name="checkbox_search" value="order_state" onclick="show_radio('id_orderState')">
+                    订单状态ID：&nbsp;&nbsp;
+                </label>
+                <div style="display: none;" id="id_orderState" >
+                    <label class="radio" style="margin-left: 40px;"><input type="radio" name="order_state" value="1">待发货</label>
+                    <label class="radio" style="margin-left: 40px;"><input type="radio" name="order_state" value="2">待收货</label>
+                    <label class="radio" style="margin-left: 40px;"><input type="radio" name="order_state" value="6">已退款</label>
+                    <label class="radio" style="margin-left: 40px;"><input type="radio" name="order_state" value="3">已完成</label>
+                </div>
+
+            </div>
+            <div>
+                <input class="btn btn-default" type="submit" name="search_order" value="搜索">
+            </div>
+        </form>
+
+    </div>
+{% endblock %}

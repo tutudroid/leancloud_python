@@ -1,0 +1,43 @@
+{% if content.shop %}
+<div class="pagination" >
+    <span class="step-links">
+        {% if content.paginator.has_previous == 1 %}
+            <a onclick="" href="?page=1&&page_nums={{ content.paginator.num_pages }}&&objectId={{ content.shop.objectId }}&&timestamp={{ content.time }}"> 首页</a>
+            <a onclick="" href="?page={{ content.paginator.previous_page_number }}&&page_nums={{ content.paginator.num_pages }}&&objectId={{ content.shop.objectId }}&&timestamp={{ content.time }}"> 上一页</a>
+        {% endif %}
+
+        {% if content.paginator.num_pages %}
+        <span class="current">
+        当前页 {{ content.paginator.number }} 总页数 {{ content.paginator.num_pages }}
+        </span>
+        {% endif %}
+
+        {% if content.paginator.has_next == 1 %}
+            <a onclick="" href="?page={{ content.paginator.next_page_number }}&&page_nums={{ content.paginator.num_pages }}&&objectId={{ content.shop.objectId }}&&timestamp={{ content.time }}">下一页</a>
+            <a onclick="" href="?page={{ content.paginator.num_pages }}&&page_nums={{ content.paginator.num_pages }}&&objectId={{ content.shop.objectId }}&&timestamp={{ content.time }}">末页</a>
+        {% endif %}
+    </span>
+</div>
+    {% else %}
+    <div class="pagination" >
+    <span class="step-links">
+        {% if content.paginator.has_previous == 1 %}
+            <a onclick="" href="?page=1&&page_nums={{ content.paginator.num_pages }}&&timestamp={{ content.time }}"> 首页</a>
+            <a onclick="" href="?page={{ content.paginator.previous_page_number }}&&page_nums={{ content.paginator.num_pages }}&&timestamp={{ content.time }}"> 上一页</a>
+        {% endif %}
+
+        {% if content.paginator.num_pages %}
+        <span class="current">
+        当前页 {{ content.paginator.number }} 总页数 {{ content.paginator.num_pages }}
+        </span>
+        {% endif %}
+
+        {% if content.paginator.has_next == 1 %}
+            <a onclick="" href="?page={{ content.paginator.next_page_number }}&&page_nums={{ content.paginator.num_pages }}&&timestamp={{ content.time }}">下一页</a>
+            <a onclick="" href="?page={{ content.paginator.num_pages }}&&page_nums={{ content.paginator.num_pages }}&&timestamp={{ content.time }}">末页</a>
+        {% endif %}
+    </span>
+</div>
+
+
+    {% endif %}

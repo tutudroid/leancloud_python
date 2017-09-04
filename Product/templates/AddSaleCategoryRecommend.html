@@ -1,0 +1,126 @@
+{% extends 'ProductAdminPage.html' %}
+{% load static %}
+{% block content %}
+
+<script language="javascript">
+
+    function PreviewImg(file, gggg){
+            var fileObj = document.getElementById(file);
+            var windowURL = window.URL || window.webkitURL;
+            var dataURL;
+            if(fileObj && fileObj.files && fileObj.files[0]) {
+                 dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                 jQuery("#"+gggg).attr('src',dataURL);
+            }
+    }
+
+    //上传图片
+    function loadImage(photo, filename) {
+        var pic = document.getElementById(photo);
+        var file = document.getElementById(filename);
+        var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+         // gif在IE浏览器暂时无法显示
+         if(ext!=='png' && ext!=='jpg' && ext!=='jpeg'){
+             alert("图片的格式必须为png或者jpg或者jpeg格式！");
+             pic.src='';
+             return;
+         }
+         var isIE = navigator.userAgent.match(/MSIE/)!== null,
+             isIE6 = navigator.userAgent.match(/MSIE 6.0/)!== null;
+
+          if(isIE) {
+
+            // IE6浏览器设置img的src为本地路径可以直接显示图片
+             if (isIE6) {
+                 file.select();
+                var reallocalpath = document.selection.createRange().text;
+                pic.src = reallocalpath;
+             }else {
+                PreviewImg(filename, photo);
+             }
+         }else {
+            html5Reader(photo, file);
+         }
+    }
+
+    function html5Reader(photo, file1){
+        var file = file1.files[0];
+        var reader = new FileReader();
+
+        reader.readAsDataURL(file);
+        reader.onload = function(e){
+            var pic = document.getElementById(photo);
+            pic.height= '100';
+            pic.width= '100';
+            pic.src=this.result;
+        }
+    }
+
+    $(function () {
+
+        });
+
+</script>
+    <style>
+        div {
+            margin: 5px;
+        }
+    </style>
+
+<div>
+    {% for foo in content.saleCategoryFirst %}
+        {% if forloop.counter != forloop.first %}
+        <hr>
+        {% endif %}
+        <div class="row">
+            <div class="span3">{{ foo.name }}</div>
+            {% if foo.saleCategoryRecommend %}
+                <div class="span7">
+                    {% for goo in foo.saleCategoryRecommend %}
+                        <form enctype="multipart/form-data" method="POST" action="{% url 'Product:SaleCategoryRecommend' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="prevToken" value="{{ content.prevToken }}">
+                            <div class="row">
+                                <div class="span2"><img src="{{ goo.mainImage.url }}" style="width: 100px; height: 100px;" ></div>
+                                <div class="span3">{{ goo.productGroup }}</div>
+                                <div class="span">
+                                    <input type="hidden" name="saleRecommendObjectId" value="{{ goo.objectId }}">
+                                    <input type="submit" name="delete" value="删除">
+                                </div>
+                            </div>
+                        </form>
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                <div class="span7">
+                    <form enctype="multipart/form-data" method="POST" action="{% url 'Product:SaleCategoryRecommend' %}" >
+                        {% csrf_token %}
+                        <input type="hidden" name="prevToken" value="{{ content.prevToken }}">
+                        <div class="row">
+                             <div class="span2">
+                                <div><img src="" style="width: 100px; height: 100px;" id="hand_ID_Card_Image{{ forloop.counter }}"></div>
+                                <input type="file" name="mainImage" id="hand_ID_Card_File{{ forloop.counter }}" onchange="loadImage('hand_ID_Card_Image{{ forloop.counter }}','hand_ID_Card_File{{ forloop.counter }}');" required>
+                                <input name="saleFirstObjectId" value="{{ foo.objectId }}" type="hidden">
+                            </div>
+                            <div class="span3"><input type="text" name="productGroupId" value="" placeholder="请输入商品组ID" required></div>
+                            <div class="span">
+                            <input type="submit" name="add" value="增加">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            {% endif %}
+
+            <div>
+
+            </div>
+        </div>
+
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

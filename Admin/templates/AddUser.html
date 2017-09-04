@@ -1,0 +1,43 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+    <style>
+    .label_add_user{
+        width: 150px;
+        display: block;
+    }
+    </style>
+    <script type="text/javascript">
+        function check() {
+            var password1 = document.getElementById('id_password1');
+            var password2 = document.getElementById('id_password2');
+            if (password1.value !== password2.value)
+            {
+                document.getElementById('label_output').innerHTML = "密码不一致，请重新输入";
+                return false;
+            }
+            return multiClick();
+        }
+    </script>
+    <div>
+        <form enctype="multipart/form-data" method="POST" action="{% url 'Admin:AddUser' %}" onsubmit="return check();" >
+            {% csrf_token %}
+            <input type="hidden" name="prevToken" value="{{ content.prevToken }}">
+            <div>
+                <div><label class="label_add_user">用户名</label>
+                    <input type="text" name="_username" value="" required>
+                </div>
+                <div><label class="label_add_user">密码</label>
+                    <input type="password" id="id_password1" name="_password" value="" required>
+                </div>
+                <div><label class="label_add_user">确认密码</label>
+                    <input type="password" id="id_password2" name="_password2" value="" required>
+                </div>
+                <input class="btn btn-default" type="submit" name="_save" value="保存" >
+                <label id="label_output"></label>
+            </div>
+        </form>
+    </div>
+    {{ content.data.message }}
+
+{% endblock %}

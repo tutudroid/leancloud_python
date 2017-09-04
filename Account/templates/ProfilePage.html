@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+    <title>萌生活</title>
+      <meta name="referrer" content="origin-when-crossorigin">
+
+    <!-- Le styles -->
+    {% load static %}
+      <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+      <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+      <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 60px;
+      }
+
+      /* Custom container */
+      .container {
+        margin: 0 auto;
+        max-width: 1000px;
+      }
+      .container > hr {
+        margin: 30px 0;
+      }
+
+      .jumbotron h1 {
+        font-size: 100px;
+        line-height: 1;
+      }
+
+      /* Customize the navbar links to be fill the entire space of the .navbar */
+
+
+      .navbar .navbar-inner {
+        padding: 0;
+      }
+      .navbar .nav li {
+        display: table-cell;
+        width: 1%;
+        float: none;
+      }
+      .navbar .nav li a {
+        font-weight: bold;
+        text-align: center;
+        border-left: 1px solid rgba(255,255,255,.75);
+        border-right: 1px solid rgba(0,0,0,.1);
+      }
+      .navbar .nav li:first-child a {
+        border-left: 0;
+        border-radius: 3px 0 0 3px;
+      }
+      .navbar .nav li:last-child a {
+        border-right: 0;
+        border-radius: 0 3px 3px 0;
+      }
+     @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+    </style>
+        <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/jquery.cookie.js' %}" ></script>
+        <script type="text/javascript">
+            var globle_varient = true;
+
+            function multiClick(){
+                if (globle_varient === true){
+                globle_varient = false;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            $(function(){
+                $("#id_logout").click(function () {
+                    $.cookie("isAutoLogin", "no", {path: '/'});
+                });
+            });
+
+        </script>
+  </head>
+
+  <body>
+    <noscript>
+    <p>本页面需要浏览器支持(启用)JavaScript。
+    </noscript>
+    <div class="container">
+ {% block headerTag %}
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+            {% if content.profile.username %}
+            <p class="brand">{{  content.profile.username }}</p>
+            <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+                <a onclick="return multiClick();" href="{% url 'Account:ModifyPassword' %}">修改密码</a>
+                    {% if content.profile.current_role == 'CustomService' %}
+                        客服
+                    {% elif content.profile.current_role == 'ProductAdmin' %}
+                        商品管理
+                    {% elif content.profile.current_role == 'BusinessOperation' %}
+                        产品运营
+                    {% elif content.profile.current_role == 'Administrator' %}
+                        管理员
+                    {% elif content.profile.current_role == 'Shop' %}
+                        店铺
+                    {% endif %}
+                <a id="id_logout" href="{% url 'Account:Logout' %}">logout</a>
+            </p>
+            </div><!--/.nav-collapse -->
+            {% endif %}
+
+        </div>
+      </div>
+    </div>
+     <div style="clear:both;"></div>
+    <hr margin="20px">
+    {% endblock %}
+    {% block middleTag %}
+
+        <div class="body_sonTagLeft">
+            {% block firstTag %}
+
+            {% endblock %}
+        </div>
+        <div class="body_sonTagRight">
+             <div style="margin:0 auto">
+                {% block secondTag %}
+                    第二级标签
+                {% endblock %}
+             </div>
+            <div style="margin:0 auto;">
+                {% block content %}
+                    内容
+                {% endblock %}
+            </div>
+        </div>
+        <div class="body_sonTagClear">
+
+        </div>
+    {% endblock %}
+
+    {% block footerTag %}
+        <hr>
+        <div class="footer">
+            <p>Copyright &copy; <a href="http://segue.leanapp.cn/" target="_blank" title="xxx"> 萌趣 </a> All Rights Reserved.</p>
+        </div>
+    {% endblock %}
+    </div>
+  </body>
+</html>

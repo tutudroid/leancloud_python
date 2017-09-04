@@ -1,0 +1,105 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+    <script type="text/javascript">
+        function clickFirstLevel1(number) {
+            var list = document.getElementsByName('_firstShowOne');
+            /*控制分类标签的显示*/
+            number = number - 1;
+            var i;
+            for( i=0; i<list.length; i++)
+                if (i === number)
+                    list[i].style.display = 'block';
+                else
+                    list[i].style.display = 'none';
+        }
+
+        function clickSecondLevel1(pnumber,number) {
+            var list = document.getElementsByName('_firstShowTwo');
+            for (var i = 0; i < list.length; i++)
+                list[i].style.display = 'none';
+            var show = document.getElementById('_firstShowTwo' + pnumber + number);
+            show.style.display = 'block';
+        }
+        //添加销售类别
+        function clickFirstLevel2(number) {
+            var list = document.getElementsByName('_secondShow');
+            /*控制分类标签的显示*/
+            var i;
+            number = number - 1;
+            for( i=0; i<list.length; i++)
+                if (i === number)
+                    list[i].style.display = 'block';
+                else
+                    list[i].style.display = 'none';
+        }
+    </script>
+    <style>
+    .form_SearchProduct input[type="button"]{
+        width: 200px;
+        display: block;
+    }
+    .form_SearchProduct{
+        width: inherit;
+        margin: 30px;
+        display: block;
+    }
+    .labelFirst{
+        width: 100px;
+        display: block;
+        float: left;
+    }
+    .form_SearchProduct label{
+        margin: 20px;
+    }
+    .form_SearchProduct input{
+        margin: 10px;
+    }
+    .form_SearchProduct div{
+        margin: 10px;
+    }
+    .form_SearchProduct table{
+        border-right:1px solid;
+        border-bottom:1px solid;
+        border-collapse: collapse;
+    }
+    .form_SearchProduct table td{
+        border-left:1px solid;
+        border-top:1px solid;
+    }
+    </style>
+    <form enctype="multipart/form-data" action="{% url 'Product:SearchProductGroup' %}?timestamp={{ content.time }}" method="post" class="form_SearchProduct"  onsubmit="return multiClick();">
+    {% csrf_token %}
+        <label>筛选条件</label>
+        <hr>
+        <div>
+            <div>
+                <div class="labelFirst"><input type="checkbox" name="_search_base" value="_search_id">ID</div>
+                <div class=""><input type="number" name="_search_id" value="100000"></div>
+            </div>
+            <div style="clear: both;"></div>
+            <div>
+                <div class="labelFirst"><input type="checkbox" name="_search_base" value="_search_name">名称</div>
+                <div class><input type="text" name="_search_name"></div>
+            </div>
+            <div style="clear: both;"></div>
+            <div>
+                <div class="labelFirst"><input type="checkbox" name="_search_base" value="_search_time">上架时间</div>
+                <div><input type="date" name="_search_time_start">至<input type="date" name="_search_time_end"></div>
+            </div>
+            <div style="clear: both;"></div>
+            <div>
+                <div class="labelFirst"><input type="checkbox" name="_search_base" value="_search_saleCount">销量</div>
+                <div>
+                    <input type="number" name="_search_saleCount_start" value="0">至<input type="number" name="_search_saleCount_end" value="10000">
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+
+        <hr>
+        <div>
+            <input class="btn btn-default" type="submit" name="_searchProductGroup" value="搜索" width="100%">
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,655 @@
+{% extends 'ProductAdminPage.html' %}
+
+
+{% block content %}
+    <script>
+    //上传图片
+    function change(photo, filename) {
+        var pic = document.getElementById(photo);
+        var file = document.getElementById(filename);
+        var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+
+         var parent = file.parentNode;
+        var formtip = file.nextSibling;
+        if(formtip)
+            parent.removeChild(formtip);
+
+        var newDiv = document.createElement('span');
+        // gif在IE浏览器暂时无法显示
+        if(ext!=='png' && ext!=='jpg' && ext!=='jpeg'){
+            newDiv.innerHTML = '图片的格式必须为png或者jpg或者jpeg格式.';
+            parent.append(newDiv);
+            pic.src='';
+            file.value = '';
+            return;
+        }
+
+        var size = file.files[0].size / 1024;
+        if (size > 1024){
+            newDiv.innerHTML = '图片大小超过1M.';
+            parent.append(newDiv);
+            pic.src='';
+            file.value = '';
+            return;
+        }
+
+
+         var isIE = navigator.userAgent.match(/MSIE/)!== null,
+             isIE6 = navigator.userAgent.match(/MSIE 6.0/)!== null;
+
+         if(isIE) {
+            file.select();
+            var reallocalpath = document.selection.createRange().text;
+
+            // IE6浏览器设置img的src为本地路径可以直接显示图片
+             if (isIE6) {
+                pic.src = reallocalpath;
+             }else {
+                // 非IE6版本的IE由于安全问题直接设置img的src无法显示本地图片，但是可以通过滤镜来实现
+                 pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src=\"" + reallocalpath + "\")";
+                 // 设置img的src为base64编码的透明图片 取消显示浏览器默认图片
+                 pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+             }
+         }else {
+            html5Reader(photo, file);
+         }
+    }
+
+    function html5Reader(photo, file1){
+        var file = file1.files[0];
+        var reader = new FileReader();
+
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            var pic = document.getElementById(photo);
+            pic.src=this.result;
+            pic.height= '200';
+            pic.width= '200';
+
+            //获得图片的高度
+            var imageWidth1 = document.getElementById('_imageWidth');
+            var imageHeight2 = document.getElementById('_imageHeight');
+            var canvas1 = document.getElementById('id_myCanvas');
+            var image = new Image();
+            image.src=this.result;
+            image.onload = function () {
+                imageWidth1.value = this.width;
+                imageHeight2.value = this.height;
+                //imageWidth  = 400;
+                imageHeight = this.height*400/this.width;
+                canvas1.height = imageHeight;
+                drawCircles();
+            }
+        }
+    }
+
+
+    function start(){
+        change('_image', '_imageFile');
+    }
+        //选择商品分类
+    //删除某个标签
+    function DeleteTag(parent, name) {
+        var parentElement = document.getElementById(parent);
+        var deleteElement = document.getElementById(name);
+        if(deleteElement !== null)
+            parentElement.removeChild(deleteElement);
+        else
+            alert('delete对象不存在');
+    }
+
+    function deleteCircle(deleteId){
+        var i;
+         // 查找被单击的圆圈
+        for( i=circles.length-1; i>=0; i--)
+        {
+            var circle = circles[i];
+            //检查是否是删除元素
+            if (circle.comment[4] === deleteId ) {
+                // 重新绘制画布.
+                circles.splice(i, 1);
+                drawCircles();
+                return;
+            }
+        }
+    }
+     //增加规格标签
+    function addTag(inputTextName){
+        var parent=document.getElementById(inputTextName+'Html');
+        var line1 = document.getElementById('_inputLine1');
+        var line2 = document.getElementById('_inputLine2');
+        var Type;
+        if (document.getElementById('checkbox_show').checked === true){
+            Type = document.getElementById('tag1_B').firstChild.nextSibling;
+        } else {
+            Type = document.getElementById('tag1_A').firstChild.nextSibling;
+        }
+
+        var direction = document.getElementById('_inputDirection');
+        var Type1 = document.getElementById('_inputType1');
+        var direction1 = document.getElementById('_inputDirection1');
+        var productId = document.getElementById('_inputProductId');
+        var productGroupId = document.getElementById('_inputProductGroupId');
+        var newDiv = document.createElement('div');
+        newDiv.id = inputTextName + line1.value;
+        if(line1.value === '')
+        {
+            alert('请输入内容！');
+            return;
+        }
+        if(document.getElementById(newDiv.id))
+        {
+            alert('该标签已存在，请重新输入！');
+            return;
+        }
+        if(productGroupId.value == '' || productId.value == ''){
+            alert('请输入商品组ID和商品ID');
+            return;
+        }
+        //
+        //
+        var comment = [];
+        comment[0]=line1.value;
+        comment[1]=line2.value;
+        comment[2]='id'+inputTextName+'X_'+ line1.value;
+        comment[3]='id'+inputTextName+'Y_'+ line1.value;
+        comment[4]=newDiv.id;
+        comment[5]=Type1.value;
+        comment[6]=direction1.value;
+        addCircleTag(Type.value, comment, direction.value);
+        var circle = circles.pop();
+        //注意字符串中引号的处理
+        newDiv.innerHTML =
+            '标签名称：' + line1.value  + '<input type="hidden" name="' + inputTextName + 'Line_' + circle.x +'" value="' + line1.value + '" readonly>';
+        if (line2.value){
+           newDiv.innerHTML +=
+            '<br>标签名称：' + line2.value  + '<input type="hidden" name="' + inputTextName + 'Line_' + circle.x + '" value="' + line2.value + '" readonly>';
+        }
+
+
+        newDiv.innerHTML +=
+            '<input type="hidden" name="' + inputTextName + 'Type_' + circle.x + line1.value + '" value="' + Type.value + '" readonly>' +
+            '<input type="hidden" name="' + inputTextName + 'Direction_' + circle.x + line1.value + '" value="' + direction.value + '" readonly>' +
+            '<input type="hidden" name="' + inputTextName + 'Type_' + circle.x + line2.value + '" value="' + Type1.value + '" readonly>' +
+            '<input type="hidden" name="' + inputTextName + 'Direction_' + circle.x + line2.value + '" value="' + direction1.value + '" readonly>' +
+            '<input type="text" name="' + inputTextName + 'X_' + circle.x + '" id="'+comment[2]+'" value="' + parseInt((circle.x/imageWidth)*100)/100 + '" >' +
+            '<input type="text" name="' + inputTextName + 'Y_' + circle.x + '" id="'+comment[3]+'" value="' + parseInt((circle.y/imageHeight)*100)/100 + '" >' +
+            '<input type="hidden" name="' + inputTextName + 'X' + '" value="' + circle.x + '" >' +
+
+            '<br>商品ID：' + productId.value  + '<input type="hidden" name="' + inputTextName + 'ProductId_' + circle.x + '" value="' + productId.value + '" >' +
+            '<br>商品组ID：' + productGroupId.value  + '<input type="hidden" name="' + inputTextName + 'ProductGroupId_' + circle.x + '" value="' + productGroupId.value + '" >' +
+
+            '<br><input class="btn btn-default" type="button" name="delete" value="删除" onclick="DeleteTag(\'' + parent.id + '\', \'' + newDiv.id + '\');deleteCircle(\'' +newDiv.id + '\')"><hr>';
+
+        if(parent !== null )
+            parent.appendChild(newDiv);
+        line1.value = '名称';
+        circles.push(circle);
+    }
+
+
+    //用于添加标签
+    // 这个方法用来储存每个圆圈对象
+    function Circle(x, y, radius, color, typed, comment, direction) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.isSelected = false;
+        this.typed = typed;
+        this.comment = comment;
+        this.direction = direction;
+    }
+
+    // 保存画布上所有的圆圈
+    var circles = [];
+
+    var canvas;
+    var context;
+    var imageHeight = 400;
+    var imageWidth = 480;
+
+    function addCircleTag(Typed, comment,direction) {
+        // 为圆圈计算一个随机大小和位置
+        //var radius = randomFromTo(10, 60);
+        var radius = 20;
+        var x = randomFromTo(0, canvas.width);
+        var y = randomFromTo(0, canvas.height);
+
+        // 为圆圈计算一个随机颜色
+        var colors = ["green", "blue", "red", "yellow", "magenta", "orange", "brown", "purple", "pink"];
+        var color = colors[randomFromTo(0, 8)];
+
+        // 创建一个新圆圈
+        var circle = new Circle(x, y, radius, color, Typed, comment, direction);
+
+        // 把它保存在数组中
+        circles.push(circle);
+
+        // 重新绘制画布
+        drawCircles();
+    }
+
+
+        function drawCircles() {
+        // 清除画布，准备绘制
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        var img=document.getElementById("_image");
+        context.drawImage(img, 0, 0, imageWidth, imageHeight);
+        var A,B,stretch1;
+        // 遍历所有圆圈
+        for(var i=0; i<circles.length; i++) {
+            A = 0;
+            B = 0;
+            stretch1 = 0;
+            var circle = circles[i];
+             // 绘制圆圈
+            context.globalAlpha = 0.85;
+            context.beginPath();
+            context.arc(circle.x, circle.y, circle.radius, 0, Math.PI*2);
+            context.fillStyle = circle.color;
+            context.strokeStyle = "black";
+
+            context.lineWidth = 1;
+            context.fill();
+            context.stroke();
+
+            drawLines(circle.comment[0], circle.typed, circle.direction, circle);
+            if(circle.comment[1] !== '')
+                drawLines(circle.comment[1], circle.comment[5], circle.comment[6], circle);
+        }
+    }
+    function drawLines(content, style1, direction1, circle){
+        var A,B,stretch1;
+        if(parseInt(style1) === 2 ){
+            A=0;
+            B=-75;
+            if(parseInt(direction1) === 0)
+                stretch1=50;
+            else
+                stretch1=-50;
+        }else if(parseInt(style1) === 1){
+            A=50;
+            B=-50;
+            if(parseInt(direction1) === 0)
+                stretch1=50;
+            else
+            {
+                stretch1=-50;
+                A=-50;
+            }
+        } else if(parseInt(style1) === 0){
+            A=50;
+            B=0;
+            if(parseInt(direction1) === 0)
+                stretch1=50;
+            else{
+                stretch1=-50;
+                A=-50;
+            }
+
+        } else if(parseInt(style1) === -1){
+            A=50;
+            B=50;
+            if(parseInt(direction1) === 0)
+                stretch1=50;
+            else
+            {
+                A=-50;
+                stretch1=-50;
+            }
+
+        }else if(parseInt(style1) === -2){
+            A=0;
+            B=75;
+            if(parseInt(direction1) === 0)
+                stretch1=50;
+            else
+                stretch1=-50;
+        }
+        context.beginPath();
+        context.moveTo(circle.x, circle.y);
+        context.lineTo(circle.x+A, circle.y+B);
+        context.lineTo(circle.x+A+stretch1, circle.y+B);
+        if(direction1 === '0')
+            context.fillText(content, circle.x+A + stretch1/4, circle.y+B);
+        else
+            context.fillText(content, circle.x+A + 3*stretch1/4, circle.y+B);
+        context.stroke();
+    }
+
+    var previousSelectedCircle;
+
+    window.onload = function () {
+        canvas=document.getElementById("id_myCanvas");
+        context=canvas.getContext("2d");
+        var img=document.getElementById("_image");
+        context.drawImage(img, 0, 0, imageWidth, imageHeight);
+
+        //鼠标的移动
+        canvas.onmousedown = canvasClick;
+        canvas.onmouseup = stopDragging;
+        canvas.onmouseout = stopDragging;
+        canvas.onmousemove = dragCircle;
+
+        //获得当前时间
+        time('_recommendationTime');
+    }
+
+    var getOffsetLeft = function(obj){
+          var tmp = obj.offsetLeft;
+          var val = obj.offsetParent;
+          while(val !== null){
+          tmp += val.offsetLeft;
+            val = val.offsetParent;
+           }
+        return tmp;
+    }
+
+    var getOffsetTop =  function(obj){
+        var tmp = obj.offsetTop;
+        var val = obj.offsetParent;
+        while(val !== null){
+            tmp += val.offsetTop;
+           val = val.offsetParent;
+        }
+        return tmp;
+    }
+
+    function canvasClick(e) {
+        // 取得画布上被单击的点
+        var clickX = e.pageX - getOffsetLeft(canvas);
+        var clickY = e.pageY - getOffsetTop(canvas);
+        // 查找被单击的圆圈
+        for(var i=circles.length-1; i>=0; i--)
+        {
+            var circle = circles[i];
+            //使用勾股定理计算这个点与圆心之间的距离
+            var distanceFromCenter = Math.sqrt(Math.pow(circle.x - clickX, 2)
+            + Math.pow(circle.y - clickY, 2));
+            // 判断这个点是否在圆圈中
+            if (distanceFromCenter <= circle.radius) {
+                // 清除之前选择的圆圈
+                if (previousSelectedCircle != null) previousSelectedCircle.isSelected = false;
+                previousSelectedCircle = circle;
+
+                //选择新圆圈
+                circle.isSelected = true;
+
+                // 使圆圈允许拖拽
+                isDragging = true;
+
+                //更新显示
+                drawCircles();
+
+                //停止搜索
+                return;
+            }
+        }
+    }
+
+    //在某个范围内生成随机数
+    function randomFromTo(from, to) {
+        return Math.floor(Math.random() * (to - from + 1) + from);
+    }
+
+    var isDragging = false;
+
+    function stopDragging() {
+        isDragging = false;
+    }
+
+    function dragCircle(e) {
+        // 判断圆圈是否开始拖拽
+        if (isDragging === true) {
+            // 判断拖拽对象是否存在
+            if (previousSelectedCircle !== null) {
+                // 取得鼠标位置
+                var x = e.pageX - getOffsetLeft(canvas);
+                var y = e.pageY - getOffsetTop(canvas);
+
+                // 将圆圈移动到鼠标位置
+                previousSelectedCircle.x = x;
+                previousSelectedCircle.y = y;
+                var tmpX = document.getElementById(previousSelectedCircle.comment[2]);
+                var tmpY = document.getElementById(previousSelectedCircle.comment[3]);
+                tmpX.value = parseInt(x*100/400.0)/100;
+                tmpY.value = parseInt(y*100/480.0)/100;
+                // 更新画布
+                drawCircles();
+            }
+        }
+    }
+
+    </script>
+     <style>
+
+        .div_inline{
+            float:left;
+            width: 250px;
+        }
+        .div_inline1{
+            float:left;
+            width: 250px;
+        }
+        .btn-upload {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-upload input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0 100px 0 0;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            width: 150px;
+            height: 150px;
+        }
+        .btn-uploadImage{
+            text-align: center;
+            box-sizing: border-box;
+            padding: 50px 50px 30px;
+            border-width: 2px;
+            border-style: outset;
+            border-color: buttonface;
+            width: 150px;
+            height: 150px;
+        }
+        canvas {
+            cursor: pointer;
+            border: 1px solid black;
+        }
+        .biaoqian1{
+            display: block;
+            width: 200px;
+            font-family: STHeiti;
+        }
+    </style>
+    <script language="javascript" type="text/javascript">
+        //js获取日期
+        function time(idname){
+          var now= new Date();
+          var year=now.getFullYear();
+          var month=now.getMonth();
+          var date=now.getDate();
+        //获取相应ID
+         document.getElementById(idname).value=year+'/'+(month+1)+'/'+date;
+        }
+        function check(){
+            var time = document.getElementById('_recommendationTime');
+            if (time.value === ''){
+                alert('请选择日期');
+                return false;
+            }
+            var imageFile = document.getElementById('_imageFile');
+            if (imageFile.value === '') {
+                alert('请选择图片');
+                return false;
+            }
+            var tag = document.getElementsByName('id_AddTagContentX');
+            if (tag.length === 0){
+                alert('请添加标签');
+                return false;
+            }
+            return multiClick();
+        }
+        function show_tag2(name_id){
+            var tag = document.getElementById(name_id);
+            if (tag.checked === true){
+                document.getElementById('tag2').setAttribute('style', "display: block");
+                document.getElementById('tag1_A').setAttribute('style', "display: none");
+                document.getElementById('tag1_B').setAttribute('style', "display: block");
+                selectValue();
+            } else {
+                document.getElementById('tag2').setAttribute('style', "display: none");
+                document.getElementById('_inputLine2').value = ''
+                document.getElementById('tag1_A').setAttribute('style', "display: block");
+                document.getElementById('tag1_B').setAttribute('style', "display: none");
+            }
+        }
+        function selectValue(){
+            var a1, a;
+            a1 = document.getElementById('_inputType1');
+            a = document.getElementById('tag1_B').firstChild.nextSibling;
+            a1.options[(3-a.options.selectedIndex)%4].selected = true;
+        }
+        function selectDirection(){
+            var a1, a;
+            a1 = document.getElementById('_inputDirection1');
+            a = document.getElementById('_inputDirection');
+            a1.options[a.options.selectedIndex].selected = true;
+        }
+    </script>
+
+
+    <div id="">
+        每日推荐上传
+    </div>
+    <hr>
+
+    <form enctype="multipart/form-data" method="POST" action="{% url 'Recommendation:AddRecommendation' %}" onsubmit="return check();">
+    {% csrf_token %}
+        <label>
+            推荐日期：<input type="date" value="" name="_recommendationTime" id="_recommendationTime" required>
+        </label>
+        <div style="margin-top: 40px">
+            <hr>
+            <div id="_addPhotoHTML" name="form1">
+                <div id="_first" class="div_inline">
+                    <div style="width: 500px">
+                        图片宽度：
+                        <label><input type="text" name="_imageWidth" value="" id="_imageWidth" readonly></label>
+                    </div>
+                    <div style="width: 500px">
+                        图片高度：
+                        <label><input type="text" name="_imageHeight" value="" id="_imageHeight" readonly></label>
+                    </div>
+
+                    <div class="btn btn-primary btn-upload" id="_idHidden">
+                        <div class="btn-uploadImage">上传</div>
+                        <input id="_imageFile" type="file" name="_imageFileName" onchange="start();" value=""/>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <hr>
+        <div style="margin-top: 40px">
+            <img id="_image" alt="" name="_image" width="400" height="480" style="display: none;" onload="drawCircles();" src=""/>
+            <canvas id="id_myCanvas" width="400" height="480">
+                
+            </canvas>
+        </div>
+        <div id="id_AddTagContentHtml">
+
+        </div>
+        <div>
+            <div >
+                <label class="biaoqian1">
+                    标签1名称：
+                </label>
+                <label>
+                <input type="text" name="" value="名字" id="_inputLine1">
+                </label>
+                <label id="tag1_A">
+                    <select name="" id="_inputType">
+                        <option value="1">上斜线</option>
+                        <option value="0">横线</option>
+                        <option value="-1">下斜线</option>
+                    </select>
+                </label>
+                <label id="tag1_B" style="display: none">
+                    <select name="" id="_inputType" onchange="">
+                        <option value="2">上直线</option>
+                        <option value="1">上斜线</option>
+                        <option value="0">横线</option>
+                        <option value="-1">下斜线</option>
+                        <option value="-2">下直线</option>
+                    </select>
+                </label>
+                <label>
+                <select name="" id="_inputDirection" onchange="selectDirection()">
+                    <option value="0">右</option>
+                    <option value="1">左</option>
+                </select>
+                </label><label>
+                <input type="checkbox" onclick="show_tag2('checkbox_show');" id="checkbox_show">
+                </label>
+            </div>
+
+            <div id="tag2" style="display: none;">
+                <br>
+                <label class="biaoqian1">
+                    标签2名称
+                </label>
+                <label>
+                <input type="text" name="" value="" id="_inputLine2" >
+                </label>
+                <label>
+                    <select name="" id="_inputType1">
+                        <option value="2">上直线</option>
+                        <option value="1">上斜线</option>
+                        <option value="0">横线</option>
+                        <option value="-1">下斜线</option>
+                        <option value="-2">下直线</option>
+                    </select>
+                </label>
+                <label>
+                <select name="" id="_inputDirection1" disabled="disabled">
+                    <option value="0">右</option>
+                    <option value="1">左</option>
+                </select>
+                </label>
+            </div>
+            <br>
+            <div>
+
+                <label class="biaoqian1">商品ID：</label>
+                <label>
+                <input type="text" name="" value="" id="_inputProductId" width="40px">
+                </label>
+            </div>
+            <div>
+                <label class="biaoqian1">
+                    商品组ID：
+                </label>
+                <label>
+                    <input type="text" name="" value="" id="_inputProductGroupId" width="40px">
+                </label>
+            </div>
+            <br>
+            <input class="btn btn-default" type="button" name="button" value="添加" onclick="addTag('id_AddTagContent');">
+        </div>
+        <hr>
+        <div>
+            <input class="btn btn-default" type="submit" name="submit" value="提交">
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'layout/app.html' %}
+
+{% block content %}
+
+<div class="header">
+  {% include 'partials/headerNav.html' %}
+</div>
+
+
+<div class="main system used">
+	<div class="side">
+	  {% include 'partials/manage/system.html' %}
+	</div>
+
+	<div class="mainContent">
+	  {% include 'partials/manage/systemContent.html' %}
+	</div>
+</div>
+
+
+<div class="main stock">
+	<div class="side">
+	  {% include 'partials/manage/stock.html' %}
+	</div>
+
+	<div class="mainContent">
+	  {% include 'partials/manage/stockContent.html' %}
+	</div>
+</div>
+
+
+<div class="main selfshop">
+	<div class="side">
+	  {% include 'partials/manage/selfShop.html' %}
+	</div>
+
+	<div class="mainContent">
+	  {% include 'partials/manage/selfShopContent.html' %}
+	</div>
+</div>
+
+
+<div class="main sellershop">
+	<div class="side">
+	  {% include 'partials/manage/sellerShop.html' %}
+	</div>
+
+	<div class="mainContent">
+	  {% include 'partials/manage/sellerShopContent.html' %}
+	</div>
+</div>
+<div class="main bussinessteam">
+	<div class="side">
+	  {% include 'partials/manage/bussinessTeam.html' %}
+	</div>
+
+	<div class="mainContent">
+	  {% include 'partials/manage/bussinessTeamContent.html' %}
+	</div>
+</div>
+
+
+<div class="main order">
+	<div class="side">
+	  {% include 'partials/manage/order.html' %}
+	</div>
+
+	<div class="mainContent">
+	  {% include 'partials/manage/orderContent.html' %}
+	</div>
+</div>
+
+
+<div class="main service">
+	<div class="side">
+	  {% include 'partials/manage/service.html' %}
+	</div>
+
+	<div class="mainContent">
+	  {% include 'partials/manage/serviceContent.html' %}
+	</div>
+</div>
+
+
+<div class="main finance">
+	<div class="side">
+	  {% include 'partials/manage/finance.html' %}
+	</div>
+
+	<div class="mainContent">
+	  {% include 'partials/manage/financeContent.html' %}
+	</div>
+</div>
+
+
+<div class="main statistics">
+	<div class="side">
+	  {% include 'partials/manage/statistics.html' %}
+	</div>
+
+	<div class="mainContent">
+	  {% include 'partials/manage/statisticsContent.html' %}
+	</div>
+</div>
+
+
+<div class="main selfcenter">
+	<div class="side">
+	  {% include 'partials/manage/selfCenter.html' %}
+	</div>
+
+	<div class="mainContent">
+	  {% include 'partials/manage/selfCenterContent.html' %}
+	</div>
+</div>
+
+{{User.username}}
+
+{% endblock %}

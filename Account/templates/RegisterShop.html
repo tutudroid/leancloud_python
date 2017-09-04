@@ -1,0 +1,189 @@
+
+{% extends 'ProfilePage.html' %}
+    {% load static %}
+
+{% block middleTag %}
+    <style href="{% static 'css/style.css' %}">
+        .div_main{
+            text-align: center;
+        }
+        .table_main td{
+             width: 200px;
+             margin-top: 40px;
+        }
+        .table_main{
+
+        }
+        .form-group{
+            width: 600px;
+        }
+        .sr-only{
+            width: 100px;
+            display:block;
+            float: left;
+        }
+        .form-control{
+            float: left;
+        }
+    </style>
+    <script src="{% static 'js/jquery.min.js' %}" ></script>
+    <script src="{% static 'js/jquery.cookie.js' %}" ></script>
+    <script language="JavaScript">
+         $(function(){
+            /*仿刷新：检测是否存在cookie*/
+            if($.cookie("catplogin")){
+                var count = $.cookie("catplogin");
+                var btn = $('#getting');
+                btn.val(count+'秒后可重新获取').attr('disabled',true).css('cursor','not-allowed');
+                var resend = setInterval(function(){
+                    count--;
+                    if (count > 0){
+                        btn.val(count+'秒后可重新获取').attr('disabled',true).css('cursor','not-allowed');
+                        $.cookie("catplogin", count, {path: '/', expires: (1/86400)*count});
+                    }else {
+                        clearInterval(resend);
+                        btn.val("获取验证码").removeAttr('disabled style');
+                    }
+                }, 1000);
+            }
+
+            /*点击改变按钮状态，已经简略掉ajax发送短信验证的代码*/
+            $('#getting').click(function(){
+                var phoneNum = $("#id_phone").val();
+                if(isPhoneNumber(phoneNum) === false)
+                    return false;
+
+                var btn = $(this);
+                var count = 60;
+                var resend = setInterval(function(){
+                    count--;
+                    if (count > 0){
+                        btn.val(count+"秒后可重新获取");
+                        $.cookie("catplogin", count, {path: '/', expires: (1/86400)*count});
+
+                    }else {
+
+                        clearInterval(resend);
+                        btn.val("获取验证码").removeAttr('disabled style');
+                    }
+                }, 1000);
+                btn.attr('disabled',true).css('cursor','not-allowed');
+                $.ajax({
+                    type: 'GET',
+                    url: '/Account/get_verify_code/',
+                    data: {
+                        'phoneNumber': phoneNum,
+                    },
+                    success: function (data) {
+                       $("#message").html(data)
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        $("#message").html(XMLHttpRequest.responseText);
+                    },
+                    complete:function(XMLHttpRequest){
+                    $("#message").html(XMLHttpRequest.responseText);
+                    }
+                });
+            });
+
+        });
+        function isPhoneNumber(number){
+            var myreg = /^((([0-9]{3}))+\d{8})$/;
+            if(!myreg.test(number)){
+                alert('请输入有效的手机号码！');
+                return false;
+            }else{
+                return true;
+            }
+        }
+        function check(){
+            var phoneNum = $("#id_phone").val();
+            if(isPhoneNumber(phoneNum) === false)
+            {
+                alert('手机号不合法');
+                return false;
+            }
+            if(document.getElementById('id_password').value !== document.getElementById('id_passwordSure').value){
+                alert('两次密码输入不一致');
+                return false;
+            }
+            return multiClick();
+        }
+    </script>
+
+    <div class="div_main">
+        <div style="margin: 0 auto; width: 600px; text-align: left">
+
+            <label id="message">{{ content.message }}</label>
+             <form enctype="multipart/form-data" method="post" action="{% url 'Account:RegisterShop' %}" name="form1" onsubmit="return check();" >
+            {% csrf_token %}
+                 <input type="hidden" name="prevToken" value="{{ content.prevToken }}">
+                <div class="table_main">
+
+                    <div class="form-group">
+                        <label class="sr-only">
+                            <label for="id_phone">手机号:</label>
+                        </label>
+                        <div class="form-control">
+                            <input id="id_phone" name="phone" type="text"  maxlength="11" placeholder="请输入手机号码" value="{{ content.phone }}" required />
+                        </div>
+
+                            <div>
+                                <input class="btn btn-default form-control" type="button" value="获取验证码" id="getting">
+                            </div>
+
+                        <div style="clear: both;"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="sr-only">
+                                <label for="id_verifyCode">验证码:</label>
+                            </label>
+                            <div class="form-control">
+                                <input id="id_verifyCode" name="verifyCode" type="text" required />
+                            </div>
+
+                            <div style="clear: both;"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="sr-only">
+                                <label for="id_password">密码:</label>
+                            </label>
+                            <div class="form-control">
+                                <input id="id_password" name="password" type="password" required />
+                            </div>
+
+
+
+
+                            <div style="clear: both;"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="sr-only">
+                                <label for="id_passwordSure">确认密码:</label>
+                            </label>
+                            <div class="form-control">
+                                <input id="id_passwordSure" name="passwordSure" type="password" required />
+                            </div>
+
+
+
+
+                            <div style="clear: both;"></div>
+                        </div>
+                    <div class="form-group">
+                        <input class="btn btn-default" type="submit" id="id_register" name="register" value="确认" >
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'js/distpicker.data.js' %}"></script>
+    <script src="{% static 'js/distpicker.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+{% endblock %}

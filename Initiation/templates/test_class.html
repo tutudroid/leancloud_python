@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <hr>
+    <h2>--------- user------------</h2>
+    <div>
+        {% for key, value in content.User.items %}
+             <p> {{ key }} ------ {{ value }}</p>
+        {% endfor %}
+    </div>
+
+    <hr>
+
+    <hr>
+    <h2>--------- Shop------------</h2>
+    <div>
+        {% for key, value in content.Shop.items %}
+             <p> {{ key }} ------ {{ value }}</p>
+        {% endfor %}
+    </div>
+
+    <hr>
+    <h2>--------- ProductGroup------------</h2>
+        <div>
+        {% for key, value in content.ProductGroup.items %}
+             <p> {{ key }} ------ {{ value }}</p>
+        {% endfor %}
+        </div>
+    <hr>
+    <h2>--------- Order------------</h2>
+        <div>
+        {% for key, value in content.Order.items %}
+             <p> {{ key }} ------ {{ value }}</p>
+        {% endfor %}
+        </div>
+    <hr>
+    <h2>--------- AfterSaleServiceRecord ------------</h2>
+        <div>
+        {% for key, value in content.AfterSaleServiceRecord.items %}
+             <p> {{ key }} ------ {{ value }}</p>
+        {% endfor %}
+        </div>
+    <hr>
+    <h2>--------- SettleInApplication------------</h2>
+        <div>
+        {% for key, value in content.SettleInApplication.items %}
+             <p> {{ key }} ------ {{ value }}</p>
+        {% endfor %}
+        </div>
+    <hr>
+    <h2>--------- SaleCategory------------</h2>
+        <div>
+        {% for key, value in content.SaleCategory.items %}
+             <p> {{ key }} ------ {{ value }}</p>
+        {% endfor %}
+        </div>
+    <hr>
+    <h2>--------- StoreCategory------------</h2>
+        <div>
+        {% for key, value in content.StoreCategory.items %}
+             <p> {{ key }} ------ {{ value }}</p>
+        {% endfor %}
+        </div>
+    <hr>
+
+    <h2>--------- StoreCategoryAll------------</h2>
+        <div>
+        {% for key, value in content.items %}
+              <h3> {{ key }} ------</h3>
+                <div>{% for firstKey in value %}
+                    <div>
+                        {% for fook,foov in firstKey.items %}
+                            <h4>{{ fook }} ------ {{ foov }}</h4>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                </div>
+        {% endfor %}
+        </div>
+    <hr>
+    <h2>--------- AllProduct------------</h2>
+        <div>
+        {% for foo in content.AllProductGroup %}
+            <div>
+                {% for key,value in foo.items %}
+                    <h4>{{ key }} ------ {{ value }}</h4>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        </div>
+        <div>
+        当前页{{ Paginator.page }}
+        <a href="{% url 'Initiation:AllProduct' %}?page={{ Paginator.page }}">上一页</a>
+         <a href="{% url 'Initiation:AllProduct' %}?page={{ Paginator.next_page }}">下一页</a>
+        总页数{{ Paginator.num_pages }}
+    </div>
+    <hr>
+<h2>--------- AllOrder------------</h2>
+        <div>
+        {% for foo in content.AllOrder %}
+            <div>
+                {% for key,value in foo.items %}
+                    <h4>{{ key }} ------ {{ value }}</h4>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        </div>
+        <div>
+        当前页{{ Paginator.page }}
+        <a href="{% url 'Initiation:AllOrder' %}?page={{ Paginator.prev_page }}">上一页</a>
+         <a href="{% url 'Initiation:AllOrder' %}?page={{ Paginator.next_page }}">下一页</a>
+        总页数{{ Paginator.num_pages }}
+    </div>
+    <hr>
+<h2>--------- AllAfterSale------------</h2>
+        <div>
+        {% for foo in content.AllAfterSale %}
+            <div>
+                {% for key,value in foo.items %}
+                    <h4>{{ key }} ------ {{ value }}</h4>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        </div>
+    <hr>
+
+    <div>
+        当前页{{ Paginator.page }}
+        <a href="{% url 'Initiation:AllAfterSale' %}?page={{ Paginator.page }}">上一页</a>
+         <a href="{% url 'Initiation:AllAfterSale' %}?page={{ Paginator.next_page }}">下一页</a>
+        总页数{{ Paginator.num_pages }}
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+    <div>
+    <a href="{% url 'Admin:ShopUser' %}">所有审核通过的店铺</a>
+    </div>
+
+    <label>所有待注册店铺</label>
+    <div class="table-responsive">
+        <table class="table table-striped">
+        {% if content.data.auditShop %}
+             <thead>
+                <tr>
+                <td>手机号</td>
+                <td>通过认证</td>
+                    <td>禁止注册</td>
+                    <td>删除注册信息</td>
+                </tr>
+              </thead>
+        {% endif %}
+
+          <tbody>
+            {% for tmpuser in content.data.auditShop %}
+                <tr>
+                    <td><label>{{ tmpuser.phoneNumber }}</label></td>
+                    <td>
+                        {% if tmpuser.state == 0 %}
+                            <a class="table_td_a btn" href="{% url 'Admin:AuditShopUser' %}?objectId={{ tmpuser.objectId }}&&state=1">审核通过</a>
+                        {% else %}
+                        {% endif %}
+                    </td>
+                    <td>
+                         {% if tmpuser.state == -1 %}
+
+                             禁止该手机号注册
+                        {% else %}
+                            <a class="table_td_a btn" href="{% url 'Admin:AuditShopUser' %}?objectId={{ tmpuser.objectId }}&&state=2">拒绝注册</a>
+                        {% endif %}
+
+                    </td>
+                    <td><a class="table_td_a btn" href="{% url 'Admin:AuditShopUser' %}?objectId={{ tmpuser.objectId }}&&state=3">删除注册信息</a></td>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,229 @@
+
+{% extends 'ProductAdminPage.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        .sonTagLeft1{
+            float: left;
+            display: block;
+            width: 220px;
+            height: 220px;
+        }
+        .sonTagLeft1 div{
+            margin: 10px;
+        }
+        .sontagCenter1{
+            text-align: center;
+        }
+        .sonTagLeft1 img {
+            width: 200px;
+            height: 200px;
+        }
+        .orderStateTag label{
+            margin: 20px;
+        }
+        .orderStateTag a{
+            margin: 20px;
+        }
+    .label1{
+        display: block;
+        width: 100px;
+        float: left;
+    }
+    </style>
+     <script src="{% static 'js/express.js'%}">
+     </script>
+
+    <script>
+
+        $(function () {
+            $("#id_submit").click(function () {
+                $("#id_submit").val('等待退款中。。。').attr('disabled',true).css('cursor','not-allowed');
+                $.ajax({
+                    type: 'POST',
+                    url: '/AfterSale/DisposeAfterSale/',
+                    data: {
+                        'radio_choice': 6,
+                        'objectId': $("#id_objectId").val(),
+                        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                    },
+                    success: function (data) {
+                        if(data == '已申请退款，请检查退款状态') {
+                            alert(data);
+                            $('#id_disposeAfterSale').css('display', 'none');
+                        }
+                        else{
+                            if (confirm("确定跳转到支付宝退款？是－选择确定，否-选择取消")){
+                                location.href="data";
+                            }
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert('处理失败');
+                        $("#id_submit").val('确定').removeAttr('disabled style');
+                    },
+                    complete:function(XMLHttpRequest){
+                        //alert(XMLHttpRequest.responseText)
+
+                    }
+                });
+            });
+        });
+
+    </script>
+
+    <div>
+
+        {% if content.order.orderState == 1 %}
+            未发货
+        {% elif content.order.orderState == 2 %}
+            已发货
+        {% elif content.order.orderState == 3 %}
+            已完成
+        {% elif content.order.orderState == 4 %}
+            已评价
+        {% elif content.order.orderState == 7 %}
+            待发货订单取消并退款
+        {% elif content.order.orderState == 6 %}
+            已退款
+        {% else %}
+        {% endif %}
+    </div>
+    <hr>
+    <div>
+        <div><label class="label1">下单时间：&nbsp;</label>     {{ content.order.createdAt }}</div>
+        <div style="clear:both;"></div>
+        <div><label class="label1">订单号：&nbsp;&nbsp;</label>{{ content.order.uniqueId }}</div>
+        <div style="clear:both;"></div>
+        <hr>
+        <div class="orderStyle">
+
+            <div class="sonTagLeft1">
+                <img src="{{ content.order.orderDetail.productMainImage.url }}"  height="200" width="200">
+            </div>
+            <div class="sonTagLeft1">
+                <div>{{ content.order.orderDetail.groupName }}</div>
+                <div>
+                    {% for foo in content.order.orderDetail.productStyle %}
+                        <p>{{ foo.PropertyName }} / {{ foo.OptionName }}</p>
+                    {% endfor %}
+                </div>
+                <div>{{ content.order.orderDetail.productPrice }}</div>
+            </div>
+            <div class="sonTagLeft1">
+                <div class="sontagCenter1">{{ content.order.orderDetail.productCount }}</div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <hr>
+        <div>
+            <label class="label1"> 实付金额： ¥ </label>{{ content.order.finalPrice }}
+            <div style="clear:both;"></div>
+        </div>
+        <div>
+            <label class="label1">接收人姓名：</label>{{ content.order.receiverName }}
+            <div style="clear:both;"></div>
+            <label class="label1">接收人电话：</label>{{ content.order.receiverPhoneNumber }}
+            <div style="clear:both;"></div>
+        </div>
+        <div>
+            <label  class="label1">
+                接收人地址：
+            </label>
+            {{ content.order.receiverAddress }}
+            <div style="clear:both;">
+
+            </div>
+        </div>
+        <hr>
+        <div><label class="label1">店铺ID：&nbsp;&nbsp;</label>{{ content.order.shop.uniqueId }}</div>
+    <div style="clear:both;"></div>
+        <div><label class="label1">用户ID：&nbsp;&nbsp;</label>{{ content.order.user.uniqueId }}</div><div style="clear:both;"></div>
+        <div><label class="label1">商品ID：</label>{{ content.order.orderDetail.productUniqueId }}</div><div style="clear:both;"></div>
+        <div><label class="label1">商品组ID：</label>{{ content.order.orderDetail.productGroupUniqueId }}</div>
+        <hr>
+
+        {% if content.order.orderState == 1 %}
+            {% if content.profile.current_role == 'Shop' %}
+                <form enctype="multipart/form-data" method="POST" action="{% url 'Order:Displace' %}" onsubmit="return multiClick();" >
+                {% csrf_token %}
+                    <div><label class="label1">物流:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <label>
+                            <select id="shipperCode" name="shipperCode" required onchange="modifyShipperName('shipperName', 'shipperCode');">
+                            <option value="0" selected>选择物流公司</option>
+                        </select>
+                        </label>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <script>
+                        createExpress('shipperCode');
+                    </script>
+                    <div>
+                        <label class="label1">快递号: &nbsp;&nbsp;</label>
+                        <label>
+                            <input type="text" name="logisticsCode" required>
+                        </label>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <div>
+                        <input type="hidden" id="shipperName" name="shipperName" value="">
+                        <input type="hidden" name="objectId" value="{{ content.order.objectId }}">
+                        <input class="btn btn-default" type="submit" name="queryLogistics" value="发货">
+                    </div>
+                </form>
+            {% endif %}
+            {% if content.profile.current_role == 'CustomService' %}
+                <a class="btn" href="{% url 'Order:Displace' %}?objectId={{ content.order.objectId }}">取消并退款</a>
+            {% endif %}
+
+        {% elif content.order.orderState == 6 %}
+
+            <div><label class="label1">物流: &nbsp;&nbsp;&nbsp;&nbsp;</label><label id="logisticCompany"> </label></div>
+             <script>
+                    getExpressName('{{ content.order.logisticsInfo.shipperCode }}', 'logisticCompany');
+            </script>
+            <div style="clear:both;"></div>
+
+            <div>
+                <label class="label1">快递号: &nbsp;&nbsp;</label>{{ content.order.logisticsInfo.logisticsCode }}
+            </div>
+            <div style="clear:both;"></div>
+
+            <form enctype="multipart/form-data" method="POST" action="{% url 'AfterSale:ShowServiceRecord' %}" onsubmit="return multiClick();" >
+            {% csrf_token %}
+                <input type="hidden" name="uniqueId" value="{{ content.order.serviceRecordUniqueId }}">
+                <div><input class="btn btn-default" type="submit" name="queryLogistics" value="查看售后记录"></div>
+            </form>
+        {% elif content.order.orderState == 7 %}
+
+            {% if content.profile.current_role == 'CustomService' %}
+                <div id="id_disposeAfterSale">
+                    <input type="hidden" id="id_objectId" value="{{ content.order.objectId }}">
+                    {% csrf_token %}
+                    <label> 请确认已完成退款，并核对退款金额！</label>
+                    <label> 退款金额：{{ content.order.finalPrice }} ¥ </label>
+                    <label><input class="btn" type="button" id="id_submit" name="button" value="确认"></label>
+                </div>
+
+            {% endif %}
+
+        {% else %}
+
+            <div><label class="label1">物流: &nbsp;&nbsp;&nbsp;&nbsp;</label><label id="logisticCompany"> </label></div>
+             <script>
+                    getExpressName('{{ content.order.logisticsInfo.shipperCode }}', 'logisticCompany');
+            </script>
+            <div style="clear:both;"></div>
+            <div><label class="label1">快递号: &nbsp;&nbsp;</label>{{ content.order.logisticsInfo.logisticsCode }}</div>
+            <div style="clear:both;"></div>
+            <form enctype="multipart/form-data" method="POST" action="{% url 'Order:ShowLogistics' %}" onsubmit="return multiClick();" >
+            {% csrf_token %}
+                <input type="hidden" name="shipperCode" value="{{ content.order.logisticsInfo.shipperCode }}">
+                <input type="hidden" name="logisticsCode" value="{{ content.order.logisticsInfo.logisticsCode }}">
+                <input type="hidden" name="objectId" value="{{ content.order.logisticsInfo.objectId }}">
+                <div><input class="btn btn-default" type="submit" name="queryLogistics" value="查询物流"></div>
+            </form>
+
+        {% endif %}
+    </div>
+{% endblock %}

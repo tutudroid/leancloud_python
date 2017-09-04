@@ -1,0 +1,27 @@
+{% extends 'ProductAdminPage.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+    <div class="span4">
+        <h2>
+            个人入驻
+        </h2>
+        <div>
+            <a class="btn" href="{% url 'Shop:SettleInUserContact' %}">马上入驻</a>
+        </div>
+    </div>
+    <div class="span4">
+        <h2>
+            企业入驻
+        </h2>
+        <div>
+            <a class="btn" href="{% url 'Shop:SettleInCompanyContact' %}">马上入驻</a>
+        </div>
+    </div>
+</div>
+
+
+<script src="{% static 'js/jquery.js'%}"></script>
+<script src="{% static 'js/bootstrap.min.js'%}"></script>
+{% endblock %}

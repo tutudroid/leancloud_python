@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <form enctype="multipart/form-data" method="POST" action="{% url 'Account:ModifyPassword' %}" onsubmit="return multiClick();" >
+        {% csrf_token %}
+            <input type="hidden" name="prevToken" value="{{ content.prevToken }}">
+        <div>新密码：</div>
+        <div>
+            <input type="password" name="password" value="" required>
+        </div>
+        <div>确认密码：</div>
+        <div>
+            <input type="password" name="passwordsure" value="" required>
+        </div>
+        <div>
+            <input type="submit" name="modifyPassword" value="提交" >
+        </div>
+        </form>
+{% endblock %}

@@ -1,0 +1,162 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+    <script type="text/javascript">
+
+        function checkbox_checked(name){
+            var tag = document.getElementsByName(name);
+            var i=0;
+            for (i =0; i<tag.length;i++)
+            {
+                if(tag[i].checked === true)
+                    return i;
+            }
+            return -1;
+        }
+        function check(name) {
+            if(checkbox_checked('_checkbox_product_name1') === -1 ){
+                alert('请选择查询项');
+                return false;
+            }
+            if(checkbox_checked('_checkbox_product_name2') === -1 ){
+                alert('请选择查询项');
+                return false;
+            }
+            if(checkbox_checked('_checkbox_product_name3') === -1 ){
+                alert('请选择查询项');
+                return false;
+            }
+            return multiClick();
+        }
+
+        function clickFirstLevel1(number) {
+            var list = document.getElementsByName('_First');
+            /*控制分类标签的显示*/
+            number = number - 1;
+            var i;
+            for( i=0; i<list.length; i++)
+                if (i === number)
+                {
+                    list[i].style.display = 'block';
+                    firstElement = list[i].firstElementChild.firstElementChild;
+                    firstElement.checked = true;
+                    clickSecondLevel1(number+1,1);
+                }
+                else
+                    list[i].style.display = 'none';
+        }
+
+        function clickSecondLevel1(pnumber,number) {
+            var list = document.getElementsByName('_Second');
+            for(var i=0; i<list.length; i++)
+                list[i].style.display = 'none';
+            var show = document.getElementById('_Second'+pnumber+number);
+            show.style.display = 'block';
+            firstElement = show.firstElementChild.firstElementChild;
+            firstElement.checked = true;
+        }
+
+    </script>
+    <div id="">
+        库存分类表
+        <hr>
+        <p>
+        <a class="btn btn-default" href="{% url 'Product:EditStoreCategory' %}">编辑商品库存表</a>
+        </p>
+
+        <hr>
+    </div>
+    <div>
+        <hr>
+        <form enctype="multipart/form-data" onsubmit="return check();" method="POST" action="{% url 'Product:ShowStoreCategory' %}">
+                {% csrf_token %}
+            <div class="row">
+                <div class="span3">
+                    <div style="border: solid 1px; padding: 5px;">
+                        {% for firstlevel in content.data.storeCategory %}
+                            <div id="storeCategory_{{ firstlevel.name }}">
+                                {% if forloop.counter == 1%}
+                                <input type="radio" onclick="clickFirstLevel1({{ forloop.counter }})" name="_checkbox_product_name1" value="{{ firstlevel.objectId }}" checked>
+                            {% else %}
+                                <input type="radio" onclick="clickFirstLevel1({{ forloop.counter }})" name="_checkbox_product_name1" value="{{ firstlevel.objectId }}">
+                            {% endif %}
+
+                                {{ firstlevel.name }}
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="span3">
+                    <div style="border: solid 1px; padding: 5px;">
+                        {% for firstlevel in content.data.storeCategory %}
+                            {% if forloop.first %}
+                                <div  id="_secondLevel{{ forloop.counter }}" style="display: block;" name="_First">
+                                {% else %}
+                                <div  id="_secondLevel{{ forloop.counter }}" style="display: none;" name="_First" >
+                            {% endif %}
+
+                                {% for secondlevel in firstlevel.value %}
+                                        <div id="_secondLevel{{ forloop.counter }}_{{ firstlevel.name }}_{{ secondlevel.name }}">
+
+                                            {% if forloop.parentloop.counter == 1 and forloop.counter == 1 %}
+                                            <input type="radio" onclick="clickSecondLevel1({{ forloop.parentloop.counter }},{{ forloop.counter }})" name="_checkbox_product_name2" value="{{ secondlevel.objectId }}" checked>
+                                            {% else %}
+                                            <input type="radio" onclick="clickSecondLevel1({{ forloop.parentloop.counter }},{{ forloop.counter }})" name="_checkbox_product_name2" value="{{ secondlevel.objectId }}">
+                                            {% endif %}
+                                            {{ secondlevel.name }}
+                                        </div>
+                                {% endfor %}
+                            {% if forloop.first %}
+                                </div>
+                                {% else %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+                <div class="span3">
+                    <div style="border: solid 1px; padding: 5px;">
+                        {% for firstlevel in content.data.storeCategory %}
+                            {% for secondlevel in firstlevel.value %}
+                            <div>
+                                {% if forloop.first and forloop.parentloop.first %}
+                                    <div id="_Second{{ forloop.parentloop.counter }}{{ forloop.counter }}" style="display: block;" name="_Second" >
+                                     {% for thirdlevel in secondlevel.value %}
+                                        <div>
+                                            {% if forloop.first and forloop.parentloop.first %}
+                                                <input type="radio" name="_checkbox_product_name3" value="{{ thirdlevel.objectId }}" checked>
+                                            {% else %}
+                                                <input type="radio" name="_checkbox_product_name3" value="{{ thirdlevel.objectId }}">
+                                            {% endif %}
+                                                {{ thirdlevel.name }}
+                                        </div>
+                                    {% endfor %}
+                                    </div>
+
+                                    {% else %}
+                                        <div id="_Second{{ forloop.parentloop.counter }}{{ forloop.counter }}" style="display: none;" name="_Second" >
+                                         {% for thirdlevel in secondlevel.value %}
+                                            <div>
+                                                <input type="radio" name="_checkbox_product_name3" value="{{ thirdlevel.objectId }}">
+                                                {{ thirdlevel.name }}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+                <div style="clear:both;;"></div>
+            </div>
+            <input class="btn btn-default" type="submit" name="_searchStoreCategory" value="搜索" >
+        </form>
+    </div>
+
+{% endblock %}

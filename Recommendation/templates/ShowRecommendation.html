@@ -1,0 +1,375 @@
+{% extends 'ProductAdminPage.html' %}
+
+
+{% block content %}
+    <script>
+
+    function deleteCircle(deleteId){
+        var i = 0;
+         // 查找被单击的圆圈
+        for( i=circles.length-1; i>=0; i--)
+        {
+            var circle = circles[i];
+            //检查是否是删除元素
+            if (circle.comment[4] === deleteId ) {
+                // 重新绘制画布.
+                circles.splice(i, 1);
+                drawCircles();
+                return;
+            }
+        }
+    }
+
+    //用于添加标签
+    // 这个方法用来储存每个圆圈对象
+    function Circle(x, y, radius, color, typed, comment, direction) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.isSelected = false;
+        this.typed = typed;
+        this.comment = comment;
+        this.direction = direction;
+    }
+
+    // 保存画布上所有的圆圈
+    var circles = [];
+
+    var canvas;
+    var context;
+    var imageHeight = 480;
+    var imageWidth = 400;
+
+    function drawCircles() {
+        // 清除画布，准备绘制
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        var img=document.getElementById("_image");
+        context.drawImage(img, 0, 0, imageWidth, imageHeight);
+        var A,B,stretch1;
+        // 遍历所有圆圈
+        for(var i=0; i<circles.length; i++) {
+            A = 0;
+            B = 0;
+            stretch1 = 0;
+            var circle = circles[i];
+             // 绘制圆圈
+            context.globalAlpha = 0.85;
+            context.beginPath();
+            context.arc(circle.x, circle.y, circle.radius, 0, Math.PI*2);
+            context.fillStyle = circle.color;
+            context.strokeStyle = "black";
+
+            context.lineWidth = 1;
+            context.fill();
+            context.stroke();
+
+            drawLines(circle.comment[0], circle.typed, circle.direction, circle);
+            if(circle.comment[1] !== '')
+                drawLines(circle.comment[1], circle.comment[5], circle.comment[6], circle);
+        }
+    }
+    function drawLines(content, style1, direction1, circle){
+        var A,B,stretch1;
+        if(parseInt(style1) === 2 ){
+            A=0;
+            B=-75;
+            if(parseInt(direction1) === 0)
+                stretch1=50;
+            else
+                stretch1=-50;
+        }else if(parseInt(style1) === 1){
+            A=50;
+            B=-50;
+            if(parseInt(direction1) === 0)
+                stretch1=50;
+            else
+            {
+                stretch1=-50;
+                A=-50;
+            }
+        } else if(parseInt(style1) === 0){
+            A=50;
+            B=0;
+            if(parseInt(direction1) === 0)
+                stretch1=50;
+            else{
+                stretch1=-50;
+                A=-50;
+            }
+
+        } else if(parseInt(style1) === -1){
+            A=50;
+            B=50;
+            if(parseInt(direction1) === 0)
+                stretch1=50;
+            else
+            {
+                A=-50;
+                stretch1=-50;
+            }
+
+        }else if(parseInt(style1) === -2){
+            A=0;
+            B=75;
+            if(parseInt(direction1) === 0)
+                stretch1=50;
+            else
+                stretch1=-50;
+        }
+        context.beginPath();
+        context.moveTo(circle.x, circle.y);
+        context.lineTo(circle.x+A, circle.y+B);
+        context.lineTo(circle.x+A+stretch1, circle.y+B);
+        if(direction1 === '0')
+            context.fillText(content, circle.x+A + stretch1/4, circle.y+B);
+        else
+            context.fillText(content, circle.x+A + 3*stretch1/4, circle.y+B);
+        context.stroke();
+    }
+    var previousSelectedCircle;
+
+    window.onload = function () {
+        canvas = document.getElementById("id_myCanvas");
+        context = canvas.getContext("2d");
+        var img = document.getElementById("_image");
+        var width = document.getElementById('imageWidth');
+        var height = document.getElementById('imageHeight');
+        imageHeight = parseInt(height.value) * imageWidth/parseInt(width.value);
+        canvas.height = imageHeight;
+
+        context.drawImage(img, 0, 0, imageWidth, imageHeight);
+
+        var tagList = document.getElementsByName('tagGroup');
+        var i = 0;
+        for (i = 1; i <= tagList.length; i++)
+        {
+            var percentX = document.getElementById('tagGroupX'+i);
+            var percentY = document.getElementById('tagGroupY'+i);
+            var name = document.getElementById('tagGroupName'+i+'1');
+            var style = document.getElementById('tagGroupStyle'+i+'1');
+            var direction = document.getElementById('tagGroupDirection'+i+'1');
+            var comment = [];
+            comment[0] = name.value;
+            if( document.getElementById('tagGroupName'+i+'2')){
+                comment[1] = document.getElementById('tagGroupName'+i+'2').value;
+                comment[5] = document.getElementById('tagGroupStyle'+i+'2').value;
+                comment[6] = document.getElementById('tagGroupDirection'+i+'2').value;
+            }
+
+
+            // 为圆圈计算一个随机颜色
+            var colors = ["green", "blue", "red", "yellow", "magenta", "orange", "brown", "purple", "pink"];
+            var color = colors[randomFromTo(0, 8)];
+            var circle = new Circle(parseFloat(percentX.value)*imageWidth, parseFloat(percentY.value)*imageHeight, 20, color, style.value, comment, direction.value);
+            circles.push(circle);
+        }
+
+        drawCircles();
+        //鼠标的移动
+        //canvas.onmousedown = canvasClick;
+        //canvas.onmouseup = stopDragging;
+        //canvas.onmouseout = stopDragging;
+        //canvas.onmousemove = dragCircle;
+    }
+
+    var getOffsetLeft = function(obj){
+          var tmp = obj.offsetLeft;
+          var val = obj.offsetParent;
+          while(val !== null){
+          tmp += val.offsetLeft;
+            val = val.offsetParent;
+           }
+        return tmp;
+    }
+
+    var getOffsetTop =  function(obj){
+        var tmp = obj.offsetTop;
+        var val = obj.offsetParent;
+        while(val != null){
+            tmp += val.offsetTop;
+           val = val.offsetParent;
+        }
+        return tmp;
+    }
+
+    function canvasClick(e) {
+        // 取得画布上被单击的点
+        var clickX = e.pageX - getOffsetLeft(canvas);
+        var clickY = e.pageY - getOffsetTop(canvas);
+        // 查找被单击的圆圈
+        for(var i=circles.length-1; i>=0; i--)
+        {
+            var circle = circles[i];
+            //使用勾股定理计算这个点与圆心之间的距离
+            var distanceFromCenter = Math.sqrt(Math.pow(circle.x - clickX, 2)
+            + Math.pow(circle.y - clickY, 2));
+            // 判断这个点是否在圆圈中
+            if (distanceFromCenter <= circle.radius) {
+                // 清除之前选择的圆圈
+                if (previousSelectedCircle != null) previousSelectedCircle.isSelected = false;
+                previousSelectedCircle = circle;
+
+                //选择新圆圈
+                circle.isSelected = true;
+
+                // 使圆圈允许拖拽
+                isDragging = true;
+
+                //更新显示
+                drawCircles();
+
+                //停止搜索
+                return;
+            }
+        }
+    }
+
+    //在某个范围内生成随机数
+    function randomFromTo(from, to) {
+        return Math.floor(Math.random() * (to - from + 1) + from);
+    }
+
+    var isDragging = false;
+
+    function stopDragging() {
+        isDragging = false;
+    }
+
+    function dragCircle(e) {
+        // 判断圆圈是否开始拖拽
+        if (isDragging === true) {
+            // 判断拖拽对象是否存在
+            if (previousSelectedCircle !== null) {
+                // 取得鼠标位置
+                var x = e.pageX - getOffsetLeft(canvas);
+                var y = e.pageY - getOffsetTop(canvas);
+
+                // 将圆圈移动到鼠标位置
+                previousSelectedCircle.x = x;
+                previousSelectedCircle.y = y;
+                var tmpX = document.getElementById(previousSelectedCircle.comment[2]);
+                var tmpY = document.getElementById(previousSelectedCircle.comment[3]);
+                tmpX.value = x/1.0/imageWidth;
+                tmpY.value = y/1.0/imageHeight;
+                // 更新画布
+                drawCircles();
+            }
+        }
+    }
+
+    </script>
+     <style>
+
+        .div_inline{
+            float:left;
+            width: 250px;
+        }
+        .div_inline1{
+            float:left;
+            width: 250px;
+        }
+        .btn-upload {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-upload input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0px 100px 0px 0px;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            width: 150px;
+            height: 150px;
+        }
+        .btn-uploadImage{
+            text-align: center;
+            box-sizing: border-box;
+            padding: 50px 50px 30px;
+            border-width: 2px;
+            border-style: outset;
+            border-color: buttonface;
+            width: 150px;
+            height: 150px;
+        }
+        canvas {
+            cursor: pointer;
+            border: 1px solid black;
+        }
+        .biaoqian1{
+            display: block;
+            width: 400px;
+            font-family: STHeiti;
+        }
+        div input{
+            width: 300px;
+        }
+    </style>
+    <div id="">
+        所有推荐
+        <form enctype="multipart/form-data" method="POST" action="{% url 'Recommendation:EditRecommendation' %}?objectId={{ content.recommend.objectId }}" onsubmit="return multiClick();" >
+            {% csrf_token %}
+            <input type="hidden" name="objectId" value="{{ content.recommend.objectId }}">
+            <input class="btn btn-default" type="submit" name="_edit" value="编辑推荐">
+            <input class="btn btn-default" type="submit" name="_delete" value="删除推荐">
+        </form>
+    </div>
+    <hr>
+    <div>
+        <img src="{{ content.recommend.mainImage.url }}" name="_image" id="_image" style="display: none;">
+    </div>
+    <div>
+        <label class="biaoqian1">
+            图片高度：{{ content.recommend.imageHeight }}
+        </label>
+        <label class="biaoqian1">
+            图片宽度：{{ content.recommend.imageWidth }}
+        </label>
+        <div style="display: none;">
+            <input  id="imageHeight" name="" value="{{ content.recommend.imageHeight }}" readonly>
+            <input  id="imageWidth" value="{{ content.recommend.imageWidth }}" readonly>
+        </div>
+    </div>
+    <canvas id="id_myCanvas" width="400" height="480"></canvas>
+    {% for foo in content.recommend.tagGroup %}
+        <div name="tagGroup">
+            {% for goo in foo.lines %}
+                <div>
+                    <label class="biaoqian1">
+                        标签名：{{ goo.content }}
+                    </label>
+                    <div style="display: none;">
+                        <input id="tagGroupName{{ forloop.parentloop.counter }}{{ forloop.counter }}" name="" value="{{ goo.content }}">
+                        标签风格：<input id="tagGroupStyle{{ forloop.parentloop.counter }}{{ forloop.counter }}" name="" value="{{ goo.style}}">
+                        标签方向：<input id="tagGroupDirection{{ forloop.parentloop.counter }}{{ forloop.counter }}" name="" value="{{ goo.direction }}">
+                    </div>
+
+                </div>
+            {% endfor %}
+
+            <div style="display: none">
+                X坐标：<input id="tagGroupX{{ forloop.counter }}" name="" value="{{ foo.point.percentX }}">
+                Y坐标：<input id="tagGroupY{{ forloop.counter }}" value="{{ foo.point.percentY }}">
+            </div>
+
+            <div>
+                <label class="biaoqian1">
+                    商品ID：{{ foo.productId }}
+                </label>
+            </div>
+
+            <div>
+                <label class="biaoqian1">
+                    商品组ID：{{ foo.productGroupId }}
+                </label>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+
+
+{% endblock %}

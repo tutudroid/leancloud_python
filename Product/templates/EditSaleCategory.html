@@ -1,0 +1,495 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% load static %}
+
+{% block content %}
+     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+     <script language="javascript">
+
+    function PreviewImg(file, gggg){
+            var fileObj = document.getElementById(file);
+            var windowURL = window.URL || window.webkitURL;
+            var dataURL;
+            if(fileObj && fileObj.files && fileObj.files[0]) {
+                 dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                 jQuery("#"+gggg).attr('src',dataURL);
+            }
+    }
+
+        //删除某个标签
+        function deleteTag(parent, name) {
+            var parentElement = document.getElementById(parent);
+            var deleteElement = document.getElementById(name);
+            if(deleteElement !== null && parentElement !== null)
+            {
+                parentElement.removeChild(deleteElement);
+            }
+        }
+
+        //上传图片
+        function loadImage(photo, filename) {
+            var pic = document.getElementById(photo);
+            var file = document.getElementById(filename);
+            var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+             // gif在IE浏览器暂时无法显示
+             if(ext!=='png' && ext!=='jpg' && ext!=='jpeg'){
+                 alert("图片的格式必须为png或者jpg或者jpeg格式！");
+                 pic.src='';
+                 return;
+             }
+             var isIE = navigator.userAgent.match(/MSIE/)!== null,
+                 isIE6 = navigator.userAgent.match(/MSIE 6.0/)!== null;
+
+              if(isIE) {
+
+                // IE6浏览器设置img的src为本地路径可以直接显示图片
+                 if (isIE6) {
+                     file.select();
+                    var reallocalpath = document.selection.createRange().text;
+                    pic.src = reallocalpath;
+                 }else {
+                    PreviewImg(filename, photo);
+                 }
+             }else {
+                html5Reader(photo, file);
+             }
+        }
+
+        function html5Reader(photo, file1){
+            var file = file1.files[0];
+            var reader = new FileReader();
+
+            reader.readAsDataURL(file);
+            reader.onload = function(e){
+                var pic = document.getElementById(photo);
+                pic.height= '100';
+                pic.width= '100';
+                pic.src=this.result;
+            }
+        }
+
+        function inputAndDeleteTag(parentId, deleteId, last_level)
+        {
+            /*
+            * parentId,表示在这个标签下，增加元素，
+            * deleteId，表示在这个标签下，删除元素，
+            * */
+            var parent=document.getElementById(parentId);
+            var newDiv = document.createElement('div');
+            //form 表单字符串
+            var formInput = parentId.substring(parentId.lastIndexOf("_")+1);
+            //注意字符串中引号的处理
+
+            newDiv.innerHTML =
+                    '<div class="span2">' +
+                        '<img src="" id="image_'+deleteId+formInput+'" width="100px" height="100px" >' +
+                    '</div>' +
+                    '<div class="span3">'+
+                        '<div>' +
+                            '<input type="text" name="' + deleteId + '" value="' + formInput + '" readonly style="display:none;">' + formInput  +
+                        '</div>' +
+                        '<div class="">'+
+                            ''+
+                            '<input type="file" id="imageFile_'+ deleteId +formInput+'" name="imageFile_'+ deleteId +formInput+'" ' +
+                            'onchange="loadImage(\'image_'+ deleteId+formInput+'\',\'imageFile_'+ deleteId+formInput+'\');">' +
+                        '</div>'+
+                        '<div>' +
+                            '简介：' + '<input type="text" id="briefDescription_' + deleteId + formInput + '" name="briefDescription_' + deleteId + formInput + '" value="briefDescription"/>' +
+                        '</div>' +
+                        '<div>' +
+                            '<input type="button" class="button"  name="delete" value="删除" ' +
+                            'onclick="deleteTag(\''+ deleteId +'\', \'' + parentId + '\')"' +
+                            '/>' +
+                        '</div>' +
+                    '</div>';
+            if(parent !== null )
+                parent.appendChild(newDiv);
+        }
+
+        function baseDivTag(parentId, idName, last_level){
+            var parent=document.getElementById(parentId);
+            var newDiv = document.createElement('div');
+            newDiv.setAttribute('id', idName);
+            if(last_level >= 1)
+                newDiv.setAttribute('class', 'row');
+            if(parent !== null )
+                parent.appendChild(newDiv);
+        }
+        function createFirstTag(id_parentFirstId, idFirstText, last_level){
+            // 第一个div
+            // 第一级下的div：input + delete button
+            // 第二级div
+            var firstText = document.getElementById(idFirstText);
+            var firstId = id_parentFirstId + '_' + firstText.value;
+            if(firstText.value === '')
+            {
+                alert('请输入内容');
+                return false;
+            }
+            if( document.getElementById(firstId) ){
+                alert('名称已存在');
+                return false;
+            }
+            //第一级div，总标签，用于删除
+            baseDivTag(id_parentFirstId,firstId, last_level);
+            //第一级下的input，用于表单的提交，隐藏属性
+            //第一级下的div，用于删除
+            inputAndDeleteTag(firstId, id_parentFirstId, last_level);
+            //用户增加第后一级标签
+            //if(last_level > 1)
+            //    inputAndAddTag(firstId, id_parentFirstId, last_level - 1 );
+            firstText.value = '';
+        }
+        function clickFirstLevel1(number) {
+            var list = document.getElementsByName('_First');
+            /*控制分类标签的显示*/
+            var i;
+            for( i=0; i<list.length; i++)
+                list[i].style.display = 'none';
+            document.getElementById(number).style.display = 'block';
+        }
+        function check(){
+            var firstList = document.getElementsByName('id_SaleTag');
+            var inputFile;
+            var briefDescription;
+            var i,j,secondList;
+
+            for(i = 0; i< firstList.length; i++)
+            {
+                inputFile = document.getElementById('imageFile_id_SaleTag' + firstList[i].value);
+                briefDescription = document.getElementById('briefDescription_id_SaleTag' + firstList[i].value);
+                if( inputFile.value == '' || briefDescription.value == ''){
+                    alert('请添加图片或者描述');
+                    return false;
+                }
+            }
+            var newFirstList = document.getElementsByName('_firstSaleCategoryName');
+            for (i=0; i<newFirstList.length; i++)
+            {
+                secondList = document.getElementsByName('id_SaleTag2_' + newFirstList[i].value );
+                for(j=0;j<secondList.length;j++){
+                    inputFile = document.getElementById('imageFile_id_SaleTag2_' + newFirstList[i].value  + secondList[j].value);
+                    briefDescription = document.getElementById('briefDescription_id_SaleTag2_' + newFirstList[i].value + secondList[j].value);
+                    if( inputFile.value == '' || briefDescription.value == ''){
+                        alert('请添加图片或者描述');
+                        return false;
+                    }
+                }
+            }
+            return multiClick();
+        }
+    </script>
+    <style>
+
+        .btn-upload input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0px 50px 0px 0px;
+            padding: 0px 0px 0px 0px;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            width: 50px;
+            height: 40px;
+        }
+
+        .button{
+            width: 50px;
+            height: 40px;
+            padding: 10px;
+        }
+
+    </style>
+    <div id="">
+        编辑商品分类表
+        <hr>
+    </div>
+    <div>
+        销售表
+        <hr>
+        <div id="id_productSale">
+            <form enctype="multipart/form-data" onsubmit="return check();" method="POST" action="{% url 'Product:EditSaleCategory' %}" onsubmit="return multiClick();" >
+            {% csrf_token %}
+            <input type="hidden" name="prevToken" value="{{ content.prevToken }}">
+             <div class="row" >
+
+                        <div class="span5" style="border: 1px solid;">
+                        <div id="id_SaleTag">
+                        {% for firstlevel in content.data.saleCategory %}
+                            <div class="row" >
+                                <div class="span2">
+                                <img src="{{ firstlevel.mainImage.url }}" width="100px" height="100px">
+                                </div>
+                                 <div class="span3">
+                                    <div>{{ firstlevel.name }}</div>
+                                    <div>{{ firstlevel.briefDescription }}</div>
+                                    <div>
+                                        <input class="btn btn-default" type="button" value="编辑" onclick="show('{{ firstlevel.objectId }}','_firstSaleCategoryTag','{{ firstlevel.name }}','{{ firstlevel.mainImage.url }}', '{{ firstlevel.briefDescription }}')">
+                                    </div>
+                                     <div>
+                                         {% if forloop.first %}
+                                             <input type="radio" name="_SaleCategoryFirst" value="{{ firstlevel.name }} {{ firstlevel.objectId }}" onclick="clickFirstLevel1('id_SaleTag_{{ firstlevel.name }}')" checked>
+                                         {% else %}
+                                             <input type="radio" name="_SaleCategoryFirst" value="{{ firstlevel.name }} {{ firstlevel.objectId }}" onclick="clickFirstLevel1('id_SaleTag_{{ firstlevel.name }}')" >
+                                         {% endif %}
+                                     </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                            <div id="id_createTag">
+                                <label for="id_firstSale"></label>
+                                <input type="text" name="text" id="id_saleText">
+                                <input class="btn btn-default" type="button" name="button" class="button" value="增加" onclick="createFirstTag('id_SaleTag', 'id_saleText', 2)">
+                            </div>
+
+
+                        </div>
+                        <div id="" class="span5" style="border: 1px solid;">
+                            {% for firstlevel in content.data.saleCategory %}
+                                <div  id="id_SaleTag_Son">
+                                {% if forloop.first %}
+                                        <div  id="id_SaleTag_{{ firstlevel.name }}" style="display: block;" name="_First">
+                                        {% else %}
+                                        <div  id="id_SaleTag_{{ firstlevel.name }}" style="display: none;" name="_First" >
+                                    {% endif %}
+                                        <div id="id_SaleTag2_{{ firstlevel.name }}">
+                                            {% for secondlevel in firstlevel.value %}
+                                                <div class="row">
+                                                    <div class="span2">
+                                                            <img src="{{ secondlevel.mainImage.url }}" width="100px" height="100px">
+                                                        </div>
+                                                        <div class="span3">
+                                                            <div>{{ secondlevel.name }}</div>
+                                                            <div>{{ secondlevel.briefDescription }}</div>
+                                                            <div>
+                                                                <input class="btn btn-default" type="button" value="编辑" onclick="show('{{ secondlevel.objectId }}', '_secondSaleCategoryTag', '{{ secondlevel.name }}', '{{ secondlevel.mainImage.url }}','{{ secondlevel.briefDescription }}')">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                            {% endfor %}
+                                        </div>
+
+                                      <div>
+                                        <input type="text" name="textInput" id="id_SaleTag_id_SaleTag_{{ firstlevel.name }}" >
+                                        <input class="btn btn-default" type="button" name="add" value="增加" onclick="createFirstTag('id_SaleTag2_{{ firstlevel.name }}','id_SaleTag_id_SaleTag_{{ firstlevel.name }}',1)" >
+                                        <input type="hidden" name="_firstSaleObjectId_{{ firstlevel.name }}" value="{{ firstlevel.objectId }}">
+                                        <input type="hidden" name="_firstSaleCategoryName" value="{{ firstlevel.name }}">
+                                    </div>
+                                      {% if forloop.first %}
+                                        </div>
+                                        {% else %}
+                                        </div>
+                                      {% endif %}
+                                 </div>
+
+                            {% endfor %}
+
+                         </div>
+                    </div>
+                <hr style="margin-top: 40px">
+                <input class="btn btn-default" type="submit" name="_addSaleCategory" value="保存新增的分类标签" >
+
+                <hr style="margin-top: 40px">
+                <a onclick="return multiClick();" href="{% url 'Product:ShowSaleCategory' %}">返回销售分类</a>
+            </form>
+            {{ content.message }}
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript">
+        var getOffsetLeft = function(obj){
+              var tmp = obj.offsetLeft;
+              var val = obj.offsetParent;
+              while(val !== null){
+              tmp += val.offsetLeft;
+                val = val.offsetParent;
+               }
+            return tmp;
+        }
+
+        var getOffsetTop =  function(obj){
+            var tmp = obj.offsetTop;
+            var val = obj.offsetParent;
+            while(val != null){
+                tmp += val.offsetTop;
+               val = val.offsetParent;
+            }
+            return tmp;
+        }
+        /*
+         * 弹出DIV层
+        */
+        function showDiv()
+        {
+            var Idiv     = document.getElementById("Idiv");
+            var mou_head = document.getElementById('mou_head');
+            Idiv.style.display = "block";
+            //以下部分要将弹出层居中显示
+            Idiv.style.left=(document.documentElement.clientWidth-Idiv.clientWidth)/2+document.documentElement.scrollLeft+"px";
+            Idiv.style.top =(document.documentElement.clientHeight-Idiv.clientHeight)/2+document.body.scrollTop-50+"px";
+
+            //以下部分使整个页面至灰不可点击
+            var procbg = document.createElement("div"); //首先创建一个div
+            procbg.setAttribute("id","myBackground"); //定义该div的id
+            procbg.style.background = "#000000";
+            procbg.style.width = "100%";
+            procbg.style.height = "100%";
+            procbg.style.position = "fixed";
+            procbg.style.top = "0";
+            procbg.style.left = "0";
+            procbg.style.zIndex = "500";
+            procbg.style.opacity = "0.6";
+            procbg.style.filter = "Alpha(opacity=70)";
+            //背景层加入页面
+            document.body.appendChild(procbg);
+            //document.body.style.overflow = "hidden"; //取消滚动条
+
+            //以下部分实现弹出层的拖拽效果
+            var posX;
+            var posY;
+            mou_head.onmousedown=function(e)
+            {
+                if(!e) e = window.event; //IE
+                posX = e.clientX - parseInt(Idiv.style.left);
+                posY = e.clientY - parseInt(Idiv.style.top);
+                document.onmousemove = mousemove;
+            };
+            document.onmouseup = function()
+            {
+                document.onmousemove = null;
+            }
+            function mousemove(ev)
+            {
+                if(ev==null) ev = window.event;//IE
+                Idiv.style.left = (ev.clientX - posX) + "px";
+                Idiv.style.top = (ev.clientY - posY) + "px";
+            }
+        }
+
+        function closeDiv() //关闭弹出层
+        {
+            var Idiv=document.getElementById("Idiv");
+            Idiv.style.display="none";
+            document.body.style.overflow = "auto"; //恢复页面滚动条
+            var body = document.getElementsByTagName("body");
+            var myBackground = document.getElementById("myBackground");
+            body[0].removeChild(myBackground);
+
+            deleteTag('id_categoryType', 'id_categoryTypeSon');
+        }
+        function show(objectId, name, value, imageSrc, description){
+            var image = document.getElementById('_editImage');
+            image.setAttribute('src', imageSrc);
+            var saleCategory = document.getElementById('_editSaleCategoryText');
+            saleCategory.value = value;
+            var oldSaleCategory = document.getElementById('_oldSaleCategoryText');
+            oldSaleCategory.value = value;
+
+            var briefDescription = document.getElementById('_editSaleCategoryDescription');
+            briefDescription.value = description;
+            var oldBriefDescription = document.getElementById('_oldSaleCategoryDescription');
+            oldBriefDescription.value = description;
+            //通过修改标签的名字，来区分修改的是第一级标签还是第二级标签
+            var category = document.getElementById('categoryObjectId');
+            category.value = objectId;
+            category.name = name;
+
+            if (name === '_firstSaleCategoryTag'){
+                var string1 = '选择类别： <select name="categoryType" >'+
+                        '<option value="0">基本分类</option>'+
+                        '<option value="1">推荐分类</option>'+
+                        '<option value="2">IP分类</option>'+
+                        '</select>';
+                addNewHtml('id_categoryType', 'id_categoryTypeSon', string1);
+            }
+
+            //显示悬浮窗口
+            showDiv();
+        }
+        var buttonTmp = 0;
+        function checkDiv(){
+            if (document.getElementById('_editSaleCategoryText').value === ''){
+                alert('标签不能为空');
+                return false;
+            }
+            if (document.getElementById('_oldSaleCategoryText').value === document.getElementById('_editSaleCategoryText').value
+                && document.getElementById('_imageFile').value === ''
+                && document.getElementById('_oldSaleCategoryDescription').value === document.getElementById('_editSaleCategoryDescription').value){
+
+                if (document.getElementsByName('categoryType'))
+                {
+                    return true;
+                }
+                if(buttonTmp === 1){
+                    closeDiv();
+                    return false;
+                }
+            }
+            buttonTmp = 0;
+            return multiClick();
+        }
+        function setButtonTmp(value){
+            buttonTmp = value;
+        }
+
+        function addNewHtml(parentId, name, string1)
+        {
+            var parent=document.getElementById(parentId);
+            var newDiv = document.createElement('div');
+            newDiv.setAttribute('id', name);
+            newDiv.innerHTML = string1;
+            if(parent !== null )
+                parent.appendChild(newDiv);
+        }
+
+    </script>
+
+<!--弹出层开始-->
+<style>
+    .Idiv{
+        width:400px;
+        height: 300px;
+        display:none;
+        position:absolute;
+        z-index:1000;
+        background:#67a3d9;
+        padding: 10px;
+    }
+    .mou_head{
+        width:400px;
+        height:20px;
+        z-index:1001;
+    }
+</style>
+<div id="Idiv" class="Idiv">
+    <div id="mou_head" class="mou_head"><div style="float:left;">编辑分类</div><input style="float: right" type="button" name="_cancel" value="X" onclick="closeDiv();"><p style="clear: both;"></p></div>
+    <form enctype="multipart/form-data" method="POST" action="{% url 'Product:EditSaleCategory' %}"  onsubmit="return checkDiv();">
+        {% csrf_token %}
+        <div>
+            <input type="hidden" name="" id="categoryObjectId" value="">
+            <input type="hidden" id="_oldSaleCategoryText"  value="">
+            <input type="hidden" id="_oldSaleCategoryDescription"  value="">
+            销售分类名称：<input type="text" id="_editSaleCategoryText" name="_editSaleCategoryText" value="">
+            <br>
+            销售分类描述：<input type="text" id="_editSaleCategoryDescription" name="_editSaleCategoryDescription" value="">
+            <div><img src="" style="width: 100px; height: 100px;" id="_editImage"></div>
+            <input type="file" name="_imageFile" id="_imageFile" onchange="loadImage('_editImage','_imageFile');">
+            <br>
+            <div id="id_categoryType">
+
+            </div>
+            <input class="btn btn-default" type="submit" name="_editCategory" value="修改" onclick="setButtonTmp(1);">
+            <input class="btn btn-default" type="submit" name="_deleteCategory" value="删除" >
+        </div>
+    </form>
+
+</div>
+<!--弹出层结束-->
+
+{% endblock %}

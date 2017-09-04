@@ -1,0 +1,112 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+    <style>
+        .sonTagLeft1_order{
+            float: left;
+            display: block;
+            width: 120px;
+            height: 120px;
+        }
+        .sonTagRight1_order{
+            float: right;
+            display: block;
+            width: 120px;
+            height: 120px;
+        }
+        .orderStyle{
+            margin-top: 20px;
+            border: solid 1px;
+            padding:10px;
+        }
+        .orderStyle image{
+            width: 100px;
+            height: 100px;
+        }
+        .orderStateTag label{
+            margin: 20px;
+        }
+        .orderStateTag a{
+            margin: 20px;
+        }
+    </style>
+    {% if content.searchCondition %}
+        {% for foo in content.searchCondition %}
+            <div>
+                <label  class="shopInforLabel">{{ foo.name }}</label>
+                <label>{{ foo.value }}</label>
+            </div>
+        {% endfor %}
+    {% else %}
+    {% endif %}
+    <div class="orderStateTag">
+    {% if content.orderState == 1 %}
+        <a href="#" style="color: rgba(165,23,77,0.65);">待发货</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 6 %}">已退款</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 2 %}">待收货</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 3 %}">已完成</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 4 %}">已评价</a>
+    {% elif content.orderState == 6 %}
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 1 %}">待发货</a>
+        <a href="#" style="color: rgba(165,23,77,0.65);">已退款</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 2 %}">待收货</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 3 %}">已完成</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 4 %}">已评价</a>
+    {% elif content.orderState == 2 %}
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 1 %}">待发货</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 6 %}">已退款</a>
+        <a href="#" style="color: rgba(165,23,77,0.65);">待收货</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 3 %}">已完成</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 4 %}">已评价</a>
+    {% elif content.orderState == 3 %}
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 1 %}">待发货</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 6 %}">已退款</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 2 %}">待收货</a>
+        <a href="#" style="color: rgba(165,23,77,0.65);">已完成</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 4 %}">已评价</a>
+    {% elif content.orderState == 4 %}
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 1 %}">待发货</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 6 %}">已退款</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 2 %}">待收货</a>
+        <a onclick="return multiClick();" href="{% url 'Order:AllOrder' 3 %}">已完成</a>
+        <a href="#" style="color: rgba(165,23,77,0.65);">已评价</a>
+    {% endif %}
+    </div>
+    <div style="clear: both;"></div>
+    {% if not content.order %}
+        <hr>
+        未查询到结果
+    {% endif %}
+    {% for foo in content.order %}
+
+        <div class="orderStyle">
+            <div style="float: left">订单号：<a onclick="" href="{% url 'Order:OrderDetail' %}?objectId={{ foo.objectId }}"> {{ foo.uniqueId }}</a></div>
+            <div style="float: right"> {{ foo.createdAt }}</div>
+            <div style="clear: both;"></div>
+            <hr>
+            <div class="sonTagLeft1_order">
+                <img src="{{ foo.orderDetail.productMainImage.url }}" height="100px" width="100px">
+            </div>
+            <div class="sonTagLeft1_order">
+                <div>{{ foo.orderDetail.groupName }}</div>
+                <div>
+                    {% for key, value in foo.orderDetail.productStyle.items %}
+                        {{ value }}
+                        {% if forloop.counter != forloop.last %}
+                            /
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div>{{ foo.orderDetail.productPrice }}</div>
+            </div>
+            <div class="sonTagRight1_order">
+                <div> X {{ foo.orderDetail.productCount }}</div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    {% endfor %}
+    <div style="clear: both;"></div>
+
+    {% include 'paginator_page.html' %}
+
+{% endblock %}

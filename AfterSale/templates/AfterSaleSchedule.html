@@ -1,0 +1,161 @@
+
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+    <style>
+
+        .sonTagLeft1 div{
+            margin: 10px;
+        }
+
+        .orderStateTag label{
+            margin: 20px;
+        }
+        .orderStateTag a{
+            margin: 20px;
+        }
+    .label1{
+        display: block;
+        width: 100px;
+        float: left;
+    }
+    </style>
+    <script>
+        function check(){
+            var radio = document.getElementsByName('radio_choice');
+            var ok = false;
+            var i;
+            for( i = 0; i<radio.length; i++)
+                if (radio[i].checked === true) {
+                    if(radio[i].value === 3){
+                        if (document.getElementsByName('refund'))
+                            ok = true;
+                    }else{
+                        ok = true;
+                    }
+                }
+            return ok === true
+        }
+
+         $(function () {
+            $("#id_submit").click(function () {
+                var radio_choice = 0;
+                if(5 == $('input:radio:checked').val()){
+                    radio_choice = 5;
+                }else if(3 == $('input:radio:checked').val()){
+                    radio_choice = 3;
+                    $("#id_submit").val('等待退款中。。。').attr('disabled',true).css('cursor','not-allowed');
+                }else{
+                    alert('请选择退款类型');
+                    return false;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/AfterSale/DisposeAfterSale/',
+                    data: {
+                        'radio_choice': radio_choice,
+                        'objectId': $("#id_objectId").val(),
+                        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                    },
+                    success: function (data) {
+                        $('#id_disposeAfterSale').css('display', 'none');
+                        alert(data);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert('处理失败');
+                        $("#id_submit").val('确定').removeAttr('disabled style');
+                    },
+                    complete:function(XMLHttpRequest){
+                    }
+                });
+            });
+        });
+
+
+    </script>
+    <div>
+        <div style="border: solid 1px; padding: 10px; margin: 10px">
+        <form enctype="multipart/form-data" action="{% url 'AfterSale:ShowServiceRecord' %}" method="post" onsubmit="return multiClick();" >
+            {% csrf_token %}
+            <input type="hidden" name="objectId" value="{{ content.serviceRecord.objectId }}">
+            <label style="width: 200px; float: left;">查看售后进度</label>
+            <input class="btn" type="submit" name="submit" value="查看申请单" style="float: right">
+            <div style="clear: both;"></div>
+        </form>
+        </div>
+
+
+        <div>
+            <label class="label1">订单号：&nbsp;&nbsp;</label>
+            <label>
+            {{ content.serviceRecord.orderUniqueId }}
+            </label>
+        </div>
+        <hr>
+        <div>
+            <label class="label1">
+                商品ID：&nbsp;
+            </label>
+            <label>
+            {{ content.serviceRecord.order.orderDetail.productUniqueId }}
+            </label>
+        </div>
+        <hr>
+        <div>
+            <label class="label1">用户ID：&nbsp;&nbsp;</label>
+            <label>
+            {{ content.serviceRecord.order.user.uniqueId }}
+            </label>
+        </div>
+        <hr>
+
+        <div>
+            <table style="margin: 40px; border: solid 1px;">
+                {% for foo in content.serviceRecord.afterSaleProgress %}
+                    <tr style="padding: 5px;">
+                    <td>
+                        <div>
+                            {{ foo.AcceptTime }}
+                        </div>
+                        <div>
+                            {{ foo.AcceptStation }}
+                        </div>
+                    </td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    {% if content.profile.current_role == 'CustomService' %}
+        {% if content.serviceRecord.recordState == 2 %}
+            <div id="id_disposeAfterSale">
+                 <form enctype="multipart/form-data" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="id_objectId" name="objectId" value="{{ content.serviceRecord.objectId }}">
+                    <div>
+                        <label class="">
+                        <input type="radio" name="radio_choice" value=5> 未收到退货，或检测不符合规定，取消申请
+                        </label>
+                        <hr>
+                    </div>
+                    <div>
+                        <label class=""><input type="radio" name="radio_choice" value=3> 收到退货，检查无误，退款 </label>
+                        <hr>
+                        <label>
+                           请确认已完成退款，并核对退款金额！
+                        </label>
+                        <div>
+                            <label class="label1">退款金额：</label>
+                            <label>
+                                {{ content.serviceRecord.refundSumPrice }} 元
+                            </label>
+                        </div>
+                        <input class="btn btn-default" type="button" name="submit" value="确认" id="id_submit">
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+    {% endif %}
+    </div>
+{% endblock %}

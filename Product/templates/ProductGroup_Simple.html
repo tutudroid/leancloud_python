@@ -1,0 +1,11 @@
+<table>
+<td>
+    <img src="{{ productGroup.mainImage.url }}" width="200" height="200">
+</td>
+<td>
+    <div><a href="{% url 'Product:ProductGroupDetail' %}?productGroupObjectId={{ productGroup.objectId }}">{{ productGroup.name }}</a></div>
+    <div>{{ productGroup.briefDescription }}</div>
+    <div>{{ productGroup.uniqueId }}</div>
+    <input type="hidden" id="id_hidden_productGroupId" value="{{ productGroup.objectId }}">
+</td>
+</table>

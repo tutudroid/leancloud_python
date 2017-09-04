@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for foo in data.result %}
+    <h2>{{ foo.name }}</h2>
+    <h3>
+    {% if foo.error %}
+        {% for goo in foo.message %}
+            <p style="color: #a5090d;"> {{ goo }}</p>
+        {% endfor %}
+    {% else %}
+        {% for goo in foo.message %}
+             {{ goo }}
+        {% endfor %}
+    {% endif %}
+    </h3>
+{% endfor %}
+
+
+<hr>
+    <p><a href="{% url 'Initiation:Init' %}">return</a></p>
+</body>
+</html>

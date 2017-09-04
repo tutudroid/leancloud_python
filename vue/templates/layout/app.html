@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>manage platform</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'vue/node_modules/sweetalert/dist/sweetalert.css' %}">
+    <meta name='csrf-token' content="{% csrf_token %}">
+  </head>
+  
+  <body>
+    <div id="app">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+
+  <script src="{% static 'vue/node_modules/jquery/dist/jquery.min.js' %}"></script>
+  <script src="{% static 'vue/node_modules/sweetalert/dist/sweetalert.min.js' %}"></script>
+  <script src="{% static 'vue/node_modules/vue/dist/vue.js' %}"></script>
+  <script src="{% static 'vue/main.js' %}"></script>
+  <script src="{% static 'axios/dist/axios.min.js' %}"></script>
+</html>
+

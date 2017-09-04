@@ -1,0 +1,186 @@
+
+{% extends 'ProfilePage.html' %}
+{% load static %}
+{% block headerTag %}
+{% endblock %}
+{% block middleTag %}
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery.cookie.js' %}" ></script>
+    <script>
+        $(document).ready(function () {
+            var getUsername = '';
+            var getPwd = '';
+            var getIsStorePwd = '';
+            var getIsAutoLogin = '';
+            if ($.cookie("username"))
+                getUsername = $.cookie("username");
+            if ($.cookie("password"))
+                getPwd = $.cookie("password");
+            if ($.cookie("isStorePwd"))
+                getIsStorePwd = $.cookie("isStorePwd");
+            if ($.cookie("isAutoLogin"))
+                getIsAutoLogin = $.cookie("isAutoLogin");
+            if ("yes" == getIsStorePwd)
+            {
+
+                if ("yes" == getIsAutoLogin)
+                {
+                    if ('' != getPwd && '' != getUsername)
+                    {
+                        $("#id_username").val(getUsername);
+                        $("#id_password").val(getPwd);
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Account/Login/',
+                            data: {
+                                'username': getUsername,
+                                'password': getPwd,
+                                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                            },
+                            success: function (data) {
+                               //登陆成功
+                               window.location.href = '/Account/Profile/';
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                $.cookie("isAutoLogin", "no", {expires: 7, path: '/'});
+                                $("#message").html(XMLHttpRequest.responseText);
+                            },
+                            complete:function(XMLHttpRequest){
+                                $.cookie("isAutoLogin", "no", {expires: 7, path: '/'});
+                                $("#message").html(XMLHttpRequest.responseText);
+                            }
+                        });
+                    }
+                }else{
+                   $("#id_username").val(getUsername);
+                   $("#id_password").val(getPwd);
+                   document.getElementById('isRememberPwdId').checked = true;
+                }
+            }else{
+            }
+        });
+        $(function () {
+           $("#id_login").click(function () {
+                var username = $("#id_username").val();
+                var password = $("#id_password").val();
+
+                if ( document.getElementById('isRememberPwdId').checked === true)
+                {
+                    $.cookie("username", username, {expires: 7, path: '/'});
+                    $.cookie("password", password, {expires: 7, path: '/'});
+                    $.cookie("isStorePwd", "yes", {expires: 7, path: '/'});
+                }else{
+                    $.cookie("username", username, {expires: 7, path: '/'});
+                    $.cookie("isStorePwd", "no", {expires: 7, path: '/'});
+                }
+
+                //auto login
+                if ( document.getElementById('auto_login').checked === true)
+                {
+                    $.cookie("username", username, {expires: 7, path: '/'});
+                    $.cookie("password", password, {expires: 7, path: '/'});
+                    $.cookie("isAutoLogin", "yes", {expires: 7, path: '/'});
+                    $.cookie("isStorePwd", "yes", {expires: 7, path: '/'});
+                }else
+                {
+                    $.cookie("username", username, {expires: 7, path: '/'});
+                    $.cookie("isAutoLogin", "no", {expires: 7, path: '/'});
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Account/Login/',
+                    data: {
+                        'username': username,
+                        'password': password,
+                        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                    },
+                    success: function (data) {
+                       //登陆成功
+                       window.location.href = '/Account/Profile/';
+                    },
+                   error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        $.cookie("isAutoLogin", "no", {expires: 7, path: '/'});
+                        $("#message").html(XMLHttpRequest.responseText);
+                    },
+                    complete:function(XMLHttpRequest){
+                        $("#message").html(XMLHttpRequest.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+    <div style="text-align: center">
+        <div style="margin: 0 auto; width: 400px; text-align: left">
+            <form >
+            {% csrf_token %}
+                <table>
+                    <tr>
+                        <td>
+                            {{ form.username.label_tag }}
+                        </td>
+                        <td>
+                            {{ form.username }}
+                        </td>
+                        <td>
+                            {{ form.username.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form.password.label_tags }}
+                            密码：
+                        </td>
+                        <td>
+                            {{ form.password }}
+                        </td>
+                        <td>
+                            {{ form.password.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="auto_login" id="isRememberPwdId"/>
+                        </td>
+                        <td>
+                            记住密码
+                        </td>
+
+                        <td>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="auto_login" id="auto_login" checked/>
+                        </td>
+                        <td>
+                            自动登陆
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+                <button class="btn btn-lg btn-primary btn-block" type="button" style="width: 272px" id="id_login">登陆</button>
+                <table>
+                    <tr>
+                        <td>
+                        <a onclick="return multiClick();" href="{% url 'Account:RegisterShop' %}" >注册</a>
+                        </td>
+                        <td>
+                        <a onclick="return multiClick();" href="{% url 'Account:ResetPassword' %}" >密码重置</a>
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <div>
+                <label id="message">{{ content.message }}</label>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block footerTag %}
+{% endblock %}

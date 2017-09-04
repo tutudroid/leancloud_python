@@ -1,0 +1,22 @@
+<div class="contentMenu">
+	<ul class="nav nav-pills">
+	  <li role="presentation" @click="allSysuser()"><a href="#" id="mpsystemAccountListProductManager" @click="back('.systemAccountVue')">系统账号</a></li>
+	  <li role="presentation"><a href="#" id="mpsystemAccountListAddManager">添加账号</a></li>
+	</ul>
+
+	<div class="mp mpsystemAccountListProductManager used">
+	 <form id="csrfProductManager">
+		 {% csrf_token %}
+	  {% include "content/system/accountList/productManager.html" %}
+	 </form>
+	</div>
+
+
+	<div class="mp mpsystemAccountListAddManager">
+	 <form id="csrfAddSysUser">
+		 {% csrf_token %}
+	  {% include "content/system/accountList/addManager.html" %}
+	 </form>
+	</div>
+
+</div>

@@ -1,0 +1,9 @@
+gevent>=1.0.2
+django>=1.10.0
+leancloud-sdk>=1.0.9
+django-html5>=1.0.0
+pingpp
+xlrd
+xlutils
+xlwt
+Pillow

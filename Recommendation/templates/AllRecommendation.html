@@ -1,0 +1,20 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+    <div id="">
+        所有推荐
+    </div>
+    <hr>
+    <form enctype="multipart/form-data" method="POST" action="{% url 'Recommendation:AddRecommendation' %}" onsubmit="return multiClick();" >
+        {% csrf_token %}
+        <input class="btn btn-default" type="submit" name="_submit" value="添加">
+    </form>
+    {% for foo in content.data.recommendList %}
+        <div>
+            <img src="{{ foo.mainImage.url }}" name="image" width="200px" height="200px">
+            <a onclick="" href="{% url 'Recommendation:ShowRecommendation' %}?objectId={{ foo.objectId }}">{{ foo.time }}</a>
+        </div>
+    {% endfor %}
+
+    {% include 'paginator_page.html' %}
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'ProductAdminPage.html' %}
+{% load static %}
+
+{% block content %}
+
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'dragsort/jquery.dragsort-0.5.2.min.js' %}"></script>
+    <style>
+    ul { margin:5px; padding:0px; margin-left:20px; }
+    </style>
+
+    {% if content.saleCategoryFirst %}
+        <form enctype="multipart/form-data" method="POST" action="{% url 'Product:sortSaleCategoryFirst' %}">
+        {% else %}
+        <form enctype="multipart/form-data" method="POST" action="{% url 'Product:sortSaleCategorySecond' %}">
+        {% endif %}
+        {% csrf_token %}
+        <ul>
+            {% for foo in content.data.saleCategory %}
+                <li>
+                    {{ foo.name }}
+                    <input type="text" name="objectId_{{ foo.objectId }}" value="{{ foo.uniqueId }}" >
+                    <input type="hidden" name="saleCategoryList" value="{{ foo.objectId }}" >
+                </li>
+            {% endfor %}
+        </ul>
+        {% if content.saleCategoryFirst %}
+        <input class="btn" type="submit" name="submit_first_sale" value="提交">
+        {% else %}
+        <input class="btn" type="submit" name="submit_second_sale" value="提交">
+        {% endif %}
+    </form>
+    <div>
+        <p>{{ content.message }}</p>
+    </div>
+	<script type="text/javascript">
+        $(function () {
+            $("form ul:first").dragsort({
+                dragSelector: "li",
+                dragEnd: function()
+                {
+                    var point = $(this).children("input")[0];
+                    var all_list = $(this).nextAll();
+                    var i,current, tmp;
+                    if(all_list.length && parseInt(all_list[0].children[0].value) < parseInt(point.value))
+                    {
+                        for (i=0;i<all_list.length;i++)
+                        {
+                            current = all_list[i].children[0];
+                            if (parseInt(current.value) < parseInt(point.value))
+                            {
+                                tmp = current.value;
+                                current.value = point.value;
+                                point.value = tmp;
+                                point = current
+                            }
+                        }
+                    }else{
+                        all_list = $(this).prevAll();
+                        for (i=all_list.length - 1 ;i >=0; i--)
+                        {
+                            current = all_list[i].children[0];
+                            if (parseInt(current.value) > parseInt(point.value))
+                            {
+                                tmp = current.value;
+                                current.value = point.value;
+                                point.value = tmp;
+                            }
+                        }
+                    }
+
+                },
+                dragBetween: false,
+                placeHolderTemplate: "<li></li>"
+            });
+        });
+
+
+	</script>
+    <a class="btn" href="{% url 'Product:ShowSaleCategory' %}">返回到销售分类</a>
+{% endblock %}

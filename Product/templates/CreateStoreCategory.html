@@ -1,0 +1,203 @@
+{% extends 'ProductAdminPage.html' %}
+
+
+
+{% block content %}
+    <script type="text/javascript">
+        //删除某个标签
+        function deleteTag(parent, name) {
+            var parentElement = document.getElementById(parent);
+            var deleteElement = document.getElementById(name);
+            if(deleteElement !== null)
+                parentElement.removeChild(deleteElement);
+            else
+                alert('delete对象不存在');
+        }
+
+        function inputAndDeleteTag(parentId, deleteId)
+        {
+            /*
+            * parentId,表示在这个标签下，增加元素，
+            * deleteId，表示在这个标签下，删除元素，
+            * */
+            var parent=document.getElementById(parentId);
+            var newDiv = document.createElement('div');
+            //form 表单字符串
+            var formInput = parentId.substring(parentId.lastIndexOf("_")+1);
+            //注意字符串中引号的处理
+            newDiv.innerHTML =
+                '<input type="text" name="' + deleteId + '" value="' + formInput + '" readonly style="display:none;" />'
+                + formInput  +
+                '<input type="button" name="delete" value="删除" ' +
+                'onclick="deleteTag(\''+ deleteId +'\', \'' + parentId + '\')"' +
+                '/>';
+            if(parent !== null )
+                parent.appendChild(newDiv);
+        }
+
+        function inputAndAddTag(parentId, id_inputId, last_level)
+        {
+            var parent=document.getElementById(parentId);
+            var newDiv = document.createElement('div');
+            //注意字符串中引号的处理
+            var newTag = parentId;
+            var newInputText = id_inputId + '_' + parentId + last_level ;// +'_'+ parentId;
+
+            newDiv.innerHTML =
+                '<div id="'+ newTag +'" ></div>' +
+                '<input type="text" name="textInput"' + ' id="'  + newInputText +'" />' +
+                '<input type="button" name="add" value="增加" ' +
+                'onclick="createFirstTag(\''+ newTag +'\', \'' + newInputText + '\', '+ last_level + ')" >';
+            if(parent !== null )
+                parent.appendChild(newDiv);
+        }
+        function baseDivTag(parentId, idName){
+            var parent=document.getElementById(parentId);
+            var newDiv = document.createElement('div');
+            newDiv.setAttribute('id', idName);
+            newDiv.setAttribute('style', 'border: solid 1px; margin: 20px; padding: 10px;');
+            if(parent !== null )
+                parent.appendChild(newDiv);
+        }
+        function createFirstTag(id_parentFirstId, idFirstText, last_level){
+            // 第一个div
+            // 第一级下的div：input + delete button
+            // 第二级div
+            var firstText = document.getElementById(idFirstText);
+            var firstId = id_parentFirstId + '_' + firstText.value;
+            if(firstText.value === '')
+            {
+                alert('请输入内容');
+                return false;
+            }
+            if( document.getElementById(firstId) ){
+                alert('名称已存在');
+                return false;
+            }
+            //第一级div，总标签，用于删除
+            baseDivTag(id_parentFirstId,firstId);
+            //第一级下的input，用于表单的提交，隐藏属性
+            //第一级下的div，用于删除
+            inputAndDeleteTag(firstId, id_parentFirstId);
+            //用户增加第后一级标签
+            if(last_level > 1)
+                inputAndAddTag(firstId, id_parentFirstId, last_level - 1 );
+            firstText.value = '';
+        }
+
+        function check(name) {
+            var tag = document.getElementsByName(name);
+            if(tag.length === 0){
+                alert('请添加内容');
+                return false;
+            }
+            return multiClick();
+        }
+
+        function clickFirstLevel1(number) {
+            var list = document.getElementsByName('_firstShowOne');
+            /*控制分类标签的显示*/
+            number = number - 1;
+            var i;
+            for( i=0; i<list.length; i++)
+                if (i === number)
+                    list[i].style.display = 'block';
+                else
+                    list[i].style.display = 'none';
+        }
+
+        function clickSecondLevel1(pnumber,number) {
+            var list = document.getElementsByName('_firstShowTwo');
+            for(var i=0; i<list.length; i++)
+                list[i].style.display = 'none';
+            var show = document.getElementById('_firstShowTwo'+pnumber+number);
+            show.style.display = 'block';
+
+        }
+    </script>
+     <div id="">
+        创建商品分类表
+        <hr>
+    </div>
+    <div>
+        商品分类表
+        <hr>
+            <table>
+                <td>
+                    <div style="border: 1px solid; margin: 10px; padding: 10px;">
+                        {% for firstlevel in content.data.storeCategory %}
+                            <div>
+                                <input type="radio" onclick="clickFirstLevel1({{ forloop.counter }})" name="_checkbox_product_name1" value="{{ firstlevel.name }}">{{ firstlevel.name }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </td>
+                <td>
+                    <div style="border: 1px solid; margin: 10px; padding: 10px;">
+                        {% for firstlevel in content.data.storeCategory %}
+                            {% if forloop.first %}
+                                <div  id="_secondLevel{{ forloop.counter }}" style="display: block;" name="_firstShowOne">
+                                {% else %}
+                                <div  id="_secondLevel{{ forloop.counter }}" style="display: none;" name="_firstShowOne" >
+                            {% endif %}
+
+                                {% for secondlevel in firstlevel.value %}
+                                    <div>
+                                        <input type="radio" id="_checkbox_product_name2{{ forloop.parentloop.counter }}{{ forloop.counter }}"
+                                               onclick="clickSecondLevel1({{ forloop.parentloop.counter }},{{ forloop.counter }})" name="_checkbox_product_name2" value="{{ secondlevel.name }}">{{ secondlevel.name }}
+                                    </div>
+                                {% endfor %}
+                            {% if forloop.first %}
+                                </div>
+                                {% else %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </td>
+                <td>
+                    <div style="border: 1px solid; margin: 10px; padding: 10px;">
+                        {% for firstlevel in content.data.storeCategory %}
+                                {% for secondlevel in firstlevel.value %}
+                                <div>
+                                    {% if forloop.first and forloop.parentloop.first %}
+                                        <div id="_firstShowTwo{{ forloop.parentloop.counter }}{{ forloop.counter }}" style="display: block;" name="_firstShowTwo" >
+                                        {% else %}
+                                        <div id="_firstShowTwo{{ forloop.parentloop.counter }}{{ forloop.counter }}" style="display: none;" name="_firstShowTwo" >
+                                    {% endif %}
+
+                                    {% for thirdlevel in secondlevel.value %}
+                                    <div>
+                                        <input type="radio" name="_checkbox_product_name3" id="_checkbox_product_name3{{ forloop.parentloop.parentloop.counter }}{{ forloop.parentloop.counter }}{{ forloop.counter }}"
+                                               onclick="">{{ thirdlevel.name }}
+                                    </div>
+                                    {% endfor %}
+                                    {% if forloop.first and forloop.parentloop.first %}
+                                        </div>
+                                        {% else %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                        {% endfor %}
+                    </div>
+                </td>
+            </table>
+        <hr>
+        <div id="id_productCategory">
+             <form enctype="multipart/form-data" onsubmit="return check('id_StoreTag');" method="POST" action="{% url 'Product:CreateStoreCategory' %}">
+                {% csrf_token %}
+                 <input type="hidden" name="prevToken" value="{{ content.prevToken }}">
+                <div id="id_StoreTag" style="border: solid 1px;">
+
+                </div>
+                <div id="id_createTag">
+                    <label for="id_firstSale"></label><input type="text" name="text" id="id_categoryText">
+                    <input type="button" name="button" id="id_firstButton" value="增加" onclick="createFirstTag('id_StoreTag', 'id_categoryText', 3)">
+                </div>
+                <input type="submit" name="_storeCategory" value="创建商品分类表" >
+             </form>
+        </div>
+    </div>
+
+{% endblock %}

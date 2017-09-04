@@ -1,0 +1,238 @@
+{% extends 'ProductAdminPage.html' %}
+
+
+{% block content %}
+    <script type="text/javascript">
+        function check(){
+            var first = document.getElementsByName('_SaleCategoryFirst');
+            var second = document.getElementsByName('_SaleCategorySecond');
+            var i,is_ok=0;
+            for(i=0;i<first.length;i++)
+            {
+                if(first[i].checked == true)
+                    is_ok =1;
+            }
+            if(is_ok===0)
+            {
+                alert('没有选择标签');
+                return false;
+            }
+            for(i=0;i<second.length;i++)
+            {
+                if(second[i].checked == true)
+                    is_ok =1;
+            }
+            if(is_ok===0)
+            {
+                alert('没有选择标签');
+                return false;
+            }
+            return multiClick();
+        }
+
+        function clickFirstLevel1(number) {
+            var list = document.getElementsByName('_First');
+            /*控制分类标签的显示*/
+            number = number - 1;
+            var i;
+            for( i=0; i<list.length; i++)
+                if (i === number)
+                {
+                    list[i].style.display = 'block';
+                    try {
+                        var firstElement = list[i].firstElementChild.lastElementChild.lastElementChild.firstElementChild;
+                        firstElement.checked = true;
+                    } catch(err) {
+
+                    }
+                }
+                else
+                    list[i].style.display = 'none';
+        }
+        function sort_Second_Sale(objectId){
+            var address = window.location.href;
+            window.location.href = address.split('/Product/')[0] + '/Product/ShowSaleCategory/?objectId=' + objectId;
+        }
+
+        $(function(){
+            $("#id_checkProductGroup").click(function () {
+                var productGroupId = $("#id_productGroupId").val();
+
+                var ret = /^[a-zA-Z0-9]+$/;
+                /*
+                参数检查
+                 */
+                if (!ret.test(productGroupId)){
+                    alert('请输入正确的Id');
+                    return;
+                }
+                var htmlobj = $.ajax(
+                    {
+                        type: 'GET',
+                        url: '/Product/ProductGroupBriefDetail/',
+                        data: {
+                            'productGroupId': productGroupId,
+                        },
+                        async: false,
+                        success: function (data) {
+                           $("#id_productGroupContext").html(data);
+                           $("#id_addProductGroup").attr('style', 'display:block');
+                        },
+                        error: function(){
+                            $("#id_productGroupContext").html('没有找到该商品');
+                            $("#id_addProductGroup").attr('style', 'display:none');
+                        }
+                    }
+                );
+
+            });
+            $("#id_addProductGroup").click(function() {
+                var productGroupId = $("#id_hidden_productGroupId").val();
+                var saleCategorySecond = $("input[name='_SaleCategorySecond']:checked").val();
+                var ret = /^[a-zA-Z0-9]+$/;
+                /*
+                参数检查
+                 */
+                if(productGroupId === undefined)
+                {
+                    return;
+                }
+                if (!ret.test(productGroupId)){
+                    alert('请输入正确的Id');
+                    return;
+                }
+                var htmlObj = $.ajax(
+                    {
+                        type: 'POST',
+                        url: '/Recommendation/SaleCategoryRecommendation/',
+                        data: {
+                            'productGroupId': productGroupId,
+                            'saleCategorySecond': saleCategorySecond.split('::')[1],
+                            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                        },
+                        async: false,
+                        success: function (data) {
+                           $("#id_productGroupContext").html('添加成功');
+                           $("#id_addProductGroup").attr('style', 'display:none');
+                        },
+                        error: function(){
+                            $("#id_productGroupContext").html('添加失败');
+                        }
+                    }
+                );
+            });
+        });
+    </script>
+    <style>
+
+        .btn-upload input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0px 50px 0px 0px;
+            padding: 0px 0px 0px 0px;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            width: 50px;
+            height: 40px;
+        }
+
+    </style>
+    <div>
+        销售表
+        <hr>
+        {% if content.data.saleCategory  %}
+        <div id="id_productSale">
+            <form enctype="multipart/form-data" onsubmit="return check();" method="POST" action="{% url 'Product:ShowSaleCategory' %}" >
+            {% csrf_token %}
+                <div id="id_SaleTag" class="row" >
+
+                        <div id="id_SaleTag_{{ firstlevel.name }}" class="span5" style="border: 1px solid;">
+                        {% for firstlevel in content.data.saleCategory %}
+                            <div class="row" >
+                                <div class="span2">
+                                <img src="{{ firstlevel.mainImage.url }}" width="100px" height="100px">
+                                </div>
+                                <div class="span3">
+                                    <div>{{ firstlevel.name }}</div>
+                                    <div>{{ firstlevel.briefDescription }}</div>
+                                    <div>
+                                        {% if forloop.first %}
+                                            <input type="radio" name="_SaleCategoryFirst" value="{{ firstlevel.name }}::{{ firstlevel.objectId }}" onclick="clickFirstLevel1({{ forloop.counter }})" checked>
+                                        {% else %}
+                                            <input type="radio" name="_SaleCategoryFirst" value="{{ firstlevel.name }}::{{ firstlevel.objectId }}" onclick="clickFirstLevel1({{ forloop.counter }})" >
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="clear:both;"></div>
+                            {% endfor %}
+                        </div>
+                        <div id="id_SaleTag_{{ firstlevel.name }}_Son" class="span5" name="_secondShow" style="border: 1px solid;">
+                        {% for firstlevel in content.data.saleCategory %}
+                                {% if forloop.first %}
+                                        <div  id="_secondLevel{{ forloop.counter }}" style="display: block;" name="_First">
+                                        {% else %}
+                                        <div  id="_secondLevel{{ forloop.counter }}" style="display: none;" name="_First" >
+                                    {% endif %}
+                                {% for secondlevel in firstlevel.value %}
+
+
+                                    <div class="row" id="id_SaleTag_{{ firstlevel.name }}_Son_{{ secondlevel.name }}">
+                                        <div class="span2">
+                                            <img src="{{ secondlevel.mainImage.url }}" width="100px" height="100px">
+                                        </div>
+                                        <div class="span3">
+                                            <div>{{ secondlevel.name }}</div>
+                                            <div>{{ secondlevel.briefDescription }}</div>
+                                            <div>
+                                                {% if forloop.first and forloop.parentloop.first %}
+                                                    <input type="radio" name="_SaleCategorySecond" value="{{ secondlevel.name }}::{{ secondlevel.objectId }}" checked>
+                                                {% else %}
+                                                    <input type="radio" name="_SaleCategorySecond" value="{{ secondlevel.name }}::{{ secondlevel.objectId }}">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                {% endfor %}
+                                      {% if forloop.first %}
+                                        </div>
+                                        {% else %}
+                                        </div>
+                                      {% endif %}
+                            {% endfor %}
+                        </div>
+
+                    </div>
+            <hr>
+                    <div>
+
+                        <input type="text" id="id_productGroupId" name="productGroupId" placeholder="请输入商品Id"><input type="button" id="id_checkProductGroup" value="查看商品" class="btn">
+                        <div class="row">
+                            <div class="span6" id="id_productGroupContext">
+
+                            </div>
+                            <div class="span2">
+                                 <input type="button" value="添加商品" id="id_addProductGroup" class="btn" style="display: none">
+                            </div>
+                        </div>
+
+                    </div>
+            <hr>
+                <input class="btn btn-default" type="submit" name="_search" value="搜索商品">
+            </form>
+        </div>
+    {% else %}
+
+    {% endif %}
+    </div>
+
+
+
+
+{% endblock %}

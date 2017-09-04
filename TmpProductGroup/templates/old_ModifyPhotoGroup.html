@@ -1,0 +1,256 @@
+{% extends 'ProductAdminPage.html' %}
+{% load static %}
+{% block content %}
+     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+     <script language="javascript">
+
+   function PreviewImg(fileObj, gggg){
+            var windowURL = window.URL || window.webkitURL;
+            var dataURL;
+            if(fileObj) {
+                 dataURL = windowURL.createObjectURL(fileObj);
+                 jQuery("#"+gggg).attr('src',dataURL);
+            }
+    }
+
+        //上传图片
+    function change(photo1, filename, parentId, deleteId) {
+        var pic = document.getElementById(photo1);
+        var fileObj = document.getElementById(filename);
+
+        //判断多个输入文件的后缀是否是文件
+
+        var i;
+        for(i=0;i<fileObj.files.length;i++)
+        {
+            var ext = fileObj.files[i].type;
+             // gif在IE浏览器暂时无法显示
+             if(ext!=='image/jpeg'){
+                 alert("图片的格式必须为jpg或者jpeg格式！");
+                 clickButtonDeleteTag(parentId, deleteId);
+                 return;
+             }
+        }
+
+
+        for(var i=0; i<fileObj.files.length; i++){
+            var image = document.createElement('img');
+            var photo = photo1+'_child_'+i;
+            image.setAttribute('id', photo);
+            image.setAttribute('class','div_inline_image');
+            pic.appendChild(image);
+            var file = fileObj.files[i];
+             var isIE = navigator.userAgent.match(/MSIE/)!= null,
+                 isIE6 = navigator.userAgent.match(/MSIE 6.0/)!= null;
+             if(isIE) {
+                // IE6浏览器设置img的src为本地路径可以直接显示图片
+                  if (isIE6) {
+                         file.select();
+                        var reallocalPath = document.selection.createRange().text;
+                        pic.src = reallocalPath;
+                     }else {
+                        PreviewImg(file, photo);
+                     }
+             }else {
+                html5Reader(photo, file);
+             }
+        }
+        var clear = document.createElement('div');
+        clear.setAttribute('style', 'clear:both;');
+        pic.appendChild(clear);
+    }
+
+    function html5Reader(photo, file){
+        var reader = new FileReader();
+
+        reader.readAsDataURL(file);
+        reader.onload = function(e){
+            var pic = document.getElementById(photo);
+            pic.height= '100';
+            pic.width= '100';
+            pic.src=this.result;
+        }
+    }
+        //删除某个标签
+    function clickButtonDeleteTag(parent, name) {
+        var parentElement = document.getElementById(parent);
+        var deleteElement = document.getElementById(name);
+        if(deleteElement != null)
+            parentElement.removeChild(deleteElement);
+        else
+            alert('delete对象不存在');
+    }
+    function addDeleteButton(parentName, parentId, deleteId){
+        var parent=document.getElementById(parentName);
+        var newDiv = document.createElement('input');
+        newDiv.setAttribute('type', 'button');
+        newDiv.setAttribute('name', deleteId);
+        newDiv.setAttribute('value', '删除');
+        newDiv.onclick = function(e){
+            clickButtonDeleteTag(parentId, deleteId);
+        }
+        if(parent !== null )
+            parent.appendChild(newDiv);
+    }
+
+    function onChangeFunction(start, whereDeleteId, deleteId){
+        var imageFileNew = '_imageFile' + start;
+        var imageNew = '_image' + start;
+        var id_hiddenNew = '_idHidden' + start;
+        change(imageNew, imageFileNew, whereDeleteId, deleteId+start);
+        addDiv(Number(start) + Number(1), whereDeleteId, deleteId);
+        addDeleteButton(deleteId+start, whereDeleteId, deleteId+start);
+        //隐藏input file按钮
+        if(document.getElementById(id_hiddenNew))
+            document.getElementById(id_hiddenNew).style.display = 'none';
+        if(document.getElementById(imageFileNew))
+            document.getElementById(imageFileNew).style.display = 'none';
+    }
+
+    function addDiv(start, whereDeleteId, deleteId, file){
+        var parent=document.getElementById(whereDeleteId);
+        var newDiv = document.createElement('div');
+        var photoId = '_image' + start;
+        newDiv.setAttribute('id', deleteId+start);
+        newDiv.setAttribute('class', 'div_inline');
+        newDiv.innerHTML=
+            '<div class="btn btn-primary btn-upload" id="_idHidden' + start + '">' +
+            '<div class="btn-uploadImage">上传</div>' +
+            '<div><input type="file" name="_imageFileList" multiple="multiple" id="_imageFile'+ start +'" onchange="onChangeFunction(\''+ start +
+            '\',\''+ whereDeleteId + '\',\''+ deleteId +'\')"></div>' +
+            '</div>' + '<div  id="'+ photoId + '" ></div>';
+        if(parent !== null )
+            parent.appendChild(newDiv);
+    }
+
+    function loadImage(){
+        change('_image', '_imageFile', '_addPhotoHTML', '_first');
+        addDiv('1','_addPhotoHTML', '_first');
+        addDeleteButton('_first', '_addPhotoHTML', '_first');
+        //隐藏input
+        if (document.getElementById('_idHidden'))
+            document.getElementById('_idHidden').style.display = 'none';
+        if (document.getElementById('_imageFile'))
+            document.getElementById('_imageFile').style.display = 'none';
+    }
+
+    function deletePhoto(parent, child, inputNameId){
+        clickButtonDeleteTag(parent, child);
+        var deleteImage = document.getElementById(inputNameId);
+        deleteImage.setAttribute('name', '_imageList');
+    }
+    </script>
+
+    <!-- 图片标签风格 -->
+    <style>
+        .div_inline{
+        }
+        .div_inline_image{
+            float:left;
+            width: 150px;
+        }
+        .btn-upload {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-upload input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0px 100px 0px 0px;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            width: 150px;
+            height: 150px;
+        }
+        .btn-uploadImage{
+            text-align: center;
+            box-sizing: border-box;
+            padding: 50px 50px 30px;
+            border-width: 2px;
+            border-style: outset;
+            border-color: buttonface;
+            width: 150px;
+            height: 150px;
+        }
+
+    </style>
+    <div >
+        修改商品组{{ content.data.name }}的图片信息
+    </div>
+    <div >
+
+            {% if content.profile.current_role == 'ProductAdmin' %}
+         <form enctype="multipart/form-data" method="POST" action="{% url 'Product:ModifyPhotoGroup' %}" onsubmit="return multiClick();" >
+        {% endif %}
+        {% if content.profile.current_role == 'Shop' %}
+         <form enctype="multipart/form-data" method="POST" action="{% url 'ShopProductGroup:ModifyPhotoGroup' %}" onsubmit="return multiClick();" >
+        {% endif %}
+
+            {% csrf_token %}
+        <input type="hidden" name="prevToken" value="{{ content.prevToken }}">
+            <div style="margin-top: 40px">
+            当前图片
+            <hr>
+            <div id="id_PhotoList">
+                {% for foo in content.data.imageList %}
+                    <input id="id_imageList{{ forloop.counter }}" type="hidden" name="" value="{{ foo.objectId }}">
+                    <div id="id_PhotoList{{ forloop.counter }}" style="float: left; width: 120px;">
+                        <div>
+                            <img src="{{ foo.image.url }}" width="100" height="100">
+                        </div>
+                        <div>
+                            <input type="button" name="button" value="删除" onclick="deletePhoto('id_PhotoList','id_PhotoList{{ forloop.counter }}', 'id_imageList{{ forloop.counter }}')">
+                        </div>
+
+                    </div>
+                {% endfor %}
+                <div style="clear:both;"></div>
+            </div>
+
+            </div>
+
+            <div style="margin-top: 40px">上传图片</div>
+            <hr>
+            <div id="_addPhotoHTML" name="form1">
+                <div id="_first"  class="div_inline">
+                    <div class="btn btn-primary btn-upload" id="_idHidden" >
+                        <div class="btn-uploadImage">上传</div>
+                        <input id="_imageFile" type="file" multiple="multiple" name="_imageFileList" onchange="loadImage();"/>
+                    </div>
+                    <div id="_image">
+                    </div>
+                </div>
+
+            </div>
+            <div style="clear: both;"></div>
+            <div style="margin-top: 40px">
+                确认
+                <hr>
+                <input type="hidden" name="_productGroupName" value="{{ content.data.name }}">
+                <input type="hidden" name="_productGroupObjectId" value="{{ content.data.objectId }}">
+                <input class="btn btn-default" type="submit" name="submit" value="确认">
+            </div>
+
+        {% if content.profile.current_role == 'ProductAdmin' %}
+        </form>
+            <div style="margin-top: 40px">
+                <a onclick="" href="{% url 'Product:ProductGroupDetail' %}?productGroupObjectId={{ content.data.objectId }}">
+                    返回商品组：{{ content.data.name }}</a>
+            </div>
+        {% endif %}
+        {% if content.profile.current_role == 'Shop' %}
+        </form>
+            <div style="margin-top: 40px">
+                <a onclick="" href="{% url 'ShopProductGroup:ProductGroupDetail' %}?productGroupObjectId={{ content.data.objectId }}">
+                    返回商品组：{{ content.data.name }}</a>
+            </div>
+        {% endif %}
+
+
+    </div>
+
+{% endblock %}

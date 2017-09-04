@@ -1,0 +1,24 @@
+
+{% block headerTage %}
+     <hr>
+
+    {% if content.profile.login %}
+
+        <div>
+            {{  content.profile.username }}
+            <a onclick="return multiClick();" href="{% url 'Account:ModifyPassword' %}">修改密码</a>
+
+            切换用户
+                    {% for role in content.profile.role_list %}
+                        <a onclick="return multiClick();" href="">{{ role.role }}</a>
+                    {% endfor %}
+            <a onclick="return multiClick();" href="{% url 'Account:Logout' %}">logout</a>
+        </div>
+    {% else %}
+        <div> 游客，请登陆系统
+            <a onclick="return multiClick();" href="{% url 'Account:Login' %}">登陆</a>
+        {{ token }}
+        </div>
+    {% endif %}
+    <hr>
+{% endblock %}

@@ -1,0 +1,282 @@
+{% extends 'ProductAdminPage.html' %}
+{% load static %}
+{% block content %}
+
+    <style>
+        div {
+            margin: 5px;
+        }
+    </style>
+
+    {% if content.settleIn.state == 3 %}
+        <h2>入驻店铺未通过审核</h2>
+    {% endif %}
+    {%  if content.settleIn.state == 0 %}
+        <h2>入驻店铺已通过审核</h2>
+    {% endif %}
+    {%  if content.settleIn.state == 2 %}
+        <h2>等待审核</h2>
+    {% endif %}
+
+
+    {% if content.settleIn.user %}
+        <div>
+            <div class="row">
+                <div class="span3">
+                    入驻真实姓名：
+                </div>
+                <div class="span3">
+                    {{ content.settleIn.real_name }}
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="span3">
+                    电子邮箱：
+                </div>
+                <div class="span3">
+                   {{ content.settleIn.email }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="span3">
+                    手机号：
+                </div>
+                <div class="span3">
+                   {{ content.settleIn.phoneNumber }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="span3">
+                    身份证号：
+                </div>
+                <div class="span3">
+                   {{ content.settleIn.ID_Card }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="span3">
+                    身份证有效期：
+                </div>
+                <div class="span3">
+                   {{ content.settleIn.ID_Card_expire_time_start }} 至
+                   {{ content.settleIn.ID_Card_expire_time_end }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="span3">
+                    身份证正面：
+                </div>
+                <div class="span3">
+                    <div><img src="{{ content.settleIn.front_ID_Card.url }}" style="width: 100px; height: 100px;" id="front_ID_Card_Image"></div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="span3">
+                    身份证反面：
+                </div>
+                <div class="span3">
+                    <div><img src="{{ content.settleIn.back_ID_Card.url }}" style="width: 100px; height: 100px;" id="back_ID_Card_Image"></div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="span3">
+                    手持身份证照片：
+                </div>
+                <div class="span3">
+                    <div><img src="{{ content.settleIn.hand_ID_Card.url }}" style="width: 100px; height: 100px;" id="hand_ID_Card_Image"></div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="span3">
+                    支付宝账号：
+                </div>
+                <div class="span3">
+                    {{ content.settleIn.alipay }}
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="span3">
+                    店铺名称：
+                </div>
+                <div class="span3">
+                    {{ content.settleIn.shop_name }}
+                </div>
+            </div>
+        </div>
+        {% if content.profile.current_role == 'Shop' %}
+            {% if content.settleIn.state == 3 %}
+            <p><a class="btn" href="{% url 'Shop:SettleInUser' %}?objectId={{ content.settleIn.objectId }}">重新编辑申请申请表</a></p>
+            {% endif %}
+        {% endif %}
+
+    {% endif %}
+
+    {% if content.settleIn.company %}
+            <div>
+                <div class="row">
+                    <div class="span3">
+                        统一社会信用代码：
+                    </div>
+                    <div class="span3">
+                        {{ content.settleIn.uniform_social_credit_code }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span3">
+                        法人姓名：
+                    </div>
+                    <div class="span3">
+                        {{ content.settleIn.legal_person_name }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        法人邮箱：
+                    </div>
+                    <div class="span3">
+                        {{ content.settleIn.legal_person_email }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        法人手机号：
+                    </div>
+                    <div class="span3">
+                       {{ content.settleIn.legal_person_phoneNumber }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        法人身份证号：
+                    </div>
+                    <div class="span3">
+                        {{ content.settleIn.legal_person_ID_Card }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        法人身份有效期：
+                    </div>
+                    <div class="span3">
+                       {{ content.settleIn.legal_person_expire_time_start }} 至
+                        {{ content.settleIn.legal_person_expire_time_end }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        身份证正面（含头像身份证号）：
+                    </div>
+                    <div class="span3">
+                        <div><img src="{{ content.settleIn.legal_person_front_ID_Card.url }}" style="width: 100px; height: 100px;" id="front_ID_Card_Image"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span3">
+                        身份证反面：
+                    </div>
+                    <div class="span3">
+                        <div><img src="{{ content.settleIn.legal_person_back_ID_Card.url }}" style="width: 100px; height: 100px;" id="back_ID_Card_Image"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span3">
+                        营业执照：
+                    </div>
+                    <div class="span3">
+                        <div><img src="{{ content.settleIn.business_license.url }}" style="width: 100px; height: 100px;" id="business_license_Image"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        支付宝账号：
+                    </div>
+                    <div class="span3">
+                    {{ content.settleIn.alipay }}
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        店铺名称：
+                    </div>
+                    <div class="span3">
+                       {{ content.settleIn.shop_name }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        管理人真实姓名：
+                    </div>
+                    <div class="span3">
+                        {{ content.settleIn.manager_real_name }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        管理人电子邮箱：
+                    </div>
+                    <div class="span3">
+                        {{ content.settleIn.manager_email }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        管理人手机号：
+                    </div>
+                    <div class="span3">
+                        {{ content.settleIn.manager_phoneNumber }}
+                    </div>
+                </div>
+
+            </div>
+        {% if content.profile.current_role == 'Shop' %}
+            {% if content.settleIn.state == 3 %}
+            <p><a class="btn" href="{% url 'Shop:SettleInCompany' %}?objectId={{ content.settleIn.objectId }}">重新编辑申请表</a></p>
+            {% endif %}
+        {% endif %}
+
+    {% endif %}
+
+    {% if content.profile.current_role == 'Administrator' %}
+        {% if content.settleIn.state == 2 %}
+            {% if content.settleIn.user %}
+                <form enctype="multipart/form-data" method="POST" action="{% url 'Shop:ReviewSettleInUser' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="objectId" value="{{ content.settleIn.objectId }}">
+                    <input class="btn" type="submit" name="verified" value="通过审核">
+                    <input class="btn" type="submit" name="rejected" value="不通过审核">
+                </form>
+            {% endif %}
+            {% if content.settleIn.company %}
+                <form enctype="multipart/form-data" method="POST" action="{% url 'Shop:ReviewSettleInCompany' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="objectId" value="{{ content.settleIn.objectId }}">
+                    <input class="btn" type="submit" name="verified" value="通过审核">
+                    <input class="btn" type="submit" name="rejected" value="不通过审核">
+                </form>
+            {% endif %}
+        {% endif%}
+    {% endif %}
+{% endblock %}

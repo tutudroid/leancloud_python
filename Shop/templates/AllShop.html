@@ -1,0 +1,32 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+    <style>
+
+        .shopParent{
+            margin: 20px;
+            border: solid 1px;
+        }
+        .shopName{
+            margin: 10px;
+        }
+
+        .shopAddress{
+            margin: 10px;
+        }
+    </style>
+    {% for foo in content.data.shopList %}
+        <div class="row shopParent">
+            <div class="span2 ">
+                <img src="{{ foo.mainImage.url }}">
+            </div>
+            <div class="span6" >
+                <label class="shopName"><a onclick="" href="?objectId={{ foo.objectId }}&&timestamp={{ content.time }}">{{ foo.name }}</a></label>
+                <br>
+                <label class="shopAddress">{{ foo.address }}</label>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    {% endfor %}
+    {% include 'paginator_page.html' %}
+{% endblock %}

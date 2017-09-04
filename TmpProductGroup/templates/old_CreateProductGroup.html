@@ -1,0 +1,904 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% load static %}
+{% block content %}
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script language="javascript">
+
+   function PreviewImg(fileObj, gggg){
+            var windowURL = window.URL || window.webkitURL;
+            var dataURL;
+            if(fileObj) {
+                 dataURL = windowURL.createObjectURL(fileObj);
+                 jQuery("#"+gggg).attr('src',dataURL);
+            }
+    }
+
+    //选择商品分类
+    function clickFirstLevel1(number) {
+        var list = document.getElementsByName('_firstShowOne');
+        /*控制分类标签的显示*/
+        number = number - 1;
+        for(var i=0; i<list.length; i++)
+            if (i === number)
+            {
+                list[i].style.display = 'block';
+                firstElement = list[i].firstElementChild.firstElementChild;
+                firstElement.checked = true;
+                clickSecondLevel1(number+1,1);
+            }
+            else
+                list[i].style.display = 'none';
+    }
+
+    function clickSecondLevel1(pnumber,number) {
+        var list = document.getElementsByName('_firstShowTwo');
+        for(var i=0; i<list.length; i++)
+            list[i].style.display = 'none';
+        var show = document.getElementById('_firstShowTwo'+pnumber+number);
+        show.style.display = 'block';
+        firstElement = show.firstElementChild.firstElementChild;
+        firstElement.checked = true;
+        //checkboxChooseOne('_checkbox_product_name2', '_checkbox_product_name2'+pnumber+number);
+    }
+
+    function clickThirdLevel1(ppnumber,pnumber,number) {
+        checkboxChooseOne('_checkbox_product_name3', '_checkbox_product_name3'+ppnumber+pnumber+number);
+    }
+    //添加销售类别
+    function clickFirstLevel2(number) {
+        var list = document.getElementsByName('_secondShow');
+        /*控制分类标签的显示*/
+        number = number - 1;
+        for(var i=0; i<list.length; i++)
+            if (i === number)
+            {
+                list[i].style.display = 'block';
+                firstElement = list[i].firstElementChild.firstElementChild;
+                firstElement.checked = true;
+            }
+            else
+                list[i].style.display = 'none';
+
+    }
+
+
+    //添加属性
+    function clickButtonSale(){
+        var tag1,tag2 = null;
+        var value1, value2;
+        var listA = document.getElementsByName('_checkbox_sale_name1');
+        for(var i=0; i<listA.length; i++) {
+            if (listA[i].checked === true) {
+                tag1 = listA[i].id;
+                value1 = listA[i].value;
+            }
+        }
+
+        var listB = document.getElementsByName('_checkbox_sale_name2');
+        for(var i=0; i<listB.length; i++)
+            if(listB[i].checked === true)
+            {
+                tag2 = listB[i].id;
+                value2 = listB[i].value;
+            }
+
+        if (tag1 == null || tag2 == null){
+            alert('请选择销售类别标签');
+            return ;
+        }
+
+
+
+        var hasSaleTagList = document.getElementsByName('_saleTag');
+        var string = value1 + ' ' + value2;
+        for( var i = 0; i<hasSaleTagList.length; i++)
+        {
+            if( string === hasSaleTagList[i].value )
+            {
+                alert("该标签已存在");
+                return;
+            }
+        }
+
+        var parent=document.getElementById("_saleAddHtml");
+        var newDiv = document.createElement('div');
+        newDiv.id = tag1 + '_' + tag2;
+        //标签值用两个引号隔开
+        newDiv.value = value1 + '::' + value2.split('-')[0];
+        if(document.getElementById(newDiv.id))
+        {
+            alert('该标签已经存在');
+            return
+        }
+
+        propertyHTML = '<input type="text" class="input-medium" name="_saleTag" value="'+ value1 + ' ' + value2.split('-')[0] + '" readonly>' +
+            '<input type="hidden" name="_saleCategorySecond" value="'+ value2.split('-')[1] + '">';
+
+        //注意字符串中引号的处理
+        newDiv.innerHTML = propertyHTML
+            + '<input class="btn btn-default" type="button" name="delete" value="删除" onclick="clickButtonDeleteTag(\'_saleAddHtml\', \''
+            + newDiv.id + '\')">';
+        if(parent !== null )
+            parent.appendChild(newDiv);
+    }
+    //删除某个标签
+    function clickButtonDeleteTag(parent, name) {
+        var parentElement = document.getElementById(parent);
+        var deleteElement = document.getElementById(name);
+        if(deleteElement !== null)
+            parentElement.removeChild(deleteElement);
+        else
+            alert('delete对象不存在');
+    }
+    function clickButtonProperty(){
+        var parent=document.getElementById('_propertyAddHTML');
+        var property = document.getElementById('_propertyText');
+        var newDiv = document.createElement('div');
+        newDiv.id = '_property_' + property.value;
+        if(property.value === '')
+        {
+            alert('请输入内容');
+            return
+        }
+        propertyHTML =
+            '<div style="border: 1px solid black;">' +
+            '<div id="'+ property.value +'">' +
+            '<input type="text" class="input-medium" readonly name="_propertyText" style="display: none;" value="'+property.value + '">'
+            + property.value +'' +
+            '</div>' +
+            '<input type="text" class="input-medium" id="' + property.value + '_text" >' +
+            '<input class="btn btn-default" type="button" name="add" value="添加" onclick="clickButtonAddChoice(\'' + property.value + '\')">' +
+            '</div>';
+        //注意字符串中引号的处理
+        newDiv.innerHTML = propertyHTML
+            + '<input type="button" name="delete" value="删除" onclick="clickButtonDeleteTag(\'' + parent.id + '\', \''
+            + newDiv.id + '\')">' ;
+        if(parent !== null )
+            parent.appendChild(newDiv);
+        property.value = '';
+    }
+    function clickButtonAddChoice(name){
+        var parent=document.getElementById(name);
+        var choiceItem = document.getElementById(name + '_text');
+        var newDiv = document.createElement('div');
+        if(choiceItem.value === '')
+        {
+            alert('请输入内容');
+            return
+        }
+
+        newDiv.id = '_choiceItem_' + choiceItem.value;
+        //注意字符串中引号的处理
+        newDiv.innerHTML =
+            '<input type="text" class="input-medium" name="_propertyChoiceText"'
+            + 'value="'  + name + ' ' +choiceItem.value + '" readonly>'
+            + '<input class="btn btn-default" type="button" name="delete" value="删除" onclick="clickButtonDeleteTag(\''+ name +'\', \''
+            + newDiv.id + '\')">';
+        if(parent !== null )
+            parent.appendChild(newDiv);
+        choiceItem.value = '';
+    }
+
+
+    //上传图片
+    function change(photo1, filename, parentId, deleteId) {
+        var pic = document.getElementById(photo1);
+        var fileObj = document.getElementById(filename);
+
+        //判断多个输入文件的后缀是否是文件
+
+        var i;
+        for(i=0;i<fileObj.files.length;i++)
+        {
+            var ext = fileObj.files[i].type;
+             // gif在IE浏览器暂时无法显示
+             if(ext!=='image/jpeg'){
+                 alert("图片的格式必须为jpg或者jpeg格式！");
+                 clickButtonDeleteTag(parentId, deleteId);
+                 return;
+             }
+        }
+        for(var i=0; i<fileObj.files.length; i++){
+            var image = document.createElement('img');
+            var photo = photo1+'_child_'+i;
+            image.setAttribute('id', photo);
+            image.setAttribute('class','div_inline_image');
+            pic.appendChild(image);
+            var file = fileObj.files[i];
+             var isIE = navigator.userAgent.match(/MSIE/)!= null,
+                 isIE6 = navigator.userAgent.match(/MSIE 6.0/)!= null;
+             if(isIE) {
+                // IE6浏览器设置img的src为本地路径可以直接显示图片
+                  if (isIE6) {
+                         file.select();
+                        var reallocalPath = document.selection.createRange().text;
+                        pic.src = reallocalPath;
+                     }else {
+                        PreviewImg(file, photo);
+                     }
+             }else {
+                html5Reader(photo, file);
+             }
+        }
+        var clear = document.createElement('div');
+        clear.setAttribute('style', 'clear:both;')
+        pic.appendChild(clear);
+    }
+
+    function html5Reader(photo, file){
+        var reader = new FileReader();
+
+        reader.readAsDataURL(file);
+        reader.onload = function(e){
+            var pic = document.getElementById(photo);
+            pic.height= '100';
+            pic.width= '100';
+            pic.src=this.result;
+        }
+    }
+    function addDeleteButton(parentName, parentId, deleteId){
+        var parent=document.getElementById(parentName);
+        var newDiv = document.createElement('input');
+        newDiv.setAttribute('type', 'button');
+        newDiv.setAttribute('name', deleteId);
+        newDiv.setAttribute('value', '删除');
+        newDiv.onclick = function(e){
+            clickButtonDeleteTag(parentId, deleteId);
+        }
+        if(parent !== null )
+            parent.appendChild(newDiv);
+    }
+
+
+    function onChangeFunction(start, whereDeleteId, deleteId){
+        var imageFileNew = '_imageFile' + start;
+        var imageNew = '_image' + start;
+        var id_hiddenNew = '_idHidden' + start;
+        change(imageNew, imageFileNew, whereDeleteId, deleteId+start);
+        addDiv(Number(start) + Number(1), whereDeleteId, deleteId);
+        addDeleteButton(deleteId+start, whereDeleteId, deleteId+start);
+        //隐藏input file按钮
+        if(document.getElementById(id_hiddenNew))
+            document.getElementById(id_hiddenNew).style.display = 'none';
+    }
+    function addUploadButton(start, whereDeleteId, deleteId){
+        var parent=document.getElementById(deleteId+start);
+        var newDiv = document.createElement('input');
+        newDiv.setAttribute('type', 'file');
+        var imageFileNew = '_imageFile' + start;
+        var deletdIdNew = deleteId + start;
+        newDiv.setAttribute('id', imageFileNew);
+        newDiv.setAttribute('name', '_imageFileName');
+        var imageNew = '_image' + start;
+
+        newDiv.onchange = function(e){
+            change(imageNew, imageFileNew);
+            addDiv(Number(start) + Number(1), whereDeleteId, deleteId);
+            addDeleteButton(deleteId+start, whereDeleteId, deleteId+start);
+            //隐藏input file按钮
+            document.getElementById(imageFileNew).style.display = 'none';
+        }
+        if(parent !== null )
+            parent.appendChild(newDiv);
+    }
+
+    function addDiv(start, whereDeleteId, deleteId){
+        var parent=document.getElementById(whereDeleteId);
+        var newDiv = document.createElement('div');
+        var photoId = '_image' + start;
+        newDiv.setAttribute('id', deleteId+start);
+        newDiv.setAttribute('class', 'div_inline');
+        newDiv.innerHTML=
+            '<div class="btn btn-primary btn-upload" id="_idHidden' + start + '">' +
+            '<div class="btn-uploadImage">上传</span>' +
+            '<input type="file" name="_imageFileName" multiple="multiple" id="_imageFile'+ start +'" onchange="onChangeFunction(\''+ start +
+            '\',\''+ whereDeleteId + '\',\''+ deleteId + '\')">' +
+            '</div>' +
+            '</div>' +
+            '<div id="'+ photoId + '" ></div>';
+        if(parent !== null )
+            parent.appendChild(newDiv);
+    }
+
+    function loadImage(){
+        change('_image', '_imageFile', '_addPhotoHTML', '_first');
+        addDiv('1','_addPhotoHTML', '_first');
+        addDeleteButton('_first', '_addPhotoHTML', '_first');
+        //隐藏input
+        if (document.getElementById('_idHidden'))
+            document.getElementById('_idHidden').style.display = 'none';
+    }
+
+
+    function loadAllUploadImage() {
+        var parent = document.getElementById('_loadAllImage');
+        var imageList = document.getElementsByName('_imageFileName');
+        //清除原来的图片
+        var i;
+
+        while(parent.hasChildNodes()) //当div下还存在子节点时 循环继续
+        {
+            parent.removeChild(parent.firstChild);
+        }
+
+        //重新加载图片
+        for(var j=0; j<imageList.length; j++){
+
+            var pic = parent;
+            var fileObj = imageList[j];
+
+            //判断多个输入文件的后缀是否是文件
+            for(var i=0; i<fileObj.files.length; i++){
+                var photo = "_mainImage" + j +'_'+i ;
+                var newDiv = document.createElement('div');
+                newDiv.setAttribute('class', 'div_inline_image');
+                newDiv.innerHTML = '' +
+                    '<div><img name="_mainImage" id="' + photo + '" src="" alt="">' +
+                    '' +
+                    '<input type="radio" name="_checkbox_MainImage"  value="'+ fileObj.files[i].name +'"></div>';
+                if(parent !== null)
+                    parent.appendChild(newDiv);
+                //加载图片
+
+                var file = fileObj.files[i];
+                 var isIE = navigator.userAgent.match(/MSIE/)!= null,
+                     isIE6 = navigator.userAgent.match(/MSIE 6.0/)!= null;
+                 if(isIE) {
+                    // IE6浏览器设置img的src为本地路径可以直接显示图片
+                      if (isIE6) {
+                             file.select();
+                            var reallocalPath = document.selection.createRange().text;
+                            pic.src = reallocalPath;
+                         }else {
+                            PreviewImg(file, photo);
+                         }
+                 }else {
+                    html5Reader(photo, file);
+                 }
+            }
+
+        }
+         var clear = document.createElement('div');
+        clear.setAttribute('style', 'clear:both;');
+        parent.appendChild(clear);
+    }
+    function checkboxChooseOne(nameList, nameId) {
+        var checkbox_list = document.getElementsByName(nameList);
+        for(var i=0; i<checkbox_list.length; i++)
+            checkbox_list[i].checked = false;
+        var checkbox_id = document.getElementById(nameId);
+        checkbox_id.checked = true;
+    }
+
+    function is_ok(check){
+        var ok = false;
+        for(var i=0; i<check.length; i++){
+            if(check[i].checked === true){
+                ok = true;
+            }
+        }
+        return ok;
+    }
+
+
+    function deleteTag(parent, name) {
+        var parentElement = document.getElementById(parent);
+        var deleteElement = document.getElementById(name);
+        if(deleteElement !== null)
+            parentElement.removeChild(deleteElement);
+        else
+            alert('delete对象不存在');
+    }
+    function inputAndDeleteTag(parentId, deleteId)
+    {
+        /*
+        * parentId,表示在这个标签下，增加元素，
+        * deleteId，表示在这个标签下，删除元素，
+        * */
+        var parent=document.getElementById(parentId);
+        var newDiv = document.createElement('div');
+        //form 表单字符串
+        var formInput = parentId.substring(parentId.lastIndexOf("_")+1);
+        newDiv.setAttribute('class', 'row');
+        //注意字符串中引号的处理
+        newDiv.innerHTML =
+            '<input type="hidden" class="input-medium" name="' + deleteId + '" value="' + formInput + '"/>' +
+            '<div class="span4">'
+            + formInput  +
+            '</div><div class="span2">' +
+            '<input class="btn btn-default" type="button" name="delete" value="删除" ' +
+            'onclick="deleteTag(\''+ deleteId +'\', \'' + parentId + '\')"' +
+            '/>' +
+            '</div>';
+        if(parent !== null )
+            parent.appendChild(newDiv);
+    }
+
+    function inputAndAddTag(parentId, id_inputId, last_level)
+    {
+        var parent=document.getElementById(parentId);
+        var newDiv = document.createElement('div');
+        //newDiv.setAttribute('class', 'span2');
+        //注意字符串中引号的处理
+        var newTag = parentId;
+        var newInputText = id_inputId + '_' + parentId + last_level ;// +'_'+ parentId;
+
+        newDiv.innerHTML =
+            '<div id="'+ newTag +'" ></div>' +
+            '<input type="text" class="input-medium" name="textInput"' + ' id="'  + newInputText +'" required/>' +
+            '<input class="btn btn-default" type="button" name="add" value="增加" ' +
+            'onclick="createFirstTag(\''+ newTag +'\', \'' + newInputText + '\', '+ last_level + ',\''+ newInputText + '\')" >';
+        if(parent !== null )
+            parent.appendChild(newDiv);
+    }
+    function baseDivTag(parentId, idName){
+        var parent=document.getElementById(parentId);
+        var newDiv = document.createElement('div');
+        newDiv.setAttribute('id', idName);
+        newDiv.setAttribute('style', 'border: 1px solid; margin: 5px; padding: 5px;');
+        if(parent !== null )
+            parent.appendChild(newDiv);
+    }
+    function createFirstTag(id_parentFirstId, idFirstText, last_level){
+        // 第一个div
+        // 第一级下的div：input + delete button
+        // 第二级div
+        var cancelFirstTag = document.getElementById(idFirstText);
+        cancelFirstTag.removeAttribute('required');
+        var firstText = document.getElementById(idFirstText);
+        var firstId = id_parentFirstId + '_' + firstText.value;
+        if(firstText.value === '')
+        {
+            alert('请输入内容');
+            return false;
+        }
+        if( document.getElementById(firstId) ){
+            alert('名称已存在');
+            return false;
+        }
+        //第一级div，总标签，用于删除
+        baseDivTag(id_parentFirstId,firstId);
+        //第一级下的div，用于删除
+        inputAndDeleteTag(firstId, id_parentFirstId);
+        //第一级下的input，用于表单的提交，隐藏属性
+        //用户增加第后一级标签
+        if(last_level > 1)
+            inputAndAddTag(firstId, id_parentFirstId, last_level - 1);
+        firstText.value = '';
+    }
+    //确认检查
+    function check() {
+
+        var product = document.getElementsByName('_checkbox_product_name3');
+        var saleTag = document.getElementsByName('_saleTag');
+        //这里取的是Id
+        var Name = document.getElementById('_productName');
+        var productSummary = document.getElementById('_productSummary');
+        //商品属性
+        var property = document.getElementsByName('id_StyleTag');
+        var imageList = document.getElementsByName('_imageFileName');
+        //主图片的选择，从本地加载中获取图片。
+        var mainImage = document.getElementsByName('_checkbox_MainImage');
+        var productDescription = document.getElementById('id_detailDescription');
+
+        var productService = document.getElementById('_productService');
+        if($("input[type='checkbox']").is(':checked')){
+		//alert("fdsfsdgsa");
+	    } else
+        {
+            alert("请选择商品服务");
+            return false;
+        }
+
+
+        if(is_ok(product) != true)
+        {
+            alert('请选择库存分类');
+            return false;
+        }
+
+        if( saleTag.length === 0 ){
+            alert('请添加销售类别');
+            return false;
+        }
+        if( saleTag.length === 0 ){
+            alert('请添加销售类别');
+            return false;
+        }
+        if(Name.value === null){
+            alert('请设置组名');
+            return false;
+        }
+        if(productSummary.value === null){
+            alert('请填写商品简介');
+            return false;
+        }
+        if(imageList.length < 2){
+            alert('请上传图片');
+            return false;
+        }
+        if(property.length === 0 ){
+            alert('请设置属性');
+            return false;
+        }
+
+        var ok = false;
+        for(var i=0; i<property.length; i++){
+            var propertyOption = document.getElementsByName('id_StyleTag_'+property[i].value);
+            if(propertyOption.length === 0){
+                alert('请设置属性选项');
+                return false;
+            }
+        }
+
+        if(is_ok(mainImage) === false){
+            alert('请选择主图片');
+            return false;
+        }
+        productDescription.value = $("#summernote").summernote('code');
+
+
+        if(productDescription.value === null) {
+            alert('请填写商品描述');
+            return false;
+        }
+
+        return multiClick();
+    }
+    function createStoreTag(){
+        var tag1 = '', tag2 = '', tag3 = '';
+        var firstList = document.getElementsByName('_checkbox_product_name1');
+        for(var i=0; i<firstList.length; i++)
+            if(firstList[i].checked == true)
+                 tag1 = firstList[i].getAttribute('value');
+
+        var secondList = document.getElementsByName('_checkbox_product_name2');
+        for(var i=0; i<secondList.length; i++)
+            if(secondList[i].checked == true)
+                tag2 = secondList[i].getAttribute('value');
+
+        var thirdList = document.getElementsByName('_checkbox_product_name3');
+        for(var i=0; i<thirdList.length; i++)
+            if(thirdList[i].checked == true)
+                tag3 = thirdList[i].getAttribute('value');
+        if(tag1 == '' || tag2 == '' || tag3 == '')
+        {
+            alert("请选择库存分类");
+            return;
+        }
+
+        if(document.getElementById('id_storeCategory_tag'))
+            deleteTag('id_storeCategory_parent','id_storeCategory_tag');
+
+        var parent=document.getElementById('id_storeCategory_parent');
+        var newDiv = document.createElement('div');
+        var tag0 = tag1 + ' ' + tag2 + ' ' + tag3.split('-')[0];
+        var objectId = tag3.split('-')[1];
+        newDiv.setAttribute('id', 'id_storeCategory_tag');
+        newDiv.innerHTML=tag0 + '<input type="hidden" name="_storeCategory" value="' + tag0 + '">' +
+                                '<input type="hidden" name="_storeCategoryThird" value="'+objectId+'">';
+        if(parent !== null )
+            parent.appendChild(newDiv);
+    }
+</script>
+
+     <!-- include libries(jQuery, bootstrap, fontawesome) -->
+
+   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+  <link href="{% static 'summernote/dist/summernote.css' %}" rel="stylesheet">
+  <script src="{% static 'summernote/dist/summernote.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                height: 300,
+                focus: true,
+
+            });
+        });
+
+    </script>
+
+    <style>
+        table{
+            border-right:1px solid;
+            border-bottom:1px solid;
+            border-collapse: collapse;
+        }
+        table td{
+            border-left:1px solid;
+            border-top:1px solid;
+        }
+            .btn-upload {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-upload input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0px 100px 0px 0px;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            width: 150px;
+            height: 150px;
+        }
+        .btn-uploadImage{
+            text-align: center;
+            box-sizing: border-box;
+            padding: 50px 50px 30px;
+            border-width: 2px;
+            border-style: outset;
+            border-color: buttonface;
+            width: 150px;
+            height: 150px;
+        }
+        .div_inline{
+        }
+        .div_inline_image{
+            float:left;
+            width: 150px;
+        }
+    </style>
+    <div id="">
+        创建商品组
+    </div>
+    <hr>
+    <div>
+        {% if content.profile.current_role == 'ProductAdmin' %}
+        <form enctype="multipart/form-data" method="POST" action="{% url 'Product:CreateProductGroup' %}?timestamp={{ content.time }}" onsubmit="return check();" style="width: 800px">
+        {% endif %}
+        {% if content.profile.current_role == 'Shop' %}
+        <form enctype="multipart/form-data" method="POST" action="{% url 'ShopProductGroup:CreateProductGroup' %}" onsubmit="return check();" style="width: 800px">
+        {% endif %}
+
+            {% csrf_token %}
+            <input type="hidden" name="prevToken" value="{{ content.prevToken }}">
+            <input type="hidden" name="_shopObjectId" value="{{ content.data.shopObjectId }}">
+            <div>
+                <div>选择商品分类</div>
+                <hr>
+                <div id="id_storeCategory_parent">
+
+                </div>
+                <table>
+                    <td>
+                        <div style="margin: 10px; padding: 10px;">
+                            {% for firstlevel in content.data.storeCategory %}
+                                <label class="radio">
+                                {% if forloop.first %}
+                                  <input type="radio" onclick="clickFirstLevel1({{ forloop.counter }})" name="_checkbox_product_name1" value="{{ firstlevel.name }}" checked>
+                                  {{ firstlevel.name }}
+                                {% else %}
+                                    <input type="radio" onclick="clickFirstLevel1({{ forloop.counter }})" name="_checkbox_product_name1" value="{{ firstlevel.name }}">
+                                  {{ firstlevel.name }}
+                                {% endif %}
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin: 10px; padding: 10px;">
+                            {% for firstlevel in content.data.storeCategory %}
+                                {% if forloop.first %}
+                                    <div id="_secondLevel{{ forloop.counter }}" style="display: block;" name="_firstShowOne">
+                                    {% else %}
+                                    <div id="_secondLevel{{ forloop.counter }}" style="display: none;" name="_firstShowOne" >
+                                {% endif %}
+
+                                    {% for secondlevel in firstlevel.value %}
+                                        <label class="radio">
+                                        {% if forloop.parentloop.first and  forloop.first %}
+                                            <input type="radio" id="_checkbox_product_name2{{ forloop.parentloop.counter }}{{ forloop.counter }}"
+                                                   onclick="clickSecondLevel1({{ forloop.parentloop.counter }},{{ forloop.counter }})" name="_checkbox_product_name2" value="{{ secondlevel.name }}" checked>
+                                        {% else %}
+                                            <input type="radio" id="_checkbox_product_name2{{ forloop.parentloop.counter }}{{ forloop.counter }}"
+                                                   onclick="clickSecondLevel1({{ forloop.parentloop.counter }},{{ forloop.counter }})" name="_checkbox_product_name2" value="{{ secondlevel.name }}">
+                                        {% endif %}
+                                        {{ secondlevel.name }}
+                                        </label>
+                                    {% endfor %}
+                                {% if forloop.first %}
+                                    </div>
+                                    {% else %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td>
+                        <div style="margin: 10px; padding: 10px;">
+                            {% for firstlevel in content.data.storeCategory %}
+                                    {% for secondlevel in firstlevel.value %}
+                                    <div>
+                                        {% if forloop.first and forloop.parentloop.first %}
+                                            <div id="_firstShowTwo{{ forloop.parentloop.counter }}{{ forloop.counter }}" style="display: block;" name="_firstShowTwo" >
+                                        {% else %}
+                                            <div id="_firstShowTwo{{ forloop.parentloop.counter }}{{ forloop.counter }}" style="display: none;" name="_firstShowTwo" >
+                                        {% endif %}
+
+                                        {% for thirdlevel in secondlevel.value %}
+                                        <label class="radio">
+                                        {% if forloop.first and forloop.parentloop.first and forloop.parentloop.parentloop.first %}
+                                            <input type="radio" name="_checkbox_product_name3" id="_checkbox_product_name3{{ forloop.parentloop.parentloop.counter }}{{ forloop.parentloop.counter }}{{ forloop.counter }}"
+                                                   value="{{ thirdlevel.objectId }}" checked>
+                                        {% else %}
+                                            <input type="radio" name="_checkbox_product_name3" id="_checkbox_product_name3{{ forloop.parentloop.parentloop.counter }}{{ forloop.parentloop.counter }}{{ forloop.counter }}"
+                                                   value="{{ thirdlevel.objectId }}">
+                                        {% endif %}
+                                            {{ thirdlevel.name }}
+                                        </label>
+                                        {% endfor %}
+                                        {% if forloop.first and forloop.parentloop.first %}
+                                            </div>
+                                            {% else %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </td>
+                </table>
+            </div>
+
+            <p></p>
+            <div style="margin-top: 40px">
+                <div>添加销售类别</div>
+                <hr>
+                <div id="_saleContainer">
+                    <div id="_saleAddHtml">
+
+                    </div>
+                <table>
+                    <td>
+                        <div style="margin: 10px; padding: 10px; width: 200px;">
+                        {% for firstlevel in content.data.saleCategory %}
+                            <label class="radio">
+                                <input type="radio" id="_checkbox_sale_name1{{ forloop.counter }}" onclick="clickFirstLevel2({{ forloop.counter }})" name="_checkbox_sale_name1" value="{{ firstlevel.name }}">{{ firstlevel.name }}
+                            </label>
+                        {% endfor %}
+                        </div>
+                    </td>
+                    <td>
+                       <div style="margin: 10px; padding: 10px;width: 200px; ">
+                        {% for firstlevel in content.data.saleCategory %}
+                            {% if forloop.first %}
+                                <div id="_secondLevel2{{ forloop.counter }}" name="_secondShow" style="display: block">
+                            {% else %}
+                                <div id="_secondLevel2{{ forloop.counter }}" name="_secondShow" style="display: none;">
+                            {% endif %}
+                                {% for secondlevel in firstlevel.value %}
+                                    <label class="radio">
+                                      <input type="radio" name="_checkbox_sale_name2" id="_checkbox_sale_name2{{ forloop.parentloop.counter }}{{ forloop.counter }}"
+                                              value="{{ secondlevel.name }}-{{ secondlevel.objectId }}" >{{ secondlevel.name }}
+                                    </label>
+                                {% endfor %}
+                            {% if forloop.first %}
+                                </div>
+                            {% else %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        </div>
+                    </td>
+                </table>
+
+                    <div style="margin: 10px; padding: 10px;">
+                        <input class="btn btn-default" type="button" id="_buttonSaleId" name="_buttonSale" value="添加" onclick="clickButtonSale()" width="40px" hight="40px">
+                    </div>
+                    </div>
+            </div>
+            <div style="margin-top: 40px">
+                <div>设置商品组名</div>
+               <hr>
+                <div>
+                    <input  type="text" class="input-medium" id="_productName" name="_productGroupName" value="test" required>
+                </div>
+            </div>
+            <div style="margin-top: 40px">
+                <div>设置商品简介</div>
+                <hr>
+                <div>
+                    <input  type="text" class="input-medium" id="_productSummary" name="_productSummary" value="100" required>
+                </div>
+            </div>
+            <p></p>
+            <div style="margin-top: 40px">
+                <div>设置商品发货地</div>
+                <hr>
+                <div>
+                    <input  type="text" class="input-medium" id="_dispatchPlace" name="_dispatchPlace" value="上海" required>
+                </div>
+            </div>
+            <p></p>
+            <div style="margin-top: 40px">
+                <div>添加属性和属性选项</div>
+                <hr>
+                <div>
+                     <div id="id_StyleTag">
+
+                    </div>
+                    <div id="id_createTag">
+                        <input type="text" class="input-medium" name="text" id="id_styleText" required>
+                        <button class="btn" type="button" id="id_firstButton" onclick="createFirstTag('id_StyleTag', 'id_styleText', 2)">增加</button>
+                    </div>
+                </div>
+
+            </div>
+            <p></p>
+            <div>
+                <div><label>选择商品服务</label></div>
+                <hr>
+                <ul>
+                    {% for foo in content.data.productService %}
+                        <li>
+                            <input type="checkbox" id="_productService" name="_productService" value="{{ foo.objectId }}" checked>{{ foo.name }}
+                        </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+            <div style="margin-top: 40px">
+                <div>上传图片</div>
+                <hr>
+                <div id="_addPhotoHTML" name="form1" class="">
+                    <div id="_first" class="div_inline">
+                            <div class="btn btn-primary btn-upload" id="_idHidden">
+                                <div class="btn-uploadImage">上传</div>
+                                <input id="_imageFile" type="file" name="_imageFileName" multiple="multiple" onchange="loadImage();" />
+                            </div>
+                            <div id="_image">
+
+                            </div>
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+            <div style="margin-top: 40px">
+                <div>选择主图片</div>
+                <hr>
+                <div id="_loadAllImage" class="">
+
+                </div>
+                <div style="clear:both"></div>
+
+                <div>
+                    <input class="btn btn-default" id="" type="button" name="button" value="选择主图片" onclick="loadAllUploadImage()" />
+                </div>
+            </div>
+            <p></p>
+            <div style="margin-top: 40px">
+
+
+                <div>编辑商品详情</div>
+                <hr>
+                <div id="summernote">
+                </div>
+               <input id="id_detailDescription" name="_detailDescription" type="hidden">
+            </div>
+            <p></p>
+            <div style="margin-top: 40px">
+                <div>完成</div>
+                <hr>
+                <div>
+                    <input class="btn btn-default" type="submit" name="_createProduct" value="确认">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div>
+        {% if content.profile.current_role == 'ProductAdmin' %}
+            <a onclick="" href="{% url 'Shop:AllShop' %}?objectId={{ content.data.shopObjectId  }}&&timestamp={{ content.time }}">返回店铺</a>
+        {% endif %}
+        {% if content.profile.current_role == 'Shop' %}
+            <a onclick="" href="{% url 'Shop:AllShop' %}?objectId={{ content.data.shopObjectId  }}&&timestamp={{ content.time }}">返回店铺</a>
+        {% endif %}
+
+    </div>
+{% endblock %}

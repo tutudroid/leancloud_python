@@ -1,0 +1,79 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+<div>
+    <div style="width: 200px; margin: auto">
+        用户名:
+        {{ content.user.username }}
+    </div>
+    <div style="width: 200px; margin: auto">
+        当前角色：
+        {% for role in content.user.role %}
+            {% if role == 'BusinessOperation' %}
+                运营管理员
+            {% elif role == 'ProductAdmin' %}
+                商户管理员
+            {% elif role == 'CustomService' %}
+                客服
+            {% elif role == 'SuperAdmin' %}
+                超级管理员
+            {% else %}
+                当前角色为空
+            {% endif %}
+        {% endfor %}
+    </div>
+    <hr>
+    <div style="width: 200px; margin: auto">
+        <label >选择角色:</label>
+        <div>
+            <form enctype="multipart/form-data" method="POST" action="{% url 'Admin:ChangeRole'%}" onsubmit="return multiClick();" >
+                {% csrf_token %}
+                <input type="hidden" name="prevToken" value="{{ content.prevToken }}">
+                <input type="hidden" value="{{ content.user.objectId }}" name="_objectId">
+                <div>
+                    <!--
+                    <label>
+                        <input type="radio" name="_checkbox_role" value="1">
+                    </label>
+                    ADMINISTRATOR
+                    -->
+                </div>
+
+                <div>
+
+                    <label>
+                        <input type="radio" name="_checkbox_role" value="2">商家
+                    </label>
+
+                </div>
+
+                <div>
+                    <label>
+                        <input type="radio" name="_checkbox_role" value="3"> 商品管理员
+                    </label>
+
+                </div>
+
+                <div>
+                    <label>
+                        <input type="radio" name="_checkbox_role" value="4"> 客服
+                    </label>
+
+                </div>
+
+                <div>
+                    <label>
+                        <input type="radio" name="_checkbox_role" value="5"> 运营
+                    </label>
+
+                </div>
+
+                <div>
+                    <input class="btn btn-default" type="submit" name="_save" value="保存">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

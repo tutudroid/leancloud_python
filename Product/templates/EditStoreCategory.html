@@ -1,0 +1,348 @@
+{% extends 'ProductAdminPage.html' %}
+
+
+{% block content %}
+    <script type="text/javascript">
+        //删除某个标签
+        function deleteTag(parent, name) {
+            var parentElement = document.getElementById(parent);
+            var deleteElement = document.getElementById(name);
+            if(deleteElement )
+                parentElement.removeChild(deleteElement);
+            else
+                alert('delete对象不存在');
+        }
+
+        function check(name) {
+            var tag = document.getElementsByName(name);
+            if(tag.length === 0){
+            }
+        }
+
+        function clickFirstLevel1(listId, name, object) {
+            var list = document.getElementsByName(name);
+            /*控制分类标签的显示*/
+            var i;
+            for( i=0; i<list.length; i++)
+                if (list[i].id === listId)
+                 {
+                    list[i].style.display = 'block';
+                    if (list[i].firstElementChild){
+                        siblingChild = list[i].firstElementChild.nextElementSibling;
+                        if(siblingChild){
+                            firstElement = siblingChild.firstElementChild;
+                            firstElement.checked = true;
+                            clickSecondLevel1('StoreCategoryThird'+object.value+firstElement.value, '_Second');
+                        }
+                    }
+
+                }
+                else
+                    list[i].style.display = 'none';
+        }
+        function clickSecondLevel1(listId, name) {
+            var list = document.getElementsByName(name);
+            /*控制分类标签的显示*/
+            var i;
+            for( i=0; i<list.length; i++)
+                if (list[i].id === listId)
+                 {
+                    list[i].style.display = 'block';
+                    if (list[i].firstElementChild){
+                        siblingChild = list[i].firstElementChild.nextElementSibling;
+                        if(siblingChild){
+                            firstElement = siblingChild.firstElementChild;
+                            firstElement.checked = true;
+                        }
+                    }
+
+                }
+                else
+                    list[i].style.display = 'none';
+        }
+        function createTag(parentId, firstName, objectId)
+        {
+            var parent=document.getElementById(parentId + firstName);
+            var input = document.getElementById(parentId + 'Input'+firstName);
+
+            var newDiv = document.createElement('div');
+            var newInputText =  input.value;
+            newDiv.id = parentId + firstName + newInputText;
+            if(input.value === '')
+            {
+                alert('请输入内容');
+                return;
+            }
+            if(document.getElementById(newDiv.id))
+            {
+                alert('该标签存在');
+                return;
+            }
+            newDiv.innerHTML =
+                '<input type="hidden" name="' + parentId + '_objectId' + '" value="'+ objectId +'">' +
+                '<input type="hidden" name="' + parentId + '_name' + '" value="'+ newInputText +'">' +
+                    newInputText +
+                '<input type="submit" name="_save" value="保存">' +
+                '<input type="button" name="button" value="删除" onclick="deleteTag(\''+parentId+firstName+'\',\''+newDiv.id+'\');">';
+            if(parent !== null )
+                parent.appendChild(newDiv);
+        }
+    </script>
+        <style>
+        .firstSaleTag{
+            border: 1px solid;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        .parentTagLeft{
+            float: left;
+            padding: 5px;
+        }
+
+    </style>
+    <div id="">
+        编辑库存分类表
+        <hr>
+    </div>
+    <div>
+        库存分类表
+        <hr>
+        <form enctype="multipart/form-data" onsubmit="return multiClick();" method="POST" action="{% url 'Product:EditStoreCategory' %}">
+            {% csrf_token %}
+        <input type="hidden" name="prevToken" value="{{ content.prevToken }}">
+            <div class="firstSaleTag">
+                <div class="parentTagLeft">
+                    <div style="border: 1px solid; margin: 10px; padding: 10px;" id="StoreCategoryFirst">
+                        <div>
+                            <input type="text" id="StoreCategoryFirstInput" >
+                            <br>
+                            <input class="btn btn-default" type="button" name="button" value="添加" onclick="createTag('StoreCategoryFirst','','')">
+                        </div>
+                        {% for firstlevel in content.data.storeCategory %}
+                            <div id="StoreCategoryFirst{{ firstlevel.name }}">
+                            {% if forloop.counter == 1%}
+                                <input type="radio" onclick="clickFirstLevel1('StoreCategorySecond{{ firstlevel.name }}', '_First', this)" name="_checkbox_product_name1" value="{{ firstlevel.name }}" checked>
+                            {% else %}
+                                <input type="radio" onclick="clickFirstLevel1('StoreCategorySecond{{ firstlevel.name }}', '_First', this)" name="_checkbox_product_name1" value="{{ firstlevel.name }}">
+                            {% endif %}
+                                {{ firstlevel.name }}
+                                <input class="btn btn-default" type="button" name="button" value="编辑" onclick="show('{{ firstlevel.objectId }}', '{{ firstlevel.name }}', 'StoreCategoryFirst');">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="parentTagLeft">
+                    <div style="border: 1px solid; margin: 10px; padding: 10px;">
+                        {% for firstlevel in content.data.storeCategory %}
+                            {% if forloop.first %}
+                                <div  id="StoreCategorySecond{{ firstlevel.name }}" style="display: block;" name="_First">
+                                {% else %}
+                                <div  id="StoreCategorySecond{{ firstlevel.name }}" style="display: none;" name="_First" >
+                            {% endif %}
+                                <div>
+                                    <input type="text" id="StoreCategorySecondInput{{ firstlevel.name }}" >
+                                    <br>
+                                    <input class="btn btn-default" type="button" name="button" value="添加" onclick="createTag('StoreCategorySecond','{{ firstlevel.name }}','{{ firstlevel.objectId }}')">
+                                </div>
+                                {% for secondlevel in firstlevel.value %}
+                                        <div id="StoreCategorySecond{{ firstlevel.name }}{{ secondlevel.name }}">
+                                        {% if forloop.parentloop.counter == 1 and forloop.counter == 1 %}
+                                            <input type="radio" onclick="clickSecondLevel1('StoreCategoryThird{{ firstlevel.name }}{{ secondlevel.name }}', '_Second')" name="_checkbox_product_name2" value="{{ secondlevel.name }}" checked>
+                                            {% else %}
+                                            <input type="radio" onclick="clickSecondLevel1('StoreCategoryThird{{ firstlevel.name }}{{ secondlevel.name }}', '_Second')" name="_checkbox_product_name2" value="{{ secondlevel.name }}">
+                                            {% endif %}
+                                            {{ secondlevel.name }}
+                                            <input class="btn btn-default" type="button" name="button" value="编辑" onclick="show('{{ secondlevel.objectId }}', '{{ secondlevel.name }}', 'StoreCategorySecond');">
+                                        </div>
+                                {% endfor %}
+                            {% if forloop.first %}
+                                </div>
+                                {% else %}
+                                </div>
+                            {% endif %}
+
+
+                        {% endfor %}
+                    </div>
+
+                </div>
+                <div class="parentTagLeft">
+                    <div style="border: 1px solid; margin: 10px; padding: 10px;">
+                        {% for firstlevel in content.data.storeCategory %}
+                                    {% for secondlevel in firstlevel.value %}
+                                    <div>
+                                        {% if forloop.first and forloop.parentloop.first %}
+                                            <div id="StoreCategoryThird{{ firstlevel.name }}{{ secondlevel.name }}" style="display: block;" name="_Second" >
+
+                                            {% else %}
+                                            <div id="StoreCategoryThird{{ firstlevel.name }}{{ secondlevel.name }}" style="display: none;" name="_Second" >
+                                        {% endif %}
+                                            <div>
+                                                <input type="text" id="StoreCategoryThirdInput{{ firstlevel.name }}{{ secondlevel.name }}" >
+                                                <br>
+                                                <input class="btn btn-default" type="button" name="button" value="添加"
+                                                       onclick="createTag('StoreCategoryThird','{{ firstlevel.name }}{{ secondlevel.name }}','{{ secondlevel.objectId }}')">
+                                            </div>
+
+                                        {% for thirdlevel in secondlevel.value %}
+                                            <div id="StoreCategoryThird{{ firstlevel.name }}{{ secondlevel.name }}{{ thirdlevel.name }}">
+                                            {% if forloop.parentloop.parentloop.counter == 1 and forloop.parentloop.counter == 1 and forloop.counter == 1 %}
+                                                <input type="radio" name="_checkbox_product_name3" checked>
+                                                {% else %}
+                                                <input type="radio" name="_checkbox_product_name3">
+                                                {% endif %}
+                                                {{ thirdlevel.name }}
+                                                <input class="btn btn-default" type="button" name="button" value="编辑" onclick="show('{{ thirdlevel.objectId }}', '{{ thirdlevel.name }}', 'StoreCategoryThird')">
+                                            </div>
+                                        {% endfor %}
+
+                                        {% if forloop.first and forloop.parentloop.first %}
+                                            </div>
+                                            {% else %}
+                                            </div>
+                                        {% endif %}
+
+                                    </div>
+                                {% endfor %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+            <div style="clear:both;"></div>
+            </div>
+        </form>
+        <hr>
+        <a onclick="return multiClick();" href="{% url 'Product:ShowStoreCategory' %}">返回库存分类</a>
+    </div>
+
+    <script type="text/javascript">
+            /*
+         * 弹出DIV层
+        */
+        function showDiv()
+        {
+            var Idiv     = document.getElementById("Idiv");
+            var mou_head = document.getElementById('mou_head');
+            Idiv.style.display = "block";
+            //以下部分要将弹出层居中显示
+            Idiv.style.left=(document.documentElement.clientWidth-Idiv.clientWidth)/2+document.documentElement.scrollLeft+"px";
+            Idiv.style.top =(document.documentElement.clientHeight-Idiv.clientHeight)/2+document.body.scrollTop-50+"px";
+
+            //以下部分使整个页面至灰不可点击
+            var procbg = document.createElement("div"); //首先创建一个div
+            procbg.setAttribute("id","myBackground"); //定义该div的id
+            procbg.style.background = "#000000";
+            procbg.style.width = "100%";
+            procbg.style.height = "100%";
+            procbg.style.position = "fixed";
+            procbg.style.top = "0";
+            procbg.style.left = "0";
+            procbg.style.zIndex = "500";
+            procbg.style.opacity = "0.6";
+            procbg.style.filter = "Alpha(opacity=70)";
+            //背景层加入页面
+            document.body.appendChild(procbg);
+            document.body.style.overflow = "hidden"; //取消滚动条
+
+            //以下部分实现弹出层的拖拽效果
+            var posX;
+            var posY;
+            mou_head.onmousedown=function(e)
+            {
+                if(!e) e = window.event; //IE
+                posX = e.clientX - parseInt(Idiv.style.left);
+                posY = e.clientY - parseInt(Idiv.style.top);
+                document.onmousemove = mousemove;
+            };
+            document.onmouseup = function()
+            {
+                document.onmousemove = null;
+            }
+            function mousemove(ev)
+            {
+                if(ev==null) ev = window.event;//IE
+                Idiv.style.left = (ev.clientX - posX) + "px";
+                Idiv.style.top = (ev.clientY - posY) + "px";
+            }
+        }
+
+        function closeDiv() //关闭弹出层
+        {
+            var Idiv=document.getElementById("Idiv");
+            Idiv.style.display="none";
+            document.body.style.overflow = "auto"; //恢复页面滚动条
+            var body = document.getElementsByTagName("body");
+            var myBackground = document.getElementById("myBackground");
+            body[0].removeChild(myBackground);
+        }
+        function show(objectId, value, categoryClassName){
+            var saleCategory = document.getElementById('storeCategoryValue');
+            saleCategory.value = value;
+            var oldSaleCategory = document.getElementById('oldCategoryValue');
+            oldSaleCategory.value = value;
+            //通过修改标签的名字，来区分修改的是第一级标签还是第二级标签
+            var category = document.getElementById('storeCategoryObjectId');
+            category.value = objectId;
+            var className = document.getElementById('storeCategoryClassName');
+            className.value = categoryClassName;
+            //显示悬浮窗口
+            showDiv();
+        }
+        var buttonTmp = 0;
+        function checkDiv(){
+            if (document.getElementById('storeCategoryValue').value === ''){
+                alert('标签不能为空');
+                return false;
+            }
+            if (document.getElementById('oldCategoryValue').value === document.getElementById('storeCategoryValue').value){
+                if(buttonTmp === 1){
+                    closeDiv();
+                    return false;
+                }
+            }
+            buttonTmp = 0;
+            return multiClick();
+        }
+        function setButtonTmp(value){
+            buttonTmp = value;
+        }
+    </script>
+
+<!--弹出层开始-->
+<style type="text/css">
+    .Idiv {
+        width:250px;
+        height: 150px;
+        display:none;
+        position:absolute;
+        z-index:1000;
+        background:#67a3d9;
+        padding: 10px;
+    }
+    .mou_head {
+        width:250px;
+        height:20px;
+        z-index:1001;
+    }
+</style>
+<div id="Idiv" class="Idiv">
+    <div id="mou_head"  class="mou_head"><div style="float:left;">编辑库存分类</div><div style="float:right;"><input type="button" name="_cancel" value="X" onclick="closeDiv();"></div></div>
+    <form enctype="multipart/form-data" method="POST" action="{% url 'Product:EditStoreCategory' %}"  onsubmit="return checkDiv();">
+        {% csrf_token %}
+        <div>
+            <input type="hidden" name="storeCategoryObjectId" id="storeCategoryObjectId" value="">
+            <input type="hidden" name="storeCategoryClassName" id="storeCategoryClassName" value="">
+            <input type="hidden" id="oldCategoryValue"  value="">
+            库存分类名称：<input type="text" id="storeCategoryValue" name="storeCategoryValue" value="">
+            <br>
+            <input class="btn btn-default" type="submit" name="_edit_save" value="修改" onclick="setButtonTmp(1);">
+            <input class="btn btn-default" type="submit" name="_edit_del" value="删除" >
+        </div>
+    </form>
+
+</div>
+<!--弹出层结束-->
+
+
+{% endblock %}

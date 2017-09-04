@@ -1,0 +1,28 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% load static %}
+{% block content %}
+<div>
+    <script src="{% static 'js/express.js'%}"></script>
+    <div class="row">
+        <div class="span1">物流: &nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <div class="span6">{{ content.express.shipperName }} </div>
+    </div>
+    <div class="row">
+        <div class="span1">快递号: &nbsp;&nbsp;</div>
+        <div class="span6"> {{ content.express.logisticsCode }}</div>
+    </div>
+    {% if not content.express.traces  %}
+        未查询到结果
+    {% endif %}
+    {% for foo in content.express.traces %}
+        <div>
+            {{ foo.AcceptTime }}
+        </div>
+        <div>
+            {{ foo.AcceptStation }}
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% load static %}
+{% block content %}
+<div>
+    {% for foo in month_range %}
+        <div>
+        <a href="{% url 'Order:ExportShopBill' %}?year={{ year }}&&month={{ foo }}">{{ year }}年{{ foo }}月账单</a>
+        </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,204 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+    {% if content.profile.current_role == 'BusinessOperation' %}
+     <script type="text/javascript">
+        $(function () {
+            $("input:button[name='button']").click(function () {
+                var $parent = $(this).closest('.parent');
+                var $previous = $(this).prev();
+                var secondId = $('#saleCategorySecondId').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '/Product/DelSaleCategoryRecommend/',
+                    data: {
+                        'saleCategorySecondObjectId': secondId,
+                        'productGroupObjectId': $previous.val(),
+                    },
+                    success: function (data) {
+                        //登陆成功
+                        if(data == 'success'){
+                            alert('删除成功');
+                            $parent.remove();
+                        }else{
+                            alert('删除失败');
+                        }
+
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert('请求失败');
+                    },
+                    complete:function(XMLHttpRequest){
+                    }
+                });
+            });
+        });
+    </script>
+    {% endif %}
+
+    <style>
+        .shopInforLabel{
+            display: block;
+            width: 200px;
+            float: left;
+        }
+        .shopInforMain div{
+            margin: 20px;
+        }
+        .shopInforFormRight{
+            float: right;
+        }
+        .button-wid{
+            width: 100px;
+        }
+        .mybutton-color{
+            color: #0e90d2;
+            border-color: #0e90d2;
+            background-color: #00a0dc;
+        }
+    </style>
+    {% if content.shop %}
+        <div class="shopInforMain">
+            <label class="">商家信息</label>
+            <hr>
+            <div>
+                <label class="shopInforLabel">名称：</label>
+                <label>{{ content.shop.name }}</label>
+            </div>
+            <div>
+                <label class="shopInforLabel">ID：</label>
+                <label>{{ content.shop.uniqueId }}</label>
+            </div>
+            <div>
+                <label class="shopInforLabel">手机号：</label>
+                <label>{{ content.shop.phoneNumber }}</label>
+            </div>
+            <div>
+                <label class="shopInforLabel">地址：</label>
+                <label>{{ content.shop.province }}/{{ content.shop.city }}/{{ content.shop.district }}/{{ content.shop.address }}</label>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+        <hr>
+        <div class="row">
+            <div class="span2">
+            {% if content.profile.current_role == 'Shop' %}
+                <a class="btn button-wid {% if content.is_shelf_on %}mybutton-color{% endif %}" href="{% url 'Product:ShopProductGroup' %}?state=0&&timestamp={{ content.time }}">正在销售的商品</a>
+            {% else %}
+                <a class="btn button-wid {% if content.is_shelf_on %}mybutton-color{% endif %}" href="{% url 'Shop:AllShop' %}?objectId={{ content.shop.objectId }}&&state=0&&timestamp={{ content.time }}">正在销售的商品</a>
+            {% endif %}
+            </div>
+
+            <div class="span2">
+            {% if content.profile.current_role == 'Shop' %}
+                <a class="btn button-wid {% if content.is_shelf_off %}mybutton-color{% endif %}" href="{% url 'Product:ShopProductGroup' %}?&&state=1&&timestamp={{ content.time }}">仓库</a>
+            {% else %}
+                <a class="btn button-wid {% if content.is_shelf_off %}mybutton-color{% endif %}" href="{% url 'Shop:AllShop' %}?objectId={{ content.shop.objectId }}&&state=1&&timestamp={{ content.time }}">仓库</a>
+            {% endif %}
+
+
+
+            </div>
+
+            {% if content.profile.current_role == 'ProductAdmin' or content.profile.current_role == 'Shop' %}
+
+                <div class="span2">
+                    <a class="btn button-wid {% if content.is_audit %}mybutton-color{% endif %}"  href="{% url 'TmpProductGroup:AllProductGroup' %}?objectId={{ content.shop.objectId }}&&audit=1">待审核</a>
+                </div>
+            {% endif %}
+            {% if content.data.searchCondition %}
+            {% else %}
+
+                {% if content.profile.current_role == 'ProductAdmin' %}
+                    <div class="span2">
+                        <a class="btn button-wid" href="{% url 'Product:CreateProductGroup' %}?_shopObjectId={{ content.shop.objectId }}" >发布商品</a>
+                    </div>
+                {% endif %}
+
+                {% if content.profile.current_role == 'Shop' %}
+                    <div class="span2">
+                        <a class="btn button-wid" href="{% url 'TmpProductGroup:CreateProductGroup' %}?_shopObjectId={{ content.shop.objectId }}" >发布商品</a>
+                    </div>
+                {% endif %}
+
+            {% endif %}
+        </div>
+
+        <hr>
+    {% endif %}
+    {% if content.data.search %}
+         <h3>{{ content.data.search }}</h3>
+            <div><input type="hidden" id="saleCategorySecondId" value="{{ content.data.saleCategorySecondId }}"></div>
+    {% endif %}
+    {% if content.data.searchCondition %}
+        {% for foo in content.data.searchCondition %}
+            <div>
+                <label  class="shopInforLabel">{{ foo.name }}</label>
+                <label>{{ foo.value }}</label>
+            </div>
+        {% endfor %}
+        <hr>
+    {% endif %}
+    <div style="clear: both;"></div>
+    {% for foo in content.productGroup %}
+
+            <div class="row">
+                <div class="span3">
+                    <img src="{{ foo.mainImage.url }}" width="200" height="200">
+                </div>
+                <div class="span5">
+
+                    {% if foo.is_shopProductGroup %}
+                        <div><a href="{% url 'TmpProductGroup:ProductGroupDetail' %}?productGroupObjectId={{ foo.objectId }}"><h3>{{ foo.name }}</h3></a></div>
+                    {% else %}
+                        <div><a href="{% url 'Product:ProductGroupDetail' %}?productGroupObjectId={{ foo.objectId }}"><h3>{{ foo.name }}</h3></a></div>
+                    {% endif %}
+                    <div>{{ foo.briefDescription }}</div>
+                    <div>{{ foo.uniqueId }}</div>
+                </div>
+                <div class="span4">
+                <h2>
+                    {% if content.profile.current_role == 'ProductAdmin' %}
+                        {% if foo.is_shopProductGroup %}
+                            <div class="row">
+                                <label class="span"><a href="{% url 'Product:AuditProductGroup' %}?productGroupObjectId={{ foo.objectId }}&&shelf_on=1"><h3>直接上架</h3></a></label>
+                                <label class="span"><a href="{% url 'Product:AuditProductGroup' %}?productGroupObjectId={{ foo.objectId }}&&shelf_off=1"><h3>放入仓库</h3></a></label>
+                            </div>
+                        {% else %}
+                            {% if foo.state == 1 %}
+                                 <div class="row">
+                                     <label class="span"><a href="{% url 'Product:EditProductGroup' %}?productGroupObjectId={{ foo.objectId }}&&time={{ content.time }}"><h3>编辑</h3></a></label>
+                                     <label class="span"><a href="{% url 'Product:DisposeProductGroup' %}?productGroupObjectId={{ foo.objectId }}&&shelf_on=1"><h3>上架</h3></a></label>
+                                     <label class="span"><a href="{% url 'Product:CreateProductGroup' %}?productGroupObjectId={{ foo.objectId }}&&delete=1"><h3>删除</h3></a></label>
+                                </div>
+                            {% else %}
+                                 <div class="row">
+                                     <label class="span"><a href="{% url 'Product:EditProductGroup' %}?productGroupObjectId={{ foo.objectId }}&&time={{ content.time }}"><h3>编辑</h3></a></label>
+                                     <label class="span"><a href="{% url 'Product:DisposeProductGroup' %}?productGroupObjectId={{ foo.objectId }}&&shelf_off=1"><h3>下架</h3></a></label>
+                                     <label class="span"><a href="{% url 'Product:CreateProductGroup' %}?productGroupObjectId={{ foo.objectId }}&&delete=1"><h3>删除</h3></a></label>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
+                    {% endif %}
+                    {% if content.profile.current_role == 'Shop' and foo.is_shopProductGroup %}
+                        <div class="row">
+                            <label class="span"><a href="{% url 'TmpProductGroup:EditProductGroup' %}?productGroupObjectId={{ foo.objectId }}&&time={{ content.time }}"><h3>编辑</h3></a></label>
+                            <label class="span"><a href="{% url 'TmpProductGroup:CreateProductGroup' %}?productGroupObjectId={{ foo.objectId }}&&delete=1"><h3>删除</h3></a></label>
+                        </div>
+                    {% endif %}
+
+                </h2>
+                </div>
+                {% if content.profile.current_role == 'BusinessOperation' and content.data.saleCategorySecondId %}
+                    <div class="span2">
+                      <input type="hidden" value="{{ foo.objectId }}">
+                      <input class="btn" type="button" name="button" value="delete" >
+                    </div>
+                {% endif %}
+            </div>
+            <hr>
+
+    {% endfor %}
+    {% include 'paginator_page.html' %}
+{% endblock %}

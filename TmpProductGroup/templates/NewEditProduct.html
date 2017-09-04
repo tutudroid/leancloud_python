@@ -1,0 +1,1813 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% load static %}
+{% block content %}
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script language="javascript">
+
+    //确认检查
+    function check(){
+
+            if($('#_productService').is(':checked')){
+            } else
+            {
+                alert("请选择商品服务");
+                return false;
+            }
+            if($('.checkbox_style_tag').is(':checked')){
+            } else
+            {
+                alert("请选择商品");
+                return false;
+            }
+            //检查商品属性的选择
+            var firstLength = 0;
+            $('input[name=second_style_1]').each(function(){
+            　　 if($(this).val()!='') firstLength++;
+            });
+            var secondLength = 0;
+            $('input[name=second_style_2]').each(function(){
+            　　 if($(this).val()!='')secondLength++;
+            });
+            var thirdLength = 0;
+            $('input[name=second_style_3]').each(function(){
+            　　 if($(this).val()!='')thirdLength++;
+            });
+            var dict1 = {};
+            var dict2 ={};
+            var dict3 = {};
+            var temp3, temp2;
+            $('.checkbox_style_tag').each(function () {
+                if($(this).is(':checked')){
+                    var temp = $(this).val().split('::')[0];
+                    if (!dict1.hasOwnProperty(temp)){
+                        dict1[temp] = true;
+                    }
+                    temp2 = $(this).val().split('::')[1];
+                    if (temp2!= undefined && !dict2.hasOwnProperty(temp2)){
+                        dict2[temp2] = true;
+                    }
+                    temp3 = $(this).val().split('::')[2];
+                    if (temp3!= undefined && !dict3.hasOwnProperty(temp3)){
+                        dict3[temp3] = true;
+                    }
+                }
+            });
+            if(Object.keys(dict1).length < firstLength || (temp2 != undefined && Object.keys(dict2).length < secondLength) || (temp3 != undefined &&Object.keys(dict3).length < thirdLength)){
+                alert('每种属性都必须至少选择一样');
+                return false;
+            }
+
+        }
+        // 用于检查输入是否有效
+        $(document).on('blur','form :input', function(){
+            var $parent = $(this).parent();
+            $parent.find(".formtips").remove();
+
+            //验证名称，规格，规格信息
+            if( $(this).is('#_productName') || $(this).is('#_dispatchPlace') ){
+                if( this.value.length > 20 ){
+                    $parent.append('<span class="formtips onError">'+'不得超过20个字符.'+'<\/span>');
+                }
+            }
+            if( $(this).is('input[name=first_style]')) {
+                 if( this.value.length > 4 ){
+                    $parent.append('<span class="formtips onError">'+'字数不能超过4个字符.'+'<\/span>');
+                    return;
+                 }
+                 var o={};
+                $(this).closest('#id_createTag').find('input[name=first_style]').each(function () {
+                    if($(this).val() != ''){
+                        if(!(o[$(this).val()])){
+                            o[$(this).val()] = true;
+                        }else{
+                             $(this).parent().find(".formtips").remove();
+                            $(this).parent().append('<span class="formtips onError">'+'输入标签不得重复.'+'<\/span>');
+                            return false;
+                        }
+                    }
+                });
+            }
+            if( $(this).is('.second_style')){
+                //输出错误检查
+                if( this.value.length > 10 ){
+                    $parent.append('<span class="formtips onError">'+'不得超过10个字符.'+'<\/span>');
+                    return;
+                }
+                var o={};
+                $(this).closest('table').first().find('.second_style').each(function () {
+                    if($(this).val() != ''){
+                        if(!(o[$(this).val()])){
+                            o[$(this).val()] = true;
+                        }else{
+                            $(this).parent().find(".formtips").remove();
+                            $(this).parent().append('<span class="formtips onError">'+'输入标签不得重复.'+'<\/span>');
+                            return false;
+                        }
+                    }
+
+                });
+                if($(this).closest('table').first().find('.formtips').length > 0){
+                    return;
+                }
+                if($(this).closest('table').first().find('input[name=first_style]').val() == ''){
+                    return;
+                }
+                // 删除已经有商品的标签
+                if($(this).next().attr('id')== 'OptionId' && $(this).val()==''){
+                    //$(this).parent().append('<span class="formtips onError">'+'该值不能为空.'+'<\/span>');
+                    //return false;
+                    var name = $(this).attr('name');
+                    var OptionId = $(this).next().val();
+                    // 删除第一级
+                    $('.checkbox_style_tag').each(function () {
+                        // 删除第一级
+                        var key = $(this).val().split('::')[0];
+                        // 删除第三级
+                        if(name == 'second_style_2')
+                        {
+                            key = $(this).val().split('::')[1];
+                        }
+                        // 删除第三级
+                        if(name == 'second_style_3'){
+                            key = $(this).val().split('::')[2];
+                        }
+                        if(key == OptionId){
+                            // 增加整个一级的delete product 信息
+
+                            if ($(this).next().first().val()){
+                                var objectId = $(this).next().first().val();
+                                $('#delete_group').append('<input type="hidden" name="delete_product" value="'+objectId+'">');
+                                // 删除productInfor中的信息
+                                var productInfor = eval("("+$('#productInfor').val()+")");
+                                for(var i in productInfor){
+                                    if(productInfor[i].hasOwnProperty('objectId')){
+                                        if(productInfor[i].objectId == objectId){
+                                            productInfor.splice(i, 1);
+                                            break;
+                                        }
+                                    }
+                                }
+                                $('#productInfor').val(JSON.stringify(productInfor).replace(/'/g,'"'));
+                            }
+
+                        }
+                    });
+                     //删除用于标示原有optionId的标记
+                    $(this).next().remove();
+                }
+                //if($(this).val() != '')
+                update_style();
+            }
+           if( $(this).is('.specification') ){
+                if( this.value.length > 4 ){
+                    $parent.append('<span class="formtips onError">'+'字数不能超过4个字符.'+'<\/span>');
+                }
+            }
+            if( $(this).is('.specification_Text') || $(this).is('#_productSummary')){
+                if( this.value.length > 50 ){
+                    $parent.append('<span class="formtips onError">'+'字数不能超过50个字符.'+'<\/span>');
+                }
+            }
+
+            //验证price
+            var reg = /^\d+(\.\d{0,2})?$/;
+            if( $(this).is('input[name=price]') ){
+                if( this.value && !reg.test(this.value) ){
+                    var errorMsg = '请输入有效的价格，保留两位小数.';
+                    $parent.append('<span class="formtips onError">'+errorMsg+'<\/span>');
+                    $(this).val('');
+                }
+                $(this).parent().prev(':last').children('.checkbox_style_tag').prop('checked', false);
+            }
+            //验证stockCount
+            var pattern = /(^\d+$)/;
+            if( $(this).is('input[name=stockCount]') ){
+                if( this.value && !pattern.test(this.value) ){
+                    var errorMsg = '请输入有效到商品数.';
+                    $parent.append('<span class="formtips onError">'+errorMsg+'<\/span>');
+                }
+                $(this).parent().prev(':last').prev(':last').children('.checkbox_style_tag').prop('checked', false);
+            }
+            // 验证规格
+        });
+</script>
+
+     <!-- include libries(jQuery, bootstrap, fontawesome) -->
+
+   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+    <script src="{% static 'js/distpicker.data.js' %}"></script>
+        <script src="{% static 'js/distpicker.js' %}"></script>
+        <script>
+            $("#distpicker").distpicker({
+                    province:'{{ content.productGroup.dispatchPlace.province }}',
+                    city:'{{ content.productGroup.dispatchPlace.city }}',
+                    district: '{{ content.productGroup.dispatchPlace.district }}'
+                });
+        </script>
+    <script type="text/javascript" src="{% static 'app/js_createNewProduct.js' %}"></script>
+    <script>
+
+        function createStyleTag(num){
+            var parent=document.getElementById('id_createTag');
+            var newDiv = document.createElement('table');
+            newDiv.innerHTML = '<tr>\
+                                    \<th><input type="text" class="input-medium" name="first_style" id="first_style_'+num+'" placeholder="颜色（最多四个字）">\
+                                    <th colspan=3><input type="button" value="删除" class="delete_style_tag"></th>\
+                                    </tr>\
+                                    <tr>\
+                                        <td>\
+                                            <input type="text" class="second_style" name="second_style_'+num+'"   >\
+                                        </td>\
+                                        <td>\
+                                            <input type="text" class="second_style" name="second_style_'+num+'" >\
+                                        </td>\
+                                        <td>\
+                                            <input type="text" class="second_style" name="second_style_'+num+'">\
+                                        </td>\
+                                        <td>\
+                                            <input type="text" class="second_style" name="second_style_'+num+'" >\
+                                        </td>\
+                                    </tr>\
+                                    <tr>\
+                                        <td>\
+                                            <input type="text" class="second_style" name="second_style_'+num+'">\
+                                        </td>\
+                                        <td>\
+                                            <input type="text" class="second_style" name="second_style_'+num+'">\
+                                        </td>\
+                                        <td>\
+                                            <input type="text" class="second_style" name="second_style_'+num+'">\
+                                        </td>\
+                                        <td>\
+                                            <input type="text" class="second_style" name="second_style_'+num+'">\
+                                        </td>\
+                                    </tr>';
+            if(parent !== null ) {
+                parent.appendChild(newDiv);
+            }
+        }
+        function update_product(){
+            var productInfor;
+            if ($('#productInfor').val() != '' && $('#productInfor').val() != '()')
+                productInfor= eval("("+$('#productInfor').val()+")");
+            for(var i in productInfor){
+                var checkboxValue = productInfor[i].style.firstId;
+                if(productInfor[i].style.secondId != '' && productInfor[i].style.thirdId != '' && productInfor[i].style.secondId != undefined && productInfor[i].style.thirdId != undefined)
+                    checkboxValue = productInfor[i].style.firstId + '::' + productInfor[i].style.secondId + '::' + productInfor[i].style.thirdId;
+                else {
+                    if(productInfor[i].style.secondId != '' && productInfor[i].style.secondId != undefined )
+                        checkboxValue = productInfor[i].style.firstId + '::' + productInfor[i].style.secondId;
+                }
+                $('.checkbox_style_tag').each(function () {
+                    if($(this).val() == checkboxValue){
+                        $(this).prop('checked', true);
+                        $(this).parent().append('<input type="hidden" name="product_old" value="'+productInfor[i].objectId+'">');
+                        $(this).parent().next().children('input').val(productInfor[i].price);
+                        $(this).parent().next().next().children('input').val(productInfor[i].stockCount);
+                        // 显示图片，屏蔽上传
+                        if(productInfor[i].mainImage){
+                            $(this).parent().next().next().next().find('.style_image').append('<img height="36" width="50" src="'+productInfor[i].mainImage+'">');
+                            $(this).parent().next().next().next().find('input').removeAttr('display style');
+                        }
+                    }
+                });
+            }
+        }
+
+        function createStyleInput(first, second, third)
+        {
+            // 清除原来的标签
+            $('#id_StyleTag').empty();
+            $('#product').val('');
+            // 添加新的标签
+            var parent=document.getElementById('id_StyleTag');
+            var newDiv = document.createElement('table');
+            var firstTag = $('input[name=first_style]');
+            // 添加第一行
+            var tmpString = '<tr>';
+            var i, j, k;
+            var tmpProperty = [];
+            for(i=0; i<firstTag.length; i++)
+            if(firstTag[i].value != ''){
+                tmpString += '<td>'+firstTag[i].value+'</td>';
+            }
+            tmpString+= '<td>添加</td><td>价格*</td><td>数量*</td><td>图片（可不填）</td></tr>';
+            var secondLength = 0;
+            for(j=0; j<second.length; j++)
+                if(second[j]!='')
+                    secondLength++;
+            var thirdLength = 0;
+            for (k = 0; k < third.length; k++)
+                if(third[k]!='')
+                    thirdLength++;
+
+            var key2=1, key3=1; // 用于确定第一个元素的位置
+            if(secondLength > 0)
+            {
+                //获得第二级标签的值
+
+                if(thirdLength > 0)
+                {
+                    //获得第三级标签的值
+                    for(i=0; i<first.length; i++)
+                    if(first[i]!=''){
+                        key2 = 1;
+                        for(j=0; j<second.length; j++)
+                        if(second[j]!=''){
+                            key3 = 1;
+                            for (k = 0; k < third.length; k++)
+                            if(third[k]!=''){
+
+                                tmpString +='<tr>';
+                                if(key3==1) {
+                                    if(key2 == 1) {
+                                        tmpString += '<td rowspan=' + secondLength*thirdLength + '>' + first[i] + '</td>';
+                                    }
+                                    tmpString +=    '<td rowspan='+thirdLength+'>' + second[j] + '</td>';
+                                }
+                                    tmpString +=    '<td>' + third[k] + '</td>\
+                                                    <td><input type="checkbox" class="checkbox_style_tag" name="checkbox_style_tag" value="'+i+"::"+j+"::"+k+'"></td>\
+                                                    <td><input type="text" name="price"></td>\
+                                                    <td><input type="text" name="stockCount"></td>\
+                                                    <td><div class="div_inline"><div class="btn btn-primary btn-upload2" style="float: left;">\
+                                                            <div class="btn-uploadImage2">上传</div><input type="file" class="style_image_file" name="style_image_file"/></div>\
+                                                            <div class="style_image" style="float:left;"></div>\
+                                                            <div style="float:left;"><input class="delete_style_image" type="button" value="删除" style="display: none;"></div>\
+                                                        </div><div style="clear: both"></div></td>\
+                                                </tr>';
+                                key3 = 0;
+                            }
+                            key2 = 0;
+                        }
+                    }
+                }else {
+                    // 只有两级标签
+                    for(i=0; i<first.length; i++)
+                    if(first[i]!=''){
+                        key2 = 1;
+                        for(j=0; j<second.length; j++)
+                        if(second[j]!=''){
+                            tmpString +='<tr>';
+                            if(key2==1) {
+                                tmpString += '<td rowspan=' + secondLength + '>' + first[i] + '</td>';
+                            }
+                                tmpString +=       '<td>'+ second[j]+ '</td>\
+                                                    <td><input type="checkbox" class="checkbox_style_tag" name="checkbox_style_tag" value="'+i+"::"+j+'"></td>\
+                                                    <td><input type="text" name="price"></td>\
+                                                    <td><input type="text" name="stockCount"></td>\
+                                                    <td><div class="div_inline"><div class="btn btn-primary btn-upload2" style="float: left;">\
+                                                            <div class="btn-uploadImage2">上传</div><input type="file" class="style_image_file" name="style_image_file"/></div>\
+                                                            <div class="style_image" style="float:left;"></div>\
+                                                            <div style="float:left;"><input class="delete_style_image" type="button" value="删除" style="display: none;"></div>\
+                                                        </div><div style="clear: both"></div></td>\
+                                              </tr>';
+                        key2 = 0;
+                        }
+
+                    }
+                }
+            }else{
+                // 只有一级标签
+                for(i=0; i<first.length; i++)
+                if(first[i]!=''){
+                    tmpString +=    '<tr><td>'+ first[i]+ '</td>\
+                                        <td><input type="checkbox" class="checkbox_style_tag" name="checkbox_style_tag" value="'+i+'"></td>\
+                                        <td><input type="text" name="price"></td>\
+                                        <td><input type="text" name="stockCount"></td>\
+                                        <td><div class="div_inline"><div class="btn btn-primary btn-upload2" style="float: left;">\
+                                                <div class="btn-uploadImage2">上传</div><input type="file" class="style_image_file" name="style_image_file"/></div>\
+                                                <div class="style_image" style="float:left;"></div>\
+                                                <div style="float:left;"><input class="delete_style_image" type="button" value="删除" style="display: none;"></div>\
+                                            </div><div style="clear: both"></div></td>\
+                                    </tr>';
+
+                }
+
+            }
+            var option = [];
+            for(i=0; i<first.length; i++)
+            if(first[i]!=''){
+                var tmpOption = {
+                    'OptionId': i.toString(),
+                    'OptionName': first[i]
+                };
+                option.push(tmpOption);
+            }
+            A = {
+                'PropertyId': '0',
+                'PropertyName': firstTag[0].value,
+                'PropertyOption':option
+            };
+            tmpProperty.push(A);
+            if(second.length > 0)
+            {
+                var option = [];
+                for(i=0; i<second.length; i++)
+                if(second[i]!=''){
+                    var tmpOption = {
+                        "OptionId": i.toString(),
+                        "OptionName": second[i]
+                    };
+                    option.push(tmpOption);
+                }
+                A = {
+                    'PropertyId': '1',
+                    'PropertyName': firstTag[1].value,
+                    'PropertyOption':option
+                };
+                tmpProperty.push(A);
+            }
+            if(third.length > 0){
+                var option = [];
+                for(i=0; i<third.length; i++)
+                if(third[i]!=''){
+                    var tmpOption = {
+                        'OptionId': i.toString(),
+                        'OptionName': third[i]
+                    };
+                    option.push(tmpOption);
+                }
+                A = {
+                    'PropertyId': '2',
+                    'PropertyName': firstTag[2].value,
+                    'PropertyOption':option
+                };
+                tmpProperty.push(A);
+            }
+            $('#propertyOption').val(JSON.stringify(tmpProperty).replace(/'/g,'"'));
+
+            newDiv.innerHTML = tmpString;
+            if(parent !== null )
+                parent.appendChild(newDiv);
+            update_product();
+        }
+
+        function isRepeat(arr){
+            var hash = {};
+            for(var i in arr) {
+                if(hash[arr[i]])
+                    return true;
+                hash[arr[i]] = true;
+            }
+            return false;
+        }
+
+        // 当点击添加属性
+        $(document).on('click','#id_add_saleProperty', function () {
+            if(1){
+                 var r=confirm("确认增加新的标签组?增加标签组将删除旧的商品");
+                if (r!=true){
+                    return;
+                }
+                // 删除productInfor信息
+                $('#productInfor').val('');
+                if($('#first_style_2').length > 0)
+                {
+                    createStyleTag(3);
+                    $(this).attr('disabled',true).css('cursor','not-allowed');
+                }else{
+                    createStyleTag(2);
+                }
+                //更新product delete 信息
+                $('input[name=product_old]').each(function () {
+                    $('#delete_group').append('<input type="hidden" name="delete_product" value="'+$(this).val()+'">');
+                });
+                update_style();
+
+            }
+        });
+         function update_style(){
+            //获得第一级标签的值
+            var first = [];
+            var second = [];
+            var third = [];
+            $('input[name=second_style_1]').each(function(){
+                first.push($(this).val());
+            });
+
+            if($('#first_style_2').length > 0 && $('#first_style_2').val() != '' )
+            {
+                //获得第二级标签的值
+                $('input[name=second_style_2]').each(function(){
+                    second.push($(this).val());
+                });
+
+                if($('#first_style_3').length > 0 && $('#first_style_3').val() != '' )
+                {
+                    //获得第三级标签的值
+                    $('input[name=second_style_3]').each(function(){
+                    　　 third.push($(this).val());
+                    });
+                    createStyleInput(first, second, third);
+                }else {
+                    // 只有两级标签
+                    createStyleInput(first, second, third);
+                }
+
+            }else{
+                // 只有一级标签
+                if($('#first_style_1').length > 0 && $('#first_style_1').val() != '' ) {
+                    createStyleInput(first, second, third);
+                }
+            }
+        }
+         // 当点击属性删除选项
+        $(document).on('click','.delete_style_tag', function() {
+            var r=confirm("确认删除整个标签组?");
+            if (r!=true){
+                return;
+            }
+            $(this).closest('table').remove();
+            if($('#id_add_saleProperty').attr('disabled') == 'disabled')
+            {
+                $('#id_add_saleProperty').removeAttr('disabled style');
+            }
+            //更新product delete 信息
+            $('input[name=product_old]').each(function () {
+                $('#delete_group').append('<input type="hidden" name="delete_product" value="'+$(this).val()+'">');
+            });
+            // 删除productInfor信息
+            $('#productInfor').val('');
+            //删除product信息
+            $('#product').val('');
+            update_style();
+        });
+        //当在属性选项中点击上传图片按钮给商品
+        $(document).on('change','.style_image_file', function() {
+        var parent = $(this).parent().next();
+        var fileObj = this;
+
+        //判断多个输入文件的后缀是否是文件
+
+        var ext = $(this).val().substring($(this).val().lastIndexOf('.') + 1).toLowerCase();
+
+         // gif在IE浏览器暂时无法显示
+        var $msgParent = $(this).parent().next();
+        $msgParent.find(".formtips").remove();
+         if(ext!=='png' && ext!=='jpg' && ext!=='jpeg'){
+             $msgParent.append('<span class="formtips onError">'+'图片格式不对，请使用png，jpg，或者jpeg.'+'<\/span>');
+
+             if(parent.children())
+                 parent.children().src='';
+             this.value = '';
+             return;
+        }
+
+         var size = fileObj.files[0].size / 1024;
+        if (size > 1024){
+
+            $msgParent.append('<span class="formtips onError">'+'图片大小超过1M.'+'<\/span>');
+            if(parent.children())
+                 parent.children().src='';
+            this.value = '';
+            return;
+        }
+
+        var image = document.createElement('img');
+        parent.append(image);
+        var file = fileObj.files[0];
+         var isIE = navigator.userAgent.match(/MSIE/)!= null,
+             isIE6 = navigator.userAgent.match(/MSIE 6.0/)!= null;
+         if(isIE) {
+            // IE6浏览器设置img的src为本地路径可以直接显示图片
+              if (isIE6) {
+                  file.select();
+                    var reallocalPath = document.selection.createRange().text;
+                    pic.src = reallocalPath;
+              }else {
+                    var windowURL = window.URL || window.webkitURL;
+                    var dataURL;
+                    if(file) {
+                         dataURL = windowURL.createObjectURL(file);
+                         $(this).parent().next().children('img:first').attr('src',dataURL);
+                    }
+              }
+         }else {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            var image1 = $(this).parent().next().children('img:first');
+            reader.onload = function(e){
+                image1.attr('height', '36');
+                image1.attr('width', '50');
+                image1.attr('src', this.result);
+            }
+         }
+        $(this).parent().next().next().children('input:first').attr('style', 'display: block;');
+        $(this).parent().parent().parent().prev(':last').prev(':last').prev(':last').children('.checkbox_style_tag').prop('checked', false);
+        });
+        $(document).on('click','.delete_style_image', function() {
+            $(this).parent().prev().empty();
+            $(this).attr('style', 'display: none;');
+            $(this).closest('input[type=file]').value = '';
+            $(this).parent().parent().parent().prev(':last').prev(':last').prev(':last').children('.checkbox_style_tag').prop('checked', false);
+        });
+        $(document).on('click','.checkbox_style_tag', function() {
+         var product = [];
+         if ($('#product').val())
+            product = eval('('+$('#product').val()+')');
+         var tmpProduct = {};
+
+         var objectId = '';
+         if('product_old' == $(this).next().attr('name')){
+             objectId = $(this).next().val();
+         }
+         var price = $(this).parent().next().children();
+         var stockCount = $(this).parent().next().next().children();
+
+         var key = $(this).val().split('::');
+         var style = [
+             {
+             'PropertyId': '0',
+             'OptionId': key[0].toString(),
+             }
+         ]
+         if(key[1]){
+             style.push({
+                 'PropertyId': '1',
+                 'OptionId': key[1].toString(),
+             });
+         }
+         if(key[2]){
+             style.push({
+                 'PropertyId': '2',
+                 'OptionId': key[2].toString(),
+             });
+         }
+         // checkbox状态更新时，需要重新刷新product的内容
+         if(product){
+             for(var foo in product){
+                if(JSON.stringify(product[foo].style) == JSON.stringify(style)){
+                    product.splice(foo, 1);
+                    break;
+                }
+             }
+         }
+         if($(this).is(':checked'))
+         {
+             var $parent = $(this).parent();
+             $parent.find(".formtips").remove();
+
+             //验证price
+             if(price.val() == '' ){
+                 var errorMsg = '请输入有效的价格.';
+                 $parent.append('<span class="formtips onError">'+errorMsg+'<\/span>');
+                 return false;
+             }
+             //验证stockCount
+             if( stockCount.val() == '' ){
+                 var errorMsg = '请输入有效到商品数.';
+                 $parent.append('<span class="formtips onError">'+errorMsg+'<\/span>');
+                 return false;
+             }
+
+             price.attr('style', 'display: block;');
+             stockCount.attr('style', 'display: block;');
+             $(this).parent().next().next().next().children().attr('style', 'display: block;');
+
+
+             tmpProduct = {
+                 'objectId': objectId,
+                 'style': style,
+                 'price': $(this).parent().next().children('input:first').val(),
+                 'stockCount': $(this).parent().next().next().children('input:first').val(),
+                 'mainImage': $(this).parent().next().next().next().children('div:first').children('div:first').children('div:first').next().val(),
+             }
+             product.push(tmpProduct);
+             if(objectId){
+                 $('#delete_group').find('input[value='+objectId+']').remove();
+             }
+         }else{
+             price.attr('style', 'display: none;');
+             stockCount.attr('style', 'display: none;');
+             $(this).parent().next().next().next().children().attr('style', 'display: none;');
+             if(objectId){
+                 $('#delete_group').append('<input type="hidden" name="delete_product" value="'+objectId+'">');
+             }
+         }
+
+         $('#product').val(JSON.stringify(product).replace(/'/g,'"'));
+        });
+        $(document).on('click', '.delete_image', function () {
+             if($(this).prev().children('input').length>0){
+                 if($(this).prev().children('input').attr('name') == 'imageList_old'){
+                     $(this).parent().prepend('<input type="hidden" name="delete_imageList" value="'+$(this).prev().children('input').val()+'">');
+                 }else{
+                     $(this).parent().prepend('<input type="hidden" name="delete_detailDescription" value="'+$(this).prev().children('input').val()+'">');
+                 }
+             }
+             $(this).prev().empty();
+             $(this).prev().prev().attr('style', 'display:block');
+             $(this).remove();
+         });
+    </script>
+    <script>
+        $(document).ready(function() {
+             $('#propertyOption').val($('#propertyOption').val().replace(/'/g,'"'));
+             $('#productInfor').val($('#productInfor').val().replace(/'/g,'"'));
+        });
+    </script>
+    <style>
+        table{
+            border-right:1px solid;
+            border-bottom:1px solid;
+            border-collapse: collapse;
+        }
+        table td{
+            border-left:1px solid;
+            border-top:1px solid;
+        }
+        .btn-upload {
+            position: relative;
+            overflow: hidden;
+            width: 176px;
+            height: 164px;
+        }
+        .btn-upload input {
+            position: absolute;
+            top: 7px;
+            right: 13px;
+            margin: 0;
+            padding: 0px 0px 0px 0px;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            width: 150px;
+            height: 150px;
+        }
+        .btn-uploadImage{
+            text-align: center;
+            box-sizing: border-box;
+            padding: 0px 0px 0px 0px;
+            border-width: 2px;
+            border-style: outset;
+            border-color: buttonface;
+            width: 150px;
+            height: 150px;
+        }
+
+        .btn-upload2 {
+            position: relative;
+            overflow: hidden;
+            width: 76px;
+            height: 44px;
+        }
+        .btn-upload2 input {
+            position: absolute;
+            top: 7px;
+            right: 13px;
+            margin: 0;
+            padding: 0px 0px 0px 0px;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            width: 50px;
+            height: 30px;
+        }
+        .btn-uploadImage2{
+            text-align: center;
+            box-sizing: border-box;
+            padding: 0px 0px 0px 0px;
+            border-width: 2px;
+            border-style: outset;
+            border-color: buttonface;
+            width: 50px;
+            height: 30px;
+        }
+        .delete_style_image{
+            margin: 10px;
+        }
+        .style_image{
+            margin: 5px;
+        }
+        .second {
+            background: rgba(85, 85, 85, 0.51);
+        }
+    </style>
+    <div id="">
+        <h1>发布商品</h1>
+    </div>
+    <hr>
+    <div>
+        {% if content.profile.current_role == 'ProductAdmin' %}
+        <form enctype="multipart/form-data" method="POST" action="{% url 'Product:EditProductGroup' %}?timestamp={{ content.time }}" onsubmit="return check();" >
+        {% endif %}
+        {% if content.profile.current_role == 'Shop' %}
+        <form enctype="multipart/form-data" method="POST" action="{% url 'TmpProductGroup:EditProductGroup' %}?timestamp={{ content.time }}" onsubmit="return check();">
+        {% endif %}
+
+            {% csrf_token %}
+            <input type="hidden" name="productGroupObjectId" value="{{ content.productGroup.objectId }}">
+            <input type="hidden" name="_shopObjectId" value="{{ content.shop.shopObjectId }}">
+            <input type="hidden" id="productInfor" value="{{ content.productList }}">
+            <input type="hidden" name="propertyOption" id="propertyOption" value="{{ content.propertyOption }}">
+            <input type="hidden" id="product" name="product" >
+            <div id="delete_group">
+
+            </div>
+            <div>
+            <h2 class="second">库存分类</h2>
+            <hr>
+
+            <table>
+                <td>
+                    <div style=" margin: 10px; padding: 10px;">
+                        {% for firstlevel in content.data.storeCategory %}
+                            <label class="radio">
+                                <input type="radio" onclick="clickFirstLevel1({{ forloop.counter }})" name="_checkbox_product_name1" value="{{ firstlevel.name }}"
+                                    {% if content.productGroup.storeCategory.storeCategoryFirst == firstlevel.name %}
+                                    checked
+                                    {% endif %}
+                                    >
+                                {{ firstlevel.name }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </td>
+                <td>
+                    <div style=" margin: 10px; padding: 10px;">
+                        {% for firstlevel in content.data.storeCategory %}
+                            {% if content.productGroup.storeCategory.storeCategoryFirst == firstlevel.name %}
+                                <div  id="_secondLevel{{ forloop.counter }}" style="display: block;" name="_firstShowOne">
+                                {% else %}
+                                <div  id="_secondLevel{{ forloop.counter }}" style="display: none;" name="_firstShowOne" >
+                            {% endif %}
+
+                                {% for secondlevel in firstlevel.value %}
+                                    <label class="radio">
+                                        <input type="radio" id="_checkbox_product_name2{{ forloop.parentloop.counter }}{{ forloop.counter }}"
+                                                       onclick="clickSecondLevel1({{ forloop.parentloop.counter }},{{ forloop.counter }})" name="_checkbox_product_name2" value="{{ secondlevel.name }}"
+                                        {% if content.productGroup.storeCategory.storeCategoryFirst == firstlevel.name and secondlevel.name == content.productGroup.storeCategory.storeCategorySecond %} checked{% endif %}
+                                            >
+                                        {{ secondlevel.name }}
+                                    </label>
+                                {% endfor %}
+                            {% if forloop.first %}
+                                </div>
+                                {% else %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </td>
+                <td>
+                    <div style="margin: 10px; padding: 10px;">
+                        {% for firstlevel in content.data.storeCategory %}
+                                {% for secondlevel in firstlevel.value %}
+                                <div>
+                                    {% if content.productGroup.storeCategory.storeCategoryFirst == firstlevel.name and secondlevel.name == content.productGroup.storeCategory.storeCategorySecond %}
+                                        <div id="_firstShowTwo{{ forloop.parentloop.counter }}{{ forloop.counter }}" style="display: block;" name="_firstShowTwo" >
+                                        {% else %}
+                                        <div id="_firstShowTwo{{ forloop.parentloop.counter }}{{ forloop.counter }}" style="display: none;" name="_firstShowTwo" >
+                                    {% endif %}
+
+                                    {% for thirdlevel in secondlevel.value %}
+                                    <label class="radio">
+                                         <input type="radio" name="storeCategory" id="_checkbox_product_name3{{ forloop.parentloop.parentloop.counter }}{{ forloop.parentloop.counter }}{{ forloop.counter }}"
+                                               value="{{ thirdlevel.objectId }}"
+                                            {% if content.productGroup.storeCategory.storeCategoryFirst == firstlevel.name and secondlevel.name == content.productGroup.storeCategory.storeCategorySecond and thirdlevel.name == content.productGroup.storeCategory.storeCategoryThird %}
+                                            checked
+                                            {% endif %}
+                                            >
+                                        {{ thirdlevel.name }}
+                                    </label>
+                                    {% endfor %}
+                                    {% if forloop.first and forloop.parentloop.first %}
+                                        </div>
+                                        {% else %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                        {% endfor %}
+                    </div>
+                </td>
+            </table>
+            </div>
+
+            <p></p>
+            <div style="margin-top: 40px">
+                <h2 class="second">销售分类</h2>
+                <hr>
+                <div id="_saleContainer">
+                    <table>
+                    <td>
+                        <div style="margin: 10px; padding: 10px; width: 200px;">
+                        {% for firstlevel in content.data.saleCategory %}
+                            <label class="radio">
+                                <input type="radio" id="_checkbox_sale_name1{{ forloop.counter }}" onclick="clickFirstLevel2({{ forloop.counter }})" name="_checkbox_sale_name1" value="{{ firstlevel.name }}"
+                                    {% if firstlevel.name == content.productGroup.saleCategory.saleCategoryFirst %}
+                                        checked
+                                    {% endif %}
+                                >
+                                {{ firstlevel.name }}
+                            </label>
+                        {% endfor %}
+                        </div>
+                    </td>
+                    <td>
+                       <div style="margin: 10px; padding: 10px;width: 200px; ">
+                        {% for firstlevel in content.data.saleCategory %}
+                            <div id="_secondLevel2{{ forloop.counter }}" name="_secondShow"
+                                 {% if firstlevel.name == content.productGroup.saleCategory.saleCategoryFirst %}
+                                    style="display: block;"
+                                {% else %}
+                                    style="display: none;"
+                                {% endif %}
+                            >
+
+                            {% for secondlevel in firstlevel.value %}
+                                <label class="radio">
+                                <input type="radio" name="saleCategory" id="_checkbox_sale_name2{{ forloop.parentloop.counter }}{{ forloop.counter }}"
+                                          value="{{ secondlevel.objectId }}"
+                                    {% if secondlevel.name == content.productGroup.saleCategory.saleCategorySecond and firstlevel.name == content.productGroup.saleCategory.saleCategoryFirst %}
+                                        checked
+                                    {% endif %}
+                                    >
+                                    {{ secondlevel.name }}
+
+                                </label>
+                            {% endfor %}
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </td>
+                </table>
+                </div>
+
+            </div>
+            <div style="margin-top: 40px">
+                <h2 class="second">商品名</h2>
+               <hr>
+                <div>
+                    <input placeholder="Input value" type="text" class="input-medium" id="_productName" name="name" value="{{ content.productGroup.name }}" required>
+                </div>
+            </div>
+            <div style="margin-top: 40px">
+                <h2 class="second">商品简介</h2>
+                <hr>
+                <div>
+                    <input placeholder="Input value" type="text" class="input-medium" id="_productSummary" name="briefDescription" value="{{ content.productGroup.briefDescription }}" required>
+                </div>
+            </div>
+            <p></p>
+            <div style="margin-top: 40px">
+                <div style="margin-top: 40px">
+                <h2 class="second">商品发货地</h2>
+                <hr>
+                <div data-toggle="distpicker" id="distpicker">
+                <div class="form-group">
+                    <label class="sr-only" for="province1">省</label>
+                    <select class="form-control" id="province1" name="id_province" ></select>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="city1">市</label>
+                    <select class="form-control" id="city1" name="id_city"></select>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="district1">区</label>
+                    <select class="form-control" id="district1" name="id_district" ></select>
+                    <div style="clear: both;"></div>
+                </div>
+                    <script>
+                    $("#distpicker").distpicker({
+                            province:'{{ content.productGroup.dispatchPlace.province }}',
+                            city:'{{ content.productGroup.dispatchPlace.city }}',
+                            district: '{{ content.productGroup.dispatchPlace.district }}'
+                        });
+                    </script>
+            </div>
+
+            <p></p>
+
+            <div style="margin-top: 40px">
+                <div>上传所有图片（主图必须有，最多五张，图片有顺序）</div>
+                <hr>
+                <div class="row">
+                     <div style="margin: 20px;" class="span2">
+                        <div id="_first_1" class="div_inline ">
+                            <div class="btn btn-primary btn-upload" id="_idHidden_1" style="display: none;">
+                                <div class="btn-uploadImage">上传</div>
+                                <input id="_imageFile_1" type="file" name="mainImage"  onchange="loadImage(1);" />
+                            </div>
+                            <div id="_image_1">
+                                <img height="130" width="150" src="{{ content.productGroup.mainImage.url }}">
+                                <input type="hidden" name="mainImage_old" value="{{ content.productGroup.mainImage.objectId }}">
+                            </div>
+                            <input type="button" id="_delete_1" value="删除" class="btn delete_image" style="width:140px">
+                        </div>
+                    </div>
+                {% for foo in content.productGroup.imageList %}
+                    {% if foo.image.url != content.productGroup.mainImage.url %}
+                     <div style="margin: 20px;" class="span2">
+                        <div id="_first_{{ forloop.counter |add:1 }}" class="div_inline " >
+                            <div class="btn btn-primary btn-upload" id="_idHidden_{{ forloop.counter|add:1 }}" style="display: none;">
+                                <div class="btn-uploadImage">上传</div>
+                                <input id="_imageFile_{{ forloop.counter|add:1 }}" type="file" name="imageList"  onchange="loadImage({{ forloop.counter|add:1 }});" />
+                            </div>
+                            <div id="_image_{{ forloop.counter|add:1 }}">
+                                <img height="130" width="150" src="{{ foo.image.url }}">
+                                <input type="hidden" name="imageList_old" value="{{ foo.objectId }}">
+                            </div>
+                            <input type="button" id="_delete_{{ forloop.counter|add:1 }}" value="删除" class="btn delete_image" style="width:140px">
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if forloop.last %}
+                        {% for goo in content.range %}
+                            {% if  goo > forloop.parentloop.counter|add:1 and goo < 7 %}
+                                <div style="margin: 20px;" class="span2">
+                                    <div id="_first_{{ goo }}" class="div_inline ">
+                                        <div class="btn btn-primary btn-upload" id="_idHidden_{{ goo }}">
+                                            <div class="btn-uploadImage">上传</div>
+                                            <input id="_imageFile_{{ goo }}" type="file" name="imageList"  onchange="loadImage({{ goo }});" />
+                                        </div>
+                                        <div id="_image_{{ goo }}">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                {% endfor %}
+
+
+                </div>
+            </div>
+
+            <p></p>
+
+            <div style="margin-top: 40px">
+                <h2 class="second">属性选项(至少一组，最多三组，所有组合不得超过100个)</h2>
+                <hr>
+                <input type="hidden" id="delete_all_product" class="btn" value="删除标签及所有商品">
+                <div id="id_createTag" >
+                {% load mytags %}
+                    {% if content.productGroup.propertyOption.first %}
+                         <table>
+                            <tr>
+                                <td colspan="4">
+                                <input type="text" class="input-medium" name="first_style" id="first_style_1" placeholder="颜色（最多四个字）" value="{{ content.productGroup.propertyOption.first.PropertyName }}" >
+                                </td>
+                            </tr>
+                            <tr>
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.first.PropertyOption %}
+                                    {% if foo.OptionId == '0' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_1" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_1" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.first.PropertyOption %}
+                                    {% if foo.OptionId == '1' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_1" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_1" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.first.PropertyOption %}
+                                    {% if foo.OptionId == '2' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_1" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_1" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.first.PropertyOption %}
+                                    {% if foo.OptionId == '3' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_1" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_1" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.first.PropertyOption %}
+                                    {% if foo.OptionId == '4' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_1" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_1" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.first.PropertyOption %}
+                                    {% if foo.OptionId == '5' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_1" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_1" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.first.PropertyOption %}
+                                    {% if foo.OptionId == '6' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_1" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_1" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.first.PropertyOption %}
+                                    {% if foo.OptionId == '7' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_1" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_1" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                            </tr>
+                        </table>
+                    {% endif %}
+                    {% if content.productGroup.propertyOption.second %}
+                         <table>
+                             <tr>
+                                 <th>
+                                 <input type="text" class="input-medium" name="first_style" id="first_style_2" placeholder="颜色（最多四个字）" value="{{ content.productGroup.propertyOption.second.PropertyName }}" >
+                                 </th>
+                                 <th colspan=3><input type="button" value="删除" class="delete_style_tag"></th>
+                             </tr>
+                             <tr>
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.second.PropertyOption %}
+                                    {% if foo.OptionId == '0' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_2" value="{{ foo.OptionName }}">
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_1" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.second.PropertyOption %}
+                                    {% if foo.OptionId == '1' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_2" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_2" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.second.PropertyOption %}
+                                    {% if foo.OptionId == '2' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_2" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_2" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.second.PropertyOption %}
+                                    {% if foo.OptionId == '3' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_2" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_2" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                             </tr>
+                             <tr>
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.second.PropertyOption %}
+                                    {% if foo.OptionId == '4' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_2" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_2" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.second.PropertyOption %}
+                                    {% if foo.OptionId == '5' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_2" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_2" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.second.PropertyOption %}
+                                    {% if foo.OptionId == '6' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_2" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_2" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.second.PropertyOption %}
+                                    {% if foo.OptionId == '7' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_2" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_2" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                            </tr>
+                        </table>
+                    {% endif %}
+                    {% if content.productGroup.propertyOption.third %}
+                         <table>
+                             <tr>
+                                 <th>
+                                 <input type="text" class="input-medium" name="first_style" id="first_style_3" placeholder="颜色（最多四个字）" value="{{ content.productGroup.propertyOption.third.PropertyName }}" >
+                                 </th>
+                                 <th colspan=3><input type="button" value="删除" class="delete_style_tag"></th>
+                             </tr>
+                             <tr>
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.third.PropertyOption %}
+                                    {% if foo.OptionId == '0' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_3" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_3" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.third.PropertyOption %}
+                                    {% if foo.OptionId == '1' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_3" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_3" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.third.PropertyOption %}
+                                    {% if foo.OptionId == '2' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_3" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_3" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.third.PropertyOption %}
+                                    {% if foo.OptionId == '3' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_3" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_3" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                            </tr>
+                             <tr>
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.third.PropertyOption %}
+                                    {% if foo.OptionId == '4' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_3" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_3" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.third.PropertyOption %}
+                                    {% if foo.OptionId == '5' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_3" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_3" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.third.PropertyOption %}
+                                    {% if foo.OptionId == '6' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_3" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_3" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                                {% set tmpTag = 0 %}
+                                {% for foo in content.productGroup.propertyOption.third.PropertyOption %}
+                                    {% if foo.OptionId == '7' %}
+                                        <td>
+                                        <input type="text" class="second_style" name="second_style_3" value="{{ foo.OptionName }}" >
+                                        <input type="hidden" id="OptionId" value="{{ foo.OptionId }}"  >
+                                        </td>
+                                        {% set tmpTag = 1 %}
+                                    {% endif %}
+                                    {% if forloop.last and tmpTag != 1 %}
+                                    <td>
+                                      <input type="text" class="second_style" name="second_style_3" id="">
+                                    </td>
+                                {% endif %}
+                                {% endfor %}
+                            </tr>
+                        </table>
+                    {% endif %}
+
+                    </div>
+                    <div>
+                        {% if content.productGroup.propertyOption.third %}
+                            <input class="btn" type="button" id="id_add_saleProperty" value="增加销售属性" disabled style="cursor: not-allowed;">
+                        {% else %}
+                            <input class="btn" type="button" id="id_add_saleProperty" value="增加销售属性">
+                        {% endif %}
+                    </div>
+
+            </div>
+
+            <div style="margin-top: 40px; " id="editPropertyOption">
+
+                <div>
+                    <div id="id_StyleTag">
+                        <table>
+                {% if content.productGroup.propertyOption.third %}
+                    <tr>
+                        <td>{{ content.productGroup.propertyOption.first.PropertyName }}</td>
+                        <td>{{ content.productGroup.propertyOption.second.PropertyName }}</td>
+                        <td>{{ content.productGroup.propertyOption.third.PropertyName }}</td>
+                        <td>添加</td>
+                        <td>价格</td>
+                        <td>库存</td>
+                        <td>图片</td>
+                    </tr>
+                    {% for foo in content.productGroup.propertyOption.first.PropertyOption %}
+                    {% for goo in content.productGroup.propertyOption.second.PropertyOption %}
+                    {% for koo in content.productGroup.propertyOption.third.PropertyOption %}
+                        <tr>
+                            {% if forloop.parentloop.first and  forloop.first %}
+                                <td rowspan="{%  widthratio content.productGroup.propertyOption.second.length 1 content.productGroup.propertyOption.third.length %}">{{ foo.OptionName }}</td>
+                            {% endif %}
+                            {% if forloop.first %}
+                                <td rowspan="{{ content.productGroup.propertyOption.third.length }}">{{ goo.OptionName }}</td>
+                            {% endif %}
+                            <td>{{ koo.OptionName }}</td>
+
+                        {% load mytags %}
+
+                            {% set age = 0 %}
+
+
+                                {% for product in content.productGroup.product %}
+                                    {% if product.style.firstId == foo.OptionId and product.style.secondId == goo.OptionId and product.style.thirdId == koo.OptionId  %}
+                                        <td><input type="checkbox" class="checkbox_style_tag" name="checkbox_style_tag" value="{{ foo.OptionId }}::{{ goo.OptionId }}::{{ koo.OptionId }}" checked>
+                                        <input type="hidden" id="product_old" name="product_old" value="{{ product.objectId }}">
+                                        </td>
+                                        <td><input type="text" name="price"  value="{{ product.price }}"></td>
+                                        <td><input type="text" name="stockCount" value="{{ product.stockCount }}"> </td>
+                                        <td>
+                                            <div class="div_inline">
+                                                    <div class="btn btn-primary btn-upload2" style="float: left;" >
+                                                        <div class="btn-uploadImage2">上传</div><input type="file" class="style_image_file" name="style_image_file"/>
+                                                    </div>
+                                                        <div class="style_image" style="float:left;">
+                                                            {% if product.mainImage.url %}
+                                                                <img height="36" width="50" src="{{ product.mainImage.url }}">
+                                                            {% endif %}
+                                                        </div>
+                                                        <div style="float:left;"><input class="delete_style_image" type="button" value="删除" {% if product.mainImage.url %} style="display: block;"{% else %}style="display: none;"{% endif %}></div>
+                                                    </div><div style="clear: both">
+                                            </div>
+                                        </td>
+                                        {% set age = 1 %}
+                                    {% else %}
+                                        {% if forloop.last and age != 1  %}
+                                            <td><input type="checkbox" class="checkbox_style_tag" name="checkbox_style_tag" value="{{ foo.OptionId }}::{{ goo.OptionId }}::{{ koo.OptionId }}"></td>
+                                            <td><input type="text" name="price"></td>
+                                            <td><input type="text" name="stockCount"></td>
+                                            <td><div class="div_inline"><div class="btn btn-primary btn-upload2" style="float: left;">
+                                                    <div class="btn-uploadImage2">上传</div><input type="file" class="style_image_file" name="style_image_file"/></div>
+                                                    <div class="style_image" style="float:left;"></div>
+                                                    <div style="float:left;"><input class="delete_style_image" type="button" value="删除" style="display: none;"></div>
+                                                </div><div style="clear: both"></div>
+                                            </td>
+                                    {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+
+                        </tr>
+
+                    {% endfor %}
+                    {% endfor %}
+                    {% endfor %}
+
+                {% else %}
+                        {% if content.productGroup.propertyOption.second %}
+                            <tr>
+                                <td>{{ content.productGroup.propertyOption.first.PropertyName }}</td>
+                                <td>{{ content.productGroup.propertyOption.second.PropertyName }}</td>
+                                <td>添加</td>
+                                <td>价格</td>
+                                <td>库存</td>
+                                <td>图片</td>
+                            </tr>
+                            {% for foo in content.productGroup.propertyOption.first.PropertyOption %}
+                            {% for goo in content.productGroup.propertyOption.second.PropertyOption %}
+                                <tr>
+                                    {% if forloop.first %}
+                                    <td rowspan="{{ content.productGroup.propertyOption.second.length }}">{{ foo.OptionName }}</td>
+                                    {% endif %}
+                                    <td>{{ goo.OptionName }}</td>
+
+                                     {% for product in content.productGroup.product %}
+                                         {% if product.style.firstId == foo.OptionId and product.style.secondId == goo.OptionId %}
+                                            <td><input type="checkbox" class="checkbox_style_tag" name="checkbox_style_tag" value="{{ foo.OptionId }}::{{ goo.OptionId }}"  checked>
+                                                <input type="hidden" id="product_old" name="product_old" value="{{ product.objectId }}">
+                                                {% if product.mainImage.url %}
+                                                    <input type="hidden" name="mainImage_old" value="1">
+                                                {% endif %}
+                                            </td>
+                                            <td><input type="text" name="price"  value="{{ product.price }}"></td>
+                                            <td><input type="text" name="stockCount" value="{{ product.stockCount }}"> </td>
+                                            <td>
+                                                <div class="div_inline">
+                                                    <div class="btn btn-primary btn-upload2" style="float: left;" >
+                                                        <div class="btn-uploadImage2">上传</div><input type="file" class="style_image_file" name="style_image_file"/>
+                                                    </div>
+                                                        <div class="style_image" style="float:left;">
+                                                            {% if product.mainImage.url %}
+                                                                <img height="36" width="50" src="{{ product.mainImage.url }}">
+                                                            {% endif %}
+                                                        </div>
+                                                        <div style="float:left;"><input class="delete_style_image" type="button" value="删除" {% if product.mainImage.url %} style="display: block;"{% else %}style="display: none;"{% endif %}></div>
+                                                    </div><div style="clear: both">
+                                                </div>
+                                            </td>
+                                          {% set age = 1 %}
+                                        {% else %}
+                                            {% if forloop.last and age != 1  %}
+                                                <td><input type="checkbox" class="checkbox_style_tag" name="checkbox_style_tag" value="{{ foo.OptionId }}::{{ goo.OptionId }}"></td>
+                                                <td><input type="text" name="price"></td>
+                                                <td><input type="text" name="stockCount"></td>
+                                                <td><div class="div_inline"><div class="btn btn-primary btn-upload2" style="float: left;">
+                                                                        <div class="btn-uploadImage2">上传</div><input type="file" class="style_image_file" name="style_image_file"/></div>
+                                                                        <div class="style_image" style="float:left;"></div>
+                                                                        <div style="float:left;"><input class="delete_style_image" type="button" value="删除" style="display: none;"></div>
+                                                                    </div><div style="clear: both"></div>
+                                                </td>
+                                            {% endif %}
+                                        {% endif %}
+                                     {% endfor %}
+                                </tr>
+                            {% endfor %}
+                            {% endfor %}
+
+                        {% else %}
+                            <tr>
+                                <td>{{ content.productGroup.propertyOption.first.PropertyName }}</td>
+                                <td>添加</td>
+                                <td>价格</td>
+                                <td>库存</td>
+                                <td>图片</td>
+                            </tr>
+                            {% for foo in content.productGroup.propertyOption.first.PropertyOption %}
+                                <tr>
+                                    <td>{{ foo.OptionName }}</td>
+
+                                     {% for product in content.productGroup.product %}
+                                         {% if product.style.firstId == foo.OptionId %}
+                                             <td><input type="checkbox" class="checkbox_style_tag" name="checkbox_style_tag" value="{{ foo.OptionId }}" checked>
+                                                 <input type="hidden" id="product_old" name="product_old" value="{{ product.objectId }}"  >
+                                             </td>
+                                            <td><input type="text" name="price"  value="{{ product.price }}"></td>
+                                            <td><input type="text" name="stockCount" value="{{ product.stockCount }}"> </td>
+                                            <td>
+                                               <div class="div_inline">
+                                                    <div class="btn btn-primary btn-upload2" style="float: left;" >
+                                                        <div class="btn-uploadImage2">上传</div><input type="file" class="style_image_file" name="style_image_file"/>
+                                                    </div>
+                                                        <div class="style_image" style="float:left;">
+                                                            {% if product.mainImage.url %}
+                                                                <img height="36" width="50" src="{{ product.mainImage.url }}">
+                                                            {% endif %}
+                                                        </div>
+                                                        <div style="float:left;"><input class="delete_style_image" type="button" value="删除" {% if product.mainImage.url %} style="display: block;"{% else %}style="display: none;"{% endif %}></div>
+                                                    </div><div style="clear: both">
+                                                </div>
+                                            </td>
+                                            {% set age = 1 %}
+                                        {% else %}
+                                            {% if forloop.last and age != 1  %}
+                                                <td><input type="checkbox" class="checkbox_style_tag" name="checkbox_style_tag" value="{{ foo.OptionId }}"></td>
+                                                <td><input type="text" name="price"></td>
+                                                <td><input type="text" name="stockCount"></td>
+                                                <td><div class="div_inline"><div class="btn btn-primary btn-upload2" style="float: left;">
+                                                        <div class="btn-uploadImage2">上传</div><input type="file" class="style_image_file" name="style_image_file"/></div>
+                                                        <div class="style_image" style="float:left;"></div>
+                                                        <div style="float:left;"><input class="delete_style_image" type="button" value="删除" style="display: none;"></div>
+                                                    </div><div style="clear: both"></div>
+                                                </td>
+                                            {% endif %}
+                                        {% endif %}
+                                     {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                {% endif %}
+
+                </table>
+                    </div>
+                </div>
+            </div>
+            <p></p>
+            <div>
+                <h2 class="second">商品服务</h2>
+                <hr>
+                <ul>
+                    {% for foo in content.data.productService %}
+                        <li>
+                            <input type="checkbox" id="_productService" name="productService" value="{{ foo.objectId }}"
+                                    {% for goo in content.productGroup.productService %}
+                                        {% if goo.objectId == foo.objectId %}
+                                            checked
+                                        {% endif %}
+                                    {% endfor %}
+                            >{{ foo.name }}
+                        </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+
+            <div style="margin-top: 40px">
+
+
+                <h2 class="second">商品规格</h2>
+                <hr>
+                <table>
+                    <tr><h3>商品规格（最多15条）</h3></tr>
+                {% for foo in content.productGroup.spec %}
+                    <tr>
+                        <td>
+                            <input type="text" class="specification" name="specification_{{ forloop.counter }}" style="width: 200px;" placeholder="规格（必填项，最多四个字）" value="{{ foo.SpecName }}" {% if forloop.first %} required{% endif %}>
+                        </td>
+                        <td>
+                            ：
+                        </td>
+                        <td>
+                            <input type="text" class="specification_Text" name="specification_Text_{{ forloop.counter }}" style="width: 400px;" placeholder="规格介绍（必填项，50个字）" value="{{ foo.SpecContent }}" {% if forloop.first %} required{% endif %}>
+                        </td>
+                    </tr>
+                    {% if forloop.last %}
+                        {% for foo in content.range %}
+                            {% if foo > forloop.parentloop.counter and foo < 16 %}
+                                <tr>
+                                    <td>
+                                        <input type="text" class="specification" name="specification_{{ foo }}" value="" placeholder="规格（选填，最多四个字）" style="width: 200px;" >
+                                    </td>
+                                    <td>
+                                        ：
+                                    </td>
+                                    <td>
+                                        <input type="text" class="specification_Text" name="specification_Text_{{ foo }}" value="" placeholder="规格介绍（选填，50个字）" style="width: 400px;">
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+
+
+
+                </table>
+            </div>
+            <div style="margin-top: 40px; width: inherit; height: 500px; display: block;">
+
+                <h2 class="second">编辑商品详情</h2>
+                <hr>
+                <div>
+                    {% for foo in content.productGroup.detailDescription %}
+                         <div style="margin: 20px;" class="span2">
+                            <div id="_first_{{ forloop.counter |add:6 }}" class="div_inline " >
+                                <div class="btn btn-primary btn-upload" id="_idHidden_{{ forloop.counter|add:6 }}" style="display: none;">
+                                    <div class="btn-uploadImage">上传</div>
+                                    <input id="_imageFile_{{ forloop.counter|add:6 }}" type="file" name="detailDescription"  onchange="loadImage({{ forloop.counter|add:6 }});" />
+                                </div>
+                                <div id="_image_{{ forloop.counter|add:6 }}">
+                                    <img height="130" width="150" src="{{ foo.imageFile }}">
+                                    <input type="hidden" name="detailDescription_old" value="{{ foo.objectId }}">
+                                </div>
+                                <input type="button" id="_delete_{{ forloop.counter|add:6 }}" value="删除" class="btn delete_image" style="width:140px">
+                            </div>
+                        </div>
+                        {% if forloop.last %}
+                            {% for goo in content.range %}
+                                {% if  goo > forloop.parentloop.counter|add:6 and goo < 17 %}
+                                    <div style="margin: 20px;" class="span2">
+                                        <div id="_first_{{ goo }}" class="div_inline ">
+                                            <div class="btn btn-primary btn-upload" id="_idHidden_{{ goo }}">
+                                                <div class="btn-uploadImage">上传</div>
+                                                <input id="_imageFile_{{ goo }}" type="file" name="detailDescription"  onchange="loadImage({{ goo }});" />
+                                            </div>
+                                            <div id="_image_{{ goo }}">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+
+                    {% endfor %}
+                    {% if not content.productGroup.detailDescription %}
+                        {% for goo in content.range %}
+                            {% if  goo > 6 and goo < 17 %}
+                                <div style="margin: 20px;" class="span2">
+                                    <div id="_first_{{ goo }}" class="div_inline ">
+                                        <div class="btn btn-primary btn-upload" id="_idHidden_{{ goo }}">
+                                            <div class="btn-uploadImage">上传</div>
+                                            <input id="_imageFile_{{ goo }}" type="file" name="detailDescription"  onchange="loadImage({{ goo }});" />
+                                        </div>
+                                        <div id="_image_{{ goo }}">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <p></p>
+            <div style="margin-top: 40px">
+                <hr>
+                 <div>
+                    <input class="btn btn-default" type="submit" name="modify" value="修改">
+                </div>
+
+
+            </div>
+
+        {% if content.profile.current_role == 'ProductAdmin' %}
+        </form >
+        {% endif %}
+        {% if content.profile.current_role == 'Shop' %}
+        </form>
+        {% endif %}
+
+    </div>
+    <hr>
+    <div>
+        {% if content.profile.current_role == 'ProductAdmin' %}
+            <a onclick="" href="{% url 'Shop:AllShop' %}?objectId={{ content.data.shopObjectId  }}&&timestamp={{ content.time }}">返回店铺</a>
+        {% endif %}
+        {% if content.profile.current_role == 'Shop' %}
+            <a onclick="" href="{% url 'Shop:AllShop' %}?objectId={{ content.data.shopObjectId  }}&&timestamp={{ content.time }}">返回店铺</a>
+        {% endif %}
+
+    </div>
+{% endblock %}

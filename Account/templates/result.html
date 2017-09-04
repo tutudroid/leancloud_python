@@ -1,0 +1,27 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+    {% if content.result %}
+    {{ content.result.message }}
+    <div>
+        {% if content.result.page %}
+        <a onclick="return multiClick();" href="{% url content.result.page %}" > 返回 </a>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% if content.return %}
+        {{ content.return.message }}
+        <div>
+            {% if content.return.page %}
+            <a onclick="return multiClick();" href="{% url content.return.page %}" > 返回 </a>
+            {% endif %}
+        </div>
+    {% endif %}
+    {% for foo in orderList %}
+        {{ foo.recordState }}
+        {{ foo.uniqueId }}
+        {{ foo.contactName }}
+    {% endfor %}
+     {{ content.message }}
+    {{ content.data.message }}
+{% endblock %}

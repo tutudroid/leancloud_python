@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p><a href="{% url 'Initiation:ClearAllData' %}">清空所有表的数据</a></p>
+
+    <p><a href="{% url 'Initiation:Check' %}">检查所有数据是否有效</a></p>
+    <p><a href="{% url 'Initiation:Check_Product' %}">检查所有商品数据是否有效</a></p>
+     <hr>
+    <p><a href="{% url 'Initiation:CreateAdmin' %}?name=admin">创建管理员用户</a></p>
+    <hr>
+    <p><a href="{% url 'Initiation:InitPrerequisite' %}">创建销售分类，库存分类，店铺，等信息</a></p>
+    <hr>
+    <p><a href="{% url 'Initiation:InitLoadData' %}">创建商品</a></p>
+    <hr>
+        <div>
+        <form enctype="multipart/form-data" method="POST" action="{% url 'Initiation:CreateAll' %}">
+            {% csrf_token %}
+            <input type="file" name="imageFile">
+            <input type="submit" value="submit">
+        </form>
+    </div>
+    <hr>
+    <div>
+        order and afterSale
+    </div>
+    <div>
+        <form enctype="multipart/form-data" method="POST" action="{% url 'Initiation:Order_AfterSale' %}">
+            {% csrf_token %}
+            <input type="file" name="imageFile">
+            <input type="submit" value="submit">
+        </form>
+    </div>
+        <p><a href="">商品分类</a></p>
+    <div>
+        <form enctype="multipart/form-data" method="POST" action="{% url 'Initiation:Category' %}">
+            {% csrf_token %}
+            <input type="file" name="imageFile">
+            <input type="submit" value="商品分类">
+        </form>
+    </div>
+</body>
+</html>

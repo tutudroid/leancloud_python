@@ -1,0 +1,117 @@
+{% extends 'ProductAdminPage.html' %}
+{% load static %}
+{% block content %}
+    <style href="{% static 'css/style.css' %}">
+
+        .table_main td{
+             width: 200px;
+             margin-top: 40px;
+        }
+
+        .form-group{
+            width: 450px;
+        }
+        .sr-only{
+            width: 100px;
+            display:block;
+            float: left;
+        }
+        .form-control{
+            float: left;
+        }
+    </style>
+    <script type="text/javascript">
+
+        function check(){
+            var province = document.getElementById('selectp');
+            var city = document.getElementById('selectc');
+
+            if(province.selectedIndex === 0){
+                alert('请选择省份');
+                return false;
+            }
+            if(city.selectedIndex === 0){
+                alert('请选择城市');
+                return false;
+            }
+            return multiClick();
+        }
+    </script>
+
+    {% if content.modifyShop %}
+         <form action="{% url 'Shop:EditShopDetail' %}?timestamp={{ content.time }}" method="post" enctype="multipart/form-data" onsubmit="return check();" name="form1" class="form-inline">
+            {% csrf_token %}
+             <input type="hidden" name="objectId" value="{{ content.shop.objectId }}">
+            ID :{{ content.shop.uniqueId }}
+            <hr>
+
+            名称 : <label><input name="id_shopName" value="{{ content.shop.name }}" required></label>
+            <hr>
+
+            地址 :
+
+            <hr>
+            <div data-toggle="distpicker" id="distpicker">
+                <div class="form-group">
+                    <label class="sr-only" for="province1">省</label>
+                    <select class="form-control" id="province1" name="id_province" ></select>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="city1">市</label>
+                    <select class="form-control" id="city1" name="id_city"></select>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="district1">区</label>
+                    <select class="form-control" id="district1" name="id_district" ></select>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="form-group">
+                    <label class="sr-only">街道：</label>
+                    <label>
+                        <input type="text" name="id_street" value="{{ content.shop.address }}" required>
+                    </label>
+                </div>
+            </div>
+            <input class="btn btn-default" type="submit" name="saveShopDetail" value="保存">
+        </form>
+
+    {% else %}
+
+
+        <p> <a class="btn btn-default" href="{% url 'Shop:EditShopDetail' %}?objectId={{ content.shop.objectId }}">编辑店铺</a></p>
+            ID :{{ content.shop.uniqueId }}
+            <hr>
+            {% if content.shop.name %}
+            名称 : {{ content.shop.name }}
+
+            <hr>
+            {% endif %}
+            {% if content.shop.address %}
+            地址 : {{ content.shop.province }} {{ content.shop.city }} {{ content.shop.district }} {{ content.shop.address }}
+
+            <hr>
+            {% endif %}
+             {% if content.shop.state == 1 %}
+                <a class="btn" href="{% url 'Shop:SettleIn' %}">入驻店铺</a>
+             {% else %}
+                 <a class="btn" href="{% url 'Shop:ShowSettleInformation' %}">查看入驻信息</a>
+             {% endif %}
+
+
+    {% endif %}
+
+        <script src="{% static 'js/jquery.js'%}"></script>
+        <script src="{% static 'js/bootstrap.min.js'%}"></script>
+        <script src="{% static 'js/distpicker.data.js' %}"></script>
+        <script src="{% static 'js/distpicker.js' %}"></script>
+        <script>
+            $("#distpicker").distpicker({
+                    province:'{{ content.shop.province }}',
+                    city:'{{ content.shop.city }}',
+                    district: '{{ content.shop.district }}'
+                });
+        </script>
+
+{% endblock %}

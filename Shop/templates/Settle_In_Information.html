@@ -1,0 +1,581 @@
+{% extends 'ProductAdminPage.html' %}
+{% load static %}
+{% block content %}
+
+<script language="javascript">
+
+    function PreviewImg(file, gggg){
+            var fileObj = document.getElementById(file);
+            var windowURL = window.URL || window.webkitURL;
+            var dataURL;
+            if(fileObj && fileObj.files && fileObj.files[0]) {
+
+                 dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                 jQuery("#"+gggg).attr('src',dataURL);
+            }
+    }
+
+    //上传图片
+    function loadImage(photo, filename) {
+        var pic = document.getElementById(photo);
+        var file = document.getElementById(filename);
+        var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+
+        var parent = file.parentNode;
+        var formtip = file.nextSibling;
+        if(formtip)
+            parent.removeChild(formtip);
+
+        var newDiv = document.createElement('span');
+        // gif在IE浏览器暂时无法显示
+        if(ext!=='png' && ext!=='jpg' && ext!=='jpeg'){
+            newDiv.innerHTML = '图片的格式必须为png或者jpg或者jpeg格式.';
+            parent.append(newDiv);
+            pic.src='';
+            file.value = '';
+            return;
+        }
+
+        var size = file.files[0].size / 1024;
+        if (size > 300){
+            newDiv.innerHTML = '图片大小超过300k.';
+            parent.append(newDiv);
+            pic.src='';
+            file.value = '';
+            return;
+        }
+
+        var isIE = navigator.userAgent.match(/MSIE/)!== null,
+         isIE6 = navigator.userAgent.match(/MSIE 6.0/)!== null;
+
+        if(isIE) {
+
+        // IE6浏览器设置img的src为本地路径可以直接显示图片
+         if (isIE6) {
+             file.select();
+            var reallocalpath = document.selection.createRange().text;
+            pic.src = reallocalpath;
+         }else {
+            PreviewImg(filename, photo);
+         }
+        }else {
+        html5Reader(photo, file);
+        }
+    }
+
+    function html5Reader(photo, file1){
+        var file = file1.files[0];
+        var reader = new FileReader();
+
+        reader.readAsDataURL(file);
+        reader.onload = function(e){
+            var pic = document.getElementById(photo);
+            pic.height= '100';
+            pic.width= '100';
+            pic.src=this.result;
+        }
+    }
+    $(function () {
+        $('form :input').blur(function(){
+            var $parent = $(this).parent();
+            $parent.find(".formtips").remove();
+            //验证用户名, 店铺名，法人姓名，管理人真实姓名
+            if( $(this).is('#real_name') || $(this).is('#shop_name') || $(this).is('#legal_person_name')|| $(this).is('#manager_real_name')){
+                if(this.value.length < 2 ){
+                    var errorMsg = '名称至少2位.';
+                    $parent.append('<span class="formtips onError">'+errorMsg+'<\/span>');
+                }
+            }
+            //验证邮件
+            var regEmail = /.+@.+\.[a-zA-Z]{2,4}$/;
+            if( $(this).is('#email') || $(this).is('#legal_person_email') || $(this).is('#manager_email')){
+                if( !regEmail.test(this.value) ){
+                    var errorMsg = '请输入正确的E-Mail地址.';
+                    $parent.append('<span class="formtips onError">'+errorMsg+'<\/span>');
+                }
+            }
+            //验证手机号
+            var reg = /^((([0-9]{3}))+\d{8})$/;
+            if( $(this).is('#phoneNumber') || $(this).is('#legal_person_phoneNumber') || $(this).is('#manager_phoneNumber') ){
+                if(  !reg.test(this.value) ){
+                    var errorMsg = '请输入有效的手机号.';
+                    $parent.append('<span class="formtips onError">'+errorMsg+'<\/span>');
+                }
+            }
+            //验证身份证号
+            var pattern = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+            if( $(this).is('#ID_Card') || $(this).is('#legal_person_ID_Card') ){
+                if(  !pattern.test(this.value) ){
+                    var errorMsg = '请输入有效的身份证号.';
+                    $parent.append('<span class="formtips onError">'+errorMsg+'<\/span>');
+                }
+            }
+            //验证支付宝账户
+
+            //验证社会信用代码
+            var patternUSCC = /^\d+$/;
+            if( $(this).is('#uniform_social_credit_code') ){
+                if(  !patternUSCC.test(this.value) ){
+                    var errorMsg = '请输入有效的社保号.';
+                    $parent.append('<span class="formtips onError">'+errorMsg+'<\/span>');
+                }
+            }
+        });
+
+    });
+    function check(){
+            alert('sfas');
+            //验证用户名, 店铺名，法人姓名，管理人真实姓名
+            var real_name = document.getElementById('real_name').value;
+            var shop_name = document.getElementById('shop_name').value;
+            var legal_person_name = document.getElementById('legal_person_name').value;
+            var manager_real_name = document.getElementById('manager_real_name').value;
+
+            if(real_name.length < 2 || shop_name.length < 2 ||legal_person_name.length < 2 ||manager_real_name.length < 2){
+                alert('名称至少2位.');
+                return false;
+            }
+
+            var email = document.getElementById('email').value;
+            var legal_person_email = document.getElementById('legal_person_email').value;
+            var manager_email = document.getElementById('manager_email').value;
+            //验证邮件
+            var regEmail = /.+@.+\.[a-zA-Z]{2,4}$/;
+            if( !regEmail.test(email) || !regEmail.test(legal_person_email) || !regEmail.test(manager_email) ){
+                alert('请输入正确的E-Mail地址.');
+                return false;
+            }
+
+            var phoneNumber = document.getElementById('phoneNumber').value;
+            var legal_person_phoneNumber = document.getElementById('legal_person_phoneNumber').value;
+            var manager_phoneNumber = document.getElementById('manager_phoneNumber').value;
+            //验证手机号
+            var reg = /^((([0-9]{3}))+\d{8})$/;
+            if(  !reg.test(phoneNumber) || !reg.test(legal_person_phoneNumber) || !reg.test(manager_phoneNumber)){
+
+                alert('请输入有效的手机号.');
+                return false;
+            }
+
+            var ID_Card = document.getElementById('ID_Card').value;
+            var legal_person_ID_Card = document.getElementById('legal_person_ID_Card').value;
+            //验证身份证号
+            var pattern = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+            if(  !pattern.test(ID_Card) || !pattern.test(legal_person_ID_Card) ){
+
+                alert('请输入有效的身份证号.');
+                return false;
+            }
+
+            //验证支付宝账户
+            var uniform_social_credit_code = document.getElementById('uniform_social_credit_code').value;
+            //验证社会信用代码
+            var patternUSCC = /^\d+$/;
+
+            if(  !patternUSCC.test(uniform_social_credit_code) ){
+
+                alert('请输入有效的社保号.');
+                return false;
+            }
+            return multiClick();
+        }
+</script>
+    <style>
+        div {
+            margin: 5px;
+        }
+
+
+    </style>
+    {% if content.settleIn.user %}
+        <script>
+            function check(){
+                //验证用户名, 店铺名，法人姓名，管理人真实姓名
+                var real_name = document.getElementById('real_name').value;
+                var shop_name = document.getElementById('shop_name').value;
+
+                if(real_name.length < 2 || shop_name.length < 2){
+                    alert('名称至少2位.');
+                    return false;
+                }
+
+                var email = document.getElementById('email').value;
+
+                //验证邮件
+                var regEmail = /.+@.+\.[a-zA-Z]{2,4}$/;
+                if( !regEmail.test(email) ){
+                    alert('请输入正确的E-Mail地址.');
+                    return false;
+                }
+
+                var phoneNumber = document.getElementById('phoneNumber').value;
+
+                //验证手机号
+                var reg = /^((([0-9]{3}))+\d{8})$/;
+                if(  !reg.test(phoneNumber)){
+
+                    alert('请输入有效的手机号.');
+                    return false;
+                }
+
+                var ID_Card = document.getElementById('ID_Card').value;
+                //验证身份证号
+                var pattern = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+                if(  !pattern.test(ID_Card) ){
+
+                    alert('请输入有效的身份证号.');
+                    return false;
+                }
+
+                return multiClick();
+            }
+        </script>
+        <form enctype="multipart/form-data" method="POST" action="{% url 'Shop:SettleInUser' %}?timestamp={{ content.time }}" onsubmit="return check();">
+            {% csrf_token %}
+            <div>
+                <div class="row">
+                    <div class="span3">
+                        入驻真实姓名：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="real_name" id="real_name" value="{{ content.settleIn.real_name }}"required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        电子邮箱：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="email" id="email" value="{{ content.settleIn.email }}" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        手机号：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="phoneNumber" id="phoneNumber" value="{{ content.settleIn.phoneNumber }}"  required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        身份证号：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="ID_Card" id="ID_Card"  value="{{ content.settleIn.ID_Card }}" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        身份证有效期：
+                    </div>
+                    <div class="span3">
+                        <input type="date" name="ID_Card_expire_time_start" value="{{ content.settleIn.ID_Card_expire_time_end }}"  required> 至
+                        <input type="date" name="ID_Card_expire_time_end" value="{{ content.settleIn.ID_Card_expire_time_end }}"  required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        身份证正面：
+                    </div>
+                    <div class="span3">
+                        <div><img src="{{ content.settleIn.front_ID_Card.url }}" style="width: 100px; height: 100px;" id="front_ID_Card_Image"></div>
+                        {% if content.settleIn.objectId %}
+                            <input type="file" name="front_ID_Card" id="front_ID_Card_File" onchange="loadImage('front_ID_Card_Image','front_ID_Card_File');" >
+                        {% else %}
+                            <input type="file" name="front_ID_Card" id="front_ID_Card_File" onchange="loadImage('front_ID_Card_Image','front_ID_Card_File');" required>
+                        {% endif %}
+
+                    </div>
+                    <div class="span3">
+                        <p>1、身份证信息需清晰可见</p>
+                        <p>2、图片不超过300k</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span3">
+                        身份证反面：
+                    </div>
+                    <div class="span3">
+                        <div><img src="{{ content.settleIn.back_ID_Card.url }}" style="width: 100px; height: 100px;" id="back_ID_Card_Image"></div>
+
+                        {% if content.settleIn.objectId %}
+                            <input type="file" name="back_ID_Card" id="back_ID_Card_File" onchange="loadImage('back_ID_Card_Image','back_ID_Card_File');" >
+                        {% else %}
+                            <input type="file" name="back_ID_Card" id="back_ID_Card_File" onchange="loadImage('back_ID_Card_Image','back_ID_Card_File');" required>
+                        {% endif %}
+
+                    </div>
+                    <div class="span3">
+                        <p>1、身份证信息需清晰可见</p>
+                        <p>2、图片不超过300k</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span3">
+                        手持身份证照片：
+                    </div>
+                    <div class="span3">
+                        <div><img src="{{ content.settleIn.hand_ID_Card.url }}" style="width: 100px; height: 100px;" id="hand_ID_Card_Image"></div>
+                        {% if content.settleIn.objectId %}
+                            <input type="file" name="hand_ID_Card" id="hand_ID_Card_File" onchange="loadImage('hand_ID_Card_Image','hand_ID_Card_File');" >
+                        {% else %}
+                            <input type="file" name="hand_ID_Card" id="hand_ID_Card_File" onchange="loadImage('hand_ID_Card_Image','hand_ID_Card_File');" required>
+                        {% endif %}
+
+                    </div>
+                    <div class="span3">
+                        <p>1、请手持本人身份证</p>
+                        <p>2、照片需免冠</p>
+                        <p>3、身份证信息需清晰可见</p>
+                        <p>4、图片不超过300k</p>
+                        <p>5、支持jpg、png格式</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        支付宝账号：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="alipay" id="alipay" value="{{ content.settleIn.alipay }}"  required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        店铺名称：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="shop_name" id="shop_name"  value="{{ content.settleIn.shop_name }}"  required>
+                    </div>
+                </div>
+                <input type="hidden" name="objectId" value="{{ content.settleIn.objectId }}">
+                <input class="btn" type="submit" value="确认信息无误，提交审核">
+            </div>
+        </form>
+    {% endif %}
+
+    {% if content.settleIn.company %}
+        <script>
+            function check(){
+            //验证用户名, 店铺名，法人姓名，管理人真实姓名
+            var shop_name = document.getElementById('shop_name').value;
+            var legal_person_name = document.getElementById('legal_person_name').value;
+            var manager_real_name = document.getElementById('manager_real_name').value;
+
+            if( shop_name.length < 2 ||legal_person_name.length < 2 ||manager_real_name.length < 2){
+                alert('名称至少2位.');
+                return false;
+            }
+
+            var legal_person_email = document.getElementById('legal_person_email').value;
+            var manager_email = document.getElementById('manager_email').value;
+            //验证邮件
+            var regEmail = /.+@.+\.[a-zA-Z]{2,4}$/;
+            if( !regEmail.test(legal_person_email) || !regEmail.test(manager_email) ){
+                alert('请输入正确的E-Mail地址.');
+                return false;
+            }
+
+            var legal_person_phoneNumber = document.getElementById('legal_person_phoneNumber').value;
+            var manager_phoneNumber = document.getElementById('manager_phoneNumber').value;
+            //验证手机号
+            var reg = /^((([0-9]{3}))+\d{8})$/;
+            if( !reg.test(legal_person_phoneNumber) || !reg.test(manager_phoneNumber)){
+
+                alert('请输入有效的手机号.');
+                return false;
+            }
+
+            var legal_person_ID_Card = document.getElementById('legal_person_ID_Card').value;
+            //验证身份证号
+            var pattern = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+            if( !pattern.test(legal_person_ID_Card) ){
+
+                alert('请输入有效的身份证号.');
+                return false;
+            }
+
+            //验证支付宝账户
+            var uniform_social_credit_code = document.getElementById('uniform_social_credit_code').value;
+            //验证社会信用代码
+            var patternUSCC = /^\d+$/;
+
+            if(  !patternUSCC.test(uniform_social_credit_code) ){
+
+                alert('请输入有效的社保号.');
+                return false;
+            }
+            return multiClick();
+        }
+        </script>
+        <form enctype="multipart/form-data" method="POST" action="{% url 'Shop:SettleInCompany' %}" onsubmit="return check();">
+            {% csrf_token %}
+            <div>
+                <div class="row">
+                    <div class="span3">
+                        统一社会信用代码：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="uniform_social_credit_code" id="uniform_social_credit_code" value="{{ content.settleIn.uniform_social_credit_code }}"  required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span3">
+                        法人姓名：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="legal_person_name" id="legal_person_name"  value="{{ content.settleIn.legal_person_name }}" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        法人邮箱：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="legal_person_email" id="legal_person_email"  value="{{ content.settleIn.legal_person_email }}" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        法人手机号：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="legal_person_phoneNumber" id="legal_person_phoneNumber"  value="{{ content.settleIn.legal_person_phoneNumber }}" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        法人身份证号：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="legal_person_ID_Card" id="legal_person_ID_Card"  value="{{ content.settleIn.legal_person_ID_Card }}"  required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        法人身份有效期：
+                    </div>
+                    <div class="span3">
+                        <input type="date" name="legal_person_expire_time_start"  value="{{ content.settleIn.legal_person_expire_time_start }}"  required> 至
+                        <input type="date" name="legal_person_expire_time_end"  value="{{ content.settleIn.legal_person_expire_time_end }}"   required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        身份证正面（含头像身份证号）：
+                    </div>
+                    <div class="span3">
+                        <div><img src="{{ content.settleIn.legal_person_front_ID_Card.url }}" style="width: 100px; height: 100px;" id="front_ID_Card_Image"></div>
+                        {% if content.settleIn.objectId %}
+                         <input type="file" name="legal_person_front_ID_Card" id="front_ID_Card_File" onchange="loadImage('front_ID_Card_Image','front_ID_Card_File');" >
+                        {% else %}
+                            <input type="file" name="legal_person_front_ID_Card" id="front_ID_Card_File" onchange="loadImage('front_ID_Card_Image','front_ID_Card_File');" required>
+                        {% endif %}
+
+                    </div>
+                    <div class="span3">
+                        <p>1、身份证信息需清晰可见</p>
+                        <p>2、图片不超过300k</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span3">
+                        身份证反面：
+                    </div>
+                    <div class="span3">
+                        <div><img src="{{ content.settleIn.legal_person_back_ID_Card.url }}" style="width: 100px; height: 100px;" id="back_ID_Card_Image"></div>
+                        {% if content.settleIn.objectId %}
+                        <input type="file" name="legal_person_back_ID_Card" id="back_ID_Card_File" onchange="loadImage('back_ID_Card_Image','back_ID_Card_File');" >
+                                {% else %}
+                     <input type="file" name="legal_person_back_ID_Card" id="back_ID_Card_File" onchange="loadImage('back_ID_Card_Image','back_ID_Card_File');" required>
+                                {% endif %}
+
+                    </div>
+                    <div class="span3">
+                        <p>1、身份证信息需清晰可见</p>
+                        <p>2、图片不超过300k</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span3">
+                        营业执照：
+                    </div>
+                    <div class="span3">
+                        <div><img src="{{ content.settleIn.business_license.url }}" style="width: 100px; height: 100px;" id="business_license_Image"></div>
+                        {% if content.settleIn.objectId %}
+                            <input type="file" name="business_license" id="business_license_File" onchange="loadImage('business_license_Image','business_license_File');">
+                        {% else %}
+                            <input type="file" name="business_license" id="business_license_File" onchange="loadImage('business_license_Image','business_license_File');" required>
+                        {% endif %}
+
+                    </div>
+                    <div class="span3">
+                        <p>1、营业执照信息需清晰可见</p>
+                        <p>2、图片不超过300k</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        支付宝账号：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="alipay" id="alipay"  value="{{ content.settleIn.alipay }}" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span3">
+                        店铺名称：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="shop_name" id="shop_name" value="{{ content.settleIn.shop_name }}"  required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        管理人真实姓名：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="manager_real_name" id="manager_real_name"  value="{{ content.settleIn.manager_real_name }}"  required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        管理人电子邮箱：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="manager_email" id="manager_email"  value="{{ content.settleIn.manager_email }}"  required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span3">
+                        管理人手机号：
+                    </div>
+                    <div class="span3">
+                        <input type="text" name="manager_phoneNumber" id="manager_phoneNumber"  value="{{ content.settleIn.manager_phoneNumber }}"  required>
+                    </div>
+                </div>
+
+                <input type="hidden" name="objectId" value="{{ content.settleIn.objectId }}">
+                <input class="btn" type="submit" value="确认信息无误，提交审核">
+            </div>
+        </form>
+
+
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,336 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+    <style>
+        .label_productGroup_left{
+            width: 220px;
+            display: block;
+            float: left;
+        }
+        .label_productGroup_right{
+            display: block;
+            float: right;
+        }
+    .first_image a img{
+        width: 200px;
+        height: 200px;
+    }
+    .second_image img {
+        width: 100px;
+        height: 100px;
+    }
+    </style>
+    <script>
+        $(function () {
+            $("input:button[name='buttonA']").click(function () {
+                var state = 0;
+                if ($(this).attr('id') == 'id_complete' || $(this).attr('id') == 'id_shelf_on' ){
+                    state = 0;
+                }
+                else if($(this).attr('id') == 'id_pull_off_shelves')
+                {
+                    state = 1;
+                }else if($(this).attr('id') == 'id_no_finish')
+                {
+                    state = 2;
+                }
+                else {
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Product/DisposeProductGroup/',
+                    data: {
+                        'state': state,
+                        '_productGroupObjectId': $("#id_productGroupObjectId").val(),
+                        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                    },
+                    success: function (data) {
+                        alert(data);
+                        if(data == '修改成功'){
+                            var $parent = $("#id_form").parent();
+                            $parent.remove();
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert('处理失败');
+                    }
+                });
+            });
+        });
+
+    </script>
+    <div >
+        <h2>
+        {% if content.productGroup.is_shopProductGroup %}
+            {% if content.productGroup.audit == 1 %}
+                商品等待审核
+            {% elif content.productGroup.audit == -1 %}
+                商品审核未通过
+            {% elif content.productGroup.audit == 0 %}
+                商品正在编辑
+            {% endif %}
+        {% else %}
+            {% if content.productGroup.state == 0 %}
+                商品已上架
+            {% endif %}
+            {% if content.productGroup.state == 1 %}
+                商品已下架
+            {% endif %}
+        {% endif %}
+        </h2>
+        <div>
+            <label class="label_productGroup_left">商品详情</label>
+
+            <label class="label_productGroup_right">店铺ID: {{ content.productGroup.shopUniqueId }}
+            </label>
+            <div style="clear: both;"></div>
+        </div>
+        <div>
+            {% if content.profile.current_role == 'ProductAdmin' %}
+                {% if not content.productGroup.is_shopProductGroup %}
+                <form enctype="multipart/form-data" method="POST" action="{% url 'Product:CreateProductGroup' %}" onsubmit="return multiClick();" id="id_form">
+                    {% csrf_token %}
+                <hr>
+                    <input type="hidden" id="id_productGroupObjectId" name="_productGroupObjectId" value="{{ content.productGroup.objectId }}" >
+                    {% if content.productGroup.state == 0 %}
+                        <input class="btn btn-default" type="button" name="buttonA" id="id_pull_off_shelves" value="下架商品">
+                    {% else %}
+                        <a class="btn btn-default" href="{% url 'Product:ModifyPhotoGroup' %}?_productGroupObjectId={{ content.productGroup.objectId }}" >修改图片组</a>
+                        <input class="btn btn-default" type="submit" name="_modifyProductGroup" value="修改商品组">
+                        <input class="btn btn-default" type="submit" name="_deleteProductGroup" value="删除商品组">
+                    {% endif %}
+
+                    {% if content.productGroup.state == 2 %}
+                        <input class="btn btn-default" type="button" name="buttonA" id="id_complete" value="商品创建完成">
+                    {% elif content.productGroup.state == 1 %}
+                        <input class="btn btn-default" type="button" name="buttonA" id="id_shelf_on" value="上架商品">
+                    {% endif %}
+                </form>
+                {% endif %}
+
+                {% if content.productGroup.is_shopProductGroup and content.productGroup.audit == 1 %}
+                    <form enctype="multipart/form-data" method="POST" action="{% url 'Product:AuditProductGroup' %}" onsubmit="return multiClick();" id="id_form">
+                        {% csrf_token %}
+                        <input type="hidden" name="_productGroupObjectId" value="{{ content.productGroup.objectId }}">
+                        <input class="btn btn-default" type="submit"  name="_verify" value="通过商品审核">
+                        <input class="btn btn-default" type="submit" name="_reject" value="商品审核不通过">
+                     </form>
+                {% endif %}
+            {% endif %}
+
+
+            {% if content.profile.current_role == 'Shop' and content.productGroup.audit != 1 and content.productGroup.state != 0 %}
+                <form enctype="multipart/form-data" method="POST" action="{% url 'ShopProductGroup:CreateProductGroup' %}" onsubmit="return multiClick();" id="id_form">
+                    {% csrf_token %}
+                  <hr>
+                    <input type="hidden" id="id_productGroupObjectId" name="_productGroupObjectId" value="{{ content.productGroup.objectId }}" >
+                    <a class="btn btn-default" href="{% url 'ShopProductGroup:ModifyPhotoGroup' %}?_productGroupObjectId={{ content.productGroup.objectId }}">修改图片组</a>
+                    <a class="btn btn-default" href="{% url 'ShopProductGroup:EditProductGroup' %}?_productGroupObjectId={{ content.productGroup.objectId }}">修改商品组</a>
+                    <input class="btn btn-default" type="submit" name="_deleteProductGroup" value="删除商品组">
+                </form>
+                {% if content.productGroup.is_shopProductGroup %}
+                    <form enctype="multipart/form-data" method="POST" action="{% url 'Product:AuditProductGroup' %}" onsubmit="return multiClick();" id="id_form">
+                        {% csrf_token %}
+                        <input type="hidden" name="_productGroupObjectId" value="{{ content.productGroup.objectId }}">
+                        {% if content.productGroup.audit == 0 %}
+                            <input class="btn btn-default" type="submit"  name="_audit" value="提交审核商品">
+                        {% endif %}
+                        {% if content.productGroup.audit == -1 %}
+                            <input class="btn btn-default" type="submit" name="_audit" value="重新提交审核商品">
+                        {% endif %}
+                    </form>
+                {% endif %}
+            {% endif %}
+
+        </div>
+    </div>
+    <hr>
+    <div >
+        <div style="margin-top: 40px">
+            商品Id
+            <hr>
+            {{ content.productGroup.uniqueId }}
+        </div>
+            {% if content.profile.current_role == 'BusinessOperation' %}
+            <div style="margin-top: 40px">
+                <div>
+                    <label>商品组编号: </label> {{ content.productGroup.objectId }}
+                </div>
+                <hr>
+            </div>
+            {% endif %}
+
+        <div style="margin-top: 40px">
+            库存分类
+            <hr>
+            {{ content.productGroup.storeCategory.storeCategoryFirst }} / {{ content.productGroup.storeCategory.storeCategorySecond }} / {{ content.productGroup.storeCategory.storeCategoryThird }}
+        </div>
+
+
+
+        <div style="margin-top: 40px">
+            销售类别
+            <hr>
+            {% for sale in content.productGroup.saleCategory %}
+                <div> {{ sale.saleCategoryFirst }} / {{ sale.saleCategorySecond }} </div>
+            {% endfor %}
+        </div>
+        <div style="margin-top: 40px">
+            商品组名
+            <hr>
+            {{ content.productGroup.name }}
+        </div>
+
+        <div style="margin-top: 40px">
+            商品简介
+            <hr>
+            {{ content.productGroup.briefDescription }}
+        </div>
+
+        <div style="margin-top: 40px">
+            属性及选项
+            <hr>
+            <div>
+                {% for foo in content.productGroup.propertyOption %}
+                    {% for key, value in foo.items %}
+                    <div>{{ key}}</div>
+                    <div style="border: 1px solid">
+                        {% for goo in value %}
+                            <div>{{ goo }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div style="margin-top: 40px" class="first_image">
+            所有图片
+            <hr>
+            {% for foo in content.productGroup.imageList %}
+                <a onclick="return multiClick();" href="{{ foo.image.url }}?timestamp={{ content.time }}"><img src="{{ foo.image.url }}" height="200px" width="200px" ></a>
+            {% endfor %}
+        </div>
+
+        <div style="margin-top: 40px">
+            主图片
+            <hr>
+            <div class="first_image">
+            <a onclick="return multiClick();" href="{{ content.productGroup.mainImage.url }}?timestamp={{ content.time }}"><img  src="{{ content.productGroup.mainImage.url }}" height="200" width="200" ></a>
+            </div>
+
+        </div>
+        <div style="margin-top: 40px">
+            商品详情
+            <hr>
+            {% autoescape off %}
+
+                {{ content.productGroup.detailDescription }}
+
+            {% endautoescape %}
+
+        </div>
+
+        <div style="margin-top: 40px">
+            商品价格
+            <hr>
+            {{ content.productGroup.price }}
+        </div>
+        <div style="margin-top: 40px">
+            商品旧的价格
+            <hr>
+            {{ content.productGroup.oldPrice }}
+        </div>
+        <div style="margin-top: 40px">
+            商品发货地
+            <hr>
+            {{ content.productGroup.dispatchPlace }}
+        </div>
+        <div style="margin-top: 40px">
+            商品服务
+            <hr>
+            {% for foo in content.productGroup.productService %}
+                <label>{{ foo.name }}</label>
+            {% endfor %}
+        </div>
+
+
+        <div style="margin-top: 40px">
+        <div>
+            <label class="label_productGroup_left">所有商品</label>
+            <label class="label_productGroup_right">
+
+                {% if content.profile.current_role == 'ProductAdmin'  %}
+                    <form enctype="multipart/form-data" method="POST" action="{% url 'Product:CreateProductGroup' %}?timestamp={{ content.time }}"  onsubmit="return multiClick();">
+                        {% csrf_token %}
+                        <input type="hidden" name="_productGroupObjectId" value="{{ content.productGroup.objectId }}">
+                        <input class="btn btn-default" type="submit" name="_addProduct" value="添加商品">
+                    </form>
+
+                {% endif %}
+                {% if content.productGroup.state != 0 and content.profile.current_role == 'Shop' %}
+                    <a class="btn btn-default" href="{% url 'ShopProductGroup:AddProduct' %}?_productGroupObjectId={{ content.productGroup.objectId }}" >添加商品</a>
+                {% endif %}
+            </label>
+            <div style="clear: both;"></div>
+        </div>
+            <hr>
+            {% for foo in content.productGroup.product %}
+                 <div>
+                 <table>
+                     <td>
+                         <div class="second_image">
+                             <img src="{{ foo.mainImage.url }}" height="100px" width="100px" >
+                         </div>
+
+                     </td>
+                     <td>
+                         <div>
+                            {% if content.profile.current_role == 'ProductAdmin'  %}
+                                <a onclick="" href="{% url 'Product:ProductDetail' %}?objectId={{ foo.objectId }}">{{ foo.name }}</a>
+                            {% endif %}
+                            {% if content.profile.current_role == 'Shop' %}
+                                <a onclick="" href="{% url 'ShopProductGroup:ProductDetail' %}?objectId={{ foo.objectId }}">{{ foo.name }}</a>
+                            {% endif %}
+
+
+                         </div>
+                         <div>
+                            {% for choice in foo.style %}
+                                {{ choice }}
+                            {% endfor %}
+                         </div>
+                        <div>{{ foo.uniqueId }}</div>
+                        <div>
+                            {% if foo.state == 2 %}
+                                 未完成状态
+                            {% endif %}
+                        </div>
+                     </td>
+                 </table>
+                 </div>
+            {% endfor %}
+
+        </div>
+        <div style="margin-top: 40px">
+            评论({{ content.productGroup.commentCount }})
+            <hr>
+            {% if content.productGroup.commentCount > 0 %}
+            <form enctype="multipart/form-data" method="POST" action="{% url 'Product:ShowComments' %}?timestamp={{ content.time }}" onsubmit="return multiClick();" >
+                {% csrf_token %}
+                <input type="hidden" name="productUniqueId" value="{{ content.productGroup.objectId }}">
+                <input class="btn btn-default" type="submit" name="showProductGroupComment" value="查看评价">
+            </form>
+            {% endif %}
+        </div>
+    {% if content.profile.current_role == 'ProductAdmin'  %}
+        <div style="margin-top: 40px">
+            <a onclick="return multiClick();" href="{% url 'Shop:AllShop' %}?objectId={{ content.shop.objectId  }}&&timestamp={{ content.time }}">
+                返回店铺：{{ content.shop.name }}</a>
+        </div>
+    {% endif %}
+    </div>
+
+{% endblock %}

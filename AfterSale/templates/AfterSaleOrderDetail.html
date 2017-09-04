@@ -1,0 +1,169 @@
+
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+    <style>
+        .sonTagLeft1{
+            float: left;
+            display: block;
+            width: 220px;
+            height: 220px;
+        }
+        .sonTagLeft1 div{
+            margin: 10px;
+        }
+        .sonTagLeft1 img{
+            width: 200px;
+            height: 200px;
+        }
+        .orderStateTag label{
+            margin: 20px;
+        }
+        .orderStateTag a{
+            margin: 20px;
+        }
+    .label1{
+        display: block;
+        width: 100px;
+        float: left;
+    }
+    </style>
+    <script>
+
+        $(function () {
+            $("#id_submit").click(function () {
+                var radio_choice = 0;
+                if(4 == $('input:radio:checked').val()){
+                    radio_choice = 4;
+                }else if (1 == $('input:radio:checked').val()){
+                    radio_choice = 1;
+                }else if(3 == $('input:radio:checked').val()){
+                    radio_choice = 3;
+                    $("#id_submit").val('等待退款中。。。').attr('disabled',true).css('cursor','not-allowed');
+                }else{
+                    alert('请选择退款类型');
+                    return false;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/AfterSale/DisposeAfterSale/',
+                    data: {
+                        'radio_choice': radio_choice,
+                        'objectId': $("#id_objectId").val(),
+                        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                    },
+                    success: function (data) {
+                        if(data == '已申请退款，请检查退款状态') {
+                            alert(data);
+                        }
+                        $('#id_disposeAfterSale').css('display', 'none');
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert('处理失败');
+                        $("#id_submit").val('确定').removeAttr('disabled style');
+                    },
+                    complete:function(XMLHttpRequest){
+                        //alert(XMLHttpRequest.responseText)
+
+                    }
+                });
+            });
+        });
+
+    </script>
+    <div>
+        <div><label class="label1">下单时间：&nbsp;</label>     {{ content.serviceRecord.createdAt }}</div>
+        <div style="clear: both;"></div>
+        <div style="clear: both;"></div>
+        <hr>
+        <div><label class="label1">订单号：&nbsp;&nbsp;</label>      {{ content.serviceRecord.orderUniqueId }}</div>
+        <div style="clear: both;"></div>
+        <hr>
+        <div><label class="label1">申请单号：&nbsp;</label>     {{ content.serviceRecord.uniqueId }}</div>
+        <div style="clear: both;"></div>
+        <hr>
+        <div><label class="label1">用户ID：&nbsp;&nbsp;</label>      {{ content.serviceRecord.order.user.uniqueId }}</div>
+        <div style="clear: both;"></div>
+        <hr>
+        <div class="orderStyle">
+
+            <div class="sonTagLeft1">
+                <img src="{{ content.serviceRecord.productMainImage.url }}" height="200" width="200">
+            </div>
+            <div class="sonTagLeft1">
+                <div>{{ content.serviceRecord.productGroupName }}</div>
+                <div>
+                </div>
+                <div>{{ content.serviceRecord.productPrice }}</div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <div style="clear: both;"></div>
+        <hr>
+        <div class="">
+            <label class="label1">数量：&nbsp;&nbsp;</label> {{ content.serviceRecord.refundProductCount }}
+        </div>
+        <div style="clear: both;"></div>
+        <hr>
+        <div><label class="label1">原因：&nbsp;&nbsp;</label>      {{ content.serviceRecord.refundReason }}</div>
+        <div style="clear: both;"></div>
+        <hr>
+        <div><label class="label1">描述：&nbsp;&nbsp;</label>      {{ content.serviceRecord.refundReasonDetail }}</div>
+        <div style="clear: both;"></div>
+        <hr>
+        <div>
+            {% if content.serviceRecord.refundReasonImage %}
+            <div><label class="label1">照片：&nbsp;&nbsp;</label></div>
+            <div>
+            {% for image in content.serviceRecord.refundReasonImage %}
+                <img src="{{ image.url }}" width="100" height="100">
+            {% endfor %}
+            </div>
+            {% endif %}
+
+        </div>
+        <div style="clear: both;"></div>
+        <hr>
+        <div><label class="label1">退款金额：&nbsp;&nbsp;</label>      {{ content.serviceRecord.refundSumPrice }}</div>
+        <div style="clear: both;"></div>
+        <hr>
+        <div><label class="label1">联系人：&nbsp;&nbsp;</label>      {{ content.serviceRecord.contactName }}</div>
+        <div style="clear: both;"></div>
+        <hr>
+        <div><label class="label1">手机号：&nbsp;&nbsp;</label>      {{ content.serviceRecord.contactPhone }}</div>
+        <div style="clear: both;"></div>
+        <hr>
+    {% if content.profile.current_role == 'CustomService' %}
+        {% if content.serviceRecord.recordState == 0 %}
+            <div style="margin: 10px;" id="id_disposeAfterSale">
+                <form enctype="multipart/form-data" method="POST" >
+                    {% csrf_token %}
+                    <input type="hidden" id="id_objectId" name="objectId" value="{{ content.serviceRecord.objectId }}">
+                    <div style="margin-bottom: 20px;">
+                        <label class=""><input type="radio" name="radio_choice" value=4> 理由不充足，拒绝申请 </label>
+                        <div style="clear: both;"></div>
+                        <hr>
+                    </div>
+                    <div style="margin-bottom: 20px;"><label class="">
+                        <input type="radio" name="radio_choice" value=1> 同意退货后退款 </label>
+                        <div style="clear: both;"></div>
+                        <hr>
+                    </div>
+                    <div style="margin-bottom: 20px;"><label class=""><input type="radio" name="radio_choice" value=3> 直接退款 </label>
+                        <div style="clear: both;"></div>
+                        <hr>
+                        <label>请确认已完成退款，并核对退款金额！</label>
+                        <div>
+                            <label class="label1">退款金额：</label>
+                            <label>
+                                {{ content.serviceRecord.refundSumPrice }} 元
+                            </label>
+                        </div>
+                        <input class="btn btn-default" type="button" name="submit" value="确认" id="id_submit">
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+    {% endif %}
+    </div>
+{% endblock %}

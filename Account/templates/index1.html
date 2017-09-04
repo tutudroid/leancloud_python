@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>萌趣</title>
+{% load static %}
+
+<!-- Stylesheets -->
+<link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+
+<link type="text/css" href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic,500italic,500,300italic,300' rel='stylesheet' type='text/css'>
+
+<link type="text/css" href="{% static 'icons/font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+
+<link type="text/css" href="{% static 'icons/rondo/style.css' %}" rel="stylesheet">
+
+<link type="text/css" href="{% static 'css/theme.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header class="header" id="jump">
+
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+    <div class="container">
+
+      <div class="navbar-header">
+
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse"> 
+            <span class="sr-only">Toggle navigation</span> 
+            <span class="icon-bar"></span> </button>
+
+        <a class="navbar-brand" href="#"><img src="{% static 'images/logo.png' %}" alt="" /></a> </div>
+
+      <div class="collapse navbar-collapse hidden-xs">
+
+        <ul class="nav navbar-nav navbar-right">
+
+          <li class="active"><a href="#jump0">首页</a></li>
+
+          <li><a href="#jump5">联系我们</a></li>
+
+        </ul>
+
+      </div>
+
+      <!-- /.navbar-collapse -->
+
+      <div class="collapse navbar-responsive-collapse">
+
+        <ul class="nav navbar-nav">
+
+          <li class="active"><a href="#jump0" data-toggle="collapse" data-target=".navbar-responsive-collapse">首页</a></li>
+
+          <li><a href="#jump5" data-toggle="collapse" data-target=".navbar-responsive-collapse">联系我们</a></li>
+
+        </ul>
+
+      </div>
+
+      <!-- /.navbar-responsive-collapse --> 
+
+    </div>
+
+  </nav>
+
+
+</header>
+
+
+
+<div class="jumper" id="jump0"></div>
+
+<div class="section type-1 big splash">
+
+  <div class="container">
+
+    <div class="splash-block">
+
+      <div class="centered">
+
+        <div class="container">
+
+          <div class="section-headlines">
+
+            <h1>萌趣</h1>
+
+            <p>让我们的生活萌起来～</p>
+
+          </div>
+
+          <a href="#jump0" class="btn btn-outline btn-lg"> 加入我们 </a> &nbsp; <a href="{% url 'Account:Login' %}" class="btn btn-outline btn-lg"> 注册登陆 </a> </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+<div id="jump1" class="jumper"></div>
+
+<div id="jump5" class="jumper"></div>
+
+<!-- Testimonials -->
+
+<div class="section type-2"> 
+
+  <div class="container">
+
+    <div class="section-headlines">
+
+      <h4> 萌趣期待您的加入 </h4>
+
+      <h2> 萌趣商城合作伙伴招募中，欢迎联系我们！ </h2>
+
+      <div>联系方式 </div>
+      
+      <div>QQ: 2198208894 </div>
+      
+      <div>电话: 021-52238536 </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Subscription -->
+
+<div id="jump6" class="jumper"></div>
+
+<footer class="footer">
+    
+    <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-12">
+          Copyright &copy; <a href="http://segue.leanapp.cn/" target="_blank" title="xxx"> 萌趣 </a> All Rights Reserved.
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+
+<!--Scripts--> 
+
+<script src="{% static 'scripts/jquery-1.10.2.min.js' %}"></script>
+
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+<script src="{% static 'scripts/jquery.smooth-scroll.min.js' %}"></script>
+
+<script src="{% static 'scripts/mixitup/jquery.mixitup.min.js' %}"></script>
+
+<script src="{% static 'scripts/theme.js' %}"></script>
+
+<script>
+
+		$('.nav-tabs a').click(function (e) {
+
+			e.preventDefault();
+
+			$(this).tab('show');
+
+		})
+
+	</script>
+
+</body>
+

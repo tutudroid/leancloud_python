@@ -1,0 +1,140 @@
+{% extends 'ProductAdminPage.html' %}
+
+{% block content %}
+    <style>
+        .sonTagLeft1{
+            float: left;
+            display: block;
+            width: 120px;
+            height: 120px;
+        }
+        .sonTagRight1{
+            float: right;
+            display: block;
+            width: 120px;
+            height: 120px;
+        }
+        .orderStyle{
+            margin-top: 20px;
+            border: solid 1px;
+            padding:10px;
+        }
+        .orderStyle img{
+            width: 100px;
+            height: 100px;
+        }
+        .orderStateTag label{
+            margin: 20px;
+        }
+        .orderStateTag a{
+            margin: 20px;
+        }
+    </style>
+    {% if content.order.searchCondition %}
+        {% for foo in content.order.searchCondition %}
+            <div>
+                <label  class="shopInforLabel">{{ foo.name }}</label>
+                <label>{{ foo.value }}</label>
+            </div>
+        {% endfor %}
+    {% else %}
+    {% endif %}
+    <div class="orderStateTag">
+    {% if content.recordState == 0 %}
+        <a href="#" style="color: rgba(165,23,77,0.65);">待受理({{ content.recordCount }})</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 1 %}">待退货</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 2 %}">退货中</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 3 %}">已退款</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 4 %}">未通过</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 5 %}">已取消</a>
+    {% elif content.recordState == 1 %}
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 0 %}">待受理</a>
+        <a href="#" style="color: rgba(165,23,77,0.65);">待退货</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 2 %}">退货中</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 3 %}">已退款</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 4 %}">未通过</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 5 %}">已取消</a>
+    {% elif content.recordState == 2 %}
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 0 %}">待受理</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 1 %}">待退货</a>
+        <a href="#" style="color: rgba(165,23,77,0.65);">退货中</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 3 %}">已退款</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 4 %}">未通过</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 5 %}">已取消</a>
+    {% elif content.recordState == 3 %}
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 0 %}">待受理</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 1 %}">待退货</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 2 %}">退货中</a>
+        <a href="#" style="color: rgba(165,23,77,0.65);">已退款</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 4 %}">未通过</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 5 %}">已取消</a>
+    {% elif content.recordState == 4 %}
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 0 %}">待受理</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 1 %}">待退货</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 2 %}">退货中</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 3 %}">已退款</a>
+        <a href="#" style="color: rgba(165,23,77,0.65);">未通过</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 5 %}">已取消</a>
+    {% elif content.recordState == 5 %}
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 0 %}">待受理</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 1 %}">待退货</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 2 %}">退货中</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 3 %}">已退款</a>
+        <a onclick="return multiClick();" href="{% url 'AfterSale:AfterSale' 4 %}">未通过</a>
+        <a href="#" style="color: rgba(165,23,77,0.65);">已取消</a>
+    {% endif %}
+    </div>
+    <hr>
+    <div style="clear: both;"></div>
+    {% if not content.serviceRecord %}
+        未查询到结果
+    {% endif %}
+    {% for foo in content.serviceRecord %}
+
+        <div class="orderStyle">
+            {% if content.recordState == 0 %}
+                <div style="float: left">订单号：<a onclick="" href="{% url 'AfterSale:ShowServiceRecord' %}?objectId={{ foo.objectId }}"> {{ foo.uniqueId }}</a></div>
+            {% else %}
+                <div style="float: left">订单号：<a onclick="" href="{% url 'AfterSale:AfterSaleSchedule' %}?objectId={{ foo.objectId }}"> {{ foo.uniqueId }}</a></div>
+            {% endif %}
+            <div style="float: right"> {{ foo.createdAt }}</div>
+            <div style="clear: both;"></div>
+            <hr>
+            <div class="sonTagLeft1">
+                <img src="{{ foo.productMainImage.url }}" height="100px" width="100px">
+            </div>
+            <div class="sonTagLeft1">
+                <div>{{ foo.productGroupName }}</div>
+                <div>{{ foo.productStyle }}</div>
+                <div>{{ foo.productPrice }}</div>
+            </div>
+            <div class="sonTagRight1">
+                <div> X {{ foo.refundProductCount }}</div>
+            </div>
+            <div style="clear: both;"></div>
+            <hr>
+            <div style="float: left">退款金额： {{ foo.refundSumPrice }}</div>
+            <div style="float: right">
+                {% if foo.recordState == 0 %}
+                    待受理
+                {% elif foo.recordState == 1 %}
+                    待退货
+                {% elif foo.recordState == 2 %}
+                    退货中
+                {% elif foo.recordState == 3 %}
+                    已退款
+                {% elif foo.recordState == 4 %}
+                    未通过
+                {% elif foo.recordState == 5 %}
+                    已取消
+                {% endif %}
+            </div>
+            <div style="clear: both;"></div>
+
+        </div>
+
+    {% endfor %}
+
+    {% include 'paginator_page.html' %}
+
+{% endblock %}

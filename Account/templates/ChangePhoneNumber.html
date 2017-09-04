@@ -1,0 +1,135 @@
+
+{% extends 'ProductAdminPage.html' %}
+{% load static %}
+{% block content %}
+
+        <script src="{% static 'js/jquery.min.js' %}" ></script>
+    <script src="{% static 'js/jquery.cookie.js' %}" ></script>
+    <script language="JavaScript">
+        {% if content.data.newPhone %}
+            var cookieName = 'newPhoneCookiecapta';
+        {% else %}
+            var cookieName = 'oldPhoneCookiecapta';
+        {% endif %}
+
+
+         $(function(){
+            /*仿刷新：检测是否存在cookie*/
+            if($.cookie(cookieName)){
+                var count = $.cookie(cookieName);
+                var btn = $('#getting');
+                btn.val(count+'秒后可重新获取').attr('disabled',true).css('cursor','not-allowed');
+                var resend = setInterval(function(){
+                    count--;
+                    if (count > 0){
+                        btn.val(count+'秒后可重新获取').attr('disabled',true).css('cursor','not-allowed');
+                        $.cookie(cookieName, count, {path: '/', expires: (1/86400)*count});
+                    }else {
+                        clearInterval(resend);
+                        btn.val("获取验证码").removeAttr('disabled style');
+                    }
+                }, 1000);
+            }
+
+            /*点击改变按钮状态，已经简略掉ajax发送短信验证的代码*/
+            $('#getting').click(function(){
+
+                {% if content.data.newPhone %}
+                    var url = '/Account/get_verify_code/';
+                {% else %}
+                    var url = '/Account/GetVerifyCode/';
+                {% endif %}
+
+
+                var phoneNum = $("#id_phone").val();
+                if(isPhoneNumber(phoneNum) === false)
+                    return false;
+
+                var btn = $(this);
+                var count = 60;
+                var resend = setInterval(function(){
+                    count--;
+                    if (count > 0){
+                        btn.val(count+"秒后可重新获取");
+                        $.cookie(cookieName, count, {path: '/', expires: (1/86400)*count});
+
+                    }else {
+                        clearInterval(resend);
+                        btn.val("获取验证码").removeAttr('disabled style');
+
+                    }
+                }, 1000);
+                btn.attr('disabled',true).css('cursor','not-allowed');
+                 $.ajax({
+                            type: 'GET',
+                            url: url,
+                            data: {
+                                'phoneNumber': phoneNum,
+                            },
+                            success: function (data) {
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                $("#message").html(XMLHttpRequest.responseText);
+                            },
+                            complete:function(XMLHttpRequest){
+                                $("#message").html(XMLHttpRequest.responseText);
+
+                            }
+                        });
+            });
+
+        });
+        function isPhoneNumber(number){
+            var myreg = /^((([0-9]{3}))+\d{8})$/;
+            if(!myreg.test(number)){
+                alert('请输入有效的手机号码！');
+                return false;
+            }else{
+                return true;
+            }
+        }
+        function check(){
+            var phoneNum = $("#id_phone").val();
+            if(isPhoneNumber(phoneNum) === false)
+            {
+                alert('手机号不合法');
+                return false;
+            }
+            return multiClick();
+        }
+    </script>
+<div>
+<label id="message">{{ content.message }}</label>
+</div>
+
+<form enctype="multipart/form-data" method="POST" action="{% url 'Account:ChangePhoneNumber' %}" onsubmit="return check();" >
+    {% csrf_token %}
+    {% if content.data.newPhone %}
+        <div>新手机号</div>
+        <div>
+            <input type="text" id="id_phone" name="phoneNumber" value="" required>
+            <input class="btn" type="button" name="getVerifyCode" id="getting" value="获得验证码" >
+        </div>
+        <div>验证码</div>
+        <div>
+            <input type="text" name="verifyCode" required>
+        </div>
+        <div>
+            <input class="btn" type="submit" name="submitNewPhone" value="确定" >
+        </div>
+    {% else %}
+        <div>原手机号</div>
+        <div>
+            <input type="text" id="id_phone" name="phoneNumber" value="" required>
+            <input class="btn" type="button" name="getVerifyCode" id="getting" value="获得验证码" >
+        </div>
+        <div>验证码</div>
+        <div>
+            <input type="text" name="verifyCode" required >
+        </div>
+        <div>
+            <input class="btn" type="submit" name="submitOldPhone" value="确定" >
+        </div>
+    {% endif %}
+</form>
+{% endblock %}

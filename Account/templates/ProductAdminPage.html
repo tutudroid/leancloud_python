@@ -1,0 +1,80 @@
+{% extends 'ProfilePage.html' %}
+
+{% block secondTag %}
+
+    <style>
+        .div_secondTag {
+            margin: 20px;
+        }
+        .div_secondTag a{
+            margin: 20px;
+        }
+    </style>
+        {% if content.profile.current_role == 'NormalUser' %}
+
+        {% endif %}
+
+    <div class="masthead">
+    <div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+    <ul class="nav">
+
+        {% if content.profile.current_role == 'Shop' %}
+            <!-- 商家账号-->
+                <li><a onclick="" href="{% url 'Shop:ShopDetail' %}?timestamp={{ content.time }}" >店铺信息</a></li>
+                <li><a onclick="" href="{% url 'Account:Profile' %}?timestamp={{ content.time }}" >账户设置</a></li>
+                {% if content.shop.state == 0 %}
+                    <li><a onclick="" href="{% url 'Product:ShopProductGroup' %}?timestamp={{ content.time }}" >所有商品</a></li>
+                    <li><a onclick="" href="{% url 'Order:AllOrder' 1 %}?timestamp={{ content.time }}" >所有订单(新订单{{ content.no_displaced_orderCount }})</a></li>
+                    <li><a onclick="" href="{% url 'Shop:ShopAfterSale' %}?timestamp={{ content.time }}" >售后记录</a></li>
+                    <li><a onclick="" href="{% url 'Order:ExportShopBill' %}" >导出店铺账单</a></li>
+                {% endif %}
+        {% endif %}
+
+        {% if content.profile.current_role == 'ProductAdmin' %}
+            <!-- 商品管理账号-->
+                <li>
+                    <a onclick="" href="{% url 'Account:Profile' %}?timestamp={{ content.time }}" >账户设置</a>
+                </li>
+                <li><a onclick="" href="{% url 'Shop:AllShop' %}?timestamp={{ content.time }}" >所有商家</a></li>
+                <li><a onclick="" href="{% url 'Product:ShowStoreCategory' %}?timestamp={{ content.time }}" >库存分类</a></li>
+                <li><a onclick="" href="{% url 'Product:ShowSaleCategory' %}?timestamp={{ content.time }}" >销售分类</a></li>
+                <li><a onclick="" href="{% url 'Product:SearchProductGroup' %}?timestamp={{ content.time }}" >搜索商品</a></li>
+        {% endif %}
+        {% if content.profile.current_role == 'CustomService' %}
+                <!-- 客服账号-->
+                <li><a onclick="" href="{% url 'Account:Profile' %}?timestamp={{ content.time }}" >账户设置</a></li>
+                <li><a onclick="" href="{% url 'Shop:AllShop' %}?timestamp={{ content.time }}" >查看商家</a></li>
+                <li><a onclick="" href="{% url 'Product:SearchProductGroup' %}?timestamp={{ content.time }}" >搜索商品</a></li>
+                <li><a onclick="" href="{% url 'Order:SearchOrder' %}?timestamp={{ content.time }}" >搜索订单</a></li>
+                <li><a onclick="" href="{% url 'AfterSale:AfterSale' 0 %}?timestamp={{ content.time }}" >售后服务</a></li>
+        {% endif %}
+        {% if content.profile.current_role == 'BusinessOperation' %}
+                <!-- 运营账号-->
+                <li><a onclick="" href="{% url 'Account:Profile' %}?timestamp={{ content.time }}" >账户设置</a></li>
+                <li><a onclick="" href="{% url 'Shop:AllShop' %}?timestamp={{ content.time }}" >所有商家</a></li>
+                <li><a onclick="" href="{% url 'Recommendation:AllRecommendation' %}?timestamp={{ content.time }}" >商品推荐</a></li>
+                <li><a onclick="" href="{% url 'Recommendation:SaleCategoryRecommendation' %}?timestamp={{ content.time }}" >销售分类推荐</a></li>
+                <li><a onclick="" href="{% url 'Product:SaleCategoryRecommend' %}?timestamp={{ content.time }}" >销售第一级推荐</a></li>
+        {% endif %}
+        {% if content.profile.current_role ==  'Administrator'%}
+            <!-- 管理员账号-->
+            <li><a onclick="" href="{% url 'Account:Profile' %}?timestamp={{ content.time }}" >账户设置</a></li>
+            <li><a onclick="" href="{% url 'Admin:SysUser' %}?timestamp={{ content.time }}" >系统账号管理</a></li>
+            <li><a onclick="" href="{% url 'Admin:ShopUser' %}?timestamp={{ content.time }}" >商家账号管理</a></li>
+            <li><a onclick="" href="{% url 'Admin:NormalUser' %}?timestamp={{ content.time }}">app用户管理</a></li>
+            <li><a onclick="" href="{% url 'Shop:AllSettleIn' %}">商家入驻审核</a></li>
+        {% endif %}
+     </ul>
+    </div>
+    </div>
+    </div><!-- /.navbar -->
+    </div>
+    <input type="hidden" name="prevToken" value="{{ content.prevToken }}">
+    <hr>
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}

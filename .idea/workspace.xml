@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0499edbb-0d6b-477c-a822-a91397b8a747" name="Default" comment="v">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shop/settleInViews.py" afterPath="$PROJECT_DIR$/Shop/settleInViews.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vue/static/vue/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vue/static/vue/backend/system/accountList/changePwd.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/static/vue/app.js" afterPath="$PROJECT_DIR$/vue/static/vue/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/static/vue/main.js" afterPath="$PROJECT_DIR$/vue/static/vue/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerAccount.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerAccount.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/accountList/tableLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/accountList/tableLayout.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -56,7 +62,7 @@
         <entry file="file://$PROJECT_DIR$/ClassLibrary/UserClass/User.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="497">
-              <caret line="182" column="59" lean-forward="true" selection-start-line="182" selection-start-column="59" selection-end-line="182" selection-end-column="59" />
+              <caret line="182" column="59" lean-forward="false" selection-start-line="182" selection-start-column="59" selection-end-line="182" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -66,7 +72,7 @@
         <entry file="file://$PROJECT_DIR$/Admin/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
-              <caret line="8" column="32" lean-forward="true" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+              <caret line="8" column="32" lean-forward="false" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -76,7 +82,7 @@
         <entry file="file://$PROJECT_DIR$/Account/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="774">
-              <caret line="83" column="47" lean-forward="true" selection-start-line="83" selection-start-column="47" selection-end-line="83" selection-end-column="47" />
+              <caret line="83" column="47" lean-forward="false" selection-start-line="83" selection-start-column="47" selection-end-line="83" selection-end-column="47" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
                 <marker date="1504523607000" expanded="true" signature="2922:2984" ph="..." />
@@ -124,7 +130,7 @@
         <entry file="file://$PROJECT_DIR$/Shop/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
-              <caret line="14" column="47" lean-forward="true" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
+              <caret line="14" column="47" lean-forward="false" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -133,9 +139,18 @@
       <file leaf-file-name="settleInViews.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Shop/settleInViews.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="59" column="51" lean-forward="true" selection-start-line="59" selection-start-column="51" selection-end-line="59" selection-end-column="51" />
-              <folding />
+            <state relative-caret-position="868">
+              <caret line="78" column="13" lean-forward="false" selection-start-line="78" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+              <folding>
+                <marker date="1504573394000" expanded="true" signature="1311:2348" ph="..." />
+                <marker date="1504573394000" expanded="true" signature="1572:2320" ph="..." />
+                <marker date="1504573394000" expanded="true" signature="2458:3242" ph="..." />
+                <marker date="1504573394000" expanded="true" signature="2463:2520" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+                <marker date="1504573394000" expanded="true" signature="2660:3214" ph="..." />
+                <marker date="1504573394000" expanded="true" signature="2842:2933" ph="..." />
+                <marker date="1504573394000" expanded="true" signature="2947:3044" ph="..." />
+                <marker date="1504573394000" expanded="true" signature="3061:3214" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1408,7 +1423,7 @@
     <entry file="file://$PROJECT_DIR$/Account/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="774">
-          <caret line="83" column="47" lean-forward="true" selection-start-line="83" selection-start-column="47" selection-end-line="83" selection-end-column="47" />
+          <caret line="83" column="47" lean-forward="false" selection-start-line="83" selection-start-column="47" selection-end-line="83" selection-end-column="47" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
             <marker date="1504523607000" expanded="true" signature="2922:2984" ph="..." />
@@ -1434,7 +1449,7 @@
     <entry file="file://$PROJECT_DIR$/Admin/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
-          <caret line="8" column="32" lean-forward="true" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+          <caret line="8" column="32" lean-forward="false" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -1442,7 +1457,7 @@
     <entry file="file://$PROJECT_DIR$/ClassLibrary/UserClass/User.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="497">
-          <caret line="182" column="59" lean-forward="true" selection-start-line="182" selection-start-column="59" selection-end-line="182" selection-end-column="59" />
+          <caret line="182" column="59" lean-forward="false" selection-start-line="182" selection-start-column="59" selection-end-line="182" selection-end-column="59" />
           <folding />
         </state>
       </provider>
@@ -1466,7 +1481,7 @@
     <entry file="file://$PROJECT_DIR$/Shop/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
-          <caret line="14" column="47" lean-forward="true" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
+          <caret line="14" column="47" lean-forward="false" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
           <folding />
         </state>
       </provider>
@@ -1486,9 +1501,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Shop/settleInViews.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="59" column="51" lean-forward="true" selection-start-line="59" selection-start-column="51" selection-end-line="59" selection-end-column="51" />
-          <folding />
+        <state relative-caret-position="868">
+          <caret line="78" column="13" lean-forward="false" selection-start-line="78" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+          <folding>
+            <marker date="1504573394000" expanded="true" signature="1311:2348" ph="..." />
+            <marker date="1504573394000" expanded="true" signature="1572:2320" ph="..." />
+            <marker date="1504573394000" expanded="true" signature="2458:3242" ph="..." />
+            <marker date="1504573394000" expanded="true" signature="2463:2520" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1504573394000" expanded="true" signature="2660:3214" ph="..." />
+            <marker date="1504573394000" expanded="true" signature="2842:2933" ph="..." />
+            <marker date="1504573394000" expanded="true" signature="2947:3044" ph="..." />
+            <marker date="1504573394000" expanded="true" signature="3061:3214" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -80,7 +80,13 @@ new Vue({
 
 	  //抓取所有的系统用户
 	  allSysuser(){
-                 let _this = this;
+		swal({
+		  title: "加载中",
+		  text:"你这么可爱，就等待一下呗",
+		  timer: 2000,
+		  showConfirmButton: false
+		});
+		 let _this = this;
                  $.ajax({
                     type: 'GET',
                     url: '/Admin/SysUser/',
@@ -88,7 +94,7 @@ new Vue({
                         'page':1,
                     },
                     success: function (data) {
-		        _this.allSysusers = data;
+		        _this.allSysUsers = data.msg.User;
                     },
                    error: function(XMLHttpRequest, textStatus, errorThrown) {
 			   swal('抓取不到数据')

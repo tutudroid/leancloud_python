@@ -7,18 +7,29 @@
 	</ul>
 
 	<div class="mp mpsystemSellerAccountPerson used">
+		<form id="csrfSellerAccountPerson">
+			{% csrf_token %}
 	  {% include "content/system/sellerAccount/person.html" %}
+	        </form>
+	</div>
+
+	<div class="mp mpsystemSellerAccountCompany used">
+		<form id="csrfSellerAccountCompany">
+			{% csrf_token %}
+	  {% include "content/system/sellerAccount/company.html" %}
+	        </form>
+	</div>
+
+	<div class="mp mpsystemSellerAccountNotYet used">
+		<form id="csrfSellerAccountNotYet">
+			{% csrf_token %}
+	  {% include "content/system/sellerAccount/notYet.html" %}
+	       </form>
 	</div>
 
 	<div class="mp mpsystemSellerAccountCompany used">
 	  {% include "content/system/sellerAccount/company.html" %}
 	</div>
 
-	<div class="mp mpsystemSellerAccountNotYet used">
-	  {% include "content/system/sellerAccount/notYet.html" %}
-	</div>
 
-	<div class="mp mpsystemSellerAccountForbidden used">
-	  {% include "content/system/sellerAccount/forbidden.html" %}
-        </div>
 </div>

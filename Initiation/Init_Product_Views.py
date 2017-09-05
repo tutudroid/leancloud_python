@@ -142,17 +142,5 @@ def Inject_Data(request):
     :param request: 
     :return: 
     """
-    ClassInstance = leancloud.Object.extend(Class_Name_Order)
-    query = ClassInstance.query
-    query.exists(attribute_objectId)
-    query.limit(1000)
-    all =query.find()
-    count = query.count()
-    print(count)
-    print(len(all))
-    shop = Shop()
-    shop.get_Object('59a93cdb1b69e60064162cdf')
-    for foo in all:
-        shop.set_attribute_order(foo)
 
-    return render(request, 'test_class.html', {'content': ''})
+    return render(request, 'test_example.html', {'content': ''})

@@ -3,15 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
 </head>
 <body>
-    <div>
-        <form enctype="multipart/form-data" method="POST" action="{% url 'Initiation:TextExample' %}">
-            {% csrf_token %}
-            <input type="file" name="imageFile">
-            <input type="submit" value="submit">
-        </form>
-    </div>
     <hr>
     <div>
         order and afterSale
@@ -24,5 +18,52 @@
         </form>
     </div>
 
+    <hr>
+        <h2>web页面配置接口测试</h2>
+        <script type="text/javascript">
+            $(function () {
+                $("#btnWebPage").click(function() {
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'Admin:WebPageConfigure' %}",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(GetJsonData()),
+                        dataType: "json",
+                        success: function (message) {
+                            if (message > 0) {
+
+                                alert("请求已提交！我们会尽快与您取得联系");
+                            }
+                        },
+                        error: function (message) {
+                            alert("提交数据失败！");
+                        }
+                    });
+                });
+
+                function GetJsonData() {
+                    var json = {
+                        "WebPageConfigure": [
+                            {
+                                'url': 'mengqu.leanapp.cn/123',
+                                'name': 'name1',
+                                'code': '1'
+                            },
+                            {
+                                'url': 'mengqu.leanapp.cn/456',
+                                'name': 'name2',
+                                'code': '2'
+                            }
+                        ]
+                    };
+                    return json;
+                }
+            });
+
+        </script>
+        <div>
+            <input type="button" id="btnWebPage" value="webPageConfigure">
+        </div>
+    <hr>
 </body>
 </html>

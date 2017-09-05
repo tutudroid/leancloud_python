@@ -43,7 +43,7 @@ import editStockCategory from './backend/stock/editStockCategory/editStockCatego
 new Vue({
 	el: '#app',
 	data:{
-	  allSysusers:[],
+	  allSysUsers:[],
 	},
 	components: {
 	    "changepwd":changePwd,

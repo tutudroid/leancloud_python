@@ -45,3 +45,25 @@ class FreightModel(Object):
             }
             return data
         return None
+
+    def input_Freight(self, request):
+        self.instance = self.instance
+        data = {
+            attribute_objectId: request.POST.get(attribute_objectId, ''),
+            attribute_name: request.POST.get(attribute_name, ''),
+            attribute_isFreightFree: request.POST.get(attribute_isFreightFree, ''),
+            attribute_freight: request.POST.get(attribute_freight, ''),
+            attribute_state: request.POST.get(attribute_state, '')
+        }
+        return data
+
+    def update_Freight(self, data):
+        if data[attribute_objectId]:
+            self.get_Object(data[attribute_objectId])
+        else:
+            self.create_Object()
+        self.set_attribute_value(attribute_name, data[attribute_name])
+        self.set_attribute_value(attribute_isFreightFree, data[attribute_isFreightFree])
+        self.set_attribute_value(attribute_freight, data[attribute_freight])
+        if int(data[attribute_state]) == -1:
+            self.destroy_Object()

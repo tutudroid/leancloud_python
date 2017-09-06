@@ -62,34 +62,33 @@
       props:['allsysusers'],
       methods: {
         hide(id=0){
-	  this.id = id;
-	  var hidden = $('.hide');
-	  var shown =  $('.shown');
-	  if(hidden != null){
-	  hidden.removeClass("hide").addClass('shown');
-	  }
-	  if(shown !=null){
-	  shown.removeClass('shown').addClass('hide');
-	  }
-	},
+		  this.id = id;
+		  var hidden = $('.hide');
+		  var shown =  $('.shown');
+		  if(hidden != null){
+		  hidden.removeClass("hide").addClass('shown');
+		  }
+		  if(shown !=null){
+		  shown.removeClass('shown').addClass('hide');
+		  }
+		},
        changePwd(){
-         $.ajax({
-                    type: 'POST',
-                    url: '/Admin/ResetUserPassword/',
-                    data: {
-                        'objectId': this.id,
-                        'password': this.newPwd,
-			            'passwordSure':this.confirmPwd,
-                        'csrfmiddlewaretoken': $('#csrfProductManager input[name="csrfmiddlewaretoken"]').prop('value')
-                    },
-                    success: function (data) {
-
-		      swal("您的密码已经被修改");
-                    },
-                   error: function(XMLHttpRequest, textStatus, errorThrown) {
-		     swal("您的密码修改失败");
-                    },
-               });
+	        $.ajax({
+	            type: 'POST',
+	            url: '/Admin/ResetUserPassword/',
+	            data: {
+	                'objectId': this.id,
+	                'password': this.newPwd,
+		            'passwordSure':this.confirmPwd,
+	                'csrfmiddlewaretoken': $('#csrfProductManager input[name="csrfmiddlewaretoken"]').prop('value')
+	            },
+	            success: function (data) {
+	      			swal("您的密码已经被修改");
+	            },
+	            error: function(XMLHttpRequest, textStatus, errorThrown) {
+	     			swal("您的密码修改失败");
+	            },
+	       	});
        },
        forbid(event,id){
 	 var forbid = $(event.target);

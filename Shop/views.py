@@ -2,7 +2,7 @@ from Error_Page import *
 from ClassLibrary.ShopClass.Shop_New import Shop
 from ClassLibrary.UserClass.User import _User
 from ClassLibrary.ShopClass.BrandTable import BrandTable
-from ClassLibrary import Base
+from ClassLibrary.Frieght.FreightModel import FreightModel
 from ClassLibrary.ShopClass.SettleInApplication import SettleInApplication
 
 
@@ -176,3 +176,51 @@ def AllForbiddenShop(request):
         shopList = shop.get_shop_state(state, page)
         return return_paginator_page(Class_Name_Shop, shopList, page, shop.count_shop_state(state))
     return return_msg('parameter is error')
+
+
+@require_http_methods(['GET'])
+def AllBrand(request):
+    page = request.GET.get(paginator_PAGE, 1)
+    objectId = request.GET.get(attribute_objectId, '')
+    if page and objectId:
+        shop = Shop()
+        brandList = shop.get_attribute_brand()
+        return return_data(Class_Name_BrandTable, brandList)
+    return return_msg('parameter is error')
+
+
+@require_http_methods(['POST'])
+def EditBrand(request):
+    brand = BrandTable()
+    data = brand.input_Table(request)
+    brand.update_Table(data)
+    shopObjectId = request.POST.get('shopObjectId', None)
+    if shopObjectId:
+        shop = Shop()
+        shop.get_Object(shopObjectId)
+        shop.add_attribute_relation(attribute_freightModel, brand.get_instance() )
+    return return_msg(brand.output_Table())
+
+
+@require_http_methods(['GET'])
+def AllFreight(request):
+    page = request.GET.get(paginator_PAGE, 1)
+    objectId = request.GET.get(attribute_objectId, '')
+    if page and objectId:
+        shop = Shop()
+        freightList = shop.get_attribute_freightModel()
+        return return_data(Class_Name_FreightModel, freightList)
+    return return_msg('parameter is error')
+
+
+@require_http_methods(['POST'])
+def EditFreight(request):
+    freight = FreightModel()
+    data = freight.input_Freight(request)
+    freight.update_Freight(data)
+    shopObjectId = request.POST.get('shopObjectId', None)
+    if shopObjectId:
+        shop = Shop()
+        shop.get_Object(shopObjectId)
+        shop.add_attribute_relation(attribute_freightModel, freight.get_instance())
+    return return_msg(freight.output_FreightModel())

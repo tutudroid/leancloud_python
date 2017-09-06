@@ -213,12 +213,12 @@ class Object(object):
             return self.instance.get(attribute).id
         return None
 
-    def get_attribute_image(self, attribute):
+    def get_attribute_image_url(self, attribute):
         if self.instance and self.instance.get(attribute) and isinstance(self.instance.get(attribute), ISINSTANCE_FILE):
             return self.instance.get(attribute).url
         return None
 
-    def destory_attribute_image(self, attribute):
+    def destroy_attribute_image(self, attribute):
         if self.instance and attribute and self.instance.get(attribute) and isinstance(self.instance.get(attribute), ISINSTANCE_FILE):
             self.instance.get(attribute).destroy()
         return None

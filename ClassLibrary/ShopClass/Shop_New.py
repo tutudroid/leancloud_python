@@ -6,6 +6,7 @@ from ClassLibrary.ShopClass.SettleInCompany import SettleInCompany
 from ClassLibrary.ShopClass.SettleInApplication import SettleInApplication
 from ClassLibrary.ProductClass.ProductGroup_New import ProductGroup
 from ClassLibrary.ShopClass.BrandTable import BrandTable
+from ClassLibrary.Frieght.FreightModel import FreightModel
 
 
 class Shop(Object):
@@ -64,7 +65,7 @@ class Shop(Object):
         count = Base.queryInstanceAttributeCount(Class_Name_Shop, attribute_state, STATE_OK)
         return count
 
-    def get_Shop_Audit_All(self,state, page):
+    def get_Shop_Audit_All(self, state, page):
         self.instance = self.instance
         settleInList = Base.queryInstanceAttribute(Class_Name_SettleInApplication, attribute_state, state, page)
         if settleInList:
@@ -72,7 +73,7 @@ class Shop(Object):
             for foo in settleInList:
                 application = SettleInApplication()
                 application.set_instance(foo)
-                List.append( application.output_SettleInApplication() )
+                List.append(application.output_SettleInApplication())
             return List
         return None
 
@@ -84,7 +85,7 @@ class Shop(Object):
             for foo in settleInList:
                 application = SettleInApplication()
                 application.set_instance(foo)
-                List.append( application.output_SettleInApplication() )
+                List.append(application.output_SettleInApplication())
             return List
         return None
 
@@ -194,7 +195,14 @@ class Shop(Object):
 
     def get_attribute_freightModel(self):
         if self.instance:
-            return self.instance.get(attribute_freightModel)
+            query = Base.get_relation_data(self.instance.get(attribute_objectId), self.__class__.__name__, attribute_freightModel)
+            if query:
+                result = []
+                for foo in query:
+                    freight = FreightModel()
+                    freight.set_instance(foo)
+                    result.append(freight.output_FreightModel())
+                return result
         return None
 
     def get_attribute_mainImage(self):
@@ -202,10 +210,10 @@ class Shop(Object):
             return self.instance.get(attribute_mainImage).url
         return None
 
-    def get_attribute_afterSaleServiceRecord(self,state, page):
+    def get_attribute_afterSaleServiceRecord(self, state, page):
         if self.instance:
             if state == -1:
-                tmpList = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), self.__class__.__name__, attribute_afterSaleServiceRecord, page)
+                tmpList = Base.get_relation_data(self.instance.get(attribute_objectId), self.__class__.__name__, attribute_afterSaleServiceRecord, page)
             else:
                 tmpList = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_Shop, attribute_afterSaleServiceRecord, attribute_state, state, page)
             if tmpList:
@@ -358,7 +366,7 @@ class Shop(Object):
     def count_attribute_afterSaleServiceRecord(self, state):
         if self.instance:
             if state == -1:
-                count = Base.get_relation_data(self.instance.get(attribute_objectId), self.__class__.__name__, attribute_afterSaleServiceRecord)
+                count = Base.count_relation_data(self.instance.get(attribute_objectId), self.__class__.__name__, attribute_afterSaleServiceRecord)
             else:
                 count = Base.count_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_Shop, attribute_afterSaleServiceRecord, attribute_state, int(state))
             return count
@@ -367,7 +375,7 @@ class Shop(Object):
     def count_attribute_order(self, state):
         if self.instance:
             if state == -1:
-                count = Base.get_relation_data(self.instance.get(attribute_objectId), self.__class__.__name__, attribute_order)
+                count = Base.count_relation_data(self.instance.get(attribute_objectId), self.__class__.__name__, attribute_order)
             else:
                 count = Base.count_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_Shop, attribute_order, attribute_orderSate, int(state))
             return count

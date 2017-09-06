@@ -24,7 +24,7 @@ class OrderProduct(Object):
             return self.instance.get(attribute_productStyle)
 
     def get_attribute_productMainImage(self):
-        if self.instance and self.instance.get(attribute_productMainImage):
+        if self.instance and isinstance(self.instance.get(attribute_productMainImage), ISINSTANCE_FILE):
             return self.instance.get(attribute_productMainImage).url
 
     def get_attribute_productPrice(self):
@@ -92,7 +92,7 @@ class OrderProduct(Object):
                 attribute_product: self.get_attribute_Object_Id(attribute_product),
                 attribute_groupName: self.get_attribute_groupName(),
                 attribute_productStyle: self.get_attribute_productStyle(),
-                attribute_productMainImage: self.get_attribute_productMainImage(),
+                attribute_productMainImage: self.get_attribute_image_url( attribute_productMainImage ),
                 attribute_productPrice: self.get_attribute_productPrice(),
                 attribute_productCount: self.get_attribute_productCount(),
                 attribute_state: self.get_attribute_state(),

@@ -18,7 +18,7 @@ def refund(pingppOrderId, refundSumPrice):
 
 
 @login_required
-@permission(ROLE_CUSTOM)
+#@permission(ROLE_CUSTOM)
 @require_http_methods(['GET'])
 def afterSale(request):
     """
@@ -27,16 +27,16 @@ def afterSale(request):
     :return: 
     """
     # 设置分页
-    state = request.GET.get(attribute_state, 1)
+    state = request.GET.get(attribute_state, -1)
     objectId = request.GET.get(attribute_objectId, '')
     page = request.GET.get(paginator_PAGE, 1)
-    if objectId:
+    if objectId and state is not None and page is not None:
         shop = Shop()
         shop.get_Object(objectId)
         afterSaleService = shop.get_attribute_afterSaleServiceRecord(int(state), page)
         page_nums = shop.count_attribute_afterSaleServiceRecord(int(state))
         return return_paginator_page(Class_Name_AfterSaleServiceRecord, afterSaleService, page, page_nums)
-    return illegal_access()
+    return return_msg('parameter is null')
 
 
 @login_required

@@ -13,6 +13,11 @@ urlpatterns = [
     url(r'^EditShopDetail/$', views.EditShopDetail, name='EditShopDetail'),
     url(r'^ShopAfterSale/$', views.shopAfterSale, name='ShopAfterSale'),
 
+    # 所有品牌
+    url(r'^AllBrand/$', views.AllBrand, name='AllBrand'),
+    url(r'^EditBrand/$', views.EditBrand, name='EditBrand'),
+
+
     url(r'^AllForbiddenShop/$', views.AllForbiddenShop, name='AllForbiddenShop'),
 
     url(r'^CreateSettleIn/$', settleInViews.CreateSettleIn, name='CreateSettleIn'),

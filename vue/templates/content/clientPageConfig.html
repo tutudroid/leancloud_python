@@ -6,7 +6,7 @@
 	<div class="mp mpsystemClientPageConfig used">
 	  <form>
 	    {%csrf_token%}
-		<clientpageconfig></clientpageconfig>
+		<clientpageconfig :configs="allClientConfigs"></clientpageconfig>
 	  </form>
 	</div>
 

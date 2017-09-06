@@ -4,7 +4,7 @@
         <div class="gap">
           <span class="mySpan" @click="editConfig()">编辑</span>
 	</div>
-	<table class="table table-striped">
+	<table class="table table-striped" v-if="configs.length>0">
 	  <thead>
 	    <tr>
 	      <td>编码</td><td>名称</td><td>URL</td><td></td>
@@ -12,8 +12,8 @@
 	  </thead>
 
 	  <tbody>
-	    <tr class="clientPageConfig">
-              <td>1</td><td>隐私政策</td><td>mengqu.leanapp.cn/....</td>     	      
+	    <tr class="clientPageConfig" v-for="config in configs">
+              <td>{{config.code}}</td><td>{{config.name}}</td><td>{{config.url}}</td>     	      
 	    </tr>
 	  </tbody>
 
@@ -22,8 +22,8 @@
 
     <div class="changeOnConfig hide">
 
-        <div class="gap">
-          <span class="mySpan" @click="addConfig()">添加</span>
+    <div class="gap">
+      <span class="mySpan" @click="addConfig()">添加</span>
 	</div>
     
 	<table class="table table-striped">
@@ -34,8 +34,8 @@
 	  </thead>
 
 	  <tbody>
-	    <tr class="clientPageConfigResult">
-              <td><input type="text" v-model="code[0]"></td><td><input type="text" v-model="name[0]"></td><td><input type="text" v-model="url[0]"></td><td class="link" @click="deleteConfig(1)">删除</td>     	      
+	    <tr class="clientPageConfigResult" v-for="config in configs">
+              <td><input type="text" :value="config.code"></td><td><input type="text" :value="config.name"></td><td><input type="text" :value="config.url"></td><td class="link" @click="deleteConfig(index)">删除</td>     	      
 	    </tr>
 	  </tbody>
 
@@ -56,18 +56,13 @@
   export default{
     data:function(){
       return{
-        code:[],
-	name:[],
-	url:[],
-	configs:[],
+        
       }
     },
+    props:['configs'],
     methods:{
       editConfig(){
         this.toggleShow();
-        this.code = [];
-		this.name = [];
-		this.url = [];
       },
       toggleShow(){
         let shown = $(".clientPageConfig .shown");
@@ -90,44 +85,41 @@
 		  }
 		);
 		$(configsDetails).each(
-		  function(inputIndex){
-		      
+		  function(inputIndex){		      
 		      let inputs = $(this).children();
 		      let parConfig = [];
 		      $(inputs).each(
-		        function(tdIndex){
-			  
-			  if($(this).val() == ""){
-			    hasEmpty = true;
-			    
-			  }
-			  parConfig[tdIndex] = $(this).val();
-			}
-		      );
-		   
-	             allConfigs[inputIndex] = parConfig;
+		        function(tdIndex){			  
+				  if($(this).val() == ""){
+				    hasEmpty = true;			    
+				  }
+			  	  parConfig[tdIndex] = $(this).val();
+			    }
+		      );		   
+	          allConfigs[inputIndex] = parConfig;
 		  }
 		);
 		if(hasEmpty){
 		   swal("Oops...","新添加中的编辑存在空值，请添加或删除","error");
 		   allConfigs = [];
 		}else{
-			this.configs = allConfigs;
-			let filterConfigs = this.configs.filter(
-			function(configs){
-			  return configs.length != 0;
-			}
+			
+			let filterConfigs = allConfigs.filter(
+				function(configs){
+				  return configs.length != 0;
+				}
 			);
-				let finalFilterConfigs = filterConfigs.map(
+			let WebPageConfigure = filterConfigs.map(
 			    function(config){
 			      var obj = {};
 			      obj['code'] = config[0];
 			      obj['name'] = config[1];
-			      obj['url'] = config[2];
+			      obj['url'] = config[2];			    
 			      return obj;
 			    }
 			);
-			let fFilterConfigs = JSON.stringify(finalFilterConfigs);
+			let w = {};
+			w['WebPageConfigure'] = WebPageConfigure;
 			swal(
 				{
 					title:"确定保存吗？",
@@ -141,10 +133,12 @@
 					$.ajax({
 	                    type: 'POST',
 	                    url: '/Admin/WebPageConfigure/',
-	                    data: {
-	                        'WebPageConfigure':fFilterConfigs,
-							'csrfmiddlewaretoken': $('#csrfProductManager input[name="csrfmiddlewaretoken"]').prop('value'),
-	                    },
+	                    headers: {
+                             'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                        },
+	                    contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+	                    data: JSON.stringify(w),
 	                    success: function (data) {
 	                       swal("配置成功");
 	                    },

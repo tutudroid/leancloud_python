@@ -5,7 +5,7 @@ from ClassLibrary.OrderClass.LogisticsInfo import LogisticsInfo
 
 
 @login_required
-@permission(ROLE_SHOP)
+#@permission(ROLE_SHOP)
 @require_http_methods(['GET'])
 def AllOrder(request):
     """
@@ -16,13 +16,14 @@ def AllOrder(request):
     state = request.GET.get(attribute_state, -1)
     objectId = request.GET.get(attribute_objectId, '')
     page = request.GET.get(paginator_PAGE, 1)
-    if objectId:
+    if objectId and state is not None and page is not None:
         shop = Shop()
         shop.get_Object(objectId)
         order = shop.get_attribute_order(int(state), page)
         page_nums = shop.count_attribute_order(int(state))
+        print(order)
         return return_paginator_page(Class_Name_Order, order, page, page_nums)
-    return illegal_access()
+    return return_msg('parameter is null')
 
 
 @login_required

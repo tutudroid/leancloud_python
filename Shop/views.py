@@ -184,6 +184,7 @@ def AllBrand(request):
     objectId = request.GET.get(attribute_objectId, '')
     if page and objectId:
         shop = Shop()
+        shop.get_Object(objectId)
         brandList = shop.get_attribute_brand()
         return return_data(Class_Name_BrandTable, brandList)
     return return_msg('parameter is error')
@@ -208,6 +209,7 @@ def AllFreight(request):
     objectId = request.GET.get(attribute_objectId, '')
     if page and objectId:
         shop = Shop()
+        shop.get_Object(objectId)
         freightList = shop.get_attribute_freightModel()
         return return_data(Class_Name_FreightModel, freightList)
     return return_msg('parameter is error')

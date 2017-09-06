@@ -6,6 +6,7 @@ from ClassLibrary.ShopClass.Shop_New import Shop
 from ClassLibrary.ShopClass.SettleInApplication import SettleInApplication
 from ClassLibrary.UserClass.User import _User
 
+
 @login_required
 #@permission(ROLE_ADMINISTRATOR)
 @require_http_methods(['GET'])

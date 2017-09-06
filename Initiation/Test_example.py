@@ -24,6 +24,7 @@ from ClassLibrary.ShopClass.BrandTable import BrandTable
 from ClassLibrary.CategoryClass.SaleCategory import SaleCategory
 from ClassLibrary.CategoryClass.StoreCategory import StoreCategory
 from ClassLibrary.ProductClass.ProductService import ProductService
+from ClassLibrary.Frieght.FreightModel import FreightModel
 
 FIRST = None
 
@@ -181,6 +182,17 @@ def CreateAll(request):
     shop.set_attribute_brand(brand.get_instance())
     user.set_attribute_shop(shop.get_instance())
 
+    # 创建运费模版
+    freight = FreightModel()
+    data = {
+        attribute_objectId: '',
+        attribute_name: 'attribute_name',
+        attribute_isFreightFree: False,
+        attribute_freight: 100,
+        attribute_state: 0,
+    }
+    freight.update_Freight(data)
+    shop.add_attribute_relation(attribute_freightModel, freight.get_instance())
 
     # 创建商品
     productGroup = ProductGroup_New.ProductGroup()

@@ -188,7 +188,7 @@ class Object(object):
         return None
 
     def add_attribute_relation(self, attribute_relation, value):
-        if self.instance and value:
+        if self.instance and attribute_relation and value:
             relation = self.instance.relation(attribute_relation)
             relation.add(value)
             self.__save_instance__()

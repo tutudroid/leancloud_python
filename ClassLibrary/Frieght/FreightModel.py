@@ -42,6 +42,10 @@ class FreightModel(Object):
                 attribute_addCost: self.get_attribute(attribute_addCost),
                 attribute_specialCities: self.get_attribute_specialCities(),
                 attribute_freeConditionList: self.get_attribute_freeConditionList(),
+
+                # simple
+                attribute_name: self.get_attribute(attribute_name),
+                attribute_freight: self.get_attribute(attribute_freight),
             }
             return data
         return None

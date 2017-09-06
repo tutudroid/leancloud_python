@@ -113,3 +113,18 @@ h1.center{
     margin: 0;
     padding: 30px;
 }
+.username,.role,.pipe{
+  position: absolute;
+  top: 10px;
+  color: lightseagreen;
+}
+.username{
+  left:2px;
+}
+.role{
+  left:93px;
+}
+.pipe{
+  left:80px;
+}
+

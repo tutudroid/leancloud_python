@@ -627,7 +627,7 @@ def queryInstanceAttribute(className, attribute, value, skip=None, limit=QUERY_S
         ClassInstance = leancloud.Object.extend(className)
         query = ClassInstance.query
         query.equal_to(attribute, value)
-        if skip:
+        if skip and int(skip) - 1 > 0:
             query.skip((int(skip)-1)*int(limit))
             query.limit(int(limit))
         else:

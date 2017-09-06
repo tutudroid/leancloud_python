@@ -62,12 +62,12 @@ class SettleInCompany(SettleIn):
         return None
 
     def get_attribute_legalPersonFrontIdCard(self):
-        if self.instance and self.instance.get(attribute_legalPersonFrontIdCard):
+        if self.instance and isinstance(self.instance.get(attribute_legalPersonFrontIdCard), ISINSTANCE_FILE):
             return self.instance.get(attribute_legalPersonFrontIdCard).url
         return None
 
     def get_attribute_legalPersonBackIdCard(self):
-        if self.instance and self.instance.get(attribute_legalPersonBackIdCard):
+        if self.instance and isinstance(self.instance.get(attribute_legalPersonBackIdCard), ISINSTANCE_FILE):
             return self.instance.get(attribute_legalPersonBackIdCard).url
         return None
 

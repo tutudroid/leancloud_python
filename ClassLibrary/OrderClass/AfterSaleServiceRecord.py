@@ -1,5 +1,5 @@
 from ClassLibrary.BaseClass.Object import *
-from ClassLibrary.OrderClass.LogisticInfo_New import LogisticsInfo
+from ClassLibrary.OrderClass.LogisticsInfo import LogisticsInfo
 from ClassLibrary.OrderClass.AfterSaleSupport import AfterSaleSupport
 from ClassLibrary.ImageClass.AfterSaleServiceImage import AfterSaleServiceImage
 from ClassLibrary.OrderClass.OrderProduct import OrderProduct
@@ -226,8 +226,8 @@ class AfterSaleServiceRecord(LogisticsInfo):
                 attribute_logisticCode: self.get_attribute_logisticCode(),
                 attribute_createdAt: self.get_attribute_createdAt(),
                 attribute_objectId: self.get_attribute_objectId(),
-                attribute_order: self.get_attribute_order(),
-                attribute_orderProduct: self.get_attribute_orderProduct(),
+                attribute_order: self.get_attribute_Object_Id(attribute_order),
+                attribute_orderProduct: self.get_attribute_Object_Id(attribute_orderProduct),
                 attribute_afterSaleProgress: self.get_attribute_afterSaleProgress(),
                 attribute_state: self.get_attribute_state(),
             }

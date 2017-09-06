@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from functools import wraps
 import leancloud
-from Admin import User
+from ClassLibrary.UserClass.User import _User
 
 
 def abort():
@@ -53,7 +53,7 @@ def auto_login(func):
 def permissions(roles):
     """
     只允许该角色的用户登陆
-    :param arg: 
+    :param roles: 
     :return: 
     """
     def _permission(func):
@@ -62,7 +62,9 @@ def permissions(roles):
             user = leancloud.User.get_current()
             if user:
                 # 获得用户的角色
-                role_query_list = User.get_attribute_role(user)
+                userInstance = _User()
+                userInstance.set_instance(user)
+                role_query_list = userInstance.get_attribute_role()
                 role_verify = False
                 # 返回当前用户的角色列表
                 if role_query_list and roles:
@@ -95,7 +97,9 @@ def permission(arg):
             user = leancloud.User.get_current()
             if user:
                 # 获得用户的角色
-                role_query_list = User.get_attribute_role(user)
+                userInstance = _User()
+                userInstance.set_instance(user)
+                role_query_list = userInstance.get_attribute_role()
                 role_verify = False
                 # 返回当前用户的角色列表
                 if role_query_list:
@@ -126,7 +130,9 @@ def not_permission(arg):
             user = leancloud.User.get_current()
             if user:
                 # 获得用户的角色
-                role_query_list = User.get_attribute_role( user )
+                userInstance = _User()
+                userInstance.set_instance(user)
+                role_query_list = userInstance.get_attribute_role()
                 role_verify = False
                 # 返回当前用户的角色列表
                 if role_query_list:

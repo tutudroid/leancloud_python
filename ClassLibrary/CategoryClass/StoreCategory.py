@@ -65,14 +65,9 @@ class StoreCategory(Object):
 
     def get_attribute_storeCategorySecond(self):
         if self.instance:
-            store = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), self.className, attribute_storeCategorySecond, attribute_state, STATE_OK)
-            if store:
-                returnList = []
-                for foo in store:
-                    second = StoreCategory(Class_Name_StoreCategorySecond)
-                    second.set_instance(foo)
-                    returnList.append(second.output_StoreCategorySecond())
-                return returnList
+            second = StoreCategory(Class_Name_StoreCategorySecond)
+            second.set_instance(self.instance)
+            return second.output_StoreCategorySecond()
         return None
 
     def get_attribute_storeCategoryThird(self):

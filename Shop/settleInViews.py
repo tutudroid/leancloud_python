@@ -4,10 +4,10 @@ from ClassLibrary.ShopClass.SettleInUser import SettleInUser
 from ClassLibrary.ShopClass.SettleInCompany import SettleInCompany
 from ClassLibrary.ShopClass.Shop_New import Shop
 from ClassLibrary.ShopClass.SettleInApplication import SettleInApplication
-
+from ClassLibrary.UserClass.User import _User
 
 @login_required
-@permission(ROLE_ADMINISTRATOR)
+#@permission(ROLE_ADMINISTRATOR)
 @require_http_methods(['GET'])
 def AllSettleIn(request):
     """
@@ -21,24 +21,25 @@ def AllSettleIn(request):
     :return: 
         shopList
     """
-    state = request.GET.get(attribute_state)
-    page = request.GET.get(paginator_PAGE)
-    if state and 0 <= int(state) <= 4:
-        shop = Shop()
-        shopList = shop.get_settleIn_shop(int(state), page)
+    state = request.GET.get(attribute_state, -1)
+    page = request.GET.get(paginator_PAGE, 1)
+    type1 = request.GET.get(attribute_type, -1)
+    if 0 <= int(state) <= 4:
+        settle = SettleInApplication()
+        settleList = settle.get_SettleInApplication_All(state, type1, page)
         returnData = {
-            Class_Name_Shop: shopList,
+            Class_Name_SettleInApplication: settleList,
             Class_Name_paginator: {
                 paginator_PAGE: page,
-                paginator_NUM_PAGES: shop.count_settleIn_shop(int(state))
+                paginator_NUM_PAGES: settle.count_SettleInApplication_All(state, type1)
             }
         }
-        return return_OK( returnData )
-    return illegal_access()
+        return return_msg( returnData )
+    return return_msg( 'parameter is error' )
 
 
 @login_required
-@permission(ROLE_SHOP)
+#@permission(ROLE_SHOP)
 @require_http_methods(['POST'])
 def CreateSettleIn(request):
     """
@@ -47,12 +48,12 @@ def CreateSettleIn(request):
     :return: 
     """
     type = request.POST.get(attribute_type, -1)
-    settleInApplicationObjectId = request.POST.get(attribute_objectId, '')
+    settleInApplicationObjectId = request.POST.get('settleInApplicationObjectId', '')
     if settleInApplicationObjectId and int(type) == 1 or int(type) == 0:
         if int(type) == 1:
-            settleIn = SettleInUser()
-        else:
             settleIn = SettleInCompany()
+        else:
+            settleIn = SettleInUser()
         data = settleIn.input_SettleIn(request)
         settleIn.create_SettleIn(data)
         returnData = settleIn.output_SettleIn()
@@ -62,15 +63,15 @@ def CreateSettleIn(request):
         settleInApplication.set_attribute_type(int(type))
         settleInApplication.set_attribute_state(SETTLE_IN_STATE_0)
         if int(type) == 1:
-            settleInApplication.set_attribute_InfoPersonal(settleIn.get_instance())
-        else:
             settleInApplication.set_attribute_InfoCompany(settleIn.get_instance())
-        return return_OK( returnData )
+        else:
+            settleInApplication.set_attribute_InfoPersonal(settleIn.get_instance())
+        return return_msg( returnData )
     return illegal_access()
 
 
 @login_required
-@permission(ROLE_ADMINISTRATOR)
+#@permission(ROLE_ADMINISTRATOR)
 @require_http_methods(['GET'])
 def ReviewSettleIn(request):
     """
@@ -78,22 +79,30 @@ def ReviewSettleIn(request):
     :param request: 
     :return: 
     """
-    objectId = request.POST.get(attribute_objectId)
-    state = request.POST.get(attribute_state)
+    objectId = request.GET.get(attribute_objectId, '')
+    state = request.GET.get(attribute_state, 0)
     if objectId and 1 <= int(state) <= 2:
-        shop = Shop()
-        shop.get_Object(objectId)
-        shop.set_attribute_state(int(state))
+        settleInApplication = SettleInApplication()
+        settleInApplication.get_Object(objectId)
+        settleInApplication.set_attribute_state(int(state))
 
-        shopType = shop.get_attribute_shopType()
+        # 创建店铺
+        shop = Shop()
+        shop.create_Object()
+
+        shopType = settleInApplication.get_attribute_type()
+        shop.set_attribute_shopType(shopType)
+        shop.set_attribute_user(settleInApplication.get_user())
+        shop.set_attribute_type(0)
         if int(shopType) == 1:
-            settleIn = SettleInUser()
-            data = shop.get_attribute_settleInUser()
+            shop.set_attribute_settleInCompany(settleInApplication.get_attribute(attribute_infoCompany))
         else:
-            settleIn = SettleInCompany()
-            data = shop.get_attribute_settleInCompany()
-        if data:
-            settleIn.get_Object(data[attribute_objectId])
-            settleIn.set_attribute_state(int(state))
-            return return_OK( 'success' )
-    return illegal_access()
+            shop.set_attribute_settleInUser(settleInApplication.get_attribute(attribute_infoPersonal))
+
+        user = _User()
+        user.get_Object(settleInApplication.get_attribute_user_id())
+        user.set_attribute_shop(shop.get_instance())
+        shop.set_attribute_phoneNumber(user.get_attribute_mobilePhoneNumber())
+
+        return return_msg( 'success' )
+    return return_msg( 'parameter is error' )

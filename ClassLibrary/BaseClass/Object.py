@@ -195,6 +195,11 @@ class Object(object):
             return True
         return None
 
+    def get_attribute(self, attribute):
+        if self.instance:
+            return self.instance.get(attribute)
+        return None
+
     def set_attribute_value(self, attribute, value):
         if self.instance and attribute and value is not None:
             self.instance.set(attribute, value)
@@ -202,3 +207,18 @@ class Object(object):
                 return True
         self.__print_msg__(attribute + ' or ' + str(value) + 'is null')
         return False
+
+    def get_attribute_Object_Id(self, attribute):
+        if self.instance and self.instance.get(attribute):
+            return self.instance.get(attribute).id
+        return None
+
+    def get_attribute_image(self, attribute):
+        if self.instance and self.instance.get(attribute) and isinstance(self.instance.get(attribute), ISINSTANCE_FILE):
+            return self.instance.get(attribute).url
+        return None
+
+    def destory_attribute_image(self, attribute):
+        if self.instance and attribute and self.instance.get(attribute) and isinstance(self.instance.get(attribute), ISINSTANCE_FILE):
+            self.instance.get(attribute).destroy()
+        return None

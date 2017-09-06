@@ -1,5 +1,5 @@
 from ClassLibrary.BaseClass.Object import *
-from ClassLibrary.OrderClass.LogisticInfo_New import LogisticsInfo
+from ClassLibrary.OrderClass.LogisticsInfo import LogisticsInfo
 from ClassLibrary.OrderClass.OrderProduct import OrderProduct
 from ClassLibrary.ProductClass.ProductComment import ProductComment
 
@@ -26,11 +26,6 @@ class Order(Object):
     def get_attribute_pingppOrderId(self):
         if self.instance:
             return self.instance.get(attribute_pingppOrderId)
-        return None
-
-    def get_attribute_createdAt(self):
-        if self.instance:
-            return Base.change_timeZone(self.instance.get(attribute_createdAt))
         return None
 
     def get_attribute_cancelTime(self):
@@ -177,8 +172,8 @@ class Order(Object):
                 attribute_receiverAddress: self.get_attribute_receiverAddress(),
                 attribute_receiverPhoneNumber: self.get_attribute_receiverPhoneNumber(),
                 attribute_receiverName: self.get_attribute_receiverName(),
-                attribute_shop: self.get_attribute_shop(),
-                attribute_user: self.get_attribute_user(),
+                attribute_shop: self.get_attribute_Object_Id(attribute_shop),
+                attribute_user: self.get_attribute_Object_Id(attribute_user),
                 attribute_state: self.get_attribute_state(),
                 attribute_uniqueId: self.get_attribute_uniqueId(),
                 attribute_logisticInfo: self.get_attribute_logisticInfo(),

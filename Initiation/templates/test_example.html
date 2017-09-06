@@ -27,6 +27,9 @@
                         type: "POST",
                         url: "{% url 'Admin:WebPageConfigure' %}",
                         contentType: "application/json; charset=utf-8",
+                        headers: {
+                             'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                        },
                         data: JSON.stringify(GetJsonData()),
                         dataType: "json",
                         success: function (message) {
@@ -54,16 +57,221 @@
                                 'name': 'name2',
                                 'code': '2'
                             }
-                        ]
+                        ],
+                        'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').prop('value')
                     };
                     return json;
                 }
             });
 
         </script>
-        <div>
+    <form enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+                <div>
             <input type="button" id="btnWebPage" value="webPageConfigure">
         </div>
+    </form>
     <hr>
+        <hr>
+        <h2>创建商家入驻信息</h2>
+            <script type="text/javascript">
+                $(function () {
+                    $("#btnSettle").click(function() {
+                        $.ajax({
+                            type: "POST",
+                            url: "{% url 'Shop:CreateSettleIn' %}",
+                            //contentType: "application/json; charset=utf-8",
+                            headers: {
+                                 'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                            },
+                            data: {
+                                settleInApplicationObjectId: '59ad2391a0bb9f00644dc093',
+                                type: '0',
+                                objectId: '59ae3442a22b9d0064e4c0c5',
+                                alipay: 'alipay',
+                                shopName: 'shopName1',
+                                brandName: 'brandName1',
+                                brandLogo: 'brandLogo',
+                                brandDescription: 'brandDescription',
+                                realName: 'realName11',
+                                email: 'email111',
+                                idCardExpireTimeStart: 'idCardExpireTimeStart',
+                                idCardExpireTimeEnd: 'idCardExpireTimeEnd',
+                                handIdCard: '',
+                                frontIdCard: '',
+                                backIdCard: '',
+                                phoneNumber: 'phoneNumber',
+                                idCard: 'idCard'
+                            },
+                            //dataType: "json",
+                            success: function (message) {
+                                if (message > 0) {
+
+                                    alert("请求已提交！我们会尽快与您取得联系");
+                                }
+                            },
+                            error: function (message) {
+                                alert("提交数据失败！");
+                            }
+                        });
+                    });
+
+                    function GetJsonData() {
+                        var json = {
+                            "WebPageConfigure": [
+                                {
+                                    'url': 'mengqu.leanapp.cn/123',
+                                    'name': 'name1',
+                                    'code': '1'
+                                },
+                                {
+                                    'url': 'mengqu.leanapp.cn/456',
+                                    'name': 'name2',
+                                    'code': '2'
+                                }
+                            ],
+                            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                        };
+                        return json;
+                    }
+                });
+
+            </script>
+            <form enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+                <div>
+                    <input type="file" name="imageFile" id="imageFile">
+                    <input type="button" id="btnSettle" value="webPageConfigure">
+                </div>
+        </form>
+        <hr>
+<div>
+    <hr>
+        <h2>创建商家入驻信息company</h2>
+            <script type="text/javascript">
+                $(function () {
+                    $("#btnSettle2").click(function() {
+                        $.ajax({
+                            type: "POST",
+                            url: "{% url 'Shop:CreateSettleIn' %}",
+                            //contentType: "application/json; charset=utf-8",
+                            headers: {
+                                 'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                            },
+                            data: {
+                                settleInApplicationObjectId: '59ad2391a0bb9f00644dc093',
+                                type: '1',
+                                objectId: '',
+                                alipay: 'alipay222',
+                                shopName: 'shopName11',
+                                brandName: 'brandName',
+                                brandLogo: 'brandLogo',
+                                brandDescription: 'brandDescription11',
+                                businessLicense: 'businessLicense11',
+                                managerRealName: 'managerRealName',
+                                managerEmail: 'managerEmail',
+                                managerPhoneNumber: 'managerPhoneNumber',
+                                uniformSocialCreditCode: 'uniformSocialCreditCode',
+                                legalPersonName: 'legalPersonName',
+                                legalPersonEmail: 'legalPersonEmail',
+                                legalPersonPhoneNumber: 'legalPersonPhoneNumber',
+                                legalPersonIdCard: 'legalPersonIdCard',
+                                legalPersonExpireTimeStart: 'legalPersonExpireTimeStart',
+                                legalPersonExpireTimeEnd: 'legalPersonExpireTimeEnd',
+                                legalPersonFrontIdCard: '',
+                                legalPersonBackIdCard: '',
+                            },
+                            //dataType: "json",
+                            success: function (message) {
+                                if (message > 0) {
+
+                                    alert("请求已提交！我们会尽快与您取得联系");
+                                }
+                            },
+                            error: function (message) {
+                                alert("提交数据失败！");
+                            }
+                        });
+                    });
+                });
+
+            </script>
+            <form enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+                <div>
+                    <input type="file" name="imageFile" id="imageFile">
+                    <input type="button" id="btnSettle2" value="webPageConfigure">
+                </div>
+        </form>
+        <hr>
+</div>
+<div>
+    <hr>
+        <h2>显示所有入驻信息</h2>
+            <script type="text/javascript">
+                $(function () {
+                    $("#btnSettle3").click(function() {
+                        $.ajax({
+                            type: "GET",
+                            url: "{% url 'Shop:AllSettleIn' %}",
+                            //contentType: "application/json; charset=utf-8",
+                            headers: {
+                                 'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                            },
+                            data: {
+                                state: '0',
+                                page: '1',
+                                type: '1'
+
+                            },
+                            //dataType: "json",
+                            success: function (message) {
+                                if (message > 0) {
+
+                                    alert("请求已提交！我们会尽快与您取得联系");
+                                }
+                            },
+                            error: function (message) {
+                                alert("提交数据失败！");
+                            }
+                        });
+                    });
+                    $("#btnReview").click(function() {
+                        $.ajax({
+                            type: "GET",
+                            url: "{% url 'Shop:ReviewSettleIn' %}",
+                            //contentType: "application/json; charset=utf-8",
+                            headers: {
+                                 'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                            },
+                            data: {
+                                objectId: '59ad2391a0bb9f00644dc093',
+                                state: 1
+                            },
+                            //dataType: "json",
+                            success: function (message) {
+                                if (message > 0) {
+
+                                    alert("请求已提交！我们会尽快与您取得联系");
+                                }
+                            },
+                            error: function (message) {
+                                alert("提交数据失败！");
+                            }
+                        });
+                    });
+                });
+
+            </script>
+            <form enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+                <div>
+                    <input type="file" name="imageFile" id="imageFile">
+                    <input type="button" id="btnSettle3" value="显示店铺">
+                    <input type="button" id="btnReview" value="审核店铺">
+                </div>
+        </form>
+        <hr>
+</div>
 </body>
 </html>

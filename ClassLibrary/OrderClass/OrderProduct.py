@@ -88,8 +88,8 @@ class OrderProduct(Object):
         if self.instance:
             data = {
                 attribute_objectId: self.get_attribute_objectId(),
-                attribute_productGroup: self.get_attribute_productGroup(),
-                attribute_product: self.get_attribute_product(),
+                attribute_productGroup: self.get_attribute_Object_Id(attribute_productGroup),
+                attribute_product: self.get_attribute_Object_Id(attribute_product),
                 attribute_groupName: self.get_attribute_groupName(),
                 attribute_productStyle: self.get_attribute_productStyle(),
                 attribute_productMainImage: self.get_attribute_productMainImage(),

@@ -18,6 +18,10 @@ class SettleInApplication(Object):
         if self.instance and self.instance.get(attribute_user):
             return self.instance.get(attribute_user).id
 
+    def get_attribute_user_id(self):
+        if self.instance and self.instance.get(attribute_user):
+            return self.instance.get(attribute_user).id
+
     def get_attribute_infoPersonal(self):
         if self.instance and self.instance.get(attribute_infoPersonal):
             settleIn = SettleInUser()
@@ -83,3 +87,30 @@ class SettleInApplication(Object):
         if result:
             return True
         return None
+
+    def get_SettleInApplication_All(self, state, type1=None, page=1):
+
+        print(state)
+        if state is not None and page:
+            if 0 == int(state):
+                query = Base.queryInstanceAttribute(self.__class__.__name__, attribute_state, int(state), page)
+            else:
+                query = Base.queryInstanceAttribute1_Attribute2(self.__class__.__name__, attribute_type, int(type1), attribute_state, int(state), page)
+            if query:
+                settle = []
+                for foo in query:
+                    settleApplication = SettleInApplication()
+                    settleApplication.set_instance(foo)
+                    settle.append(settleApplication.output_SettleInApplication())
+                return settle
+        return []
+
+    def count_SettleInApplication_All(self, state, type1):
+        if state is not None:
+            if 0 == int(state):
+                count = Base.queryInstanceAttributeCount(self.__class__.__name__, attribute_state, int(state))
+            else:
+                count = Base.queryInstanceAttribute1_Attribute2_Count(self.__class__.__name__, attribute_type, int(type1), attribute_state, int(state))
+            return count
+        self.__print_msg__('parameter is null')
+        return 0

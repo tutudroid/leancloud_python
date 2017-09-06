@@ -13,8 +13,8 @@ class _User(Object):
             INSTANCE = leancloud.Object.extend(self.className)
             instance = INSTANCE()
             instance.set(attribute_state, STATE_OK)
-            instance.set(attribute_username, username)
-            instance.set(attribute_password, 'password')
+            instance.set_username(username)
+            instance.set_password('password')
             self.instance = instance
             return self.__save_instance__()
         self.__print_msg__('create object fail')
@@ -38,7 +38,8 @@ class _User(Object):
         return None
 
     def get_attribute_avatar(self):
-        if self.instance and self.instance.get(attribute_avatar) == "{'provider': 'qiniu'}":
+        print(self.instance.get(attribute_avatar))
+        if self.instance and isinstance(self.instance.get(attribute_avatar), ISINSTANCE_FILE):
             return self.instance.get(attribute_avatar).url
         return None
 

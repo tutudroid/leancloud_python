@@ -1,10 +1,11 @@
 from ClassLibrary.BaseClass.Object import *
 from ClassLibrary.OrderClass.AfterSaleServiceRecord import AfterSaleServiceRecord
-from ClassLibrary.OrderClass.Order_New import Order
+from ClassLibrary.OrderClass.Order import Order
 from ClassLibrary.ShopClass.SettleInUser import SettleInUser
 from ClassLibrary.ShopClass.SettleInCompany import SettleInCompany
 from ClassLibrary.ShopClass.SettleInApplication import SettleInApplication
 from ClassLibrary.ProductClass.ProductGroup_New import ProductGroup
+from ClassLibrary.ShopClass.BrandTable import BrandTable
 
 
 class Shop(Object):
@@ -111,7 +112,10 @@ class Shop(Object):
 
     def get_attribute_order(self, state, page):
         if self.instance:
-            tmpList = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_Shop, attribute_order, attribute_orderSate, int(state), page, QUERY_SKIP)
+            if state == -1:
+                tmpList = Base.get_relation_data(self.instance.get(attribute_objectId), self.__class__.__name__, attribute_order, page, QUERY_SKIP)
+            else:
+                tmpList = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_Shop, attribute_order, attribute_orderSate, int(state), page, QUERY_SKIP)
             if tmpList:
                 orderList = []
                 for foo in tmpList:
@@ -146,10 +150,6 @@ class Shop(Object):
             return self.instance.get(attribute_user)
         return None
 
-    def get_attribute_createdAt(self):
-        if self.instance:
-            return self.instance.get(attribute_createdAt)
-        return None
 
     def get_attribute_settleInUser(self):
         if self.instance and self.instance.get(attribute_settleInUser):
@@ -161,7 +161,7 @@ class Shop(Object):
     def get_attribute_settleInCompany(self):
         if self.instance and self.instance.get(attribute_settleInCompany):
             settleIn = SettleInCompany()
-            settleIn.get_Object(self.instance.get(attribute_settleInCompany).id)
+            settleIn.get_Object(self.instance.get(attribute_settleInCompany).get(attribute_objectId))
             return settleIn.output_SettleIn()
         return None
 
@@ -177,7 +177,14 @@ class Shop(Object):
 
     def get_attribute_brand(self):
         if self.instance:
-            return self.instance.get(attribute_brand)
+            query = Base.get_relation_data(self.instance.get(attribute_objectId), self.__class__.__name__, attribute_brand)
+            if query:
+                result = []
+                for foo in query:
+                    brand = BrandTable()
+                    brand.set_instance(foo)
+                    result.append(brand.output_Table())
+                return result
         return None
 
     def get_attribute_type(self):
@@ -197,7 +204,10 @@ class Shop(Object):
 
     def get_attribute_afterSaleServiceRecord(self,state, page):
         if self.instance:
-            tmpList = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_Shop, attribute_afterSaleServiceRecord, attribute_state, state, page)
+            if state == -1:
+                tmpList = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), self.__class__.__name__, attribute_afterSaleServiceRecord, page)
+            else:
+                tmpList = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_Shop, attribute_afterSaleServiceRecord, attribute_state, state, page)
             if tmpList:
                 returnList = []
                 for foo in tmpList:
@@ -282,8 +292,8 @@ class Shop(Object):
         return None
 
     def set_attribute_shopType(self, value):
-        if self.instance and value:
-            self.instance.set(attribute_shopType, value)
+        if self.instance and value is not None:
+            self.instance.set(attribute_shopType, int(value))
             self.__save_instance__()
             return True
         return None
@@ -347,14 +357,19 @@ class Shop(Object):
 
     def count_attribute_afterSaleServiceRecord(self, state):
         if self.instance:
-            count = Base.count_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_Shop, attribute_afterSaleServiceRecord, attribute_state, int(state))
+            if state == -1:
+                count = Base.get_relation_data(self.instance.get(attribute_objectId), self.__class__.__name__, attribute_afterSaleServiceRecord)
+            else:
+                count = Base.count_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_Shop, attribute_afterSaleServiceRecord, attribute_state, int(state))
             return count
         return None
 
     def count_attribute_order(self, state):
         if self.instance:
-            # count = Base.queryInstanceAttribute1_Attribute2_Count(Order.CLASS_ORDER, Order.attribute_shop, shop, Order.attribute_orderSate, int(state))
-            count = Base.count_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_Shop, attribute_order, attribute_orderSate, int(state))
+            if state == -1:
+                count = Base.get_relation_data(self.instance.get(attribute_objectId), self.__class__.__name__, attribute_order)
+            else:
+                count = Base.count_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_Shop, attribute_order, attribute_orderSate, int(state))
             return count
         return None
 
@@ -362,7 +377,7 @@ class Shop(Object):
         if self.instance:
             A = {
                 attribute_uniqueId: self.get_attribute_uniqueId(),
-                attribute_user: self.get_attribute_user(),
+                attribute_user: self.get_attribute_Object_Id(attribute_user),
                 attribute_address: self.get_attribute_address(),
                 attribute_PROVINCE: self.get_attribute_province(),
                 attribute_CITY: self.get_attribute_city(),
@@ -378,14 +393,14 @@ class Shop(Object):
                 attribute_shopType: self.get_attribute_shopType(),
                 attribute_settleInCompany: self.get_attribute_settleInCompany(),
                 attribute_settleInUser: self.get_attribute_settleInUser(),
-                attribute_order: self.get_attribute_order(5, 1),
-                attribute_afterSaleServiceRecord: self.get_attribute_afterSaleServiceRecord(0, 1),
-                attribute_productGroup: self.get_attribute_productGroup(0, 1)
+                # attribute_order: self.get_attribute_order(5, 1),
+                # attribute_afterSaleServiceRecord: self.get_attribute_afterSaleServiceRecord(0, 1),
+                # attribute_productGroup: self.get_attribute_productGroup(0, 1)
             }
             return A
         return None
 
-    def get_settleIn_shop(self, state, page):
+    def get_shop_state(self, state, page):
         query = Base.queryInstanceAttribute(self.__class__.__name__, attribute_state, int(state), page)
         if query:
             settleInList = []
@@ -396,7 +411,7 @@ class Shop(Object):
             return settleInList
         return []
 
-    def count_settleIn_shop(self, state):
+    def count_shop_state(self, state):
         count = Base.queryInstanceAttributeCount(self.__class__.__name__, attribute_state, int(state))
         return count
 

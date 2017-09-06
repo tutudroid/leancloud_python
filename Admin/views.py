@@ -8,7 +8,7 @@ from ClassLibrary.ShopClass.SettleInCompany import SettleInCompany
 from ClassLibrary.Others.WebPageConfigure import WebPageConfigure
 
 
-# @login_required
+@login_required
 # @permission(ROLE_ADMINISTRATOR)
 @require_http_methods(['POST'])
 def AddUser(request):
@@ -21,9 +21,9 @@ def AddUser(request):
     user = _User()
     data = user.input_User(request)
     if user.create_User(data):
-        return return_OK('success')
+        return return_msg('success')
     print('create account failed')
-    return return_OK('username has existed')
+    return return_msg('username has existed')
 
 
 @login_required
@@ -42,14 +42,7 @@ def AppUser(request):
     page_nums = user.count_App_User()
 
     user_list = user.get_App_User(page)
-    data = {
-        Class_Name_paginator: {
-            paginator_NUM_PAGES: page_nums,
-            paginator_PAGE: page
-        },
-        Class_Name_User: user_list,
-    }
-    return return_OK(data)
+    return return_paginator_page(Class_Name_User, user_list, page, page_nums)
 
 
 @login_required
@@ -78,14 +71,8 @@ def ShopUser(request):
     shop = Shop()
     page_nums = shop.count_Shop_Audit_All(state)
     shopList = shop.get_Shop_Audit_All(state, page)
-    data = {
-        Class_Name_paginator: {
-            paginator_NUM_PAGES: page_nums,
-            paginator_PAGE: page
-        },
-        Class_Name_User: shopList,
-    }
-    return return_OK(data)
+
+    return return_paginator_page(Class_Name_Shop, shopList, page, page_nums)
 
 
 @login_required
@@ -148,7 +135,7 @@ def audit_shop(request):
             user.set_attribute_shop(shop.get_instance())
         if int(state) == SETTLE_IN_STATE_1:
             settleInApplication.set_attribute_state(SETTLE_IN_STATE_1)
-        return return_OK('success')
+        return return_msg('success')
     return Parameter_Error(request, '参数错误')
 
 
@@ -162,21 +149,12 @@ def sysUser(request):
     :param request: 
     :return: 
     """
-    page = request.GET.get('page', 1)  # 获取页码
-
+    page = request.GET.get(paginator_PAGE, 1)  # 获取页码
     user = _User()
     user_list = user.get_User_Role_All(ROLE_SYS, page)
     page_nums = user.count_User_Role_All(ROLE_SYS)
-    """设置分页"""
-    data = {
-        Class_Name_paginator: {
-            paginator_NUM_PAGES: page_nums,
-            paginator_PAGE: page
-        },
-        Class_Name_User: user_list,
-    }
-    print(data)
-    return return_OK(data)
+
+    return return_paginator_page(Class_Name_User, user_list, page, page_nums)
 
 
 @login_required
@@ -202,39 +180,42 @@ def SysUserManager(request):
         if state:
             user.destroy_Object()
         if role:
-            return return_OK(role[0])
+            return return_msg(role[0])
     return illegal_access()
 
 
 @login_required
 # @permission(ROLE_ADMINISTRATOR)
-@require_http_methods(['GET'])
+@require_http_methods(['POST'])
 def ResetUserPassword(request):
     """
     重置用户密码
     :param request: 
     :return: 
     """
-    objectId = request.GET.get(attribute_objectId, '')
+    objectId = request.POST.get(attribute_objectId, '')
     password = request.POST.get(attribute_password, '')
     passwordSure = request.POST.get(attribute_passwordSure, '')
     if password == passwordSure and objectId:
         user = _User()
-        user = user.get_Object(objectId)
+        user.get_Object(objectId)
         if user.set_attribute_password(password):
-            return return_OK('success')
-    return return_OK('fail')
+            return return_msg('success')
+    return return_msg('fail')
 
 
+# @csrf_exempt
 @login_required
 # @permission(ROLE_ADMINISTRATOR)
 @require_http_methods(['POST', 'GET'])
 def WebPage(request):
     if request.method == 'POST':
-        webPageData = request.POST.get(Class_Name_WebPageConfigure)
+        webPageData = json.loads(request.body.decode('utf-8'))
+        print(webPageData)
         if webPageData:
             WebPageConfigure().clear_all_WebPageConfigure()
-            webPageData = json.loads(webPageData)
+            webPageData = webPageData[Class_Name_WebPageConfigure]
+            print(webPageData)
             for foo in webPageData:
                 webPage = WebPageConfigure()
                 webPage.create_WebPageConfigure(foo)

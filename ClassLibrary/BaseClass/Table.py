@@ -7,10 +7,10 @@ class Table(ProductService, ImageBase):
         super(Table, self).__init__()
         self.className = self.__class__.__name__
 
-    def output_productDetailDescription(self):
+    def output_Table(self):
         if self.instance:
             data = {
-                attribute_imageFile: self.get_imageFile(),
+                attribute_imageFile: self.get_attribute_imageFile(),
                 attribute_objectId: self.get_attribute_objectId(),
                 attribute_name: self.get_attribute_name(),
                 attribute_briefDescription: self.get_attribute_briefDescription()

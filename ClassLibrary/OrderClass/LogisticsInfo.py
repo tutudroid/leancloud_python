@@ -41,11 +41,6 @@ class LogisticsInfo( Object ):
             return self.instance.get(attribute_traces)
         return None
 
-    def get_attribute_createdAt(self):
-        if self.instance:
-            return Base.change_timeZone(self.instance.get(attribute_createdAt))
-        return None
-
     def output_Logistic(self):
         if self.instance:
             A = {

@@ -22,7 +22,7 @@ class ProductComment(Object):
         return None
 
     def get_attribute_userAvatar(self):
-        if self.instance and self.instance.get(attribute_userAvatar):
+        if self.instance and self.instance.get(attribute_userAvatar) and isinstance(self.instance.get(attribute_userAvatar), ISINSTANCE_FILE):
             return self.instance.get(attribute_userAvatar).url
         return None
 
@@ -47,12 +47,12 @@ class ProductComment(Object):
             if imageList:
                 returnList = []
                 for foo in imageList:
-                    if foo.get(attribute_imageFile):
+                    if isinstance(foo.get(attribute_imageFile), ISINSTANCE_FILE):
                         data = {
                             attribute_imageFile: foo.get(attribute_imageFile).url,
                         }
                         returnList.append(data)
-                return imageList
+                return returnList
         return None
 
     def output_ProductComment(self):

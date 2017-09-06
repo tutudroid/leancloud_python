@@ -1,7 +1,7 @@
 from Error_Page import *
 from ClassLibrary.OrderClass.AfterSaleServiceRecord import AfterSaleServiceRecord
 from ClassLibrary.ShopClass.Shop_New import Shop
-from ClassLibrary.OrderClass.Order_New import Order
+from ClassLibrary.OrderClass.Order import Order
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -35,7 +35,7 @@ def afterSale(request):
         shop.get_Object(objectId)
         afterSaleService = shop.get_attribute_afterSaleServiceRecord(int(state), page)
         page_nums = shop.count_attribute_afterSaleServiceRecord(int(state))
-        return return_paginator_page(afterSaleService, page, page_nums)
+        return return_paginator_page(Class_Name_AfterSaleServiceRecord, afterSaleService, page, page_nums)
     return illegal_access()
 
 
@@ -56,27 +56,45 @@ def disposeAfterSale(request):
         if state == AFTER_SALE_2:
             # 退货后退款
             if afterSaleService.set_attribute_state(AFTER_SALE_2):
-                return return_OK( '处理成功，等待用户退货后退款' )
+                return return_msg('处理成功，等待用户退货后退款')
         elif state == AFTER_SALE_4 or state == AFTER_SALE_6:
             # 退款
-            orderId = afterSaleService.get_attribute_order()
+            orderId = afterSaleService.get_attribute_Object_Id(attribute_order)
             refundSumPrice = afterSaleService.get_attribute_refundSumPrice()
             if orderId and refundSumPrice is not None:
                 order = Order()
-                order.get_Object(orderId.id)
+                order.get_Object(orderId)
                 re = refund(order.get_attribute_pingppOrderId(), refundSumPrice)
                 if re:
                     if re['failure_msg']:
-                        return return_OK( re['failure_msg'] )
+                        return return_msg(re['failure_msg'])
                     else:
                         afterSaleService.set_attribute_state(state)
-                        return return_OK( '已申请退款，请检查退款状态' )
+                        return return_msg('已申请退款，请检查退款状态')
         elif state == AFTER_SALE_5:
             # 取消申请
             if afterSaleService.set_attribute_state(AFTER_SALE_5):
-                return return_OK( '已成功取消申请' )
-        return return_OK( '未能成功处理，请联系系统管理员' )
+                return return_msg('已成功取消申请')
+        return return_msg('未能成功处理，请联系系统管理员')
     return illegal_access()
+
+
+@login_required
+@require_http_methods(['POST'])
+def CancelDisplacedRefund(request):
+    objectId = request.POST.get(attribute_objectId, '')
+    if objectId:
+        order = Order()
+        if order.get_Object(objectId):
+            re = refund(order.get_attribute_pingppOrderId(), order.get_attribute_finalPrice())
+            if re:
+                if re['failure_msg']:
+                    return return_msg(re['failure_msg'])
+                else:
+                    if Order.set_attribute_orderState(order, ORDER_STATE_REFUND):
+                        return return_msg('refund success')
+            return return_msg('order state is exceptional')
+    return return_msg('order does not existed')
 
 
 @csrf_exempt
@@ -85,8 +103,8 @@ def disposeRefund(request):
         print(request.POST)
         event = request.POST.get('event')
         if event['type'] == 'charge.succeeded':
-            return return_OK( status=200 )
+            return return_msg(status=200)
         elif event['type'] == 'order.refund.succeeded':
-            return return_OK( status=200 )
-        return return_OK( status=500 )
-    return return_OK( status=200 )
+            return return_msg(status=200)
+        return return_msg(status=500)
+    return return_msg(status=200)

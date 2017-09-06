@@ -91,7 +91,7 @@ class Product(Object):
 
     def get_attribute_mainImage(self):
         if self.instance:
-            if self.instance.get(attribute_mainImage):
+            if isinstance(self.instance.get(attribute_mainImage), ISINSTANCE_FILE):
                 return self.instance.get(attribute_mainImage).url
         return None
 

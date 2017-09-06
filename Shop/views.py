@@ -6,6 +6,11 @@ from ClassLibrary import Base
 from ClassLibrary.ShopClass.SettleInApplication import SettleInApplication
 
 
+
+def login(request):
+    return render(request, 'login.html')
+
+
 @login_required
 @permission(ROLE_SHOP)
 def ShopDetail(request):
@@ -57,25 +62,18 @@ def shopAfterSale(request):
     :param request: 
     :return: 
     """
-    content = PROFILE_INIT()
-    current_user = leancloud.User.get_current()
-    if current_user:
-        shop = current_user.get('shop')
-        shopId = Shop.get_attribute_objectId(shop)
-        if shopId:
+    objectId = request.GET.get(attribute_objectId, '')
+    page = request.GET.get(paginator_PAGE, 1)
+    state = request.GET.get(attribute_state, -1)
+    if objectId:
+        shop = Shop()
+        if shop.get_Object(objectId):
             # 设置分页
-            page = request.GET.get('page', 1)
-            page_nums = Shop.count_attribute_afterSaleServiceRecord(shopId)
-            paginator1 = Base.paginator_private(page, page_nums)
-
-            content.update({'paginator': paginator1})
-            content['serviceRecord'] = Shop.get_attribute_afterSaleServiceRecord(shopId, page)
-            print(content)
-            return render(request, 'AfterSale.html', {'content': content})
-        else:
-            return Parameter_Error('店铺不存在')
-    else:
-        return Parameter_Error('用户不存在')
+            page_nums = shop.count_attribute_afterSaleServiceRecord(state)
+            afterSaleList = shop.get_attribute_afterSaleServiceRecord(state, page)
+            return return_paginator_page(Class_Name_AfterSaleServiceRecord, afterSaleList, page, page_nums)
+        return return_msg('no found shop')
+    return return_msg('parameter is null')
 
 
 @require_http_methods(["POST"])
@@ -167,3 +165,14 @@ def modifyPassword_Username(request):
         user.set_attribute_username(username)
         return HttpResponse('success')
     return HttpResponse('fail')
+
+
+@require_http_methods(['GET'])
+def AllForbiddenShop(request):
+    page = request.GET.get(paginator_PAGE, 1)
+    state = request.GET.get(attribute_state, 1)
+    if state and int(state) == 1:
+        shop = Shop()
+        shopList = shop.get_shop_state(state, page)
+        return return_paginator_page(Class_Name_Shop, shopList, page, shop.count_shop_state(state))
+    return return_msg('parameter is error')

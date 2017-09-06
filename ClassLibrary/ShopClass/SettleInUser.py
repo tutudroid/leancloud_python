@@ -39,17 +39,17 @@ class SettleInUser(SettleIn):
 
 
     def get_attribute_handIdCard(self):
-        if self.instance and self.instance.get(attribute_handIdCard):
+        if self.instance and isinstance(self.instance.get(attribute_handIdCard), ISINSTANCE_FILE):
             return self.instance.get(attribute_handIdCard).url
         return None
 
     def get_attribute_frontIdCard(self):
-        if self.instance and self.instance.get(attribute_frontIdCard):
+        if self.instance and isinstance(self.instance.get(attribute_frontIdCard), ISINSTANCE_FILE):
             return self.instance.get(attribute_frontIdCard).url
         return None
 
     def get_attribute_backIdCard(self):
-        if self.instance and self.instance.get(attribute_backIdCard):
+        if self.instance and isinstance(self.instance.get(attribute_backIdCard), ISINSTANCE_FILE):
             return self.instance.get(attribute_backIdCard).url
         return None
 
@@ -171,6 +171,8 @@ class SettleInUser(SettleIn):
             attribute_handIdCard: request.POST.get(attribute_handIdCard, ''),
             attribute_frontIdCard: request.POST.get(attribute_frontIdCard, ''),
             attribute_backIdCard: request.POST.get(attribute_backIdCard, ''),
+            attribute_phoneNumber: request.POST.get(attribute_phoneNumber, ''),
+            attribute_idCard: request.POST.get(attribute_idCard, ''),
         }
         return data
 

@@ -32,7 +32,9 @@ Class_Name_User = 'User'
 Class_Name_Role = 'Role'
 Class_Name_SettleInApplication = 'SettleInApplication'
 Class_Name_WebPageConfigure = 'WebPageConfigure'
-
+Class_Name_SpecialAreaFreight = 'SpecialAreaFreight'
+Class_Name_FreightFreeCondition = 'FreightFreeCondition'
+Class_Name_FreightModel = 'FreightModel'
 
 
 # base attribute
@@ -73,6 +75,7 @@ AFTER_SALE_3 = 3   # 退货中
 AFTER_SALE_4 = 4   # 已退款
 AFTER_SALE_5 = 5   # 已取消
 AFTER_SALE_6 = 6   # 直接退款
+
 
 # afterSaleSupport
 attribute_serviceState = 'serviceState'
@@ -122,6 +125,10 @@ attribute_dispatchPlace = 'dispatchPlace'
 attribute_audit = 'audit'
 attribute_productMainImage = 'productMainImage'
 attribute_group = 'group'
+
+
+# 商品评论条数, 后台新增参数
+attribute_commentCount = 'commentCount'
 
 # 修改商品组时可能的参数
 attribute_delete_imageList = 'delete_imageList'
@@ -234,6 +241,7 @@ ORDER_STATE_COMMENTS = 4        # 已评价
 ORDER_STATE_CANCEL = 5          # 已取消
 ORDER_STATE_REFUND = 6          # 已退款
 
+
 # orderProduct
 attribute_groupName = 'groupName'
 attribute_productPrice = 'productPrice'
@@ -290,6 +298,22 @@ TYPE_BASE = 0
 TYPE_RECOMMEND = 1
 TYPE_IP = 2
 
+# Freight
+attribute_startNum = 'startNum'
+attribute_startCost = 'startCost'
+attribute_addNum = 'addNum'
+attribute_addCost = 'addCost'
+attribute_cityList = 'cityList'
+
+attribute_option = 'option'
+attribute_freeNum = 'freeNum'
+attribute_freeSum = 'freeSum'
+
+attribute_isFreightFree = 'isFreightFree'
+attribute_shippingAddress = 'shippingAddress'
+attribute_specialCities = 'specialCities'
+attribute_freeConditionList = 'freeConditionList'
+
 
 # paginator
 Class_Name_paginator = 'Paginator'
@@ -301,4 +325,6 @@ paginator_NUM_PAGES = 'num_pages'
 
 
 # return
+import leancloud
 return_status = 'status'
+ISINSTANCE_FILE = leancloud.file_.File

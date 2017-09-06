@@ -9,7 +9,6 @@ urlpatterns = [
     url(r'^Profile/$', views.profile, name='Profile'),
     url(r'^Login/$', views.login, name='Login'),
     url(r'^Logout/$', views.logout, name='Logout'),
-
     url(r'^ResetPassword/$', views.resetPassword, name='ResetPassword'),
     url(r'^GetVerifyCode/$', views.getVerifyCode, name='GetVerifyCode'),
     url(r'^GetVerifyCode_Register/$', views.getVerifyCode_Register, name='GetVerifyCode_Register'),

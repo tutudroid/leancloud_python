@@ -25,7 +25,7 @@ from ClassLibrary.CategoryClass.SaleCategory import SaleCategory
 from ClassLibrary.ImageClass.ProductImage import ProductImage
 from ClassLibrary.ProductClass.ProductService import ProductService
 from ClassLibrary.ProductClass.ProductComment import ProductComment
-
+from ClassLibrary.Frieght.FreightModel import FreightModel
 
 
 class ProductGroup(Object):
@@ -150,15 +150,15 @@ class ProductGroup(Object):
             storeCategoryThird = self.instance.get(attribute_storeCategory)
             if storeCategoryThird:
                 storeInstance3 = StoreCategory(Class_Name_StoreCategoryThird)
-                if storeInstance3.get_StoreCategoryThird(storeCategoryThird.id):
+                if storeInstance3.get_StoreCategoryThird(storeCategoryThird.get(attribute_objectId)):
                     store2 = storeInstance3.get_attribute_storeCategorySecond()
                     if store2:
                         storeInstance2 = StoreCategory(Class_Name_StoreCategorySecond)
-                        if storeInstance2.get_StoreCategorySecond(store2.id):
+                        if storeInstance2.get_StoreCategorySecond(store2.get(attribute_objectId)):
                             store1 = storeInstance2.get_attribute_storeCategoryFirst()
                             if store1:
                                 storeInstance1 = StoreCategory(Class_Name_StoreCategoryFirst)
-                                storeInstance1.get_StoreCategoryFirst(store1.id)
+                                storeInstance1.get_StoreCategoryFirst(store1.get(attribute_objectId))
                                 A = {
                                     attribute_storeCategoryFirst: storeInstance1.get_attribute_name(),
                                     attribute_storeCategorySecond: storeInstance2.get_attribute_name(),
@@ -219,7 +219,7 @@ class ProductGroup(Object):
 
     def get_attribute_mainImage(self):
         if self.instance:
-            if self.instance.get(attribute_mainImage):
+            if self.instance.get(attribute_mainImage) and isinstance(self.instance.get(attribute_mainImage), ISINSTANCE_FILE):
                 return self.instance.get(attribute_mainImage).url
         return None
 
@@ -227,13 +227,15 @@ class ProductGroup(Object):
         if self.instance:
             imageList = Base.get_relation_data(self.instance.get(attribute_objectId), self.className, attribute_imageList)
             if imageList:
-                image = [
-                    {
-                        'image': foo.get('imageFile').url,
-                        'objectId': foo.get('objectId'),
-                    } for foo in imageList
-                ]
-                return image
+                resultList = []
+                for foo in imageList:
+                    if isinstance(foo.get(attribute_imageFile), ISINSTANCE_FILE):
+                        image = {
+                            attribute_imageFile: foo.get(attribute_imageFile).url,
+                            attribute_objectId: foo.get(attribute_objectId),
+                        }
+                        resultList.append(image)
+                return resultList
         return None
 
     def get_attribute_collectionUser(self):
@@ -313,7 +315,9 @@ class ProductGroup(Object):
 
     def get_attribute_freightModel(self):
         if self.instance:
-            return self.instance.get(attribute_freightModel)
+            freight = FreightModel()
+            freight.set_instance(self.instance)
+            return freight.output_FreightModel()
         return None
 
     def set_attribute_storeCategory(self, storeCategory):
@@ -400,7 +404,7 @@ class ProductGroup(Object):
                 attribute_comment: self.get_attribute_comment(attribute_state, 0, 1, 10),
                 attribute_briefDescription: self.get_attribute_briefDescription(),
                 attribute_detailDescription: self.get_attribute_detailDescription(),
-                attribute_shop: self.get_attribute_shop(),
+                attribute_shop: self.get_attribute_Object_Id(attribute_shop),
                 attribute_saleCount: self.get_attribute_saleCount(),
                 attribute_price: self.get_attribute_price(),
                 attribute_spec: self.get_attribute_spec(),
@@ -408,6 +412,7 @@ class ProductGroup(Object):
                 attribute_state: self.get_attribute_state(),
                 attribute_collectionUser: self.get_attribute_collectionUser(),
                 attribute_dispatchPlace: self.get_attribute_dispatchPlace(),
+                attribute_commentCount: self.get_attribute_comment_count(attribute_state, 0)
             }
             print(data)
             return data
@@ -443,7 +448,6 @@ class ProductGroup(Object):
     def destroy_ProductGroup(self):
         if self.instance:
             shopObjectId = self.instance.get(attribute_shop)
-
             self.objectId = self.instance.get(attribute_objectId)
             Base.destroy_relation_imageList(self.objectId, self.__class__.__name__,
                                             attribute_imageList, Class_Name_ProductImage)
@@ -584,8 +588,8 @@ class ProductGroup(Object):
                 for foo in data['delete_detailDescription']:
                     detailDescription = ProductDetailDescription().get_Object(foo)
                     if detailDescription:
-                        if detailDescription.get(self.imageFile):
-                            detailDescription.get(self.imageFile).destroy()
+                        if detailDescription.get(attribute_imageFile):
+                            detailDescription.get(attribute_imageFile).destroy()
                         detailDescription.destroy()
 
             if data[attribute_detailDescription]:

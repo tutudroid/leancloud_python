@@ -7,7 +7,7 @@ class ImageBase(Object):
         self.className = self.__class__.__name__
 
     def output_Image(self):
-        if self.instance:
+        if self.instance and isinstance(self.instance.get(attribute_imageFile), ISINSTANCE_FILE):
             data = {
                 attribute_imageFile: self.instance.get(attribute_imageFile).url,
             }
@@ -18,7 +18,7 @@ class ImageBase(Object):
             return self.instance.get(attribute_imageFile)
 
     def get_attribute_imageFile(self):
-        if self.instance and self.instance.get(attribute_imageFile) == "{'provider': 'qiniu'}":
+        if self.instance and isinstance(self.instance.get(attribute_imageFile), ISINSTANCE_FILE):
             return self.instance.get(attribute_imageFile).url
 
     def set_attribute_imageFile(self, imageFile):

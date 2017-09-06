@@ -27,7 +27,7 @@ def Shop_All_ProductGroup(request):
         shop.get_Object(objectId)
         productGroup = shop.get_attribute_productGroup(int(state), page)
         page_nums = shop.count_attribute_productGroup(int(state))
-        return return_paginator_page(productGroup, page, page_nums)
+        return return_paginator_page(Class_Name_ProductGroup, productGroup, page, page_nums)
     return illegal_access()
 
 
@@ -48,7 +48,7 @@ def Shop_All_ShopProductGroup(request):
         shop.get_Object(objectId)
         productGroup = shop.get_attribute_shopProductGroup(page)
         page_nums = shop.count_attribute_shopProductGroup()
-        return return_paginator_page(productGroup, page, page_nums)
+        return return_paginator_page(Class_Name_ProductGroup, productGroup, page, page_nums)
     return illegal_access()
 
 

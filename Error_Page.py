@@ -31,18 +31,19 @@ def Parameter_Error(request=None, message=None):
     return HttpResponse()
 
 
-def return_paginator_page(dataList, page, pageNums):
+def return_paginator_page(className, dataList, page, pageNums):
     returnData = {
-        Class_Name_Shop: dataList,
+        className: dataList,
         Class_Name_paginator: {
             paginator_PAGE: page,
             paginator_NUM_PAGES: pageNums
         }
     }
-    return HttpResponse(returnData, content_type='Application/Json')
+    print(returnData)
+    return HttpResponse(json.dumps(returnData), content_type='Application/Json')
 
 
-def return_OK(msg=None, status=200):
+def return_msg(msg=None, status=200):
     returnData = {
         'msg': msg,
         return_status: True,
@@ -55,7 +56,7 @@ def return_data(key, value, status=200):
         key: value,
         return_status: True,
     }
-    return HttpResponse(returnData, content_type='Application/Json', status=status)
+    return HttpResponse(json.dumps(returnData), content_type='Application/Json', status=status)
 
 
 def PROFILE_INIT():
@@ -92,7 +93,7 @@ def Dict_Check(data, keyList):
     if keyList:
         for key in keyList:
             if key not in data or not data[key]:
-                return return_OK('数据不完整，请检查')
+                return return_msg('数据不完整，请检查')
     return True
 
 # 请求错误

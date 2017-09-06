@@ -7,5 +7,5 @@ from Order import views
 urlpatterns = [
     url(r'^AllOrder/$', views.AllOrder, name='AllOrder'),
     url(r'^SearchOrder/$', views.SearchOrder, name='SearchOrder'),
-    url(r'^Displace/$', views.displaceOrder, name='Displace'),
+    url(r'^DisplaceOrder/$', views.DisplaceOrder, name='DisplaceOrder'),
 ]

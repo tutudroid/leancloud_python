@@ -14,7 +14,7 @@
 </thead>
 
 <tbody>
-    <tr v-for="sysUser in allsysusers" class="accountRow"><td>{{sysUser.username}}</td><td>{{sysUser.role[0]}}</td><td v-if="sysUser.state == 0">正常</td><td v-else>禁用</td><td :class="[sysUser.state==0?'forbid':'restore', 'link']" @click="forbid($event,sysUser.objectId)" v-if="sysUser.state==0">禁用</td><td :class="[sysUser.state==0?'forbid':'restore', 'link']" @click="forbid($event,sysUser.objectId)" v-if="sysUser.state==1">恢复</td><td class="link" @click="hide(sysUser.objectId)">修改密码</td><td class="link" @click="deleteUser(sysUser.objectId)">删除</td></tr>
+    <tr v-for="sysUser in allsysusers" class="accountRow"><td>{{sysUser.username}}</td><td>{{sysUser.role[0]}}</td><td v-if="sysUser.state == 0">正常</td><td v-else>禁用</td><td :class="['link',sysUser.state==0?'forbid':'restore']" @click="forbid($event,sysUser.objectId)" v-if="sysUser.state==0">禁用</td><td :class="['link',sysUser.state==0?'forbid':'restore']" @click="forbid($event,sysUser.objectId)" v-if="sysUser.state==1">恢复</td><td class="link" @click="hide(sysUser.objectId)">修改密码</td><td class="link" @click="deleteUser($event,sysUser.objectId)">删除</td></tr>
 </tbody>
 </table>
 
@@ -78,7 +78,7 @@
                     url: '/Admin/ResetUserPassword/',
                     data: {
                         'objectId': this.id,
-                        'password': newPwd,
+                        'password': this.newPwd,
 			'passwordSure':this.confirmPwd,
                         'csrfmiddlewaretoken': $('#csrfProductManager input[name="csrfmiddlewaretoken"]').prop('value')
                     },
@@ -93,15 +93,9 @@
        },
        forbid(event,id){
 	 var forbid = $(event.target);
-	 if(forbid.hasClass('forbid')){
-	   forbid.removeClass('forbid').addClass('restore');
-	   forbid.text('恢复');
-	 }else{
-	   forbid.removeClass('restore').addClass('forbid');
-	   forbid.text('禁用');
-	 }
-	 let state = forbid.attr('class');
-	 console.log(state);
+	 let state = forbid.attr('class').slice(5);
+	 console.log(state=="forbid");
+	 if(state == "forbid"){
 	 swal(
 	   {
 	     title:"你确定禁用它吗？",
@@ -122,6 +116,15 @@
                     },
                     success: function (data) {
 		      swal('禁用成功');
+
+			 if(forbid.hasClass('forbid')){
+			   forbid.removeClass('forbid').addClass('restore');
+			   forbid.text('恢复');
+			 }else{
+			   forbid.removeClass('restore').addClass('forbid');
+			   forbid.text('禁用');
+			 }
+
                     },
                    error: function(XMLHttpRequest, textStatus, errorThrown) {
                       swal("禁用失败");
@@ -130,9 +133,49 @@
                });
 	   }
 	 );
-       },
-       deleteUser(id){
+         }else{
+	 swal(
+	   {
+	     title:"你确定恢复它吗？",
+	     text:"恢复之后此账号可以正常使用",
+	     type:"warning",
+	     showCancelButton:true,
+	     closeOnConfirm:false,
+	     confirmButtonText:"是的，我要恢复它",
+	     confirmButtonColor:"ec6c62",
+	   },function(){
+	     $.ajax({
+                    type: 'POST',
+                    url: '/Admin/SysUserManager/',
+                    data: {
+                        'objectId': id,
+                        'forbidden':state, 
+                        'csrfmiddlewaretoken': $('#csrfProductManager input[name="csrfmiddlewaretoken"]').prop('value')
+                    },
+                    success: function (data) {
+		      swal('恢复成功');
 
+			 if(forbid.hasClass('forbid')){
+			   forbid.removeClass('forbid').addClass('restore');
+			   forbid.text('恢复');
+			 }else{
+			   forbid.removeClass('restore').addClass('forbid');
+			   forbid.text('禁用');
+			 }
+
+                    },
+                   error: function(XMLHttpRequest, textStatus, errorThrown) {
+                      swal("恢复失败");
+
+                   },
+               });
+	   }
+	 );
+        }
+
+       },
+       deleteUser(e,id){
+         let target = $(e.currentTarget).parent();
 	 swal(
 	   {
 	     title:"你确定删除它吗？",
@@ -153,6 +196,8 @@
                     },
                     success: function (data) {
 		      swal("删除成功");
+		      target.empty();
+		      
                     },
                    error: function(XMLHttpRequest, textStatus, errorThrown) {
 		     swal("删除失败");

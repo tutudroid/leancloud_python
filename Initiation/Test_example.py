@@ -7,7 +7,7 @@ from Error_Page import *
 from ClassLibrary.BaseClass.Attribute_Parameter import *
 from ClassLibrary.ProductClass import ProductGroup_New
 from ClassLibrary.ShopClass import Shop_New
-from ClassLibrary.OrderClass import Order_New
+from ClassLibrary.OrderClass import Order
 from ClassLibrary.OrderClass import AfterSaleServiceRecord
 from ClassLibrary.ShopClass import SettleInCompany
 from ClassLibrary.ShopClass import SettleInUser
@@ -15,7 +15,7 @@ from ClassLibrary.ShopClass.SettleInApplication import SettleInApplication
 
 from ClassLibrary.UserClass import User
 from ClassLibrary.OrderClass.OrderProduct import OrderProduct
-from ClassLibrary.OrderClass.LogisticInfo_New import LogisticsInfo
+from ClassLibrary.OrderClass.LogisticsInfo import LogisticsInfo
 from ClassLibrary.OrderClass.AfterSaleSupport import AfterSaleSupport
 from ClassLibrary.ProductClass.ProductComment import ProductComment
 from ClassLibrary.ShopClass.IPTable import IPTable
@@ -313,7 +313,7 @@ def CreateAll(request):
     productComment.set_attribute_user(user.get_instance())
     productGroup.set_attribute_comment(productComment.get_instance())
 
-    order = Order_New.Order()
+    order = Order.Order()
     data = {
         attribute_finalPrice: 100,
         attribute_orderSate: 5,
@@ -436,7 +436,7 @@ def AfterSale_Order(request):
     productComment.create_ProductComment(data)
     productComment.set_attribute_orderProduct(orderProduct.get_instance())
 
-    order = Order_New.Order()
+    order = Order.Order()
     data = {
         attribute_finalPrice: 100,
         attribute_orderSate: 5,

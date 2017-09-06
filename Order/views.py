@@ -1,6 +1,7 @@
 from Error_Page import *
 from ClassLibrary.ShopClass.Shop_New import Shop
-
+from ClassLibrary.OrderClass.Order import Order
+from ClassLibrary.OrderClass.LogisticsInfo import LogisticsInfo
 
 
 @login_required
@@ -12,7 +13,7 @@ def AllOrder(request):
     :param request: 
     :return: 
     """
-    state = request.GET.get(attribute_state, 1)
+    state = request.GET.get(attribute_state, -1)
     objectId = request.GET.get(attribute_objectId, '')
     page = request.GET.get(paginator_PAGE, 1)
     if objectId:
@@ -20,28 +21,37 @@ def AllOrder(request):
         shop.get_Object(objectId)
         order = shop.get_attribute_order(int(state), page)
         page_nums = shop.count_attribute_order(int(state))
-        return return_paginator_page(order, page, page_nums)
+        return return_paginator_page(Class_Name_Order, order, page, page_nums)
     return illegal_access()
 
 
 @login_required
 @require_http_methods(['POST'])
-def displaceOrder(request):
+def DisplaceOrder(request):
     """
-    发送请求从快递鸟获得
+    发货
     :param request: 
     :return: 
     """
-    shipperCode = request.POST.get(attribute_shipperCode)
-    shipperName = request.POST.get(attribute_shipperName)
-    logisticsCode = request.POST.get(attribute_logisticCode)
-    objectId = request.POST.get(attribute_objectId)
+    shipperCode = request.POST.get(attribute_shipperCode, '')
+    shipperName = request.POST.get(attribute_shipperName, '')
+    logisticsCode = request.POST.get(attribute_logisticCode, '')
+    objectId = request.POST.get(attribute_objectId, '')
     if shipperCode and shipperName and logisticsCode and objectId:
-        pass
-    else:
-        return Parameter_Error('输入信息有误')
-    return illegal_access()
-
+        orderInstance = Order()
+        if orderInstance.get_Object(objectId):
+            logisticId = orderInstance.get_attribute_Object_Id(attribute_logisticInfo)
+            logistic = LogisticsInfo()
+            if not logistic.get_Object(logisticId):
+                # 如果物流为空，则创建一条物流信息
+                logistic.create_Object()
+                orderInstance.set_attribute_logisticInfo(logistic.get_instance())
+            logistic.set_attribute_shipperCode(shipperCode)
+            logistic.set_attribute_shipperName(shipperName)
+            logistic.set_attribute_logisticsCode(logisticsCode)
+            orderInstance.set_attribute_orderState(ORDER_STATE_DISPLACED)
+            return return_msg('order is displaced')
+    return return_msg('parameter is null or error')
 
 
 @login_required

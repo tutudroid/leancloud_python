@@ -1,0 +1,31 @@
+{% extends 'layout/app.html' %}
+
+{% block content %}
+
+  <h1 class="center">萌趣--商家后台</h1>
+ 
+  <div class="container" style="text-align:center;">
+ 
+  <h2>注册</h2>
+  
+  <div>
+    <a>返回登入界面</a>
+  </div>
+<form class="form-horizontal" method="POST" style="position:relative;top:200px;width:40%;display:inline-block">
+  {% csrf_token %}
+  <forgetpwdform></forgetpwdform>
+</form>
+
+
+
+
+ </div>
+
+{% endblock %}
+
+<!--
+	
+
+
+
+-->

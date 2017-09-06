@@ -1,10 +1,13 @@
 <div class="contentMenu">
 	<ul class="nav nav-pills">
-	  <li role="presentation"><a href="#" id="mpsystemClientPageConfig" @click="back('.clientPageConfigVue')">客户端网页配置</a></li>
+	  <li role="presentation" @click="getAllClientConfigs()"><a href="#" id="mpsystemClientPageConfig" @click="back('.clientPageConfigVue')">客户端网页配置</a></li>
 	</ul>
 
 	<div class="mp mpsystemClientPageConfig used">
+	  <form>
+	    {%csrf_token%}
 		<clientpageconfig></clientpageconfig>
+	  </form>
 	</div>
 
 

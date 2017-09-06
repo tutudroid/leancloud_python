@@ -5,57 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0499edbb-0d6b-477c-a822-a91397b8a747" name="Default" comment="v">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ClassLibrary/Frieght/FreightFreeCondition.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ClassLibrary/Frieght/FreightModel.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ClassLibrary/Frieght/SpecialAreaFreight.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Admin/Role.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Admin/User.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/ClassLibrary/OrderClass/LogisticInfo_New.py" afterPath="$PROJECT_DIR$/ClassLibrary/OrderClass/LogisticsInfo.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/ClassLibrary/OrderClass/Order_New.py" afterPath="$PROJECT_DIR$/ClassLibrary/OrderClass/Order.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Account/decorators.py" afterPath="$PROJECT_DIR$/Account/decorators.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Account/urls.py" afterPath="$PROJECT_DIR$/Account/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Account/views.py" afterPath="$PROJECT_DIR$/Account/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Admin/views.py" afterPath="$PROJECT_DIR$/Admin/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Admin/管理员.md" afterPath="$PROJECT_DIR$/Admin/管理员.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AfterSale/urls.py" afterPath="$PROJECT_DIR$/AfterSale/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AfterSale/views.py" afterPath="$PROJECT_DIR$/AfterSale/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AfterSale/售后接口.md" afterPath="$PROJECT_DIR$/AfterSale/售后接口.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/Base.py" afterPath="$PROJECT_DIR$/ClassLibrary/Base.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/BaseClass/Attribute_Parameter.py" afterPath="$PROJECT_DIR$/ClassLibrary/BaseClass/Attribute_Parameter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/BaseClass/Object.py" afterPath="$PROJECT_DIR$/ClassLibrary/BaseClass/Object.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/BaseClass/Table.py" afterPath="$PROJECT_DIR$/ClassLibrary/BaseClass/Table.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py" afterPath="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/ImageClass/Image.py" afterPath="$PROJECT_DIR$/ClassLibrary/ImageClass/Image.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/OrderClass/AfterSaleServiceRecord.py" afterPath="$PROJECT_DIR$/ClassLibrary/OrderClass/AfterSaleServiceRecord.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/OrderClass/OrderProduct.py" afterPath="$PROJECT_DIR$/ClassLibrary/OrderClass/OrderProduct.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/ProductClass/Product.py" afterPath="$PROJECT_DIR$/ClassLibrary/ProductClass/Product.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/ProductClass/ProductComment.py" afterPath="$PROJECT_DIR$/ClassLibrary/ProductClass/ProductComment.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/ProductClass/ProductGroup_New.py" afterPath="$PROJECT_DIR$/ClassLibrary/ProductClass/ProductGroup_New.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/ShopClass/BrandTable.py" afterPath="$PROJECT_DIR$/ClassLibrary/ShopClass/BrandTable.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/ShopClass/SettleInApplication.py" afterPath="$PROJECT_DIR$/ClassLibrary/ShopClass/SettleInApplication.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/ShopClass/SettleInCompany.py" afterPath="$PROJECT_DIR$/ClassLibrary/ShopClass/SettleInCompany.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/ShopClass/SettleInUser.py" afterPath="$PROJECT_DIR$/ClassLibrary/ShopClass/SettleInUser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/ShopClass/Shop_New.py" afterPath="$PROJECT_DIR$/ClassLibrary/ShopClass/Shop_New.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/UserClass/User.py" afterPath="$PROJECT_DIR$/ClassLibrary/UserClass/User.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Error_Page.py" afterPath="$PROJECT_DIR$/Error_Page.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Initiation/Test_example.py" afterPath="$PROJECT_DIR$/Initiation/Test_example.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Initiation/templates/test_example.html" afterPath="$PROJECT_DIR$/Initiation/templates/test_example.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Order/urls.py" afterPath="$PROJECT_DIR$/Order/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Order/views.py" afterPath="$PROJECT_DIR$/Order/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Order/订单接口.md" afterPath="$PROJECT_DIR$/Order/订单接口.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shop/settleInViews.py" afterPath="$PROJECT_DIR$/Shop/settleInViews.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shop/urls.py" afterPath="$PROJECT_DIR$/Shop/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shop/views.py" afterPath="$PROJECT_DIR$/Shop/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shop/店铺接口.md" afterPath="$PROJECT_DIR$/Shop/店铺接口.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TmpProductGroup/productViews.py" afterPath="$PROJECT_DIR$/TmpProductGroup/productViews.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/static/css/style.css" afterPath="$PROJECT_DIR$/vue/static/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/static/vue/backend/system/accountList/addAccount.vue" afterPath="$PROJECT_DIR$/vue/static/vue/backend/system/accountList/addAccount.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/static/vue/backend/system/accountList/changePwd.vue" afterPath="$PROJECT_DIR$/vue/static/vue/backend/system/accountList/changePwd.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/static/vue/main.js" afterPath="$PROJECT_DIR$/vue/static/vue/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/index.html" afterPath="$PROJECT_DIR$/vue/templates/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/login.html" afterPath="$PROJECT_DIR$/vue/templates/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/headerNav.html" afterPath="$PROJECT_DIR$/vue/templates/partials/headerNav.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -118,7 +68,7 @@
         <entry file="file://$PROJECT_DIR$/Admin/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="721">
-              <caret line="223" column="20" lean-forward="true" selection-start-line="223" selection-start-column="20" selection-end-line="223" selection-end-column="20" />
+              <caret line="223" column="20" lean-forward="false" selection-start-line="223" selection-start-column="20" selection-end-line="223" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -134,7 +84,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Error_Page.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Error_Page.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Error_Page.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="350">
@@ -142,6 +92,16 @@
               <folding>
                 <element signature="e#0#58#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settleInViews.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Shop/settleInViews.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="244">
+              <caret line="31" column="42" lean-forward="false" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -175,16 +135,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="275">
               <caret line="50" column="25" lean-forward="false" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Account/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -284,7 +234,6 @@
         <option value="$PROJECT_DIR$/ClassLibrary/ShopClass/SettleInCompany.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/ShopClass/SettleInUser.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/BaseClass/Object.py" />
-        <option value="$PROJECT_DIR$/Shop/settleInViews.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/ShopClass/SettleInApplication.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/Base.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py" />
@@ -307,6 +256,7 @@
         <option value="$PROJECT_DIR$/Order/views.py" />
         <option value="$PROJECT_DIR$/Shop/views.py" />
         <option value="$PROJECT_DIR$/Error_Page.py" />
+        <option value="$PROJECT_DIR$/Shop/settleInViews.py" />
       </list>
     </option>
   </component>
@@ -399,7 +349,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Admin" />
+              <option name="myItemId" value="Shop" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -930,6 +880,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1001" y="23" width="1339" height="1417" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329927" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
@@ -1053,16 +1004,6 @@
         <state relative-caret-position="55">
           <caret line="616" column="0" lean-forward="true" selection-start-line="616" selection-start-column="0" selection-end-line="616" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Shop/settleInViews.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="55" lean-forward="false" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#24#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1418,7 +1359,7 @@
     <entry file="file://$PROJECT_DIR$/Admin/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="721">
-          <caret line="223" column="20" lean-forward="true" selection-start-line="223" selection-start-column="20" selection-end-line="223" selection-end-column="20" />
+          <caret line="223" column="20" lean-forward="false" selection-start-line="223" selection-start-column="20" selection-end-line="223" selection-end-column="20" />
           <folding />
         </state>
       </provider>
@@ -1430,6 +1371,14 @@
           <folding>
             <element signature="e#0#58#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shop/settleInViews.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="31" column="42" lean-forward="false" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -38,12 +38,18 @@ import searchStockCategory from './backend/stock/searchStockCategory/searchStock
 //editStockCategory
 import editStockCategory from './backend/stock/editStockCategory/editStockCategory.vue'
 
-
+//sellerBackend loginModule
+//register
+import registerForm from './sellerBackend/loginModule/registerForm.vue'
+//sellerBackend loginModule
+//forgetPwd
+import forgetPwdForm from './sellerBackend/loginModule/forgetPwdForm.vue'
 
 new Vue({
 	el: '#app',
 	data:{
 	  allSysUsers:[],
+    allClientConfigs:[],
 	},
 	components: {
 	    "changepwd":changePwd,
@@ -57,6 +63,8 @@ new Vue({
 	    "login":login,
 	    "searchstockcategory":searchStockCategory,
 	    "editstockcategory":editStockCategory,
+	    "registerform":registerForm,
+	    "forgetpwdform":forgetPwdForm,
 	},
 	methods: {
 	  back(id){
@@ -80,32 +88,55 @@ new Vue({
 
 	  //抓取所有的系统用户
 	  allSysuser(){
-		swal({
-		  title: "加载中",
-		  text:"你这么可爱，就等待一下呗",
-		  timer: 2000,
-		  showConfirmButton: false
-		});
+  		swal({
+  		  title: "加载中",
+  		  text:"你这么可爱，就等待一下呗",
+  		  timer: 2000,
+  		  showConfirmButton: false
+  		});
 		 let _this = this;
-                 $.ajax({
-                    type: 'GET',
-                    url: '/Admin/SysUser/',
-                    data: {
-                        'page':1,
-                    },
-                    success: function (data) {
-		        _this.allSysUsers = data.msg.User;
-                    },
-                   error: function(XMLHttpRequest, textStatus, errorThrown) {
-			   swal('抓取不到数据')
-                    },
-                });
-	  },
+       $.ajax({
+          type: 'GET',
+          url: '/Admin/SysUser/',
+          data: {
+              'page':1,
+          },
+          success: function (data) {
+            _this.allSysUsers = data.msg.User;
+          },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+           swal('抓取不到数据')
+          },
+      });
+  	},
+    //抓取所有的客户端配置
+    getAllClientConfigs(){
+      swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+     let _this = this;
+       $.ajax({
+          type: 'GET',
+          url: '/Admin/WebPageConfigure/',
+          data: {
+             
+          },
+          success: function (data) {
+            let value = JSON.parse(data);
+            _this.allClientConfigs = value;
+            alert(value);
+          },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+           swal('抓取不到数据')
+          },
+      });
+    },
+  }
 
-	}
-    }
-
-);
+});
 
 
 

@@ -27,15 +27,9 @@ def AllSettleIn(request):
     if 0 <= int(state) <= 4:
         settle = SettleInApplication()
         settleList = settle.get_SettleInApplication_All(state, type1, page)
-        returnData = {
-            Class_Name_SettleInApplication: settleList,
-            Class_Name_paginator: {
-                paginator_PAGE: page,
-                paginator_NUM_PAGES: settle.count_SettleInApplication_All(state, type1)
-            }
-        }
-        return return_msg( returnData )
-    return return_msg( 'parameter is error' )
+        count = settle.count_SettleInApplication_All(state, type1)
+        return return_paginator_page(Class_Name_SettleInApplication, settleList, page, count)
+    return return_msg('parameter is error')
 
 
 @login_required

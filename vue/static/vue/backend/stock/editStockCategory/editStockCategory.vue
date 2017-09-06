@@ -1,6 +1,6 @@
 <template>
  <div class="editStockCategory">
-  <h2 @click="addFirstHtml(1)" class="addBtn"><span class="glyphicon glyphicon-plus"></span>加一级分类</h2>
+  <h2 @click="addFirstHtml()" class="addBtn"><span class="glyphicon glyphicon-plus"></span>加一级分类</h2>
   <div class="cateContent">
     <h3 class="save link">保存</h3>
     <h3 class="oprate"><span class="title">分类名称</span><span class="title">--</span><span class="title">操作</span></h3>
@@ -25,52 +25,31 @@
     
     },
     methods:{
-      addFirst(){
-        let first = new Category();
-	let second = new Category();
-	let third = new Category();
-	first.children.push(second);
-	second.childre.push(third);
-	this.first.push(first);
-	this.second.push(second);
-	this.third.push(third);
-	this.index[this.count] = [this.firstCount,this.secondCount,this.thirdCount];
-	this.count++;
-	this.firstCount++;
-	this.secondCount++;
-	this.thirdCount++;
-	this.addFirstHtml();
-      },
-      addSecond(e){
-        let index = index[e.currentTarget.parentElement.index][0];
-	let first = this.first[index]
-        let second = new Category();
-	let third = new Category();
-	first.children.push(second);
-	second.children.push(third);
-	this.index[this.count] = [index,this.secondCount,this.thirdCount];
-	this.count++;
-	this.secondCount++;
-	this.thirdCount++;
-
-      },
-      addThird(e){
-        let firstIndex = index[e.currentTarget.parentElement.index][0]
-        let index = index[e.currentTarget.parentElement.index][1];
-	let second = this.second[index];
-	let third = new Category();
-	second.children.push(third);
-	this.index[this.count] = [firstIndex,index,this.thirdCount];
-	this.count++;
-	this.thirdCount++;
-      },
-      addFirstHtml(index){
+      addFirstHtml(){
         let _this = this; 
-        let firstHtml = "<div  index='"+index+"'class='grandFather mainContent'><input type='text' class='grandFatherInput'><span class='glyphicon glyphicon-remove remove link'></span><hr><div index='"+index+"'class='father'><span class='directLine'></span><input type='text' class='fatherInput'><span class='glyphicon glyphicon-remove remove link'></span><hr><div index='"+index+"'class='son'><span class='directLine add'></span><input type='text' class='sonInput'><span class='glyphicon glyphicon-remove remove link'></span><hr></div><div class='addThird'><span class='directLine add'></span><button class='btn btn-primary thirdAdd'>添加三级子分类</button><hr></div></div><div class='addSecond'><span class='directLine'></span><button class='btn btn-primary secondAdd'>添加二级子分类</button><hr></div></div>";
+        let firstHtml = "<div class='grandFather mainContent'><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='grandFatherInput'><span class='glyphicon glyphicon-remove remove link'></span><hr><div class='father'><span class='directLine'></span><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='fatherInput'><span class='glyphicon glyphicon-remove remove link'></span><hr><div class='son'><span class='directLine add'></span><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='sonInput'><span class='glyphicon glyphicon-remove remove link'></span><hr></div><div class='addThird'><span class='directLine add'></span><button class='btn btn-primary thirdAdd'>添加三级子分类</button><hr></div></div><div class='addSecond'><span class='directLine'></span><button class='btn btn-primary secondAdd'>加二级子分类</button><hr style='border-top:3px solid #a00404'></div></div>";
 	$(firstHtml).appendTo('.cateContent');
 	$('.remove').bind('click',function(event){
 	  _this.deleteHtml(event);
 	});
+	$('.secondAdd').bind('click',function(event){
+	  _this.addSecondHtml(event);
+	});
+	$('.thirdAdd').bind('click',function(event){
+	  _this.addThirdHtml(event);
+	});
+      },
+      addSecondHtml(event){
+        let targetSecond = $(event.currentTarget).parent().parent();
+	let button = $(event.currentTarget).parent();
+	let secondHtml = '<div class="father"><span class="directLine"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="fatherInput"><span class="glyphicon glyphicon-remove remove link"></span><hr><div class="son"><span class="directLine add"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="sonInput"><span class="glyphicon glyphicon-remove remove link"></span><hr></div><div class="addThird"><span class="directLine add"></span><button class="btn btn-primary thirdAdd">添加三级子分类</button><hr></div></div>';
+	$(secondHtml).appendTo(targetSecond);
+	$(button).appendTo(targetSecond);
+      },
+      addThirdHtml(event){
+        let targetThird = $(event.currentTarget).parent().parent();
+	let thirdHtml = '<div class="son"><span class="directLine add"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="sonInput"><span class="glyphicon glyphicon-remove remove link"></span><hr></div>';
+	$(thirdHtml).appendTo(targetThird);
       },
       deleteHtml(e){
         console.log(e.currentTarget.parentElement.getAttributeNode('index').value);
@@ -121,12 +100,20 @@
     position: absolute;
     left: 10px;
   }
+  .father .glyphicon-triangle-bottom{
+    position:relative;
+    left: 45px;
+  }
   .directLine.add{
     left: 55px;
   }
+  .son .glyphicon-triangle-bottom{
+    position:relative;
+    left:95px;
+  }
   .remove{
     position: relative;
-    left: 455px;
+    left: 440px;
     top: 5px;
   }
   .mainContent{

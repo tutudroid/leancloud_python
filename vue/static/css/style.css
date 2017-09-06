@@ -127,4 +127,7 @@ h1.center{
 .pipe{
   left:80px;
 }
+.nav-pills>li+li{
+ margin-left:12px !important;
+}
 

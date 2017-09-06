@@ -4,7 +4,7 @@
 <table class="table table-striped one shown" v-if="allsysusers.length > 0">
 <thead>	
   <tr class="success">
-    <td>用户名</td>
+    <td>用户名ddd</td>
     <td>角色</td>
     <td>状态</td>
     <td></td>
@@ -14,7 +14,7 @@
 </thead>
 
 <tbody>
-    <tr v-for="sysUser in allsysusers" class="accountRow"><td>{{sysUser.username}}</td><td>{{sysUser.role[0]}}</td><td v-if="sysUser.state == 0">正常</td><td v-else>禁用</td><td :class="['link',sysUser.state==0?'forbid':'restore']" @click="forbid($event,sysUser.objectId)" v-if="sysUser.state==0">禁用</td><td :class="['link',sysUser.state==0?'forbid':'restore']" @click="forbid($event,sysUser.objectId)" v-if="sysUser.state==1">恢复</td><td class="link" @click="hide(sysUser.objectId)">修改密码</td><td class="link" @click="deleteUser($event,sysUser.objectId)">删除</td></tr>
+    <tr v-for="sysUser in allsysusers" class="accountRow"><td>{{sysUser.username}}</td><td>{{sysUser.role[0]}}</td><td v-if="sysUser.forbidden">禁用</td><td v-else>正常</td><td :class="['link',sysUser.forbidden == false?'forbid':'restore']" @click="forbid($event,sysUser.objectId)" v-if="sysUser.forbidden!=true">禁用</td><td :class="['link',sysUser.forbidden == true?'restore':'false']" @click="forbid($event,sysUser.objectId)" v-if="sysUser.forbidden">恢复</td><td class="link" @click="hide(sysUser.objectId)">修改密码</td><td class="link" @click="deleteUser($event,sysUser.objectId)">删除</td></tr>
 </tbody>
 </table>
 
@@ -79,7 +79,7 @@
                     data: {
                         'objectId': this.id,
                         'password': this.newPwd,
-			'passwordSure':this.confirmPwd,
+			            'passwordSure':this.confirmPwd,
                         'csrfmiddlewaretoken': $('#csrfProductManager input[name="csrfmiddlewaretoken"]').prop('value')
                     },
                     success: function (data) {
@@ -120,9 +120,13 @@
 			 if(forbid.hasClass('forbid')){
 			   forbid.removeClass('forbid').addClass('restore');
 			   forbid.text('恢复');
+			   console.log(forbid.prev());
+			   forbid.prev()[0].innerText = '禁用';
 			 }else{
 			   forbid.removeClass('restore').addClass('forbid');
 			   forbid.text('禁用');
+			   console.log(forbid.prev());
+			   forbid.prev()[0].innerText = '正常';
 			 }
 
                     },

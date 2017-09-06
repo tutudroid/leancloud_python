@@ -1,20 +1,19 @@
 <template>
   <div class="companySettledVue">
-    <table class="table table-striped one shown">
+    <table class="table table-striped one shown" v-if="companyshops.length > 0">
       <thead>
         <tr><td>商家名</td><td>品牌名</td><td>品牌LOGO</td><td>入驻类型</td><td>状态</td></tr>
       </thead>
 
       <tbody>
-        <tr class="personRow pointer" @click='settledCompanyDetail(1,"asha","18816500304","asha","289574827@qq.com","18816500304","ashaShop","ashaBrand","品牌Logo","asha company going well","214231413434134","营业执照","asha","18816500304","330327199402112931","法人身份证正面","法人身份证反面","2008-09-01","2009-09-09","289574827@qq.com",0,"company")'><td>asha</td><td>ashaBrand</td><td>sunasha</td><td>company</td><td>normal</td></tr>
-        <tr class="personRow pointer" @click='settledCompanyDetail(2,"peter","34324324325","peter","peter@qq.com","34234341","peterShop","peterBrand","品牌Logo","peter company going well","214231413434134","营业执照","peter","4545454545","334545345435345","法人身份证正面","法人身份证反面","2008-09-01","2009-09-09","peter@qq.com",1,"company")'><td>peter</td><td>peterBrand</td><td>sunpeter</td><td>company</td><td>forbidden</td></tr>
+        <tr v-for="shop in shops()" class="personRow pointer" @click='settledCompanyDetail(shop.objectId,shop.managerPhoneNumber,shop.managerRealName,shop.managerEmail,shop.alipay,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription,shop.bussinessLicense,shop.uniformSocialCreditCode,shop.legalPersonName,shop.legalPersonPhoneNumber,shop.legalPersonIdCard,shop.legalPersonFrontIdCard,shop.legalPersonBackIdCard,shop.legalPersonExpireTimeStart,shop.legalPersonExpireTimeEnd,shop.legalPersonEmail,shop.state,shop.type)'><td>{{shop.legalPersonName}}</td><td>{{shop.brandName}}</td><td>{{shop.brandLogo}}</td><td>公司</td><td>{{shop.state}}</td></tr>
       </tbody>
     </table>
 
     <div class="settledPersonDetail hide">
       <div class="container">
         <div class="name">
-          账号：{{name}} 
+          账号：{{managerRealName}} 
 	</div>
 
 	<div class="managePhoneNumber">
@@ -160,58 +159,55 @@
     data:function(){
       return {
         settledPersonId:-1,
-	name:"",
-	type:"",
-	managerPhoneNumber:"",
-	managerRealName:"",
-	managerEmail:"",
-	alipay:"",
-	shopName:"",
-	brandName:"",
-	brandLogo:"",
-	brandDescription:"",
-	bussinessLicense:"",
-	uniformSocialCreditCode:"",
-	legalPersonName:"",
-	legalPersonPhoneNumber:"",
-	legalPersonIdCard:"",
-	legalPersonFrontIdCard:"",
-	legalPersonBackIdCard:"",
-	legalPersonExpireTimeStart:"",
-	legalPersonExpireTimeEnd:"",
-	legalPersonEmail:"",
-	state:-1,
-	newPhoneNumber:"",
-	confirmPhoneNumber:""
+      	type:"",
+      	managerPhoneNumber:"",
+      	managerRealName:"",
+      	managerEmail:"",
+      	alipay:"",
+      	shopName:"",
+      	brandName:"",
+      	brandLogo:"",
+      	brandDescription:"",
+      	bussinessLicense:"",
+      	uniformSocialCreditCode:"",
+      	legalPersonName:"",
+      	legalPersonPhoneNumber:"",
+      	legalPersonIdCard:"",
+      	legalPersonFrontIdCard:"",
+      	legalPersonBackIdCard:"",
+      	legalPersonExpireTimeStart:"",
+      	legalPersonExpireTimeEnd:"",
+      	legalPersonEmail:"",
+      	state:0,
+      	newPhoneNumber:"",
+      	confirmPhoneNumber:""
       }
     },
-    props:["listofsettledperson"],
+    props:["companyshops"],
     methods: {
-      settledCompanyDetail(settledCompanyId,name,managerPhoneNumber,managerRealName,managerEmail,alipay,shopName,brandName,brandLogo,brandDescription,bussinessLicense,uniformSocialCreditCode,legalPersonName,legalPersonPhoneNumber,legalPersonIdCard,legalPersonFrontIdCard,legalPersonBackIdCard,legalPersonExpireTimeStart,legalPersonExpireTimeEnd,legalPersonEmail,state,type){
+      settledCompanyDetail(settledCompanyId,managerPhoneNumber,managerRealName,managerEmail,alipay,shopName,brandName,brandLogo,brandDescription,bussinessLicense,uniformSocialCreditCode,legalPersonName,legalPersonPhoneNumber,legalPersonIdCard,legalPersonFrontIdCard,legalPersonBackIdCard,legalPersonExpireTimeStart,legalPersonExpireTimeEnd,legalPersonEmail,state,type){
         this.settledCompanyId = settledCompanyId;
-	this.name = name;
-	this.managerPhoneNumber = managerPhoneNumber;
-	this.managerRealName = managerRealName;
-	this.managerEmail = managerEmail;
-	this.alipay = alipay;
-	this.shopName = shopName;
-	this.brandName = brandName;
-	this.brandLogo = brandLogo;
-	this.brandDescription = brandDescription;
-	this.bussinessLicense = bussinessLicense;
-	this.uniformSocialCreditCode = uniformSocialCreditCode;
-	this.legalPersonName = legalPersonName;
-	this.legalPersonPhoneNumber = legalPersonPhoneNumber;
-	this.legalPersonIdCard = legalPersonIdCard;
-	this.legalPersonFrontIdCard = legalPersonFrontIdCard;
-	this.legalPersonBackIdCard = legalPersonBackIdCard;
-	this.legalPersonExpireTimeStart = legalPersonExpireTimeStart;
-	this.legalPersonExpireTimeEnd = legalPersonExpireTimeEnd;
-	this.legalPersonEmail = legalPersonEmail;
-	this.state = state;
-	this.type = type;
-	this.toggleShow();
-
+      	this.managerPhoneNumber = managerPhoneNumber;
+      	this.managerRealName = managerRealName;
+      	this.managerEmail = managerEmail;
+      	this.alipay = alipay;
+      	this.shopName = shopName;
+      	this.brandName = brandName;
+      	this.brandLogo = brandLogo;
+      	this.brandDescription = brandDescription;
+      	this.bussinessLicense = bussinessLicense;
+      	this.uniformSocialCreditCode = uniformSocialCreditCode;
+      	this.legalPersonName = legalPersonName;
+      	this.legalPersonPhoneNumber = legalPersonPhoneNumber;
+      	this.legalPersonIdCard = legalPersonIdCard;
+      	this.legalPersonFrontIdCard = legalPersonFrontIdCard;
+      	this.legalPersonBackIdCard = legalPersonBackIdCard;
+      	this.legalPersonExpireTimeStart = legalPersonExpireTimeStart;
+      	this.legalPersonExpireTimeEnd = legalPersonExpireTimeEnd;
+      	this.legalPersonEmail = legalPersonEmail;
+      	this.state = state;
+      	this.type = type;
+      	this.toggleShow();
       },
      toggleShow(){
        var show = $(".companySettledVue .shown");
@@ -229,9 +225,9 @@
        var hideSecond = $(".companySettledVue .modifyPhoneNumDetail.hideSecond");
        if(show != null){
          show.addClass("prev");
-	 if(hide != null){
-	   hide.addClass("prev");
-	 }
+    	 if(hide != null){
+    	   hide.addClass("prev");
+    	 }
        }
        if(hideSecond != null){
          hideSecond.removeClass("hideSecond").addClass("shownSecond");
@@ -243,9 +239,9 @@
        var hideSecond = $(".checkSettledCompanyMaterial.hideSecond");
        if(show != null){
          show.addClass("prev");
-	 if(hide != null){
-	   hide.addClass("prev");
-	 }
+    	 if(hide != null){
+    	   hide.addClass("prev");
+    	 }
        }
        if(hideSecond != null){
          hideSecond.removeClass("hideSecond").addClass("shownSecond");
@@ -258,30 +254,36 @@
        var shownPrev = $('.companySettledVue .shown.prev');
        if(shownSecond != null){
          shownSecond.removeClass('shownSecond').addClass('hideSecond');
-	 if(hidePrev != null){
-	   hidePrev.removeClass('prev');
+    	 if(hidePrev != null){
+    	   hidePrev.removeClass('prev');
 
-	 }
-	 if(shownPrev != null){
-	  shownPrev.removeClass('prev');
-	 }
+    	 }
+    	 if(shownPrev != null){
+    	  shownPrev.removeClass('prev');
+    	 }
        }
 
        if(shownSecondMaterial != null){
          shownSecondMaterial.removeClass('shownSecond').addClass('hideSecond');
-	 if(hidePrev != null){
-	   hidePrev.removeClass('prev');
+    	 if(hidePrev != null){
+    	   hidePrev.removeClass('prev');
 
-	 }
-	 if(shownPrev != null){
-	  shownPrev.removeClass('prev');
-	 }
+    	 }
+    	 if(shownPrev != null){
+    	  shownPrev.removeClass('prev');
+    	 }
        }
      },
      modifyPhoneNumToDB(){
        alert(" id: "+this.settledCompanyId+" newPhoneNumber: "+this.newPhoneNumber+" confirmPhoneNumber: "+this.confirmPhoneNumber);
      },
-
+    shops(){
+      let i = this.companyshops;
+      let shops = i.map(function(item){
+        return item.infoCompany;
+      });
+      return shops;
+    },
 
     }
   }

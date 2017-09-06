@@ -50,13 +50,17 @@ new Vue({
 	data:{
 	  allSysUsers:[],
     allClientConfigs:[],
+    allPersonShops:[],
+    allCompanyShops:[],
+    allAuditShops:[],
+    allForbiddenShops:[],
 	},
 	components: {
 	    "changepwd":changePwd,
 	    "addaccount":addAccount,
 	    "personsettled":personSettled,
 	    "companysettled":companySettled,
-            "settlewaitingforpass":settleWaitingForPass,
+      "settlewaitingforpass":settleWaitingForPass,
 	    "settleforbidden":settleForbidden,
 	    "searchappuser":searchAppUser,
 	    "clientpageconfig":clientPageConfig,
@@ -128,6 +132,112 @@ new Vue({
           success: function (data) {
             let dataJson = JSON.parse(data);
             _this.allClientConfigs = dataJson.WebPageConfigure;
+            
+          },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+           swal('抓取不到数据')
+          },
+      });
+    },
+    //抓取所有的个体商户
+    getAllPersonShops(){
+      swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/Shop/AllSettleIn/',
+          data: {
+             state:2,
+             page: 1,
+             type: 0 
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.allPersonShops = dataJson.SettleInApplication;
+            
+          },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+           swal('抓取不到数据')
+          },
+      });
+    },
+    //抓取所有的企业商户
+    getAllCompanyShops(){
+      swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/Shop/AllSettleIn/',
+          data: {
+             state:2,
+             page: 1,
+             type: 1 
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.allCompanyShops = dataJson.SettleInApplication;
+            
+          },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+           swal('抓取不到数据')
+          },
+      });
+    },
+    //抓取所有的待审核商户
+    getAllAuditShops(){
+      swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/Shop/AllSettleIn/',
+          data: {
+             state:0,
+             page: 1,
+             type: 0 
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.allAuditShops = dataJson.SettleInApplication;
+            
+          },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+           swal('抓取不到数据')
+          },
+      });
+    },
+    //抓取所有的禁用商户
+    getAllForbiddenShops(){
+      swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/Shop/AllForbiddenShop/',
+          data: {
+             page: 1,
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.allForbiddenShops = dataJson.Shop;
             
           },
          error: function(XMLHttpRequest, textStatus, errorThrown) {

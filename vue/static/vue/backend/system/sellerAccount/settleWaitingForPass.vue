@@ -1,13 +1,13 @@
 <template>
   <div class="settleWaitingForPassVue">
-    <table class="table table-striped one shown">
+    <table class="table table-striped one shown" v-if="auditshops.length > 0">
       <thead>
         <tr><td>账号名</td><td>手机号</td>入驻类型</td></tr>
       </thead>
 
       <tbody>
-        <tr class="personRow pointer" @click='fillOutPersonMaterial(1,"个人","asha","18816500304","289574827@qq.com","330327199402112931","2007-09-09","2009-09-09","身份证正面","身份证反面","手持身份证照片","14244343434","ashaShop","ashaBrand","品牌Logo","品牌简介")'><td>asha</td><td>18816500304</td><td>个人</td></tr>
-        <tr class="personRow pointer" @click='fillOutCompanyMaterial(2,"企业","30343432987423","营业执照","peter","18816500304","peter@gmail.com","330327199402112931","2008-09-02","2009-09-09","法人身份证正面","法人身份证反面","18816500304","peter","peter@gmail.com","1881232424","peterShop","peterBrand","品牌Logo","peter stuff is cool")'><td>peter</td><td>1881650403</td><td>企业</td></tr>
+        <tr v-for="shop in shops()" v-if="shop.type=0" class="personRow pointer" @click='fillOutPersonMaterial(shop.objectId,shop.type,shop.realName,shop.phoneNumber,shop.email,shop.IdCard,shop.idCardExpireTimeStart,shop.idCardExpireTimeEnd,shop.frontIdCard,shop.backIdCard,shop.handIdCard,shop.alipay,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><td>shop.realName</td><td>shop.phoneNumber</td><td>个人</td></tr>
+        <tr v-for="shop in shops()" v-if="shop.type=1" class="personRow pointer" @click='fillOutCompanyMaterial(id,shop.type,shop.uniformSocialCreditCode,shop.bussinessLicense,shop.legalPersonName,shop.legalPersonPhoneNumber,shop.legalPersonEmail,shop.legalPersonIdCard,shop.legalPersonExpireTimeStart,shop.legalPersonExpireTimeEnd,shop.legalPersonFrontIdCard,shop.legalPersonBackIdCard,shop.alipay,shop.managerRealName,shop.managerEmail,shop.managerPhoneNumber,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><td>{{shop.managerRealName}}</td><td>{{shop.managerPhoneNumber}}</td><td>企业</td></tr>
       </tbody>
     </table>
 
@@ -17,7 +17,7 @@
     <hr>
 
     <div class="name">
-    入驻真实姓名: <span class="answer">{{name}}</span>
+    入驻真实姓名: <span class="answer">{{managerRealName}}</span>
     </div>
     <div class="phoneNumber">
     手机号: <span class="answer">{{phoneNumber}}</span>
@@ -47,7 +47,7 @@
     <hr>
 
     <div class="shop_name">
-    店铺名称: <span class="answer">{{shop_name}}</span>
+    店铺名称: <span class="answer">{{shopName}}</span>
     </div>
     <div class="brandName">
     品牌名称: <span class="answer">{{brandName}}</span>
@@ -165,41 +165,41 @@
   export default {
     data:function(){
       return {
-	personMaterial:"",
-	companyMaterial:"",
-	name:"",
-	phoneNumber:"",
-	email:"",
-	IdCard:"",
-	idCardExpireTimeStart:"",
-	idCardExpireTimeEnd:"",
-	frontIdCard:"",
-	backIdCard:"",
-	handIdCard:"",
-	alipay:"",
-	shop_name:"",
-	brandName:"",
-	brandLogo:"",
-	brandDescription:"",
+      	personMaterial:"",
+      	companyMaterial:"",
+      	name:"",
+      	phoneNumber:"",
+      	email:"",
+      	IdCard:"",
+      	idCardExpireTimeStart:"",
+      	idCardExpireTimeEnd:"",
+      	frontIdCard:"",
+      	backIdCard:"",
+      	handIdCard:"",
+      	alipay:"",
+      	shop_name:"",
+      	brandName:"",
+      	brandLogo:"",
+      	brandDescription:"",
         uniformSocialCreditCode:"",
-	bussinessLicense:"",
-	legalPersonName:"",
-	legalPersonPhoneNumber:"",
-	legalPersonEmail:"",
-	legalPersonIdCard:"",
-	legalPersonExpireTimeStart:"",
-	legalPersonExpireTimeEnd:"",
-	legalPersonFrontIdCard:"",
-	legalPersonBackIdCard:"",
+      	bussinessLicense:"",
+      	legalPersonName:"",
+      	legalPersonPhoneNumber:"",
+      	legalPersonEmail:"",
+      	legalPersonIdCard:"",
+      	legalPersonExpireTimeStart:"",
+      	legalPersonExpireTimeEnd:"",
+      	legalPersonFrontIdCard:"",
+      	legalPersonBackIdCard:"",
         managerRealName:"",
-	managerEmail:"",
-	managerPhoneNumber:"",
-	shopName:"",
-	id:"",
-	type:"",
+      	managerEmail:"",
+      	managerPhoneNumber:"",
+      	shopName:"",
+      	id:"",
+      	type:"",
       }
     },
-    props:["listofsettledperson"],
+    props:["auditshops"],
     methods: {
      toggleShow(id,type){
        var show = $(".settleWaitingForPassVue .shown");
@@ -207,12 +207,12 @@
        if(mainHide.hasClass('hide')){
          mainHide.removeClass('hide').addClass('shown');
        }
-       if(type == "个人"){
+       if(type == 0){
        
        var hide = $(".checkPersonMaterial.hide");
        
        }
-       if(type == "企业"){
+       if(type == 1){
        
        var hide = $(".checkCompanyMaterial.hide");
        }
@@ -270,51 +270,58 @@
      pass(id,state){
        //alert("objectId: "+id+" state: "+state);
        if(state == 1){
-	 swal(
-	   {
-	     title:"你确定通过它吗？",
-	     text:"通过之后此商家将成为入驻商家",
-	     type:"warning",
-	     showCancelButton:true,
-	     closeOnConfirm:false,
-	     confirmButtonText:"是的，我要让它入驻",
-	     confirmButtonColor:"ec6c62",
-	   },function(){
-		axios.post('https://unpkg.com/axios/dist/axios.min.js', {
-		  })
-		  .then(function (response) {
-		    swal("此商家成功入驻");
-		  })
-		  .catch(function (error) {
-		    swal("无法入驻此商家...");
-		  });
-	     
-	   }
+    	 swal(
+      	   {
+      	     title:"你确定通过它吗？",
+      	     text:"通过之后此商家将成为入驻商家",
+      	     type:"warning",
+      	     showCancelButton:true,
+      	     closeOnConfirm:false,
+      	     confirmButtonText:"是的，我要让它入驻",
+      	     confirmButtonColor:"ec6c62",
+      	   },function(){
+      		axios.post('https://unpkg.com/axios/dist/axios.min.js', {
+      		  })
+      		  .then(function (response) {
+      		    swal("此商家成功入驻");
+      		  })
+      		  .catch(function (error) {
+      		    swal("无法入驻此商家...");
+      		  });
+      	     
+      	   }
        );
       }else{
-	 swal(
-	   {
-	     title:"你确定拒绝它吗？",
-	     text:"拒绝之后此商家将无法成为入驻商家",
-	     type:"warning",
-	     showCancelButton:true,
-	     closeOnConfirm:false,
-	     confirmButtonText:"是的，我要拒绝它入驻",
-	     confirmButtonColor:"ec6c62",
-	   },function(){
-		axios.post('https://unpkg.com/axios/dist/axios.min.js', {
-		  })
-		  .then(function (response) {
-		    swal("此商家被拒绝入驻");
-		  })
-		  .catch(function (error) {
-		    swal("无法拒绝此商家...");
-		  });
-	     
-	   }
+    	 swal(
+      	   {
+      	     title:"你确定拒绝它吗？",
+      	     text:"拒绝之后此商家将无法成为入驻商家",
+      	     type:"warning",
+      	     showCancelButton:true,
+      	     closeOnConfirm:false,
+      	     confirmButtonText:"是的，我要拒绝它入驻",
+      	     confirmButtonColor:"ec6c62",
+      	   },function(){
+      		axios.post('https://unpkg.com/axios/dist/axios.min.js', {
+      		  })
+      		  .then(function (response) {
+      		    swal("此商家被拒绝入驻");
+      		  })
+      		  .catch(function (error) {
+      		    swal("无法拒绝此商家...");
+      		  });
+      	     
+      	   }
        );
 
     }
+  },
+  shops(){
+      let i = this.auditshops;
+      let shops = i.map(function(item){
+        return item.infoCompany;
+      });
+      return shops;
   },
   
   }

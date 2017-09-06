@@ -67,6 +67,14 @@ def createSaleCategory(request):
     创建销售分类
     :param request: 
     :return: 
+
+        for mainImage in imageFileList:
+            stringSeries = str(mainImage)
+            print(stringSeries)
+            print(data[Attribute_mainImage].split('\\')[-1])
+            if stringSeries == data[Attribute_mainImage].split('\\')[-1]:
+                print('success')
+    
     """
     saleCategory = request.GET.get(Class_Name_SaleCategory)
     if saleCategory:
@@ -146,7 +154,7 @@ def createStoreCategory(request):
                 Dict_Check(goo, keyList2)
                 for koo in goo[attribute_storeCategoryThird]:
                     Dict_Check(koo, keyList3)
-
+        # 上述代码检查输入的数据是否合理------------
         for foo in storeCategory:
             first = StoreCategory(Class_Name_StoreCategoryFirst)
             first.create_StoreCategoryFirst(foo)

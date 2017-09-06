@@ -1,9 +1,9 @@
 <div class="contentMenu">
 	<ul class="nav nav-pills">
-	  <li role="presentation"><a href="#" id="mpsystemSellerAccountPerson" @click="back('.personSettledVue')">个人入驻</a></li>
-	  <li role="presentation" ><a href="#" id="mpsystemSellerAccountCompany" @click="back('.companySettledVue')">企业入驻</a></li>
-	  <li role="presentation"><a href="#" id="mpsystemSellerAccountNotYet" @click="back('.settleWaitingForPassVue')">待审核</a></li>
-	  <li role="presentation"><a href="#" id="mpsystemSellerAccountForbidden" @click="back('.settleForbiddenVue')">已禁用</a></li>
+	  <li role="presentation" @click="getAllPersonShops()"><a href="#" id="mpsystemSellerAccountPerson" @click="back('.personSettledVue')" >个人入驻</a></li>
+	  <li role="presentation" @click="getAllCompanyShops()"><a href="#" id="mpsystemSellerAccountCompany" @click="back('.companySettledVue')" >企业入驻</a></li>
+	  <li role="presentation" @click="getAllAuditShops()"><a href="#" id="mpsystemSellerAccountNotYet" @click="back('.settleWaitingForPassVue')" >待审核</a></li>
+	  <li role="presentation" @click="getAllForbiddenShops()"><a href="#" id="mpsystemSellerAccountForbidden" @click="back('.settleForbiddenVue')" >已禁用</a></li>
 	</ul>
 
 	<div class="mp mpsystemSellerAccountPerson used">
@@ -27,8 +27,8 @@
 	       </form>
 	</div>
 
-	<div class="mp mpsystemSellerAccountCompany used">
-	  {% include "content/system/sellerAccount/company.html" %}
+	<div class="mp mpsystemSellerAccountForbidden used">
+	  {% include "content/system/sellerAccount/forbidden.html" %}
 	</div>
 
 

@@ -28,28 +28,33 @@
       addFirstHtml(){
         let _this = this; 
         let firstHtml = "<div class='grandFather mainContent'><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='grandFatherInput'><span class='glyphicon glyphicon-remove remove link'></span><hr><div class='father'><span class='directLine'></span><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='fatherInput'><span class='glyphicon glyphicon-remove remove link'></span><hr><div class='son'><span class='directLine add'></span><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='sonInput'><span class='glyphicon glyphicon-remove remove link'></span><hr></div><div class='addThird'><span class='directLine add'></span><button class='btn btn-primary thirdAdd'>添加三级子分类</button><hr></div></div><div class='addSecond'><span class='directLine'></span><button class='btn btn-primary secondAdd'>加二级子分类</button><hr style='border-top:3px solid #a00404'></div></div>";
-	$(firstHtml).appendTo('.cateContent');
-	$('.remove').bind('click',function(event){
-	  _this.deleteHtml(event);
-	});
-	$('.secondAdd').bind('click',function(event){
-	  _this.addSecondHtml(event);
-	});
-	$('.thirdAdd').bind('click',function(event){
-	  _this.addThirdHtml(event);
-	});
+      	$(firstHtml).appendTo('.cateContent');
+      	$('.remove').bind('click',function(event){
+      	  _this.deleteHtml(event);
+      	});
+      	$('.secondAdd').bind('click',function(event){
+      	  _this.addSecondHtml(event);
+      	});
+      	$('.thirdAdd').bind('click',function(event){
+      	  _this.addThirdHtml(event);
+      	});
       },
       addSecondHtml(event){
         let targetSecond = $(event.currentTarget).parent().parent();
-	let button = $(event.currentTarget).parent();
-	let secondHtml = '<div class="father"><span class="directLine"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="fatherInput"><span class="glyphicon glyphicon-remove remove link"></span><hr><div class="son"><span class="directLine add"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="sonInput"><span class="glyphicon glyphicon-remove remove link"></span><hr></div><div class="addThird"><span class="directLine add"></span><button class="btn btn-primary thirdAdd">添加三级子分类</button><hr></div></div>';
-	$(secondHtml).appendTo(targetSecond);
-	$(button).appendTo(targetSecond);
+      	let button = $(event.currentTarget).parent();
+      	let secondHtml = '<div class="father"><span class="directLine"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="fatherInput"><span class="glyphicon glyphicon-remove remove link"></span><hr><div class="son"><span class="directLine add"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="sonInput"><span class="glyphicon glyphicon-remove remove link"></span><hr></div><div class="addThird"><span class="directLine add"></span><button class="btn btn-primary thirdAdd">添加三级子分类</button><hr></div></div>';
+      	$(secondHtml).appendTo(targetSecond);
+      	$(button).appendTo(targetSecond);
+        $('.thirdAdd').bind('click',function(event){
+          _this.addThirdHtml(event);
+        });
       },
       addThirdHtml(event){
         let targetThird = $(event.currentTarget).parent().parent();
-	let thirdHtml = '<div class="son"><span class="directLine add"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="sonInput"><span class="glyphicon glyphicon-remove remove link"></span><hr></div>';
-	$(thirdHtml).appendTo(targetThird);
+        let button = $(event.currentTarget).parent();
+      	let thirdHtml = '<div class="son"><span class="directLine add"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="sonInput"><span class="glyphicon glyphicon-remove remove link"></span><hr></div>';
+      	$(thirdHtml).appendTo(targetThird);
+        $(button).appendTo(targetThird);
       },
       deleteHtml(e){
         console.log(e.currentTarget.parentElement.getAttributeNode('index').value);
@@ -122,3 +127,56 @@
     top: 10px;
   }
 </style>
+
+let foo = $('.grandFather');
+let grandFatherDiv = [];
+for(prop in foo){
+  if(prop > -1){
+    grandFatherDiv.push(foo[prop]);
+  }
+}
+
+let grandFatherInputObject = grandFatherDiv.map(function(obj){
+    let grandFatherInputObject = {};
+    let fInput = $(obj).children('.grandFatherInput').val();
+    grandFatherInputObject.name = fInput;
+    grandFatherInputObject.objectId = "";
+    grandFatherInputObject.storeSecondCategory = [];
+    let foo = $(obj).children('.father');
+    let fatherDiv = [];
+    for(prop in foo){
+        if(prop > -1){
+            fatherDiv.push(foo[prop]);
+        }else{
+            break;
+        }
+    }
+    let fatherInputObject = fatherDiv.map(function(obj){
+        let fatherInputObject = {};
+        let sInput = $(obj).children('.fatherInput').val();
+        fatherInputObject.name = sInput;
+        fatherInputObject.objectId = "";
+        fatherInputObject.storeThirdCategory = [];
+        let foo = $(obj).children('.son');
+        let sonDiv = [];
+        for(prop in foo){
+          if(prop > -1){
+            sonDiv.push(foo[prop]);
+          }
+          else{
+            break;
+          }
+        }
+        let sonInputObject = sonDiv.map(function(obj){
+          let sonInputObject = {};
+          let sInput = $(obj).children('.sonInput').val();
+          sonInputObject.name = sInput;
+          sonInputObject.objectId = "";
+          return sonInputObject;
+        })
+        fatherInputObject.storeThirdCategory.push(sonInputObject);
+        return fatherInputObject;
+    });
+    grandFatherInputObject.storeSecondCategory.push(fatherInputObject);
+    return grandFatherInputObject;
+});

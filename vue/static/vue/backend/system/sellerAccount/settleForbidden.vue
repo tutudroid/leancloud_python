@@ -1,13 +1,13 @@
 <template>
   <div class="settleForbiddenVue">
-    <table class="table table-striped one shown">
+    <table class="table table-striped one shown" v-if="forbiddenshops.length > 0">
       <thead>
         <tr><td>商家名字</td><td>品牌名</td><td>品牌Logo</td><td>入驻类型</td><td>状态</td></tr>
       </thead>
 
       <tbody>
-        <tr class="personRow pointer" @click='fillOutPersonMaterial(1,"个人","asha","18816500304","289574827@qq.com","330327199402112931","2007-09-09","2009-09-09","身份证正面","身份证反面","手持身份证照片","14244343434","ashaShop","ashaBrand","品牌Logo","品牌简介")'><td>asha</td><td>ashaBrand</td><td>ashaLogo</td><td>个人</td><td>禁止</td></tr>
-        <tr class="personRow pointer" @click='fillOutCompanyMaterial(2,"企业","30343432987423","营业执照","peter","18816500304","peter@gmail.com","330327199402112931","2008-09-02","2009-09-09","法人身份证正面","法人身份证反面","18816500304","peter","peter@gmail.com","1881232424","peterShop","peterBrand","品牌Logo","peter stuff is cool")'><td>peter</td><td>peterBrand</td><td>peterLogo</td><td>企业</td><td>禁用</td></tr>
+        <tr v-for="shop in shops()" v-if="shop.type=0" class="personRow pointer" @click='fillOutPersonMaterial(shop.id,shop.type,shop.realName,shop.phoneNumber,shop.email,shop.IdCard,shop.idCardExpireTimeStart,shop.idCardExpireTimeEnd,shop.frontIdCard,shop.backIdCard,shop.handIdCard,shop.alipay,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><td>shop.realName</td><td>shop.phoneNumber</td><td>个人</td><td>禁用</td></tr>
+        <tr v-for="shop in shops()" v-if="shop.type=1" class="personRow pointer" @click='fillOutCompanyMaterial(id,shop.type,shop.uniformSocialCreditCode,shop.bussinessLicense,shop.legalPersonName,shop.legalPersonPhoneNumber,shop.legalPersonEmail,shop.legalPersonIdCard,shop.legalPersonExpireTimeStart,shop.legalPersonExpireTimeEnd,shop.legalPersonFrontIdCard,shop.legalPersonBackIdCard,shop.alipay,shop.managerRealName,shop.managerEmail,shop.managerPhoneNumber,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><td>shop.managerRealName</td><td>shop.managerPhoneNumber</td><td>企业</td><td>禁用</td></tr>
       </tbody>
     </table>
 
@@ -149,41 +149,41 @@
   export default {
     data:function(){
       return {
-	personMaterial:"",
-	companyMaterial:"",
-	name:"",
-	phoneNumber:"",
-	email:"",
-	IdCard:"",
-	idCardExpireTimeStart:"",
-	idCardExpireTimeEnd:"",
-	frontIdCard:"",
-	backIdCard:"",
-	handIdCard:"",
-	alipay:"",
-	shop_name:"",
-	brandName:"",
-	brandLogo:"",
-	brandDescription:"",
-        uniformSocialCreditCode:"",
-	bussinessLicense:"",
-	legalPersonName:"",
-	legalPersonPhoneNumber:"",
-	legalPersonEmail:"",
-	legalPersonIdCard:"",
-	legalPersonExpireTimeStart:"",
-	legalPersonExpireTimeEnd:"",
-	legalPersonFrontIdCard:"",
-	legalPersonBackIdCard:"",
-        managerRealName:"",
-	managerEmail:"",
-	managerPhoneNumber:"",
-	shopName:"",
-	id:"",
-	type:"",
+      	personMaterial:"",
+      	companyMaterial:"",
+      	name:"",
+      	phoneNumber:"",
+      	email:"",
+      	IdCard:"",
+      	idCardExpireTimeStart:"",
+      	idCardExpireTimeEnd:"",
+      	frontIdCard:"",
+      	backIdCard:"",
+      	handIdCard:"",
+      	alipay:"",
+      	shop_name:"",
+      	brandName:"",
+      	brandLogo:"",
+      	brandDescription:"",
+              uniformSocialCreditCode:"",
+      	bussinessLicense:"",
+      	legalPersonName:"",
+      	legalPersonPhoneNumber:"",
+      	legalPersonEmail:"",
+      	legalPersonIdCard:"",
+      	legalPersonExpireTimeStart:"",
+      	legalPersonExpireTimeEnd:"",
+      	legalPersonFrontIdCard:"",
+      	legalPersonBackIdCard:"",
+              managerRealName:"",
+      	managerEmail:"",
+      	managerPhoneNumber:"",
+      	shopName:"",
+      	id:"",
+      	type:"",
       }
     },
-    props:["listofsettledperson"],
+    props:["forbiddenshops"],
     methods: {
      toggleShow(id,type){
        var show = $(".settleForbiddenVue .shown");
@@ -250,7 +250,14 @@
        this.brandDescription = brandDescription;
        this.toggleShow(id,type);
      
-     }
+     },
+     shops(){
+      let i = this.auditshops;
+      let shops = i.map(function(item){
+        return item.infoCompany;
+      });
+      return shops;
+    },
      
 
 

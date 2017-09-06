@@ -1,81 +1,80 @@
 <template>
   <div class="personSettledVue">
-    <table class="table table-striped one shown">
+    <table class="table table-striped one shown" v-if="personshops.length > 0">
       <thead>
         <tr><td>商家名</td><td>品牌名</td><td>品牌LOGO</td><td>入驻类型</td><td>状态</td></tr>
       </thead>
 
       <tbody>
-        <tr class="personRow pointer" @click='settledPersonDetail(1,"asha","18816500304","ashaShop","ashaBrand","ashaLogo照片","asha shop is nice","person",0,"289574827@qq.com","330327199402112931","2008-08-05","2009-09-01","正面照片","反面照片","手持照片","18816500340")'><td>asha</td><td>ashaBrand</td><td>sunasha</td><td>person</td><td>normal</td></tr>
-        <tr class="personRow pointer" @click='settledPersonDetail(2,"peter","11011911212","peterShop","peterBrand","peterLogo","peter shop is good","person",1,"peter@gmail.com","3234234257357","2009-09-09","2010-09-08","正面照片","反面照片","手持照片","13718787326")'><td>peter</td><td>peterBrand</td><td>sunpeter</td><td>person</td><td>forbidden</td></tr>
+        <tr v-for="shop in shops()" class="personRow pointer" @click='settledPersonDetail(shop.objectId,shop.realName,shop.phoneNumber,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription,"person",shop.state,shop.email,shop.idCard,shop.idCardExpireTimeEnd,shop.idCardExpireTimeStart,shop.frontIdCard,shop.backIdCard,shop.handIdCard,shop.alipay)'><td>{{shop.realName}}</td><td>{{shop.brandName}}</td><td>{{shop.brandLogo}}</td><td>person</td><td>{{shop.state}}</td></tr>
       </tbody>
     </table>
 
-    <div class="settledPersonDetail hide">
+  <div class="settledPersonDetail hide">
       <div class="container">
         <div class="name">
           账号：{{name}} 
-	</div>
+    	</div>
 
-	<div class="phoneNumber">
-          手机号：{{phoneNumber}}<span class="modifyPhoneNum link margin-left " @click="modifyPhoneNum()">修改</span>
-	</div>
-	
-	<hr>
+    	<div class="phoneNumber">
+              手机号：{{phoneNumber}}<span class="modifyPhoneNum link margin-left " @click="modifyPhoneNum()">修改</span>
+    	</div>
+    	
+    	<hr>
 
-	<div class="shop_name">
-          店铺名：{{shop_name}}
-	</div>
+    	<div class="shop_name">
+              店铺名：{{shopName}}
+    	</div>
 
-	<div class="brandName">
-          品牌名：{{brandName}}
-	</div>
+    	<div class="brandName">
+              品牌名：{{brandName}}
+    	</div>
 
-	<div class="brandLogo">
-          品牌Logo{{brandLogo}}
-	</div>
+    	<div class="brandLogo">
+              品牌Logo{{brandLogo}}
+    	</div>
 
-	<div class="brandDescription">
-          品牌简介：{{brandDescription}}
-	</div>
+    	<div class="brandDescription">
+              品牌简介：{{brandDescription}}
+    	</div>
 
-	<hr>
+    	<hr>
 
-	<div class="type">
-          入驻类型：{{type}}<span class="checkSettledInfo link margin-left "  @click="checkSettledPersonMaterial()">查看入驻材料</span>
-	</div>
+    	<div class="type">
+              入驻类型：{{type}}<span class="checkSettledInfo link margin-left "  @click="checkSettledPersonMaterial()">查看入驻材料</span>
+    	</div>
 
-	<div class="state">
-          状态：<span :class='[state==0?"normal":"forbidden"]'>正常</span><span :class='[state==1?"normal":"forbidden"]'>禁用</span>
-	</div>
+    	<div class="state">
+              状态：<span :class='[state==0?"normal":"forbidden"]'>正常</span><span :class='[state==1?"normal":"forbidden"]'>禁用</span>
+    	</div>
 
-	<div class="link" @click="toggleShow">
-	  返回
-	</div>
-      </div>
+    	<div class="link" @click="toggleShow">
+    	  返回
+    	</div>
+  </div>
     </div>
 
-    <div class="modifyPhoneNumDetail hideSecond">
-	 <form class="form-horizontal">
-	  <div class="control-group">
-	    <label class="control-label" for="newPhone">新的手机号</label>
-	    <div class="controls">
-	      <input type="text" id="newPhone" v-model="newPhoneNumber">
-	    </div>
-	  </div>
-	  <div class="control-group">
-	    <label class="control-label" for="confirmPhone">确认手机号</label>
-	    <div class="controls">
-	      <input type="input" id="confirmPhone" v-model="confirmPhoneNumber">
-	    </div>
-	  </div>
-	  <div class="control-group">
-	    <div class="controls">
-	      <button class="btn myBtn" @click="modifyPhoneNumToDB">确认</button>
-	      <button class="btn myBtn" @click="toggleSecond">取消</button>
-	    </div>
-	  </div>
-	</form>     
+  <div class="modifyPhoneNumDetail hideSecond">
+  	 <form class="form-horizontal">
+    	  <div class="control-group">
+    	    <label class="control-label" for="newPhone">新的手机号</label>
+    	    <div class="controls">
+    	      <input type="text" id="newPhone" v-model="newPhoneNumber">
+    	    </div>
+    	  </div>
+    	  <div class="control-group">
+    	    <label class="control-label" for="confirmPhone">确认手机号</label>
+    	    <div class="controls">
+    	      <input type="input" id="confirmPhone" v-model="confirmPhoneNumber">
+    	    </div>
+    	  </div>
+    	  <div class="control-group">
+    	    <div class="controls">
+    	      <button class="btn myBtn" @click="modifyPhoneNumToDB">确认</button>
+    	      <button class="btn myBtn" @click="toggleSecond">取消</button>
+    	    </div>
+    	  </div>
+  	</form>     
   </div>
 
   <div class="checkSettledPersonMaterial hideSecond">
@@ -113,7 +112,7 @@
     <hr>
 
     <div class="shop_name">
-    店铺名称: <span class="answer">{{shop_name}}</span>
+    店铺名称: <span class="answer">{{shopName}}</span>
     </div>
     <div class="brandName">
     品牌名称: <span class="answer">{{brandName}}</span>
@@ -133,7 +132,7 @@
 
   </div>
 
-  </div>
+</div>
 
 
 </template>
@@ -142,51 +141,52 @@
   export default {
     data:function(){
       return {
-        settledPersonId:-1,
-	name:"",
-	phoneNumber:"",
-	shop_name:"",
-	brandName:"",
-	brandLogo:"",
-	brandDescription:"",
-	type:"",
-	state:-1,
-	newPhoneNumber:"",
-	confirmPhoneNumber:"",
-	email:"",
-	IdCard:"",
-	idCardExpireTimeStart:"",
-	idCardExpireTimeEnd:"",
-	frontIdCard:"",
-	backIdCard:"",
-	handIdCard:"",
-	alipay:"",
+        objectId:-1,
+      	name:"",
+      	phoneNumber:"",
+      	shopName:"",
+      	brandName:"",
+      	brandLogo:"",
+      	brandDescription:"",
+      	type:"",
+      	state:-1,
+      	newPhoneNumber:"",
+      	confirmPhoneNumber:"",
+      	email:"",
+      	IdCard:"",
+      	idCardExpireTimeStart:"",
+      	idCardExpireTimeEnd:"",
+      	frontIdCard:"",
+      	backIdCard:"",
+      	handIdCard:"",
+      	alipay:"",
+        state:0,
       }
     },
-    props:["listofsettledperson"],
+    props:["personshops"],
     methods: {
       settledPersonDetail(settledPersonId,name,phoneNumber,shop_name,brandName,brandLogo,brandDescription,type,state,email,IdCard,idCardExpireTimeStart,idCardExpireTimeEnd,frontIdCard,backIdCard,handIdCard,alipay){
-        this.settledPersonId = settledPersonId;
-	this.name = name;
-	this.phoneNumber = phoneNumber;
-	this.shop_name = shop_name;
-	this.brandName = brandName;
-	this.brandLogo = brandLogo;
-	this.brandDescription = brandDescription;
-	this.type = type;
-	this.state = state;
-	this.email = email;
-	this.IdCard = IdCard;
-	this.idCardExpireTimeStart = idCardExpireTimeStart;
-	this.idCardExpireTimeEnd = idCardExpireTimeEnd;
-	this.frontIdCard = frontIdCard;
-	this.backIdCard = backIdCard;
-	this.handIdCard = handIdCard;
-	this.alipay = alipay;
-	this.toggleShow();
-
+        this.objectId = settledPersonId;
+      	this.name = name;
+      	this.phoneNumber = phoneNumber;
+      	this.shopName = shop_name;
+      	this.brandName = brandName;
+      	this.brandLogo = brandLogo;
+      	this.brandDescription = brandDescription;
+      	this.type = type;
+      	this.state = state;
+      	this.email = email;
+      	this.IdCard = IdCard;
+      	this.idCardExpireTimeStart = idCardExpireTimeStart;
+      	this.idCardExpireTimeEnd = idCardExpireTimeEnd;
+      	this.frontIdCard = frontIdCard;
+      	this.backIdCard = backIdCard;
+      	this.handIdCard = handIdCard;
+      	this.alipay = alipay;
+        this.state = state;
+      	this.toggleShow();
       },
-     toggleShow(){
+      toggleShow(){
        var show = $(".personSettledVue .shown");
        var hide = $(".personSettledVue .hide");
        if(show != null){
@@ -195,69 +195,75 @@
            hide.removeClass("hide").addClass("shown");
          }
        }
-     },
-     modifyPhoneNum(){
+      },
+      modifyPhoneNum(){
        var show = $(".personSettledVue .shown");
        var hide = $(".personSettledVue .hide");
        var hideSecond = $(".personSettledVue .modifyPhoneNumDetail.hideSecond");
        if(show != null){
          show.addClass("prev");
-	 if(hide != null){
-	   hide.addClass("prev");
-	 }
+    	 if(hide != null){
+    	   hide.addClass("prev");
+    	 }
        }
        if(hideSecond != null){
          hideSecond.removeClass("hideSecond").addClass("shownSecond");
        }
-     },
-     checkSettledPersonMaterial(){
+      },
+      checkSettledPersonMaterial(){
        var show = $(".personSettledVue .shown");
        var hide = $(".personSettledVue .hide");
        var hideSecond = $(".checkSettledPersonMaterial.hideSecond");
        if(show != null){
          show.addClass("prev");
-	 if(hide != null){
-	   hide.addClass("prev");
-	 }
+    	 if(hide != null){
+    	   hide.addClass("prev");
+    	 }
        }
        if(hideSecond != null){
          hideSecond.removeClass("hideSecond").addClass("shownSecond");
        }
-     },
-     toggleSecond(){
+      },
+      toggleSecond(){
        var shownSecond = $('.personSettledVue .modifyPhoneNumDetail.shownSecond');
        var shownSecondMaterial = $('.checkSettledPersonMaterial.shownSecond');
        var hidePrev = $('.personSettledVue .hide.prev');
        var shownPrev = $('.personSettledVue .shown.prev');
        if(shownSecond != null){
          shownSecond.removeClass('shownSecond').addClass('hideSecond');
-	 if(hidePrev != null){
-	   hidePrev.removeClass('prev');
-
-	 }
-	 if(shownPrev != null){
-	  shownPrev.removeClass('prev');
-	 }
+      	 if(hidePrev != null){
+      	   hidePrev.removeClass('prev');
+      	 }
+      	 if(shownPrev != null){
+      	  shownPrev.removeClass('prev');
+      	 }
        }
-
        if(shownSecondMaterial != null){
          shownSecondMaterial.removeClass('shownSecond').addClass('hideSecond');
-	 if(hidePrev != null){
-	   hidePrev.removeClass('prev');
+      	 if(hidePrev != null){
+      	   hidePrev.removeClass('prev');
 
-	 }
-	 if(shownPrev != null){
-	  shownPrev.removeClass('prev');
-	 }
+      	 }
+      	 if(shownPrev != null){
+      	  shownPrev.removeClass('prev');
+      	 }
        }
      },
      modifyPhoneNumToDB(){
-       alert(" id: "+this.settledPersonId+" newPhoneNumber: "+this.newPhoneNumber+" confirmPhoneNumber: "+this.confirmPhoneNumber);
+       alert(" id: "+this.objectId+" newPhoneNumber: "+this.newPhoneNumber+" confirmPhoneNumber: "+this.confirmPhoneNumber);
      },
-
-
-    }
-  }
+     shops(){
+      let i = this.personshops;
+      let shops = i.map(function(item){
+        return item.infoPersonal;
+      });
+      return shops;
+    },
+  },
+  computed:{
+    
+  },
+}
 </script>
 
 <style>

@@ -79,6 +79,7 @@ class SettleInApplication(Object):
                 attribute_state: self.get_attribute_state(),
                 attribute_infoPersonal: self.get_attribute_infoPersonal(),
                 attribute_infoCompany: self.get_attribute_infoCompany(),
+                attribute_type: self.get_attribute_type(),
             }
             return data
 

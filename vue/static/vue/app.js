@@ -49,7 +49,7 @@ new Vue({
 	el: '#app',
 	data:{
 	  allSysUsers:[],
-    allClientConfigs:[],
+    allClientConfigs:{},
 	},
 	components: {
 	    "changepwd":changePwd,
@@ -102,7 +102,7 @@ new Vue({
               'page':1,
           },
           success: function (data) {
-            _this.allSysUsers = data.msg.User;
+            _this.allSysUsers = data.User;
           },
          error: function(XMLHttpRequest, textStatus, errorThrown) {
            swal('抓取不到数据')
@@ -125,9 +125,10 @@ new Vue({
              
           },
           success: function (data) {
+            alert(value);
             let value = JSON.parse(data);
             _this.allClientConfigs = value;
-            alert(value);
+            
           },
          error: function(XMLHttpRequest, textStatus, errorThrown) {
            swal('抓取不到数据')

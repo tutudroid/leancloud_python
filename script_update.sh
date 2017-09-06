@@ -7,3 +7,4 @@ cp -r ../vue/vue/* vue/
 git add .
 git commit -m "$1"
 git push
+lean up

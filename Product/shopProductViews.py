@@ -6,10 +6,6 @@ from ClassLibrary.ShopClass.Shop_New import Shop
 from ClassLibrary.ProductClass.ProductService import ProductService
 from ClassLibrary.CategoryClass.SaleCategory import SaleCategory
 from ClassLibrary.CategoryClass.StoreCategory import StoreCategory
-from ClassLibrary.ProductClass.ShopProduct import ShopProduct
-
-
-
 
 
 @login_required

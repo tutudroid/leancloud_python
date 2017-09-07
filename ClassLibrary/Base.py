@@ -1042,3 +1042,13 @@ def create_network_image(instance, attr):
     avatar = leancloud.File.create_with_url(name, img_url)
     avatar.save()
     return avatar
+
+
+def create_image_url(name, url):
+    """
+    获得实例参数中的url，并将其赋值给file
+    :return: 
+    """
+    avatar = leancloud.File.create_with_url(name, url)
+    avatar.save()
+    return avatar

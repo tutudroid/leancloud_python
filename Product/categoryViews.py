@@ -14,6 +14,7 @@ def ShowSaleCategory(request):
     :param request: 
     :return: 
     """
+    request.method = request.method
     allData = SaleCategory().get_SaleCategory_All()
     return return_data(Class_Name_SaleCategory, allData)
 
@@ -128,6 +129,7 @@ def ShowStoreCategory(request):
     :param request: 
     :return: 
     """
+    request.method = request.method
     allData = StoreCategory().get_StoreCategory_All()
     return return_data(Class_Name_StoreCategory, allData)
 

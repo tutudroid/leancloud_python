@@ -1,5 +1,5 @@
 from Error_Page import *
-from ClassLibrary.ProductClass.ProductGroup_New import ProductGroup
+from ClassLibrary.ProductClass.ProductGroup_New import ProductGroup, copy_Shop_ProductGroup
 from ClassLibrary.ShopClass.Shop_New import Shop
 from ClassLibrary.ProductClass.ShopProductGroup import ShopProductGroup
 from ClassLibrary.CategoryClass.SaleCategory import SaleCategory
@@ -83,11 +83,23 @@ def AuditProductGroup(request):
     shopProductGroup = ShopProductGroup()
     state = request.GET.get(attribute_state)
     if shopProductGroup.get_Object(objectId) and 0 <= int(state) <= 1:
+
         # 通过审核
-        productGroup1 = ProductGroup()
-        productGroup1.copy_Tmp_ProductGroup(shopProductGroup.get_instance())
-        productGroup1.set_attribute_state(int(state))
-        return return_msg('success')
+        shopObjectId = shopProductGroup.get_attribute_Object_Id(attribute_shop)
+        productGroup1 = copy_Shop_ProductGroup(shopProductGroup)
+
+        # 获得店铺信息
+        if productGroup1:
+            shop = Shop()
+            shop.get_Object(shopObjectId)
+
+            # 将productGroup关联到shop中
+            if shop.add_attribute_relation(attribute_productGroup, productGroup1):
+                shopProductGroup.destroy_ProductGroup()
+                return return_msg('success')
+            else:
+                productGroup1.destroy_ProductGroup()
+            return return_msg('can\'t save to shop')
     return return_msg('parameter is error')
 
 

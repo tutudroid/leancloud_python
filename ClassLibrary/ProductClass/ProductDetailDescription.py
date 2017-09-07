@@ -45,6 +45,12 @@ class ProductDetailDescription(ImageBase):
             }
             return data
 
+    def copy_ProductDetailDescription(self, detail):
+        self.set_attribute_value(attribute_imageFile, detail.get(attribute_imageFile))
+        self.set_attribute_value(attribute_imageWidth, detail.get(attribute_imageWidth))
+        self.set_attribute_value(attribute_imageHeight, detail.get(attribute_imageHeight))
+
+
 
 def output_productDetailDescription(detail):
     if detail:

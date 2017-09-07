@@ -223,7 +223,7 @@ def CreateAll(request):
     productGroup.set_attribute_brand(brand.get_instance())
     productGroup.set_attribute_ip(ip.get_instance())
     productGroup.set_attribute_shop(shop.get_instance())
-
+    productGroup.set_attribute_value(attribute_freightModel, freight.get_instance())
     # 创建公司入驻
     data = {
         attribute_objectId: '',

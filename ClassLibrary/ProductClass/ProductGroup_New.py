@@ -19,13 +19,14 @@ function：
 import json
 from ClassLibrary.BaseClass.Object import *
 from ClassLibrary.ProductClass.ProductDetailDescription import ProductDetailDescription
-from ClassLibrary.ProductClass.Product import Product
+from ClassLibrary.ProductClass.Product import Product, copy_Shop_Product
 from ClassLibrary.CategoryClass.StoreCategory import StoreCategory
 from ClassLibrary.CategoryClass.SaleCategory import SaleCategory
 from ClassLibrary.ImageClass.ProductImage import ProductImage
 from ClassLibrary.ProductClass.ProductService import ProductService
 from ClassLibrary.ProductClass.ProductComment import ProductComment
 from ClassLibrary.Frieght.FreightModel import FreightModel
+from ClassLibrary.ProductClass.ShopProductGroup import ShopProductGroup
 
 
 class ProductGroup(Object):
@@ -146,39 +147,31 @@ class ProductGroup(Object):
             self.__save_instance__()
 
     def get_attribute_storeCategory(self):
-        if self.instance:
-            storeCategoryThird = self.instance.get(attribute_storeCategory)
-            if storeCategoryThird:
-                storeInstance3 = StoreCategory(Class_Name_StoreCategoryThird)
-                if storeInstance3.get_StoreCategoryThird(storeCategoryThird.get(attribute_objectId)):
-                    store2 = storeInstance3.get_attribute_storeCategorySecond()
-                    if store2:
-                        storeInstance2 = StoreCategory(Class_Name_StoreCategorySecond)
-                        if storeInstance2.get_StoreCategorySecond(store2.get(attribute_objectId)):
-                            store1 = storeInstance2.get_attribute_storeCategoryFirst()
-                            if store1:
-                                storeInstance1 = StoreCategory(Class_Name_StoreCategoryFirst)
-                                storeInstance1.get_StoreCategoryFirst(store1.get(attribute_objectId))
-                                A = {
-                                    attribute_storeCategoryFirst: storeInstance1.output_StoreCategory(),
-                                    attribute_storeCategorySecond: storeInstance2.output_StoreCategory(),
-                                    attribute_storeCategoryThird: storeInstance3.output_StoreCategory(),
-                                }
-                                return A
-                            else:
-                                self.__print_msg__('storeCategoryFirst is not existed')
+        if self.instance and self.instance.get(attribute_storeCategory):
+            storeInstance3 = StoreCategory(Class_Name_StoreCategoryThird)
+            if storeInstance3.get_StoreCategoryThird(self.get_attribute_Object_Id(attribute_storeCategory)):
+                storeInstance2 = StoreCategory(Class_Name_StoreCategorySecond)
+                if storeInstance2.get_StoreCategorySecond(storeInstance3.get_attribute_Object_Id(attribute_storeCategorySecond)):
+                    storeInstance1 = StoreCategory(Class_Name_StoreCategoryFirst)
+                    if storeInstance1.get_StoreCategoryFirst(storeInstance2.get_attribute_Object_Id(attribute_storeCategoryFirst)):
+                        A = {
+                            attribute_storeCategoryFirst: storeInstance1.output_StoreCategory(),
+                            attribute_storeCategorySecond: storeInstance2.output_StoreCategory(),
+                            attribute_storeCategoryThird: storeInstance3.output_StoreCategory(),
+                        }
+                        return A
                     else:
-                        self.__print_msg__('storeCategorySecond is not existed')
+                        self.__print_msg__('storeCategoryFirst is not existed')
                 else:
-                    self.__print_msg__('storeCategoryThird1 is not existed')
+                    self.__print_msg__('storeCategorySecond is not existed')
             else:
-                self.__print_msg__('storeCategoryThird2 is not existed')
+                self.__print_msg__('storeCategoryThird is not existed')
+        self.__print_msg__('parameter is null')
         return None
 
     def get_attribute_saleCategory(self):
         if self.instance:
             saleList2 = Base.get_relation_data(self.instance.get(attribute_objectId), self.__class__.__name__, attribute_saleCategory)
-            print('testsss')
             if saleList2:
                 returnList = []
                 for sale2 in saleList2:
@@ -314,9 +307,9 @@ class ProductGroup(Object):
         return
 
     def get_attribute_freightModel(self):
-        if self.instance:
+        if self.instance and self.instance.get(attribute_freightModel):
             freight = FreightModel()
-            freight.set_instance(self.instance)
+            freight.get_Object(self.instance.get(attribute_freightModel).id)
             return freight.output_FreightModel()
         return None
 
@@ -447,13 +440,13 @@ class ProductGroup(Object):
 
     def destroy_ProductGroup(self):
         if self.instance:
-            shopObjectId = self.instance.get(attribute_shop)
-            self.objectId = self.instance.get(attribute_objectId)
-            Base.destroy_relation_imageList(self.objectId, self.__class__.__name__,
+            shopObjectId = self.get_attribute_Object_Id(attribute_shop)
+            objectId = self.instance.get(attribute_objectId)
+            Base.destroy_relation_imageList(objectId, self.__class__.__name__,
                                             attribute_imageList, Class_Name_ProductImage)
-            Base.destroy_relation(self.objectId, self.__class__.__name__,
+            Base.destroy_relation(objectId, self.__class__.__name__,
                                   attribute_product, self.productName)
-            Base.destroy_relation(self.objectId, self.__class__.__name__,
+            Base.destroy_relation(objectId, self.__class__.__name__,
                                   attribute_detailDescription, Class_Name_ProductDetailDescription)
             if self.instance.get(attribute_mainImage):
                 self.instance.get(attribute_mainImage).destroy()
@@ -461,12 +454,9 @@ class ProductGroup(Object):
             return shopObjectId
         return None
 
-
     def delete_ProductGroup(self):
         if self.instance:
             self.delete_Object()
-
-
 
     def create_ProductGroup(self, data, shop):
         state = STATE_SHELF_ON
@@ -758,5 +748,103 @@ class ProductGroup(Object):
         }
         return product
 
-    def copy_Tmp_ProductGroup(self, shopProductGroup):
-        pass
+
+def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
+        if shopProductGroup:
+            state = STATE_SHELF_ON
+            productGroup = ProductGroup()
+            productGroup.create_Object()
+            # 写入商品的静态信息
+            productGroup.set_attribute_value(attribute_name, shopProductGroup.get_attribute(attribute_name))
+            productGroup.set_attribute_value(attribute_shop, shopProductGroup.get_attribute(attribute_shop))
+
+            productGroup.set_attribute_value(attribute_briefDescription, shopProductGroup.get_attribute(attribute_briefDescription))
+            productGroup.set_attribute_value(attribute_propertyOption, shopProductGroup.get_attribute(attribute_propertyOption))
+            productGroup.set_attribute_value(attribute_dispatchPlace, shopProductGroup.get_attribute(attribute_dispatchPlace))
+            productGroup.set_attribute_value(attribute_price, float(shopProductGroup.get_attribute(attribute_price)))
+            productGroup.set_attribute_value(attribute_saleCount, int(shopProductGroup.get_attribute(attribute_saleCount)))
+            productGroup.set_attribute_value(attribute_spec, shopProductGroup.get_attribute(attribute_spec))
+
+
+            """
+            保存商品详情
+            """
+
+            shopDetailDescription = shopProductGroup.get_attribute_relation(attribute_detailDescription)
+            if shopDetailDescription:
+                for foo in shopDetailDescription:
+                    description = ProductDetailDescription()
+                    description.create_Object()
+                    description.copy_ProductDetailDescription(foo)
+                    if not productGroup.add_attribute_relation(attribute_detailDescription, description):
+                        Base.sys_log('save detailDescription failed')
+                        state = STATE_NO_FINISH
+            """
+            保存主图片信息
+            """
+            image = ProductImage()
+            image.create_Object()
+            imageFile = Base.create_network_image(shopProductGroup.get_attribute(attribute_mainImage), attribute_mainImage)
+            image.set_attribute_value(attribute_imageFile, imageFile)
+            productGroup.set_attribute_value(attribute_mainImage, imageFile)
+
+            """
+            保存图片列表信息
+            """
+            imageList = shopProductGroup.get_attribute_relation(attribute_imageList)
+            if imageList:
+                for pic in imageList:
+                    image = ProductImage()
+                    image.create_Object()
+                    image.set_attribute_value(attribute_imageFile, pic.get(attribute_imageFile))
+                    if not productGroup.add_attribute_relation(attribute_imageList, image):
+                        Base.sys_log('save imageList failed')
+                        state = STATE_NO_FINISH
+
+            # 保存库存信息
+            productGroup.set_attribute_value(attribute_storeCategoryThird, shopProductGroup.get_attribute(attribute_storeCategoryThird))
+
+            # 写入商品服务信息
+            serviceList = shopProductGroup.get_attribute_relation(attribute_productService)
+            if serviceList:
+                for foo in serviceList:
+                    productService = ProductService()
+                    productService.get_Object(foo.id)
+                    productGroup.add_attribute_relation(attribute_productService, productService)
+
+            storeCategory = StoreCategory()
+            storeCategory.get_Object(shopProductGroup.get_attribute_Object_Id(attribute_storeCategoryThird))
+            if not storeCategory.add_attribute_relation(attribute_productGroup, productGroup):
+                Base.sys_log('save storeCategory failed')
+                state = STATE_NO_FINISH
+
+            saleList = shopProductGroup.get_attribute_relation(attribute_saleCategory)
+            if saleList:
+                for foo in saleList:
+                    # 将销售关系写入到商品类中
+                    sale = SaleCategory(Class_Name_SaleCategorySecond)
+                    sale.get_Object(foo.id)
+                    if productGroup.add_attribute_relation(attribute_saleCategory, sale):
+                        Base.sys_log('save saleCategory failed')
+                        state = STATE_NO_FINISH
+                    if sale.add_attribute_relation(attribute_productGroup, productGroup):
+                        Base.sys_log('save saleCategory failed')
+                        state = STATE_NO_FINISH
+
+            # 保存商品信息
+            shopProductList = shopProductGroup.get_attribute_relation(attribute_product)
+            if shopProductList:
+                for shopProduct in shopProductList:
+                    product = copy_Shop_Product(shopProduct, productGroup.get_instance())
+                    if not productGroup.add_attribute_relation(attribute_product, product):
+                        Base.sys_log('save product failed')
+                        state = STATE_NO_FINISH
+
+            # 设置商品组状态
+            if state == STATE_SHELF_ON:
+                return productGroup
+            else:
+                # 清理数据
+                productGroup.destroy_ProductGroup()
+        Base.sys_log("shopProductGroup doesn't exist")
+        return None

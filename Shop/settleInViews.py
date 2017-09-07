@@ -80,24 +80,24 @@ def ReviewSettleIn(request):
         settleInApplication = SettleInApplication()
         settleInApplication.get_Object(objectId)
         settleInApplication.set_attribute_state(int(state))
+        if 2 == int(state):
+            # 创建店铺
+            shop = Shop()
+            shop.create_Object()
 
-        # 创建店铺
-        shop = Shop()
-        shop.create_Object()
+            shopType = settleInApplication.get_attribute_type()
+            shop.set_attribute_shopType(shopType)
+            shop.set_attribute_user(settleInApplication.get_user())
+            shop.set_attribute_type(0)
+            if 1 == shopType:
+                shop.set_attribute_settleInCompany(settleInApplication.get_attribute(attribute_infoCompany))
+            else:
+                shop.set_attribute_settleInUser(settleInApplication.get_attribute(attribute_infoPersonal))
 
-        shopType = settleInApplication.get_attribute_type()
-        shop.set_attribute_shopType(shopType)
-        shop.set_attribute_user(settleInApplication.get_user())
-        shop.set_attribute_type(0)
-        if int(shopType) == 1:
-            shop.set_attribute_settleInCompany(settleInApplication.get_attribute(attribute_infoCompany))
-        else:
-            shop.set_attribute_settleInUser(settleInApplication.get_attribute(attribute_infoPersonal))
+            user = _User()
+            user.get_Object(settleInApplication.get_attribute_user_id())
+            user.set_attribute_shop(shop.get_instance())
+            shop.set_attribute_phoneNumber(user.get_attribute_mobilePhoneNumber())
 
-        user = _User()
-        user.get_Object(settleInApplication.get_attribute_user_id())
-        user.set_attribute_shop(shop.get_instance())
-        shop.set_attribute_phoneNumber(user.get_attribute_mobilePhoneNumber())
-
-        return return_msg( 'success' )
-    return return_msg( 'parameter is error' )
+        return return_msg('success')
+    return return_msg('parameter is error')

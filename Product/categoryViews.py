@@ -2,7 +2,9 @@
 from Error_Page import *
 from ClassLibrary.CategoryClass.SaleCategory import SaleCategory
 from ClassLibrary.CategoryClass.StoreCategory import StoreCategory
-
+from ClassLibrary.CategoryClass.SaleCategoryRecommend import SaleCategoryRecommend
+from ClassLibrary.ProductClass.ProductGroup_New import ProductGroup
+from ClassLibrary.ImageClass.Image import ImageBase
 
 
 @login_required
@@ -194,11 +196,40 @@ def EditStoreCategory(request):
 @permission(ROLE_BUSINESS)
 @require_http_methods(['GET'])
 def DelSaleCategoryRecommend(request):
-    return HttpResponse('failed')
+    objectId = request.GET.get(attribute_objectId)
+    if objectId:
+        sale = SaleCategory(Class_Name_SaleCategoryFirst)
+        sale.get_Object(objectId)
+        if sale.get_instance():
+            saleRecommend = SaleCategoryRecommend()
+            saleRecommend.get_Object(sale.get_attribute_Object_Id(attribute_saleCategoryRecommend))
+            saleRecommend.destroy_attribute_image(attribute_mainImage)
+            saleRecommend.destroy_Object()
+            return return_msg('delete success')
+    return return_msg('parameter is error')
 
 
 @login_required
 @permission(ROLE_BUSINESS)
+@require_http_methods(['GET'])
 def SaleCategoryRecommend(request):
-    content = PROFILE_INIT()
-    return render(request, 'SaleCategoryRecommend.html', {'content': content})
+    productGroupUniqueId = request.GET.get(attribute_uniqueId, '')
+    objectId = request.GET.get(attribute_objectId, '')
+    mainImage = request.FILES.get(attribute_mainImage, '')
+    if productGroupUniqueId and objectId and mainImage:
+        productGroup = ProductGroup()
+        productGroup.get_Object_UniqueId(int(productGroupUniqueId))
+
+        sale = SaleCategory(Class_Name_SaleCategoryFirst)
+        sale.get_Object(objectId)
+        if sale.get_instance() and productGroup.get_instance():
+            saleRecommend = SaleCategoryRecommend()
+            saleRecommend.create_Object()
+            saleRecommend.set_attribute_value(attribute_productGroup, productGroup.get_instance())
+            imageFile = ImageBase().save_ImageFile(mainImage)
+            saleRecommend.set_attribute_value(attribute_mainImage, imageFile)
+
+            # 将信息写入第一级销售分类
+            sale.set_attribute_value(attribute_saleCategoryRecommend, saleRecommend.get_instance())
+            return return_data(Class_Name_SaleCategoryRecommend, saleRecommend.output_SaleCategoryRecommend())
+    return return_msg('parameter is error')

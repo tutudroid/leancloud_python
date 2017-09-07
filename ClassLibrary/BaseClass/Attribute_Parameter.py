@@ -298,6 +298,9 @@ TYPE_BASE = 0
 TYPE_RECOMMEND = 1
 TYPE_IP = 2
 
+attribute_productGroupUniqueId = 'productGroupUniqueId'
+
+
 # Freight
 attribute_startNum = 'startNum'
 attribute_startCost = 'startCost'

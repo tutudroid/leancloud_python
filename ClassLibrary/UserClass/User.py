@@ -13,10 +13,11 @@ class _User(Object):
             INSTANCE = leancloud.Object.extend(self.className)
             instance = INSTANCE()
             instance.set(attribute_state, STATE_OK)
-            instance.set_username(username)
-            instance.set_password('password')
-            self.instance = instance
-            return self.__save_instance__()
+            instance.set(attribute_username, username)
+            instance.set(attribute_password, 'password')
+            if self.__save_instance__():
+                self.instance = instance
+                return self.instance
         self.__print_msg__('create object fail')
         return None
 

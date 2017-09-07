@@ -160,9 +160,9 @@ class ProductGroup(Object):
                                 storeInstance1 = StoreCategory(Class_Name_StoreCategoryFirst)
                                 storeInstance1.get_StoreCategoryFirst(store1.get(attribute_objectId))
                                 A = {
-                                    attribute_storeCategoryFirst: storeInstance1.get_attribute_name(),
-                                    attribute_storeCategorySecond: storeInstance2.get_attribute_name(),
-                                    attribute_storeCategoryThird: storeInstance3.get_attribute_name(),
+                                    attribute_storeCategoryFirst: storeInstance1.output_StoreCategory(),
+                                    attribute_storeCategorySecond: storeInstance2.output_StoreCategory(),
+                                    attribute_storeCategoryThird: storeInstance3.output_StoreCategory(),
                                 }
                                 return A
                             else:
@@ -188,8 +188,8 @@ class ProductGroup(Object):
                     saleTmp1 = SaleCategory(Class_Name_SaleCategoryFirst)
                     if saleTmp2.get_attribute_saleCategoryFirst() and saleTmp1.get_SaleCategoryFirst(saleTmp2.get_attribute_saleCategoryFirst().id):
                         A = {
-                            attribute_saleCategoryFirst: saleTmp1.get_attribute_name(),
-                            attribute_saleCategorySecond: saleTmp2.get_attribute_name(),
+                            attribute_saleCategoryFirst: saleTmp1.output_SaleCategory(),
+                            attribute_saleCategorySecond: saleTmp2.output_SaleCategory()
                         }
                         returnList.append(A)
                 if len(returnList) > 0:

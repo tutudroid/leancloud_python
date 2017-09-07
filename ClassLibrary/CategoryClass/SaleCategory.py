@@ -264,6 +264,16 @@ class SaleCategory(Object):
                 return True
         return None
 
+    def output_SaleCategory(self):
+        if self.instance:
+            data = {
+                attribute_objectId: self.get_attribute_objectId(),
+                attribute_name: self.get_attribute_name(),
+                attribute_uniqueId: self.get_attribute_uniqueId(),
+            }
+            return data
+        return None
+
     def output_SaleCategorySecond(self):
         if self.instance:
             data = {

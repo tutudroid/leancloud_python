@@ -1,15 +1,16 @@
 <template>
-  <div class="settleForbiddenVue">
-    <table class="table table-striped one shown" v-if="forbiddenshops.length > 0">
-      <thead>
-        <tr><td>商家名字</td><td>品牌名</td><td>品牌Logo</td><td>入驻类型</td><td>状态</td></tr>
-      </thead>
+  <div class="settleForbiddenVue container">
+    <div class="t one shown" v-if="forbiddenshops.length > 0">
+ 
+        <div class="row"><div class="col-md-4">账号名</div><div class="col-md-4">手机号</div><div class="col-md-4">入驻类型</div></div>
 
-      <tbody>
-        <tr v-for="shop in shops()" v-if="shop.type=0" class="personRow pointer" @click='fillOutPersonMaterial(shop.id,shop.type,shop.realName,shop.phoneNumber,shop.email,shop.IdCard,shop.idCardExpireTimeStart,shop.idCardExpireTimeEnd,shop.frontIdCard,shop.backIdCard,shop.handIdCard,shop.alipay,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><td>shop.realName</td><td>shop.phoneNumber</td><td>个人</td><td>禁用</td></tr>
-        <tr v-for="shop in shops()" v-if="shop.type=1" class="personRow pointer" @click='fillOutCompanyMaterial(id,shop.type,shop.uniformSocialCreditCode,shop.bussinessLicense,shop.legalPersonName,shop.legalPersonPhoneNumber,shop.legalPersonEmail,shop.legalPersonIdCard,shop.legalPersonExpireTimeStart,shop.legalPersonExpireTimeEnd,shop.legalPersonFrontIdCard,shop.legalPersonBackIdCard,shop.alipay,shop.managerRealName,shop.managerEmail,shop.managerPhoneNumber,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><td>shop.managerRealName</td><td>shop.managerPhoneNumber</td><td>企业</td><td>禁用</td></tr>
-      </tbody>
-    </table>
+        <div v-for="shop in shops()">
+          <div v-if="shop.flag==0" class="tr personRow pointer row" @click='fillOutPersonMaterial(shop.objectId,shop.flag,shop.realName,shop.phoneNumber,shop.email,shop.idCard,shop.idCardExpireTimeStart,shop.idCardExpireTimeEnd,shop.frontIdCard,shop.backIdCard,shop.handIdCard,shop.alipay,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><div class="col-md-4">{{shop.realName}}</div><div class="col-md-4">{{shop.phoneNumber}}</div><div class="col-md-4">个人</div></div>
+          <div v-if="shop.flag==1" class="tr personRow pointer row" @click='fillOutCompanyMaterial(shop.objectId,shop.flag,shop.uniformSocialCreditCode,shop.bussinessLicense,shop.legalPersonName,shop.legalPersonPhoneNumber,shop.legalPersonEmail,shop.legalPersonIdCard,shop.legalPersonExpireTimeStart,shop.legalPersonExpireTimeEnd,shop.legalPersonFrontIdCard,shop.legalPersonBackIdCard,shop.alipay,shop.managerRealName,shop.managerEmail,shop.managerPhoneNumber,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><div class="col-md-4">{{shop.managerRealName}}</div><div class="col-md-4">{{shop.managerPhoneNumber}}</div><div class="col-md-4">企业</div></div>
+        </div>
+
+    </div>
+
 
 
   <div class="checkPersonMaterial hide">
@@ -47,7 +48,7 @@
     <hr>
 
     <div class="shop_name">
-    店铺名称: <span class="answer">{{shop_name}}</span>
+    店铺名称: <span class="answer">{{shopName}}</span>
     </div>
     <div class="brandName">
     品牌名称: <span class="answer">{{brandName}}</span>
@@ -149,54 +150,54 @@
   export default {
     data:function(){
       return {
-      	personMaterial:"",
-      	companyMaterial:"",
-      	name:"",
-      	phoneNumber:"",
-      	email:"",
-      	IdCard:"",
-      	idCardExpireTimeStart:"",
-      	idCardExpireTimeEnd:"",
-      	frontIdCard:"",
-      	backIdCard:"",
-      	handIdCard:"",
-      	alipay:"",
-      	shop_name:"",
-      	brandName:"",
-      	brandLogo:"",
-      	brandDescription:"",
-              uniformSocialCreditCode:"",
-      	bussinessLicense:"",
-      	legalPersonName:"",
-      	legalPersonPhoneNumber:"",
-      	legalPersonEmail:"",
-      	legalPersonIdCard:"",
-      	legalPersonExpireTimeStart:"",
-      	legalPersonExpireTimeEnd:"",
-      	legalPersonFrontIdCard:"",
-      	legalPersonBackIdCard:"",
-              managerRealName:"",
-      	managerEmail:"",
-      	managerPhoneNumber:"",
-      	shopName:"",
-      	id:"",
-      	type:"",
+        personMaterial:"",
+        companyMaterial:"",
+        realName:"",
+        phoneNumber:"",
+        email:"",
+        idCard:"",
+        idCardExpireTimeStart:"",
+        idCardExpireTimeEnd:"",
+        frontIdCard:"",
+        backIdCard:"",
+        handIdCard:"",
+        alipay:"",
+        shopName:"",
+        brandName:"",
+        brandLogo:"",
+        brandDescription:"",
+        uniformSocialCreditCode:"",
+        bussinessLicense:"",
+        legalPersonName:"",
+        legalPersonPhoneNumber:"",
+        legalPersonEmail:"",
+        legalPersonIdCard:"",
+        legalPersonExpireTimeStart:"",
+        legalPersonExpireTimeEnd:"",
+        legalPersonFrontIdCard:"",
+        legalPersonBackIdCard:"",
+        managerRealName:"",
+        managerEmail:"",
+        managerPhoneNumber:"",
+        shopName:"",
+        id:"",
+        type:"",
       }
     },
     props:["forbiddenshops"],
     methods: {
      toggleShow(id,type){
        var show = $(".settleForbiddenVue .shown");
-       var mainHide = $(".table.hide");
+       var mainHide = $(".t.hide");
        if(mainHide.hasClass('hide')){
          mainHide.removeClass('hide').addClass('shown');
        }
-       if(type == "个人"){
+       if(type == 0){
        
        var hide = $(".checkPersonMaterial.hide");
        
        }
-       if(type == "企业"){
+       if(type == 1){
        
        var hide = $(".checkCompanyMaterial.hide");
        }
@@ -207,20 +208,20 @@
          hide.removeClass("hide").addClass("shown");
        }
      },
-     fillOutPersonMaterial(id,type,name,phoneNumber,email,IdCard,idCardExpireTimeStart,idCardExpireTimeEnd,frontIdCard,backIdCard,handIdCard,alipay,shop_name,brandName,brandLogo,brandDescription,){
+     fillOutPersonMaterial(id,type,name,phoneNumber,email,IdCard,idCardExpireTimeStart,idCardExpireTimeEnd,frontIdCard,backIdCard,handIdCard,alipay,shop_name,brandName,brandLogo,brandDescription){
        this.id = id;
-       this.name = name;
+       this.realName = name;
        this.type = type;
        this.phoneNumber = phoneNumber;
        this.email = email;
-       this.IdCard = IdCard;
+       this.idCard = IdCard;
        this.idCardExpireTimeStart = idCardExpireTimeStart;
        this.idCardExpireTimeEnd = idCardExpireTimeEnd;
        this.frontIdCard = frontIdCard;
        this.backIdCard = backIdCard;
        this.handIdCard = handIdCard;
        this.alipay = alipay;
-       this.shop_name = shop_name;
+       this.shopName = shop_name;
        this.brandName = brandName;
        this.brandLogo = brandLogo;
        this.brandDescription = brandDescription;
@@ -252,12 +253,25 @@
      
      },
      shops(){
-      let i = this.auditshops;
+      let i = this.forbiddenshops;
       let shops = i.map(function(item){
-        return item.infoCompany;
+        
+        if(item.type == 1 && item.settleInCompany!=null){
+          console.log(item);
+          item.settleInCompany.flag = 1;
+          return item.settleInCompany;
+        }
+        if(item.type == null && item.settleInUser!=null){
+          console.log(item);
+          item.settleInUser.flag = 0;
+          return item.settleInUser;
+        } 
+        
+        return {};
+        
       });
       return shops;
-    },
+  },
      
 
 

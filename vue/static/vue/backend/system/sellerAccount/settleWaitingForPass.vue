@@ -1,15 +1,15 @@
 <template>
-  <div class="settleWaitingForPassVue">
-    <table class="table table-striped one shown" v-if="auditshops.length > 0">
-      <thead>
-        <tr><td>账号名</td><td>手机号</td>入驻类型</td></tr>
-      </thead>
+  <div class="container settleWaitingForPassVue">
+    <div class="t one shown" v-if="auditshops.length > 0">
+ 
+        <div class="row"><div class="col-md-4">账号名</div><div class="col-md-4">手机号</div><div class="col-md-4">入驻类型</div></div>
 
-      <tbody>
-        <tr v-for="shop in shops()" v-if="shop.type=0" class="personRow pointer" @click='fillOutPersonMaterial(shop.objectId,shop.type,shop.realName,shop.phoneNumber,shop.email,shop.IdCard,shop.idCardExpireTimeStart,shop.idCardExpireTimeEnd,shop.frontIdCard,shop.backIdCard,shop.handIdCard,shop.alipay,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><td>shop.realName</td><td>shop.phoneNumber</td><td>个人</td></tr>
-        <tr v-for="shop in shops()" v-if="shop.type=1" class="personRow pointer" @click='fillOutCompanyMaterial(id,shop.type,shop.uniformSocialCreditCode,shop.bussinessLicense,shop.legalPersonName,shop.legalPersonPhoneNumber,shop.legalPersonEmail,shop.legalPersonIdCard,shop.legalPersonExpireTimeStart,shop.legalPersonExpireTimeEnd,shop.legalPersonFrontIdCard,shop.legalPersonBackIdCard,shop.alipay,shop.managerRealName,shop.managerEmail,shop.managerPhoneNumber,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><td>{{shop.managerRealName}}</td><td>{{shop.managerPhoneNumber}}</td><td>企业</td></tr>
-      </tbody>
-    </table>
+        <div v-for="shop in shops()">
+          <div v-if="shop.flag==0" class="tr personRow pointer row" @click='fillOutPersonMaterial(shop.objectId,shop.flag,shop.realName,shop.phoneNumber,shop.email,shop.idCard,shop.idCardExpireTimeStart,shop.idCardExpireTimeEnd,shop.frontIdCard,shop.backIdCard,shop.handIdCard,shop.alipay,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><div class="col-md-4">{{shop.realName}}</div><div class="col-md-4">{{shop.phoneNumber}}</div><div class="col-md-4">个人</div></div>
+          <div v-if="shop.flag==1" class="tr personRow pointer row" @click='fillOutCompanyMaterial(shop.objectId,shop.flag,shop.uniformSocialCreditCode,shop.bussinessLicense,shop.legalPersonName,shop.legalPersonPhoneNumber,shop.legalPersonEmail,shop.legalPersonIdCard,shop.legalPersonExpireTimeStart,shop.legalPersonExpireTimeEnd,shop.legalPersonFrontIdCard,shop.legalPersonBackIdCard,shop.alipay,shop.managerRealName,shop.managerEmail,shop.managerPhoneNumber,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><div class="col-md-4">{{shop.managerRealName}}</div><div class="col-md-4">{{shop.managerPhoneNumber}}</div><div class="col-md-4">企业</div></div>
+        </div>
+
+    </div>
 
 
   <div class="checkPersonMaterial hide">
@@ -17,7 +17,7 @@
     <hr>
 
     <div class="name">
-    入驻真实姓名: <span class="answer">{{managerRealName}}</span>
+    入驻真实姓名: <span class="answer">{{realName}}</span>
     </div>
     <div class="phoneNumber">
     手机号: <span class="answer">{{phoneNumber}}</span>
@@ -26,19 +26,19 @@
     电子邮箱: <span class="answer">{{email}}</span>
     </div>
     <div class="IdCard">
-    身份证号: <span class="answer">{{IdCard}}</span>
+    身份证号: <span class="answer">{{idCard}}</span>
     </div>
     <div class="idCardTime">
     身份证有效期: <span class="answer">{{idCardExpireTimeStart}}至{{idCardExpireTimeEnd}}}</span>
     </div>
     <div class="frontIdCard">
-    身份证正面: <span class="answer">{{frontIdCard}}</span>
+    身份证正面: <img class="answer pointer" :src="frontIdCard" width="100px" height="100px">
     </div>
     <div class="backIdCard">
-    身份证反面: <span class="answer">{{backIdCard}}</span>
+    身份证反面: <img class="answer pointer" :src="backIdCard" width="100px" height="100px">
     </div>
     <div class="handIdCard">
-    手持身份证照片: <span class="answer">{{handIdCard}}</span>
+    手持身份证照片: <img class="answer pointer" :src="handIdCard" width="100px" height="100px">
     </div>
     <div class="alipay">
     支付宝账号: <span class="answer">{{alipay}}</span>
@@ -170,14 +170,14 @@
       	name:"",
       	phoneNumber:"",
       	email:"",
-      	IdCard:"",
+      	idCard:"",
       	idCardExpireTimeStart:"",
       	idCardExpireTimeEnd:"",
       	frontIdCard:"",
       	backIdCard:"",
       	handIdCard:"",
       	alipay:"",
-      	shop_name:"",
+      	shopName:"",
       	brandName:"",
       	brandLogo:"",
       	brandDescription:"",
@@ -203,7 +203,7 @@
     methods: {
      toggleShow(id,type){
        var show = $(".settleWaitingForPassVue .shown");
-       var mainHide = $(".table.hide");
+       var mainHide = $(".t.hide");
        if(mainHide.hasClass('hide')){
          mainHide.removeClass('hide').addClass('shown');
        }
@@ -223,20 +223,20 @@
          hide.removeClass("hide").addClass("shown");
        }
      },
-     fillOutPersonMaterial(id,type,name,phoneNumber,email,IdCard,idCardExpireTimeStart,idCardExpireTimeEnd,frontIdCard,backIdCard,handIdCard,alipay,shop_name,brandName,brandLogo,brandDescription,){
+     fillOutPersonMaterial(id,type,name,phoneNumber,email,IdCard,idCardExpireTimeStart,idCardExpireTimeEnd,frontIdCard,backIdCard,handIdCard,alipay,shop_name,brandName,brandLogo,brandDescription){
        this.id = id;
-       this.name = name;
+       this.realName = name;
        this.type = type;
        this.phoneNumber = phoneNumber;
        this.email = email;
-       this.IdCard = IdCard;
+       this.idCard = IdCard;
        this.idCardExpireTimeStart = idCardExpireTimeStart;
        this.idCardExpireTimeEnd = idCardExpireTimeEnd;
        this.frontIdCard = frontIdCard;
        this.backIdCard = backIdCard;
        this.handIdCard = handIdCard;
        this.alipay = alipay;
-       this.shop_name = shop_name;
+       this.shopName = shop_name;
        this.brandName = brandName;
        this.brandLogo = brandLogo;
        this.brandDescription = brandDescription;
@@ -268,7 +268,7 @@
      
      },
      pass(id,state){
-       //alert("objectId: "+id+" state: "+state);
+       let _this = this;
        if(state == 1){
     	 swal(
       	   {
@@ -280,17 +280,22 @@
       	     confirmButtonText:"是的，我要让它入驻",
       	     confirmButtonColor:"ec6c62",
       	   },function(){
-      		axios.post('https://unpkg.com/axios/dist/axios.min.js', {
-      		  })
-      		  .then(function (response) {
-      		    swal("此商家成功入驻");
-      		  })
-      		  .catch(function (error) {
-      		    swal("无法入驻此商家...");
-      		  });
-      	     
-      	   }
-       );
+              $.ajax({
+                type: 'get',
+                url: '/Shop/ReviewSettleIn/',
+                data: {
+                   'objectId': _this.id,
+                   'state': '2',
+                },
+                success: function (data) {
+                  swal("此商家成功入驻");
+                  
+                },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+                 swal("无法入驻此商家...");
+                },
+            });
+      	   });
       }else{
     	 swal(
       	   {
@@ -302,24 +307,34 @@
       	     confirmButtonText:"是的，我要拒绝它入驻",
       	     confirmButtonColor:"ec6c62",
       	   },function(){
-      		axios.post('https://unpkg.com/axios/dist/axios.min.js', {
-      		  })
-      		  .then(function (response) {
-      		    swal("此商家被拒绝入驻");
-      		  })
-      		  .catch(function (error) {
-      		    swal("无法拒绝此商家...");
-      		  });
-      	     
-      	   }
-       );
-
-    }
+          		$.ajax({
+                    type: 'get',
+                    url: '/Shop/ReviewSettleIn/',
+                    data: {
+                       'objectId': _this.id,
+                       'state': new Number(1),
+                    },
+                    success: function (data) {
+                      swal("已成功拒绝此商家入驻");
+                      
+                    },
+                   error: function(XMLHttpRequest, textStatus, errorThrown) {
+                     swal("无法拒绝此商家入驻");
+                    },
+              });
+          });
+  }
   },
   shops(){
       let i = this.auditshops;
       let shops = i.map(function(item){
-        return item.infoCompany;
+        if(item.type == 1){
+          item.infoCompany.flag = 1;
+          return item.infoCompany;
+        }else{
+          item.infoPersonal.flag = 0;
+          return item.infoPersonal;
+        }        
       });
       return shops;
   },
@@ -369,5 +384,14 @@
     margin: 10px;
     cursor:pointer;
     
+  }
+  .personRow{
+    position: relative;
+    top: 20px;
+    border-top:1px solid #c5c1c1;
+  }
+  .frontIdCard,.handIdCard,.backIdCard{
+      height: 100px;
+      margin: 100px 0;
   }
 </style>

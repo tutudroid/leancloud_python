@@ -18,13 +18,13 @@ def resetPassword(request):
         try:
             leancloud.cloudfunc.verify_sms_code(phoneNumber, verifyCode)
         except LeanCloudError as e:
-            return return_msg( e.error )
+            return return_msg(e.error)
         try:
             leancloud.User.reset_password_by_sms_code(phoneNumber, password)
         except LeanCloudError as e:
-            return return_msg( e.error )
-        return return_msg( 'success' )
-    return return_msg( 'fail' )
+            return return_msg(e.error)
+        return return_msg('success')
+    return return_msg('fail')
 
 
 @require_http_methods(['POST', 'GET'])
@@ -47,16 +47,16 @@ def login(request):
                     if user.get(attribute_state) != 0:
                         if user.get(attribute_state) == STATE_FORBIDDEN:
                             print('user is forbidden')
-                            return return_msg( '禁止该用户登陆', status=404 )
+                            return return_msg('禁止该用户登陆', status=404)
                         if user.get(attribute_state) == STATE_DELETE:
                             print('user is delete')
-                            return return_msg( '该用户不存在', status=404 )
+                            return return_msg('该用户不存在', status=404)
                     print('user state is not true')
                     return HttpResponseRedirect('/Account/Profile/')
-                return return_msg( '用户不存在', status=404 )
+                return return_msg('用户不存在', status=404)
             except LeanCloudError as e:
                 print(e.error)
-                return return_msg( e.error, status=404 )
+                return return_msg(e.error, status=404)
         print('username or password is null')
     if request.method == 'GET':
         return render(request, 'login.html')
@@ -76,11 +76,13 @@ def profile(request):
     user.set_instance(current_user)
     userData = user.output_User()
     role = user.get_attribute_role()
-    if role and 'ProductAdmin' in role:
+    if role and ROLE_PRODUCT in role:
         settleInApplication = SettleInApplication()
         if not settleInApplication.find_User(current_user):
             settleInApplication.create_Object()
             settleInApplication.set_attribute_user(user.get_instance())
+    if ROLE_SHOP:
+        render(request, 'sellerControl.html')
     return render(request, 'index.html', {'User': userData})
 
 
@@ -110,14 +112,14 @@ def getVerifyCode_Register(request):
         user = _User()
         user.get_User_phoneNumber(phoneNumber)
         if user:
-            return return_msg( '该手机号已注册' )
+            return return_msg('该手机号已注册')
         else:
             try:
                 leancloud.cloudfunc.request_sms_code(phone_number=phoneNumber, template="萌生活", params={})
                 message = '短信发送成功'
             except LeanCloudError as e:
                 message = e.error
-            return return_msg( message )
+            return return_msg(message)
     return illegal_access()
 
 
@@ -136,7 +138,7 @@ def getVerifyCode(request):
             message = 'success'
         except LeanCloudError as e:
             message = e.error
-        return return_msg( message )
+        return return_msg(message)
     return illegal_access()
 
 
@@ -153,12 +155,12 @@ def getVerifyCode_PhoneNumber(request):
     user = leancloud.User.get_current()
     userPhoneNumber = user.get_mobile_phone_number()
     if userPhoneNumber != phoneNumber:
-        return return_msg( '输入手机号与注册手机号不一致' )
+        return return_msg('输入手机号与注册手机号不一致')
 
     if len(phoneNumber) == 11 and phoneNumber.isdigit():
         try:
             leancloud.cloudfunc.request_sms_code(phone_number=phoneNumber, template="萌生活", params={})
-            return return_msg( '短信发送成功' )
+            return return_msg('短信发送成功')
         except LeanCloudError as e:
-            return return_msg( e.error )
-    return return_msg( '手机号不符合格式' )
+            return return_msg(e.error)
+    return return_msg('手机号不符合格式')

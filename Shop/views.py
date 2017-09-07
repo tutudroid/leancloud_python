@@ -8,7 +8,7 @@ from ClassLibrary.ShopClass.SettleInApplication import SettleInApplication
 
 
 def login(request):
-    return render(request, 'login.html')
+    return render(request, 'sellerLogin.html')
 
 
 @login_required
@@ -226,3 +226,30 @@ def EditFreight(request):
         shop.get_Object(shopObjectId)
         shop.add_attribute_relation(attribute_freightModel, freight.get_instance())
     return return_msg(freight.output_FreightModel())
+
+
+@login_required
+@permissions([ROLE_SHOP])
+@require_http_methods(['POST'])
+def SettleModifyPhoneNumber(request):
+    """
+    改变用户的手机号
+    :param request: 
+    :return: 
+    """
+    phoneNumber = request.POST.get(attribute_phoneNumber)
+    phoneNumber_new = request.POST.get(attribute_phoneNumber_New)
+    if len(phoneNumber) == 11 and phoneNumber.isdigit():
+        try:
+            user = _User()
+            user.get_User_phoneNumber(phoneNumber)
+            if len(phoneNumber_new) == 11 and phoneNumber_new.isdigit():
+                user.set_attribute_mobilePhoneNumber(phoneNumber_new)
+                shop = Shop()
+                shop.get_Object(user.get_shop())
+                shop.set_attribute_phoneNumber(phoneNumber_new)
+                return HttpResponse('success')
+        except LeanCloudError as e:
+            return HttpResponse(e.error)
+    return illegal_access()
+

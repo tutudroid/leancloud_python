@@ -401,7 +401,7 @@ class ProductGroup(Object):
                 attribute_storeCategory: self.get_attribute_storeCategory(),
                 attribute_mainImage: self.get_attribute_mainImage(),
                 attribute_imageList: self.get_attribute_imageList(),
-                attribute_comment: self.get_attribute_comment(attribute_state, 0, 1, 10),
+                attribute_comment: self.get_attribute_comment(attribute_state, STATE_OK, 1, 10),
                 attribute_briefDescription: self.get_attribute_briefDescription(),
                 attribute_detailDescription: self.get_attribute_detailDescription(),
                 attribute_shop: self.get_attribute_Object_Id(attribute_shop),
@@ -412,7 +412,7 @@ class ProductGroup(Object):
                 attribute_state: self.get_attribute_state(),
                 attribute_collectionUser: self.get_attribute_collectionUser(),
                 attribute_dispatchPlace: self.get_attribute_dispatchPlace(),
-                attribute_commentCount: self.get_attribute_comment_count(attribute_state, 0)
+                attribute_commentCount: self.get_attribute_comment_count(attribute_state, STATE_OK)
             }
             print(data)
             return data
@@ -460,6 +460,12 @@ class ProductGroup(Object):
             self.destroy_Object()
             return shopObjectId
         return None
+
+
+    def delete_ProductGroup(self):
+        if self.instance:
+            self.delete_Object()
+
 
 
     def create_ProductGroup(self, data, shop):
@@ -751,3 +757,6 @@ class ProductGroup(Object):
             attribute_delete_detailDescription: request.POST.getlist(attribute_delete_detailDescription, []),
         }
         return product
+
+    def copy_Tmp_ProductGroup(self, shopProductGroup):
+        pass

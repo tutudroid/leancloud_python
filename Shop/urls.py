@@ -24,5 +24,8 @@ urlpatterns = [
 
     url(r'^CreateSettleIn/$', settleInViews.CreateSettleIn, name='CreateSettleIn'),
     url(r'^ReviewSettleIn/$', settleInViews.ReviewSettleIn, name='ReviewSettleIn'),
-    url(r'^AllSettleIn/$', settleInViews.AllSettleIn, name='AllSettleIn')
+    url(r'^AllSettleIn/$', settleInViews.AllSettleIn, name='AllSettleIn'),
+    url(r'^SettleModifyPhoneNumber/$', settleInViews.SettleModifyPhoneNumber, name='SettleModifyPhoneNumber'),
+
+
 ]

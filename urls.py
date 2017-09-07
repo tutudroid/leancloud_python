@@ -29,6 +29,4 @@ urlpatterns = [
     # 初始化
     url(r'^Initiation/', include('Initiation.urls', namespace='Initiation')),
 
-    # 店家上传商品
-    url(r'^TmpProductGroup/', include('TmpProductGroup.urls', namespace='TmpProductGroup')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

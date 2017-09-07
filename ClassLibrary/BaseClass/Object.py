@@ -195,6 +195,12 @@ class Object(object):
             return True
         return None
 
+    def get_attribute_relation(self, attribute):
+        if self.instance:
+            data = Base.get_relation_data(self.instance.get(attribute_objectId), self.className, attribute)
+            return data
+        return []
+
     def get_attribute(self, attribute):
         if self.instance:
             return self.instance.get(attribute)

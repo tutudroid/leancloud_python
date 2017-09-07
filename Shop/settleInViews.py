@@ -101,3 +101,26 @@ def ReviewSettleIn(request):
 
         return return_msg('success')
     return return_msg('parameter is error')
+
+
+@login_required
+@require_http_methods(['POST'])
+def SettleModifyPhoneNumber(request):
+    """
+    改变用户的手机号
+    :param request: 
+    :return: 
+    """
+    phoneNumber = request.POST.get(attribute_phoneNumber)
+    phoneNumber_new = request.POST.get(attribute_phoneNumber_New)
+    objectId = request.POST.get(attribute_objectId)
+    if objectId and phoneNumber_new == phoneNumber and len(phoneNumber) == 11 and phoneNumber.isdigit():
+        settle = SettleInUser()
+        settle.get_Object(objectId)
+        settle.set_attribute_value(attribute_mobilePhoneNumber, phoneNumber)
+        settleCompany = SettleInApplication()
+        settleCompany.get_Object(objectId)
+        settleCompany.set_attribute_value(attribute_managerPhoneNumber, phoneNumber)
+    return return_msg('parameter is error')
+
+

@@ -105,6 +105,7 @@ attribute_saleCategoryRecommend = 'saleCategoryRecommend'
 # productGroup
 
 STATE_SHELF_ON = 0
+STATE_SHELF_OFF = 1
 STATE_NO_FINISH = 2
 
 attribute_propertyOption = 'propertyOption'

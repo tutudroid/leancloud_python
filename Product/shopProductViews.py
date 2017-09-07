@@ -14,7 +14,7 @@ from ClassLibrary.ProductClass.ShopProduct import ShopProduct
 
 @login_required
 @permission(ROLE_SHOP)
-def createProductGroup(request):
+def CreateShopProductGroup(request):
     """
     创建商品组, 或者修改商品组
     :param request: 
@@ -49,7 +49,7 @@ def createProductGroup(request):
 
 @login_required
 @permissions([ROLE_SHOP])
-def editProductGroup(request):
+def EditShopProductGroup(request):
     """
     编辑商品组
     :param request: 

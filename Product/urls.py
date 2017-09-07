@@ -2,21 +2,30 @@
 
 from django.conf.urls import url
 from Product import productViews, categoryViews
+from Product import shopProductViews
 
 urlpatterns = [
 
     # product Management
     # product manage
-    url(r'^ShopProductGroup/$', productViews.shop_ProductGroup, name='ShopProductGroup'),
-    url(r'^CreateProductGroup/$', productViews.createProductGroup, name='CreateProductGroup'),
-    url(r'^ProductGroupDetail/$', productViews.productGroupDetail, name='ProductGroupDetail'),
-    url(r'^EditProductGroup/$', productViews.editProductGroup, name='EditProductGroup'),
+    url(r'^ProductGroupDetail/$', productViews.ProductGroupDetail, name='ProductGroupDetail'),
+
+    url(r'^AuditProductGroup/$', productViews.AuditProductGroup, name='AuditProductGroup'),
+    url(r'^ShopAllProductGroup/$', productViews.ShopAllProductGroup, name='ShopAllProductGroup'),
+    url(r'^ShopAllShopProductGroup/$', productViews.ShopAllShopProductGroup, name='ShopAllShopProductGroup'),
+
+    url(r'^CreateProductGroup/$', productViews.CreateProductGroup, name='CreateProductGroup'),
+    url(r'^EditProductGroup/$', productViews.EditProductGroup, name='EditProductGroup'),
     url(r'^SearchProductGroup/$', productViews.SearchProductGroup, name='SearchProductGroup'),
     url(r'^ProductGroupBriefDetail/$', productViews.ProductGroupBriefDetail, name='ProductGroupBriefDetail'),
     url(r'^DisposeProductGroup/$', productViews.DisposeProductGroup, name='DisposeProductGroup'),
-    url(r'^AuditProductGroup/$', productViews.AuditProductGroup, name='AuditProductGroup'),
 
+    # 店铺创建，修改，显示未审核商品
+    url(r'^CreateShopProductGroup/$', shopProductViews.CreateShopProductGroup, name='CreateShopProductGroup'),
+    url(r'^EditShopProductGroup/$', shopProductViews.EditShopProductGroup, name='EditShopProductGroup'),
+    url(r'^ShopProductGroupDetail/$', shopProductViews.ShopProductGroupDetail, name='ShopProductGroupDetail'),
 
+    url(r'^ShowComments/$', productViews.ShowComments, name='ShowComments'),
 
     url(r'^CreateStoreCategory/$', categoryViews.createStoreCategory, name='CreateStoreCategory'),
     url(r'^ShowStoreCategory/$', categoryViews.ShowStoreCategory, name='ShowStoreCategory'),
@@ -30,7 +39,6 @@ urlpatterns = [
     url(r'^sortSaleCategorySecond/$', categoryViews.sortSaleCategorySecond, name='sortSaleCategorySecond'),
     url(r'^sortSaleCategoryFirst/$', categoryViews.sortSaleCategoryFirst, name='sortSaleCategoryFirst'),
 
-    url(r'^ShowComments/$', productViews.ShowComments, name='ShowComments'),
     url(r'^SaleCategoryRecommend/$', categoryViews.SaleCategoryRecommend, name='SaleCategoryRecommend'),
     url(r'^DelSaleCategoryRecommend/$', categoryViews.DelSaleCategoryRecommend, name='DelSaleCategoryRecommend'),
 ]

@@ -23,6 +23,7 @@ from ClassLibrary.ShopClass.BrandTable import BrandTable
 
 from ClassLibrary.CategoryClass.SaleCategory import SaleCategory
 from ClassLibrary.CategoryClass.StoreCategory import StoreCategory
+from ClassLibrary.CategoryClass.StoreCategoryFirst import StoreCategoryFirst
 from ClassLibrary.ProductClass.ProductService import ProductService
 from ClassLibrary.Frieght.FreightModel import FreightModel
 from ClassLibrary.ProductClass.ShopProductGroup import ShopProductGroup
@@ -43,8 +44,6 @@ def CreateAll(request):
     3。 创建app用户创建
     """
 
-
-    content = {}
     # 创建用户
     user = User._User()
     data = {
@@ -114,7 +113,7 @@ def CreateAll(request):
     saleCategoryFirst.set_attribute_saleCategorySecond(saleCategorySecond.get_instance())
 
     # store first
-    storeFirst = StoreCategory(Class_Name_StoreCategoryFirst)
+    storeFirst = StoreCategoryFirst()
     data = {
         attribute_objectId: '',
         attribute_name: 'Class_Name_StoreCategoryFirst',
@@ -597,7 +596,7 @@ def Category(request):
     saleCategoryFirst.set_attribute_saleCategorySecond(saleCategorySecond.get_instance())
 
     # store first
-    storeFirst = StoreCategory(Class_Name_StoreCategoryFirst)
+    storeFirst = StoreCategoryFirst()
     data = {
         attribute_objectId: '',
         attribute_name: 'Class_Name_StoreCategoryFirst',
@@ -629,13 +628,14 @@ def Category(request):
     content['SaleCategory'] = saleCategoryFirst.output_SaleCategoryFirst()
     return render(request, 'test_class.html', {'content': content})
 
+from ClassLibrary.CategoryClass.StoreCategoryFirst import get_StoreCategory_All
 
 def AllCategory(request):
 
     content = {}
 
     content['SaleCategoryAll'] = SaleCategory().get_SaleCategory_All()
-    content['StoreCategoryAll'] = StoreCategory().get_StoreCategory_All()
+    content['StoreCategoryAll'] = get_StoreCategory_All()
     print(content)
     return render(request, 'test_class.html', {'content': content})
 

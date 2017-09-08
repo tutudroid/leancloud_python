@@ -1,5 +1,4 @@
 from ClassLibrary.BaseClass.Object import *
-import ClassLibrary.ProductClass.ProductGroup_New
 
 
 class StoreCategory(Object):
@@ -64,31 +63,6 @@ class StoreCategory(Object):
             return store
         return None
 
-    def get_attribute_storeCategorySecond(self):
-        if self.instance:
-            store = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_StoreCategoryFirst, attribute_storeCategorySecond, attribute_state, STATE_OK)
-            if store:
-                returnList = []
-                for foo in store:
-                    second = StoreCategory(Class_Name_StoreCategorySecond)
-                    second.set_instance(foo)
-                    returnList.append(second.output_StoreCategorySecond())
-                return returnList
-        return None
-
-    def get_attribute_storeCategoryThird(self):
-        if self.instance:
-            store = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_StoreCategorySecond, attribute_storeCategoryThird, attribute_state, STATE_OK)
-            if store:
-                returnList = []
-                for foo in store:
-                    third = StoreCategory(Class_Name_StoreCategoryThird)
-                    third.set_instance(foo)
-                    returnList.append(third.output_StoreCategory())
-                print(returnList)
-                return returnList
-        return None
-
 
     def get_attribute_storeCategoryFirst(self):
         self.instance = self.instance
@@ -147,19 +121,6 @@ class StoreCategory(Object):
             return data
         return None
 
-    def output_StoreCategorySecond(self):
-        if self.instance:
-            data = self.output_StoreCategory()
-            data.update({attribute_storeCategoryThird: self.get_attribute_storeCategoryThird()})
-            return data
-        return None
-
-    def output_StoreCategoryFirst(self):
-        if self.instance:
-            data = self.output_StoreCategory()
-            data.update({attribute_storeCategorySecond: self.get_attribute_storeCategorySecond()})
-            return data
-        return None
 
     def set_attribute_productGroup(self, productGroup):
         if self.instance and productGroup:
@@ -197,21 +158,6 @@ class StoreCategory(Object):
             return True
         return None
 
-    def get_StoreCategory_All(self):
-        """
-        获得库存分类表
-        :return: 
-        """
-        self.instance = self.instance
-        storeCategoryFirst = Base.queryInstanceAttribute(Class_Name_StoreCategoryFirst, attribute_state, 0)
-        if storeCategoryFirst:
-            storeCategoryList = []
-            for foo in storeCategoryFirst:
-                first = StoreCategory(Class_Name_StoreCategoryFirst)
-                first.set_instance(foo)
-                storeCategoryList.append(first.output_StoreCategoryFirst())
-            return storeCategoryList
-        return None
 
     def input_Category(self, request):
         self.instance = self.instance
@@ -220,4 +166,3 @@ class StoreCategory(Object):
             attribute_objectId: request.POST.get(attribute_objectId, ''),
         }
         return data
-

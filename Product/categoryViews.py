@@ -5,7 +5,7 @@ from ClassLibrary.CategoryClass.StoreCategory import StoreCategory
 from ClassLibrary.CategoryClass.SaleCategoryRecommend import SaleCategoryRecommend
 from ClassLibrary.ProductClass.ProductGroup_New import ProductGroup
 from ClassLibrary.ImageClass.Image import ImageBase
-from ClassLibrary.CategoryClass.StoreCategoryFirst import StoreCategoryFirst
+from ClassLibrary.CategoryClass.StoreCategoryFirst import StoreCategoryFirst, get_StoreCategory_All
 from ClassLibrary.CategoryClass.StoreCategorySecond import StoreCategorySecond
 from ClassLibrary.CategoryClass.StoreCategoryThird import StoreCategoryThird
 
@@ -134,7 +134,7 @@ def ShowStoreCategory(request):
     :return: 
     """
     request.method = request.method
-    allData = StoreCategory().get_StoreCategory_All()
+    allData = get_StoreCategory_All()
     return return_data(Class_Name_StoreCategory, allData)
 
 
@@ -176,7 +176,7 @@ def createStoreCategory(request):
                     third = StoreCategoryThird()
                     third.create_StoreCategoryThird(koo, second.get_instance())
                     second.add_attribute_relation(attribute_storeCategoryThird, third.get_instance())
-    allData = StoreCategory().get_StoreCategory_All()
+    allData = get_StoreCategory_All()
     return return_data(Class_Name_SaleCategory, allData)
 
 

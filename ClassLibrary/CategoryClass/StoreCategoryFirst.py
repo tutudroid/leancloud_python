@@ -41,3 +41,19 @@ class StoreCategoryFirst(StoreCategory):
 
     def delete_Category(self):
         return None
+
+
+def get_StoreCategory_All():
+    """
+    获得库存分类表
+    :return: 
+    """
+    storeCategoryFirst = Base.queryInstanceAttribute(Class_Name_StoreCategoryFirst, attribute_state, 0)
+    if storeCategoryFirst:
+        storeCategoryList = []
+        for foo in storeCategoryFirst:
+            first = StoreCategoryFirst()
+            first.set_instance(foo)
+            storeCategoryList.append(first.output_StoreCategoryFirst())
+        return storeCategoryList
+    return None

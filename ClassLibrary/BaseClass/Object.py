@@ -16,7 +16,6 @@ function：
             __print_msg__()
 """
 from ClassLibrary import Base
-import leancloud
 import logging
 from ClassLibrary.BaseClass.Attribute_Parameter import *
 

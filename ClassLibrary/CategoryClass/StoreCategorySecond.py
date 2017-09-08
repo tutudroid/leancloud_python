@@ -17,6 +17,19 @@ class StoreCategorySecond(StoreCategory):
             return data
         return None
 
+    def get_attribute_storeCategoryThird(self):
+        if self.instance:
+            store = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_StoreCategorySecond, attribute_storeCategoryThird, attribute_state, STATE_OK)
+            if store:
+                returnList = []
+                for foo in store:
+                    third = StoreCategory(Class_Name_StoreCategoryThird)
+                    third.set_instance(foo)
+                    returnList.append(third.output_StoreCategory())
+                print(returnList)
+                return returnList
+        return None
+
     def delete_Category(self):
         First = StoreCategory(Class_Name_StoreCategoryFirst)
         firstInstance = self.get_attribute_storeCategoryFirst()

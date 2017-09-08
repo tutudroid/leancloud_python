@@ -285,7 +285,7 @@
                 url: '/Shop/ReviewSettleIn/',
                 data: {
                    'objectId': _this.id,
-                   'state': '2',
+                   'state': 2,
                 },
                 success: function (data) {
                   swal("此商家成功入驻");
@@ -312,7 +312,7 @@
                     url: '/Shop/ReviewSettleIn/',
                     data: {
                        'objectId': _this.id,
-                       'state': new Number(1),
+                       'state': 1,
                     },
                     success: function (data) {
                       swal("已成功拒绝此商家入驻");

@@ -2,8 +2,11 @@
  <div class="editStockCategory">
   <h2 @click="addFirstHtml()" class="addBtn"><span class="glyphicon glyphicon-plus"></span>加一级分类</h2>
   <div class="cateContent">
-    <h3 class="save link">保存</h3>
+    <h3 class="save link" @click="save()">保存</h3>
     <h3 class="oprate"><span class="title">分类名称</span><span class="title">--</span><span class="title">操作</span></h3>
+    <div class="stockCate">
+      <div class='grandFather mainContent' v-for='fcategory in stockcategorys'><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='grandFatherInput' :vlaue='fcategory.name'><span class='glyphicon glyphicon-remove remove link'></span><hr><div class='father' v-for='scategory in fcategory.storeCategorySecond'><span class='directLine'></span><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='fatherInput' :value="scategory.name"><span class='glyphicon glyphicon-remove remove link'></span><hr><div class='son' v-for='tcategory in scategory.storeCategoryThird'><span class='directLine add'></span><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='sonInput' :value='tcategory.name'><span class='glyphicon glyphicon-remove remove link'></span><hr></div><div class='addThird'><span class='directLine add'></span><button class='btn btn-primary thirdAdd'>添加三级子分类</button><hr></div></div><div class='addSecond'><span class='directLine'></span><button class='btn btn-primary secondAdd'>加二级子分类</button></div><hr style='border-top:3px solid #a00404'></div>
+    </div>
   </div>
  </div>
 </template>
@@ -21,43 +24,286 @@
       second:[],
       third:[],
       index:[],
+      fcount:0,
+      scount:0,
      }
-    
     },
+    props:['stockcategorys'],
     methods:{
       addFirstHtml(){
         let _this = this; 
-        let firstHtml = "<div class='grandFather mainContent'><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='grandFatherInput'><span class='glyphicon glyphicon-remove remove link'></span><hr><div class='father'><span class='directLine'></span><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='fatherInput'><span class='glyphicon glyphicon-remove remove link'></span><hr><div class='son'><span class='directLine add'></span><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='sonInput'><span class='glyphicon glyphicon-remove remove link'></span><hr></div><div class='addThird'><span class='directLine add'></span><button class='btn btn-primary thirdAdd'>添加三级子分类</button><hr></div></div><div class='addSecond'><span class='directLine'></span><button class='btn btn-primary secondAdd'>加二级子分类</button><hr style='border-top:3px solid #a00404'></div></div>";
-      	$(firstHtml).appendTo('.cateContent');
-      	$('.remove').bind('click',function(event){
-      	  _this.deleteHtml(event);
-      	});
-      	$('.secondAdd').bind('click',function(event){
+        let firstHtml = "<div class='grandFather mainContent'><span id='f"+this.fcount+"' class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='grandFatherInput'><span class='glyphicon glyphicon-remove remove link'></span><hr><div class='father'><span class='directLine'></span><span id='s"+this.scount+"' class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='fatherInput'><span class='glyphicon glyphicon-remove remove link'></span><hr><div class='son'><span class='directLine add'></span><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='sonInput'><span class='glyphicon glyphicon-remove remove link'></span><hr></div><div class='addThird'><span class='directLine add'></span><button id='addt"+this.scount+"' class='btn btn-primary thirdAdd'>添加三级子分类</button><hr></div></div><div class='addSecond'><span class='directLine'></span><button id='adds"+this.fcount+"' class='btn btn-primary secondAdd'>添加二级子分类</button></div><hr style='border-top:3px solid #a00404'></div>";
+      	$(firstHtml).prependTo('.stockCate');
+        let secondAdd = '#adds'+this.fcount;
+      	$(secondAdd).bind('click',function(event){
       	  _this.addSecondHtml(event);
       	});
-      	$('.thirdAdd').bind('click',function(event){
+        let thirdAdd = '#addt'+this.scount;
+      	$(thirdAdd).bind('click',function(event){
       	  _this.addThirdHtml(event);
       	});
+        $('.grandFather .remove').bind('click',function(event){
+          _this.deleteFirst(event);
+        });
+        $('.father .remove').bind('click',function(event){
+          _this.deleteSecond(event);
+        });
+        $('.son .remove').bind('click',function(event){
+          _this.deleteThird(event);
+        });
+        let ftriangle = '#f'+this.fcount;
+        $(ftriangle).bind('click',function(event){
+          _this.hide(event);
+        });
+        let striangle = '#s'+this.scount;
+        $(striangle).bind('click',function(event){
+          _this.hide(event);
+        });
+        this.fcount++;
+        this.scount++;
       },
       addSecondHtml(event){
+        let _this = this;
         let targetSecond = $(event.currentTarget).parent().parent();
       	let button = $(event.currentTarget).parent();
-      	let secondHtml = '<div class="father"><span class="directLine"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="fatherInput"><span class="glyphicon glyphicon-remove remove link"></span><hr><div class="son"><span class="directLine add"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="sonInput"><span class="glyphicon glyphicon-remove remove link"></span><hr></div><div class="addThird"><span class="directLine add"></span><button class="btn btn-primary thirdAdd">添加三级子分类</button><hr></div></div>';
+      	let secondHtml = '<div class="father"><span class="directLine"></span><span id="s'+this.scount+'" class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="fatherInput"><span class="glyphicon glyphicon-remove remove link"></span><hr><div class="son"><span class="directLine add"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="sonInput"><span class="glyphicon glyphicon-remove remove link"></span><hr></div><div class="addThird"><span class="directLine add"></span><button id="addt'+this.scount+'" class="btn btn-primary thirdAdd">添加三级子分类</button><hr></div></div>';
       	$(secondHtml).appendTo(targetSecond);
       	$(button).appendTo(targetSecond);
-        $('.thirdAdd').bind('click',function(event){
+        let thirdAdd = '#addt'+this.scount;
+        $(thirdAdd).bind('click',function(event){
           _this.addThirdHtml(event);
         });
+        $('.father .remove').bind('click',function(event){
+          _this.deleteSecond(event);
+        });
+        $('.son .remove').bind('click',function(event){
+          _this.deleteThird(event);
+        });
+        let striangle = '#s'+this.scount;
+        $(striangle).bind('click',function(event){
+          _this.hide(event);
+        });
+        this.scount++;
       },
       addThirdHtml(event){
+        let _this = this;
         let targetThird = $(event.currentTarget).parent().parent();
         let button = $(event.currentTarget).parent();
       	let thirdHtml = '<div class="son"><span class="directLine add"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="sonInput"><span class="glyphicon glyphicon-remove remove link"></span><hr></div>';
       	$(thirdHtml).appendTo(targetThird);
         $(button).appendTo(targetThird);
+        $('.son .remove').bind('click',function(event){
+          _this.deleteThird(event);
+        });
       },
-      deleteHtml(e){
-        console.log(e.currentTarget.parentElement.getAttributeNode('index').value);
+      deleteFirst(e){
+        let grandFatherInput = $(e.currentTarget).prev();
+        let grandFatherDiv = $(e.currentTarget).parent();
+        if(grandFatherDiv.children('.father').length>0){
+          swal("无法删除","第一级下面有子级的存在");
+        }else{
+          swal({
+            title: "你确定吗?",
+            text: "删除之后将无法恢复",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "是的,我要删除它!",
+            closeOnConfirm: false
+          },
+          function(){
+            $.ajax({
+                type: 'post',
+                url: '/xx/xx/',
+                data: {
+                   
+                },
+                success: function (data) {
+                  swal("成功删除");
+                  grandFatherDiv.remove();               
+                },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+                 swal("无法删除");
+                },
+            });
+          });
+        }
+      },
+      deleteSecond(e){
+        let fatherInput = $(e.currentTarget).prev();
+        let fatherDiv = $(e.currentTarget).parent();
+        if(fatherDiv.children('.son').length>0){
+          swal("无法删除","第二级下面有子集的存在");
+        }else{
+          swal({
+            title: "你确定吗?",
+            text: "删除之后将无法恢复",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "是的,我要删除它!",
+            closeOnConfirm: false
+          },
+          function(){
+            $.ajax({
+                type: 'post',
+                url: '/xx/xx/',
+                data: {
+                   
+                },
+                success: function (data) {
+                  swal("成功删除");
+                  fatherDiv.remove();               
+                },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+                 swal("无法删除");
+                },
+            });
+          });
+        }
+      },
+      deleteThird(e){
+        let sonInput = $(e.currentTarget).prev();
+        let sonDiv = $(e.currentTarget).parent();
+        swal({
+          title: "你确定吗?",
+          text: "删除之后将无法恢复",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "是的,我要删除它!",
+          closeOnConfirm: false
+        },
+        function(){
+          $.ajax({
+              type: 'post',
+              url: '/xx/xx/',
+              data: {
+                 
+              },
+              success: function (data) {
+                swal("成功删除");
+                sonDiv.remove();               
+              },
+             error: function(XMLHttpRequest, textStatus, errorThrown) {
+               swal("无法删除");
+              },
+          });
+        });
+      },
+      hide(e){
+        let div = $(e.currentTarget).parent();
+        let fhideTarget = $(div).children('.father');
+        let fhideAdd = $(div).children('.addSecond');
+        let shideTarget = $(div).children('.son');
+        let thideAdd = $(div).children('.addThird');
+        if(fhideTarget.length > 0){
+          for(let prop in fhideTarget){
+            if(prop > -1){
+              $(fhideTarget[prop]).toggleClass( 'hideCategory', 'hideCategory' );
+            }else{
+              break;
+            }
+          }
+          fhideAdd.toggleClass( 'hideCategory', 'hideCategory' );
+          $(div).children('span[id*="f"]').toggleClass('glyphicon-triangle-bottom','glyphicon-triangle-bottom');
+          $(div).children('span[id*="f"]').toggleClass('glyphicon-triangle-right','glyphicon-triangle-right');
+        }
+        if(shideTarget.length > 0){
+          for(let prop in shideTarget){
+            if(prop > -1){             
+              $(shideTarget[prop]).toggleClass( 'hideCategory', 'hideCategory' ); 
+            }else{
+              break;
+            }
+          }
+          thideAdd.toggleClass( 'hideCategory', 'hideCategory' );
+          $(div).children('span[id*="s"]').toggleClass('glyphicon-triangle-bottom','glyphicon-triangle-bottom');
+          $(div).children('span[id*="s"]').toggleClass('glyphicon-triangle-right','glyphicon-triangle-right');
+        }
+      },
+      save(){
+        let foo = $('.grandFather');
+        let grandFatherDiv = [];
+        for(let prop in foo){
+          if(prop > -1){
+            grandFatherDiv.push(foo[prop]);
+          }
+        }
+        let grandFatherInputObject = grandFatherDiv.map(function(obj){
+            let grandFatherInputObject = {};
+            let fInput = $(obj).children('.grandFatherInput').val();
+            grandFatherInputObject.objectId = "";
+            grandFatherInputObject.name = fInput;
+            grandFatherInputObject.storeSecondCategory = [];
+            let foo = $(obj).children('.father');
+            let fatherDiv = [];
+            for(let prop in foo){
+                if(prop > -1){
+                    fatherDiv.push(foo[prop]);
+                }else{
+                    break;
+                }
+            }
+            let fatherInputObject = fatherDiv.map(function(obj){
+                let fatherInputObject = {};
+                let sInput = $(obj).children('.fatherInput').val();
+                fatherInputObject.objectId = "";
+                fatherInputObject.name = sInput;             
+                fatherInputObject.storeThirdCategory = [];
+                let foo = $(obj).children('.son');
+                let sonDiv = [];
+                for(let prop in foo){
+                  if(prop > -1){
+                    sonDiv.push(foo[prop]);
+                  }
+                  else{
+                    break;
+                  }
+                }
+                let sonInputObject = sonDiv.map(function(obj){
+                  let sonInputObject = {};
+                  let sInput = $(obj).children('.sonInput').val();                
+                  sonInputObject.objectId = "";
+                  sonInputObject.name = sInput;
+                  return sonInputObject;
+                })
+                fatherInputObject.storeThirdCategory.push(sonInputObject);
+                return fatherInputObject;
+            });
+            grandFatherInputObject.storeSecondCategory.push(fatherInputObject);
+            return grandFatherInputObject;
+        }); 
+        let obj = {};
+        obj.StoreCategory = [];
+        obj.StoreCategory = grandFatherInputObject;
+        swal({
+          title: "你确定更新库存分类吗?",
+          text: "更新之后将无法恢复",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "是的,我要更新它!",
+          closeOnConfirm: false
+        },
+        function(){
+          $.ajax({
+            type: 'GET',
+            url: '/xx/xx/',
+            headers: {
+                  
+            },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(obj),
+            success: function (data) {
+              swal("库存分类已经更新为最新版");
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              swal("库存分类更新失败");
+            },           
+          });
+        });
       },
     },
   }
@@ -105,14 +351,14 @@
     position: absolute;
     left: 10px;
   }
-  .father .glyphicon-triangle-bottom{
+  .father .glyphicon-triangle-bottom,.father .glyphicon-triangle-right{
     position:relative;
     left: 45px;
   }
   .directLine.add{
     left: 55px;
   }
-  .son .glyphicon-triangle-bottom{
+  .son .glyphicon-triangle-bottom,.son .glyphicon-triangle-right{
     position:relative;
     left:95px;
   }
@@ -126,57 +372,11 @@
     left: 40px;
     top: 10px;
   }
+  .hideCategory{
+    display:none;
+  }
+  .showCategory{
+    display:initial;
+  }
 </style>
 
-let foo = $('.grandFather');
-let grandFatherDiv = [];
-for(prop in foo){
-  if(prop > -1){
-    grandFatherDiv.push(foo[prop]);
-  }
-}
-
-let grandFatherInputObject = grandFatherDiv.map(function(obj){
-    let grandFatherInputObject = {};
-    let fInput = $(obj).children('.grandFatherInput').val();
-    grandFatherInputObject.name = fInput;
-    grandFatherInputObject.objectId = "";
-    grandFatherInputObject.storeSecondCategory = [];
-    let foo = $(obj).children('.father');
-    let fatherDiv = [];
-    for(prop in foo){
-        if(prop > -1){
-            fatherDiv.push(foo[prop]);
-        }else{
-            break;
-        }
-    }
-    let fatherInputObject = fatherDiv.map(function(obj){
-        let fatherInputObject = {};
-        let sInput = $(obj).children('.fatherInput').val();
-        fatherInputObject.name = sInput;
-        fatherInputObject.objectId = "";
-        fatherInputObject.storeThirdCategory = [];
-        let foo = $(obj).children('.son');
-        let sonDiv = [];
-        for(prop in foo){
-          if(prop > -1){
-            sonDiv.push(foo[prop]);
-          }
-          else{
-            break;
-          }
-        }
-        let sonInputObject = sonDiv.map(function(obj){
-          let sonInputObject = {};
-          let sInput = $(obj).children('.sonInput').val();
-          sonInputObject.name = sInput;
-          sonInputObject.objectId = "";
-          return sonInputObject;
-        })
-        fatherInputObject.storeThirdCategory.push(sonInputObject);
-        return fatherInputObject;
-    });
-    grandFatherInputObject.storeSecondCategory.push(fatherInputObject);
-    return grandFatherInputObject;
-});

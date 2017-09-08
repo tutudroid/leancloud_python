@@ -25,6 +25,8 @@ from ClassLibrary.CategoryClass.SaleCategory import SaleCategory
 from ClassLibrary.CategoryClass.StoreCategory import StoreCategory
 from ClassLibrary.ProductClass.ProductService import ProductService
 from ClassLibrary.Frieght.FreightModel import FreightModel
+from ClassLibrary.ProductClass.ShopProductGroup import ShopProductGroup
+
 
 FIRST = None
 
@@ -194,6 +196,40 @@ def CreateAll(request):
     freight.update_Freight(data)
     shop.add_attribute_relation(attribute_freightModel, freight.get_instance())
 
+    # 创建shop商品
+    productGroup = ShopProductGroup()
+    data = {
+        attribute_spec: [
+            {
+                'SpecName': 'spec',
+                'SpecContent': 'specText'
+            }
+        ],
+        attribute_propertyOption:  '[{"PropertyId":"0","PropertyName":"颜色","PropertyOption":[{"OptionId":"0","OptionName":"红色"},{"OptionId":"1","OptionName":"黄色"}]},{"PropertyId":"1","PropertyName":"大小","PropertyOption":[{"OptionId":"0","OptionName":"大号"},{"OptionId":"1","OptionName":"小号"}]}]',
+        attribute_name: 'attribute_name',
+        attribute_mainImage: request.FILES.get('imageFile'),
+        attribute_imageList: request.FILES.getlist('imageFile'),
+        attribute_briefDescription: 'attribute_briefDescription',
+        attribute_detailDescription: request.FILES.getlist('imageFile'),
+        attribute_productService: [productService.get_attribute_objectId()],
+        attribute_storeCategory: storeThird.get_attribute_objectId(),
+        attribute_saleCategory: [saleCategorySecond.get_attribute_objectId()],
+        attribute_dispatchPlace: 'attribute_PROVINCE' + ' ' + 'attribute_CITY' + ' ' + 'attribute_DISTRICT',
+        attribute_product: '[{"style":[{"PropertyId":"0","OptionId":"0"},{"PropertyId":"1","OptionId":"0"}],"price":"1","stockCount":"22","mainImage":""},{"style":[{"PropertyId":"0","OptionId":"1"},{"PropertyId":"1","OptionId":"1"}],"price":"11","stockCount":"22","mainImage":""}]',
+        attribute_productMainImage: request.FILES.getlist('imageFile'),
+        attribute_delete_imageList: 'attribute_delete_imageList',
+        attribute_delte_product: 'attribute_delete_product',
+        attribute_delete_detailDescription: 'attribute_delete_detailDescription',
+    }
+    productGroup.create_ProductGroup(data)
+    productGroup.set_attribute_brand(brand.get_instance())
+    productGroup.set_attribute_ip(ip.get_instance())
+    productGroup.set_attribute_shop(shop.get_instance())
+    productGroup.set_attribute_value(attribute_freightModel, freight.get_instance())
+    productGroup.set_attribute_shop(shop.get_instance())
+
+    shop.add_attribute_relation(attribute_shopProductGroup, productGroup.get_instance())
+
     # 创建商品
     productGroup = ProductGroup_New.ProductGroup()
     data = {
@@ -219,11 +255,15 @@ def CreateAll(request):
         attribute_delte_product: 'attribute_delete_product',
         attribute_delete_detailDescription: 'attribute_delete_detailDescription',
     }
-    productGroup.create_ProductGroup(data, shop)
+    productGroup.create_ProductGroup(data)
     productGroup.set_attribute_brand(brand.get_instance())
     productGroup.set_attribute_ip(ip.get_instance())
     productGroup.set_attribute_shop(shop.get_instance())
     productGroup.set_attribute_value(attribute_freightModel, freight.get_instance())
+    shop.set_attribute_productGroup(productGroup.get_instance())
+    productGroup.set_attribute_shop(shop.get_instance())
+
+
     # 创建公司入驻
     data = {
         attribute_objectId: '',
@@ -395,7 +435,6 @@ def CreateAll(request):
     afterSaleServiceRecord.set_attribute_shop(shop.get_instance())
     afterSaleServiceRecord.set_attribute_user(user.get_instance())
 
-    shop.set_attribute_productGroup(productGroup.get_instance())
     shop.set_attribute_order(order.get_instance())
     shop.set_attribute_afterSaleServiceRecord(afterSaleServiceRecord.get_instance())
 

@@ -1,4 +1,5 @@
 from ClassLibrary.BaseClass.Object import *
+import ClassLibrary.ProductClass.ProductGroup_New
 
 
 class StoreCategory(Object):

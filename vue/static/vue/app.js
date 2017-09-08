@@ -54,6 +54,7 @@ new Vue({
     allCompanyShops:[],
     allAuditShops:[],
     allForbiddenShops:[],
+    allStockCategorys:[],
 	},
 	components: {
 	    "changepwd":changePwd,
@@ -242,6 +243,30 @@ new Vue({
           },
          error: function(XMLHttpRequest, textStatus, errorThrown) {
            swal('抓取不到数据')
+          },
+      });
+    },
+    //抓取所有的库存分类
+    getAllStockCategorys(){
+      swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+             page: 1,
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.allStockCategorys = dataJson.StoreCategory;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
           },
       });
     },

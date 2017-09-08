@@ -31,12 +31,14 @@ class StoreCategorySecond(StoreCategory):
         return None
 
     def delete_Category(self):
+        self.set_attribute_state(STATE_DELETE)
         First = StoreCategory(Class_Name_StoreCategoryFirst)
         firstInstance = self.get_attribute_storeCategoryFirst()
         if firstInstance:
             First.get_Object(firstInstance.id)
             First.remove_attribute_relation(attribute_storeCategorySecond, self.instance)
             return True
+
         return None
 
     def create_StoreCategorySecond(self, data, storeCategoryFirst):

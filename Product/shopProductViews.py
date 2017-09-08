@@ -4,8 +4,8 @@ from Error_Page import *
 from ClassLibrary.ProductClass.ShopProductGroup import ShopProductGroup
 from ClassLibrary.ShopClass.Shop_New import Shop
 from ClassLibrary.ProductClass.ProductService import ProductService
-from ClassLibrary.CategoryClass.SaleCategory import SaleCategory
-from ClassLibrary.CategoryClass.StoreCategory import StoreCategory
+from ClassLibrary.CategoryClass.SaleCategoryFirst import get_SaleCategory_All
+from ClassLibrary.CategoryClass.StoreCategoryFirst import get_StoreCategory_All
 
 
 @login_required
@@ -27,7 +27,7 @@ def CreateShopProductGroup(request):
                 productGroup1 = ShopProductGroup()
                 data = productGroup1.input_ProductGroup(request)
                 # 将数据保存到数据库
-                if productGroup1.create_ProductGroup(data, shop):
+                if productGroup1.create_ProductGroup(data):
                     if request.POST.get('shelf_off'):
                         productGroup1.set_attribute_state(STATE_SHELF_OFF)
                     productGroupObjectId = productGroup1.get_attribute_objectId()
@@ -36,8 +36,8 @@ def CreateShopProductGroup(request):
     if request.method == 'GET':
         # 显示创建商品页面
         data = {
-            Class_Name_StoreCategory: StoreCategory().get_StoreCategory_All(),
-            Class_Name_SaleCategory: SaleCategory().get_SaleCategory_All(),
+            Class_Name_StoreCategory: get_StoreCategory_All(),
+            Class_Name_SaleCategory: get_SaleCategory_All(),
             Class_Name_ProductService: ProductService().get_ProductService_All(),
         }
         return return_data(Class_Name_ProductGroup, data)

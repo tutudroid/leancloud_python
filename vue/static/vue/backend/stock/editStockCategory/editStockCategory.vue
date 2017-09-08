@@ -240,7 +240,7 @@
         let grandFatherInputObject = grandFatherDiv.map(function(obj){
             let grandFatherInputObject = {};
             let fInput = $(obj).children('.grandFatherInput').val();
-            grandFatherInputObject.objectId = "";
+            grandFatherInputObject.objectId = $(obj).children('.grandFatherInput').attr('id');
             grandFatherInputObject.name = fInput;
             grandFatherInputObject.storeSecondCategory = [];
             let foo = $(obj).children('.father');
@@ -255,7 +255,7 @@
             let fatherInputObject = fatherDiv.map(function(obj){
                 let fatherInputObject = {};
                 let sInput = $(obj).children('.fatherInput').val();
-                fatherInputObject.objectId = "";
+                fatherInputObject.objectId = $(obj).children('.fatherInput').attr('id');
                 fatherInputObject.name = sInput;             
                 fatherInputObject.storeThirdCategory = [];
                 let foo = $(obj).children('.son');
@@ -271,7 +271,7 @@
                 let sonInputObject = sonDiv.map(function(obj){
                   let sonInputObject = {};
                   let sInput = $(obj).children('.sonInput').val();                
-                  sonInputObject.objectId = "";
+                  sonInputObject.objectId = $(obj).children('.sonInput').attr('id');
                   sonInputObject.name = sInput;
                   return sonInputObject;
                 })

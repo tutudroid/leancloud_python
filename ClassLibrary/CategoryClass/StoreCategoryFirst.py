@@ -39,9 +39,6 @@ class StoreCategoryFirst(StoreCategory):
             return True
         return None
 
-    def delete_Category(self):
-        return None
-
 
 def get_StoreCategory_All():
     """

@@ -6,7 +6,7 @@
 
         <div v-for="shop in shops()">
           <div v-if="shop.flag==0" class="tr personRow pointer row" @click='fillOutPersonMaterial(shop.objectId,shop.flag,shop.realName,shop.phoneNumber,shop.email,shop.idCard,shop.idCardExpireTimeStart,shop.idCardExpireTimeEnd,shop.frontIdCard,shop.backIdCard,shop.handIdCard,shop.alipay,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><div class="col-md-4">{{shop.realName}}</div><div class="col-md-4">{{shop.phoneNumber}}</div><div class="col-md-4">个人</div></div>
-          <div v-if="shop.flag==1" class="tr personRow pointer row" @click='fillOutCompanyMaterial(shop.objectId,shop.flag,shop.uniformSocialCreditCode,shop.bussinessLicense,shop.legalPersonName,shop.legalPersonPhoneNumber,shop.legalPersonEmail,shop.legalPersonIdCard,shop.legalPersonExpireTimeStart,shop.legalPersonExpireTimeEnd,shop.legalPersonFrontIdCard,shop.legalPersonBackIdCard,shop.alipay,shop.managerRealName,shop.managerEmail,shop.managerPhoneNumber,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><div class="col-md-4">{{shop.managerRealName}}</div><div class="col-md-4">{{shop.managerPhoneNumber}}</div><div class="col-md-4">企业</div></div>
+          <div v-if="shop.flag==1" class="tr personRow pointer row" @click='fillOutCompanyMaterial(shop.objectId,shop.flag,shop.uniformSocialCreditCode,shop.businessLicense,shop.legalPersonName,shop.legalPersonPhoneNumber,shop.legalPersonEmail,shop.legalPersonIdCard,shop.legalPersonExpireTimeStart,shop.legalPersonExpireTimeEnd,shop.legalPersonFrontIdCard,shop.legalPersonBackIdCard,shop.alipay,shop.managerRealName,shop.managerEmail,shop.managerPhoneNumber,shop.shopName,shop.brandName,shop.brandLogo,shop.brandDescription)'><div class="col-md-4">{{shop.managerRealName}}</div><div class="col-md-4">{{shop.managerPhoneNumber}}</div><div class="col-md-4">企业</div></div>
         </div>
 
     </div>
@@ -78,7 +78,7 @@
     <div class="uniformSocialCreditCode">
     统一社会信用代码: <span class="answer">{{uniformSocialCreditCode}}</span>
     </div>
-    <div class="bussinessLicense">
+    <div class="businessLicense">
     营业执照: <span class="answer">{{bussinessLicense}}</span>
     </div>
     <div class="legalPersonName">

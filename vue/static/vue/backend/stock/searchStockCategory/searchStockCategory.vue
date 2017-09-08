@@ -50,7 +50,7 @@
 	      if(addedStuff.hasClass('addedFirst')){
 
 		  }else{
-		  this.storeCategory.forEach(
+		  this.storecategory.forEach(
 		    function(item,index){
 		      firstName[index] = item.name;
 		      let secondName = [];

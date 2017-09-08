@@ -119,14 +119,18 @@ class StoreCategory(Object):
                 self.get_Object(data[attribute_objectId])
             else:
                 self.create_Object()
-            self.set_attribute_name(data[attribute_name])
-
+            self.set_attribute_value(attribute_name, data[attribute_name])
+            if data[attribute_state] and int(data[attribute_state]) == -1:
+                self.set_attribute_state(data[attribute_state])
+                self.delete_Category()
+            return True
+    
     def update_Category(self, data):
         if data:
             if data[attribute_objectId]:
                 self.get_Object(data[attribute_objectId])
             self.set_attribute_name(data[attribute_name])
-            if data[attribute_state] != '':
+            if data[attribute_state] and int(data[attribute_state]) == -1:
                 self.set_attribute_state(data[attribute_state])
                 self.delete_Category()
             return True

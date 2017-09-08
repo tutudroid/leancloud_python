@@ -5,6 +5,10 @@ from ClassLibrary.CategoryClass.StoreCategory import StoreCategory
 from ClassLibrary.CategoryClass.SaleCategoryRecommend import SaleCategoryRecommend
 from ClassLibrary.ProductClass.ProductGroup_New import ProductGroup
 from ClassLibrary.ImageClass.Image import ImageBase
+from ClassLibrary.CategoryClass.StoreCategoryFirst import StoreCategoryFirst
+from ClassLibrary.CategoryClass.StoreCategorySecond import StoreCategorySecond
+from ClassLibrary.CategoryClass.StoreCategoryThird import StoreCategoryThird
+
 
 
 @login_required
@@ -92,7 +96,7 @@ def createSaleCategory(request):
             Dict_Check(foo, keyList2)
             for goo in foo[attribute_storeCategorySecond]:
                 Dict_Check(goo, keyList2)
-
+        print(saleCategory)
         for foo in saleCategory:
             first = SaleCategory(Class_Name_SaleCategoryFirst)
             first.create_SaleCategory(foo)
@@ -160,16 +164,16 @@ def createStoreCategory(request):
                     Dict_Check(koo, keyList3)
         # 上述代码检查输入的数据是否合理------------
         for foo in storeCategory:
-            first = StoreCategory(Class_Name_StoreCategoryFirst)
+            first = StoreCategoryFirst()
             first.create_StoreCategoryFirst(foo)
             secondStore = foo[attribute_storeCategorySecond]
             for goo in secondStore:
-                second = StoreCategory(Class_Name_StoreCategorySecond)
+                second = StoreCategorySecond()
                 second.create_StoreCategorySecond(goo, first.get_instance())
                 first.add_attribute_relation(attribute_storeCategorySecond, second.get_instance())
                 thirdStore = foo[attribute_storeCategoryThird]
                 for koo in thirdStore:
-                    third = StoreCategory(Class_Name_StoreCategoryThird)
+                    third = StoreCategoryThird()
                     third.create_StoreCategoryThird(koo, second.get_instance())
                     second.add_attribute_relation(attribute_storeCategoryThird, third.get_instance())
     allData = StoreCategory().get_StoreCategory_All()

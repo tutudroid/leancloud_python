@@ -55,7 +55,6 @@
     </div>
 
   <div class="modifyPhoneNumDetail hideSecond">
-  	 <form class="form-horizontal">
     	  <div class="control-group">
     	    <label class="control-label" for="newPhone">新的手机号</label>
     	    <div class="controls">
@@ -70,11 +69,10 @@
     	  </div>
     	  <div class="control-group">
     	    <div class="controls">
-    	      <button class="btn myBtn" @click="modifyPhoneNumToDB">确认</button>
-    	      <button class="btn myBtn" @click="toggleSecond">取消</button>
+    	      <span class="btn myBtn" @click="modifyPhoneNumToDB">确认</span>
+    	      <span class="btn myBtn" @click="toggleSecond">取消</span>
     	    </div>
     	  </div>
-  	</form>     
   </div>
 
   <div class="checkSettledPersonMaterial hideSecond">
@@ -250,7 +248,38 @@
        }
      },
      modifyPhoneNumToDB(){
-       alert(" id: "+this.objectId+" newPhoneNumber: "+this.newPhoneNumber+" confirmPhoneNumber: "+this.confirmPhoneNumber);
+       _this = this;
+       swal({
+          title: "你确定修改手机号码吗?",
+          text: "更新之后将无法恢复",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "是的,我要更新它!",
+          closeOnConfirm: false
+        },
+        function(){
+          $.ajax({
+            type: 'POST',
+            url: '/Shop/SettleModifyPhoneNumber/',
+            headers: {
+              'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+            },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: {
+              objectId: _this.objectId,
+              phoneNumber: _this.newPhoneNumber,
+              phoneNumberNew: _this.confirmPhoneNumber
+            },
+            success: function (data) {
+              swal("手机号码已经更新");
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              swal("手机号码更新失败");
+            },           
+          });
+        });
      },
      shops(){
       let i = this.personshops;

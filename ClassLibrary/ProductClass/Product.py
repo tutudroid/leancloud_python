@@ -263,17 +263,18 @@ class Product(Object):
             return data
 
 
-def copy_Shop_Product(shopProduct, productGroup):
-    if shopProduct and productGroup:
+def copy_Shop_Product(shopProduct):
+    if shopProduct:
         product = Product()
         product.create_Object()
-        product.set_attribute_value(attribute_group, productGroup)
         product.set_attribute_value(attribute_price, float(shopProduct.get(attribute_price)))
         product.set_attribute_value(attribute_stockCount, int(shopProduct.get(attribute_stockCount)))
         product.set_attribute_value(attribute_limitCount, int(shopProduct.get(attribute_limitCount)))
         product.set_attribute_value(attribute_style, shopProduct.get(attribute_style))
+        product.set_attribute_value(attribute_shop, shopProduct.get(attribute_shop))
 
         if shopProduct.get(attribute_mainImage):
             imageFile = Base.create_network_image(shopProduct, attribute_mainImage)
             product.set_attribute_value(attribute_mainImage, imageFile)
+        return product
     return None

@@ -1053,11 +1053,13 @@ def create_network_image(instance, attr):
     :param attr: 
     :return: 
     """
-    img_url = instance.get(attr).url
-    name = instance.get(attr).name
-    avatar = leancloud.File.create_with_url(name, img_url)
-    avatar.save()
-    return avatar
+    if instance and attr and isinstance(instance.get(attr), leancloud.file_.File):
+        img_url = instance.get(attr).url
+        name = instance.get(attr).name
+        avatar = leancloud.File.create_with_url(name, img_url)
+        avatar.save()
+        return avatar
+    return None
 
 
 def create_image_url(name, url):

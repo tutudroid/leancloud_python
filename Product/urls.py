@@ -33,7 +33,7 @@ urlpatterns = [
 
     url(r'^ShowSaleCategory/$', categoryViews.ShowSaleCategory, name='ShowSaleCategory'),
     url(r'^CreateSaleCategory/$', categoryViews.createSaleCategory, name='CreateSaleCategory'),
-    url(r'^EditSaleCategory/$', categoryViews.EditSaleCategory, name='EditSaleCategory'),
+    url(r'^DelSaleCategory/$', categoryViews.DelSaleCategory, name='DelSaleCategory'),
 
     # 销售分类排序
     url(r'^sortSaleCategorySecond/$', categoryViews.sortSaleCategorySecond, name='sortSaleCategorySecond'),

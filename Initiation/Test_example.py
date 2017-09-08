@@ -28,6 +28,7 @@ from ClassLibrary.CategoryClass.StoreCategoryFirst import StoreCategoryFirst
 from ClassLibrary.ProductClass.ProductService import ProductService
 from ClassLibrary.Frieght.FreightModel import FreightModel
 from ClassLibrary.ProductClass.ShopProductGroup import ShopProductGroup
+from ClassLibrary.ProductClass.ProductGroup_New import copy_Shop_ProductGroup
 
 
 FIRST = None
@@ -206,7 +207,7 @@ def CreateAll(request):
             }
         ],
         attribute_propertyOption:  '[{"PropertyId":"0","PropertyName":"颜色","PropertyOption":[{"OptionId":"0","OptionName":"红色"},{"OptionId":"1","OptionName":"黄色"}]},{"PropertyId":"1","PropertyName":"大小","PropertyOption":[{"OptionId":"0","OptionName":"大号"},{"OptionId":"1","OptionName":"小号"}]}]',
-        attribute_name: 'attribute_name',
+        attribute_name: 'shop',
         attribute_mainImage: request.FILES.get('imageFile'),
         attribute_imageList: request.FILES.getlist('imageFile'),
         attribute_briefDescription: 'attribute_briefDescription',
@@ -229,6 +230,7 @@ def CreateAll(request):
 
     shop.add_attribute_relation(attribute_shopProductGroup, productGroup.get_instance())
 
+    copy_Shop_ProductGroup(productGroup)
     # 创建商品
     productGroup = ProductGroup_New.ProductGroup()
     data = {

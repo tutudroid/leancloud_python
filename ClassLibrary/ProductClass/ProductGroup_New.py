@@ -24,6 +24,8 @@ from ClassLibrary.ProductClass.ProductDetailDescription import ProductDetailDesc
 from ClassLibrary.ProductClass.Product import copy_Shop_Product
 from ClassLibrary.CategoryClass.StoreCategory import StoreCategory
 from ClassLibrary.CategoryClass.SaleCategory import SaleCategory
+from ClassLibrary.CategoryClass.StoreCategoryThird import StoreCategoryThird
+from ClassLibrary.CategoryClass.SaleCategorySecond import SaleCategorySecond
 from ClassLibrary.ImageClass.ProductImage import ProductImage
 from ClassLibrary.ProductClass.ProductService import ProductService
 
@@ -50,9 +52,11 @@ def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
             productGroup.set_attribute_value(attribute_propertyOption, shopProductGroup.get_attribute(attribute_propertyOption))
             productGroup.set_attribute_value(attribute_dispatchPlace, shopProductGroup.get_attribute(attribute_dispatchPlace))
             productGroup.set_attribute_value(attribute_price, float(shopProductGroup.get_attribute(attribute_price)))
-            productGroup.set_attribute_value(attribute_saleCount, int(shopProductGroup.get_attribute(attribute_saleCount)))
+            # roductGroup.set_attribute_value(attribute_saleCount, int(shopProductGroup.get_attribute(attribute_saleCount)))
             productGroup.set_attribute_value(attribute_spec, shopProductGroup.get_attribute(attribute_spec))
-
+            productGroup.set_attribute_value(attribute_ip, shopProductGroup.get_attribute(attribute_ip))
+            productGroup.set_attribute_value(attribute_brand, shopProductGroup.get_attribute(attribute_brand))
+            productGroup.set_attribute_value(attribute_freightModel, shopProductGroup.get_attribute(attribute_freightModel))
 
             """
             保存商品详情
@@ -64,7 +68,7 @@ def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
                     description = ProductDetailDescription()
                     description.create_Object()
                     description.copy_ProductDetailDescription(foo)
-                    if not productGroup.add_attribute_relation(attribute_detailDescription, description):
+                    if not productGroup.add_attribute_relation(attribute_detailDescription, description.get_instance()):
                         Base.sys_log('save detailDescription failed')
                         state = STATE_NO_FINISH
             """
@@ -72,7 +76,7 @@ def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
             """
             image = ProductImage()
             image.create_Object()
-            imageFile = Base.create_network_image(shopProductGroup.get_attribute(attribute_mainImage), attribute_mainImage)
+            imageFile = Base.create_network_image(shopProductGroup.get_instance(), attribute_mainImage)
             image.set_attribute_value(attribute_imageFile, imageFile)
             productGroup.set_attribute_value(attribute_mainImage, imageFile)
 
@@ -85,12 +89,9 @@ def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
                     image = ProductImage()
                     image.create_Object()
                     image.set_attribute_value(attribute_imageFile, pic.get(attribute_imageFile))
-                    if not productGroup.add_attribute_relation(attribute_imageList, image):
+                    if not productGroup.add_attribute_relation(attribute_imageList, image.get_instance()):
                         Base.sys_log('save imageList failed')
                         state = STATE_NO_FINISH
-
-            # 保存库存信息
-            productGroup.set_attribute_value(attribute_storeCategoryThird, shopProductGroup.get_attribute(attribute_storeCategoryThird))
 
             # 写入商品服务信息
             serviceList = shopProductGroup.get_attribute_relation(attribute_productService)
@@ -98,11 +99,14 @@ def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
                 for foo in serviceList:
                     productService = ProductService()
                     productService.get_Object(foo.id)
-                    productGroup.add_attribute_relation(attribute_productService, productService)
+                    productGroup.add_attribute_relation(attribute_productService, productService.get_instance())
 
-            storeCategory = StoreCategory()
-            storeCategory.get_Object(shopProductGroup.get_attribute_Object_Id(attribute_storeCategoryThird))
-            if not storeCategory.add_attribute_relation(attribute_productGroup, productGroup):
+            # 保存库存信息
+            productGroup.set_attribute_value(attribute_storeCategory, shopProductGroup.get_attribute(attribute_storeCategory))
+
+            storeCategory = StoreCategoryThird()
+            storeCategory.get_Object(shopProductGroup.get_attribute_Object_Id(attribute_storeCategory))
+            if not storeCategory.add_attribute_relation(attribute_productGroup, productGroup.get_instance()):
                 Base.sys_log('save storeCategory failed')
                 state = STATE_NO_FINISH
 
@@ -110,12 +114,12 @@ def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
             if saleList:
                 for foo in saleList:
                     # 将销售关系写入到商品类中
-                    sale = SaleCategory(Class_Name_SaleCategorySecond)
+                    sale = SaleCategorySecond()
                     sale.get_Object(foo.id)
-                    if productGroup.add_attribute_relation(attribute_saleCategory, sale):
+                    if not productGroup.add_attribute_relation(attribute_saleCategory, sale.get_instance()):
                         Base.sys_log('save saleCategory failed')
                         state = STATE_NO_FINISH
-                    if sale.add_attribute_relation(attribute_productGroup, productGroup):
+                    if not sale.add_attribute_relation(attribute_productGroup, productGroup.get_instance()):
                         Base.sys_log('save saleCategory failed')
                         state = STATE_NO_FINISH
 
@@ -123,8 +127,9 @@ def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
             shopProductList = shopProductGroup.get_attribute_relation(attribute_product)
             if shopProductList:
                 for shopProduct in shopProductList:
-                    product = copy_Shop_Product(shopProduct, productGroup.get_instance())
-                    if not productGroup.add_attribute_relation(attribute_product, product):
+                    product = copy_Shop_Product(shopProduct)
+                    product.set_attribute_value(attribute_group, productGroup.get_instance())
+                    if not productGroup.add_attribute_relation(attribute_product, product.get_instance()):
                         Base.sys_log('save product failed')
                         state = STATE_NO_FINISH
 

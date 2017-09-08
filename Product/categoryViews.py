@@ -8,6 +8,8 @@ from ClassLibrary.ImageClass.Image import ImageBase
 from ClassLibrary.CategoryClass.StoreCategoryFirst import StoreCategoryFirst, get_StoreCategory_All
 from ClassLibrary.CategoryClass.StoreCategorySecond import StoreCategorySecond
 from ClassLibrary.CategoryClass.StoreCategoryThird import StoreCategoryThird
+from ClassLibrary.CategoryClass.SaleCategoryFirst import SaleCategoryFirst, get_SaleCategory_All
+from ClassLibrary.CategoryClass.SaleCategorySecond import SaleCategorySecond
 
 
 
@@ -19,7 +21,7 @@ def ShowSaleCategory(request):
     :return: 
     """
     request.method = request.method
-    allData = SaleCategory().get_SaleCategory_All()
+    allData = get_SaleCategory_All()
     return return_data(Class_Name_SaleCategory, allData)
 
 
@@ -105,7 +107,7 @@ def createSaleCategory(request):
                 second = SaleCategory(Class_Name_SaleCategorySecond)
                 second.create_SaleCategory(goo, first.get_instance())
                 first.add_attribute_relation(attribute_saleCategorySecond, second.get_instance())
-    allData = SaleCategory().get_SaleCategory_All()
+    allData = get_SaleCategory_All()
     return return_data(Class_Name_SaleCategory, allData)
 
 
@@ -122,7 +124,7 @@ def EditSaleCategory(request):
         saleCategory = SaleCategory(className)
         data = saleCategory.input_SaleCategory(request)
         saleCategory.update_SaleCategory(data)
-        return return_data(className, saleCategory.output_SaleCategorySecond())
+        return return_data(className, saleCategory.output_SaleCategory())
     return illegal_access()
 
 

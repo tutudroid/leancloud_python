@@ -21,6 +21,7 @@ from ClassLibrary.ProductClass.ProductComment import ProductComment
 from ClassLibrary.ShopClass.IPTable import IPTable
 from ClassLibrary.ShopClass.BrandTable import BrandTable
 
+from ClassLibrary.CategoryClass.SaleCategoryFirst import SaleCategoryFirst
 from ClassLibrary.CategoryClass.SaleCategory import SaleCategory
 from ClassLibrary.CategoryClass.StoreCategory import StoreCategory
 from ClassLibrary.CategoryClass.StoreCategoryFirst import StoreCategoryFirst
@@ -76,7 +77,7 @@ def CreateAll(request):
 
     # 创建第一级销售分类
     content = {}
-    saleCategoryFirst = SaleCategory(Class_Name_SaleCategoryFirst)
+    saleCategoryFirst = SaleCategoryFirst()
     data = {
         attribute_objectId: '',
         attribute_name: 'Class_Name_SaleCategoryFirst',
@@ -559,7 +560,7 @@ def AfterSale_Order(request):
 def Category(request):
     # 创建第一级销售分类
     content = {}
-    saleCategoryFirst = SaleCategory(Class_Name_SaleCategoryFirst)
+    saleCategoryFirst = SaleCategoryFirst()
     data = {
         attribute_objectId: '',
         attribute_name: 'Class_Name_SaleCategoryFirst',
@@ -629,12 +630,13 @@ def Category(request):
     return render(request, 'test_class.html', {'content': content})
 
 from ClassLibrary.CategoryClass.StoreCategoryFirst import get_StoreCategory_All
+from ClassLibrary.CategoryClass.SaleCategoryFirst import get_SaleCategory_All
 
 def AllCategory(request):
 
     content = {}
 
-    content['SaleCategoryAll'] = SaleCategory().get_SaleCategory_All()
+    content['SaleCategoryAll'] = get_SaleCategory_All()
     content['StoreCategoryAll'] = get_StoreCategory_All()
     print(content)
     return render(request, 'test_class.html', {'content': content})

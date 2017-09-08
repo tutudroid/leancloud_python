@@ -248,7 +248,7 @@
        }
      },
      modifyPhoneNumToDB(){
-       _this = this;
+       let _this = this;
        swal({
           title: "你确定修改手机号码吗?",
           text: "更新之后将无法恢复",
@@ -263,7 +263,7 @@
             type: 'POST',
             url: '/Shop/SettleModifyPhoneNumber/',
             headers: {
-              'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
             },
             contentType: "application/json; charset=utf-8",
             dataType: "json",

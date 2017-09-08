@@ -291,7 +291,7 @@
             type: 'POST',
             url: '/Product/CreateStoreCategory/',
             headers: {
-              'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
             },
             contentType: "application/json; charset=utf-8",
             dataType: "json",

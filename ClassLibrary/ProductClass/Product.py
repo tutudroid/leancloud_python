@@ -17,7 +17,6 @@ function：
     派生类
 """
 from ClassLibrary.BaseClass.Object import *
-from ClassLibrary.ProductClass import ProductGroup_New
 
 
 class Product(Object):
@@ -216,8 +215,6 @@ class Product(Object):
 
     def create_Product(self, data, group, imageFileList):
         if data and group:
-            productGroup = ProductGroup_New.ProductGroup()
-            productGroup.instance = group
             if self.find_Product(group, data[attribute_style]):
                 Base.sys_log('this product has existed')
                 return None
@@ -239,14 +236,15 @@ class Product(Object):
                                 self.instance.destroy_Product()
                                 return None
                 else:
-                    img_url = productGroup.get_attribute_mainImage()
-                    if img_url:
-                        avatar = leancloud.File.create_with_url('default_image.jpg', img_url)
-                        avatar.save()
-                        self.set_attribute_mainImage(avatar)
-                price = productGroup.get_attribute_price()
-                if not price or price > float(data[attribute_price]):
-                    productGroup.set_attribute_price(data[attribute_price])
+                    if group.get(attribute_mainImage) and isinstance(group.get(attribute_mainImage), ISINSTANCE_FILE):
+                        img_url = group.get(attribute_mainImage).url
+                        if img_url:
+                            avatar = leancloud.File.create_with_url('default_image.jpg', img_url)
+                            avatar.save()
+                            self.set_attribute_mainImage(avatar)
+                price = group.get(attribute_price)
+                if not price or float(price) > float(data[attribute_price]):
+                    group.set(attribute_price, float(data[attribute_price]))
                 return self.instance
         return None
 

@@ -226,7 +226,6 @@ def CreateAll(request):
     productGroup.set_attribute_ip(ip.get_instance())
     productGroup.set_attribute_shop(shop.get_instance())
     productGroup.set_attribute_value(attribute_freightModel, freight.get_instance())
-    productGroup.set_attribute_shop(shop.get_instance())
 
     shop.add_attribute_relation(attribute_shopProductGroup, productGroup.get_instance())
 
@@ -261,7 +260,6 @@ def CreateAll(request):
     productGroup.set_attribute_shop(shop.get_instance())
     productGroup.set_attribute_value(attribute_freightModel, freight.get_instance())
     shop.set_attribute_productGroup(productGroup.get_instance())
-    productGroup.set_attribute_shop(shop.get_instance())
 
 
     # 创建公司入驻

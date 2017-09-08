@@ -341,12 +341,10 @@ class ProductGroupBase(Object):
             if self.__save_instance__():
                 product = self.get_attribute_relation(attribute_product)
                 if product:
+                    self.__print_msg__(product)
                     for foo in product:
-                        if self.className == Class_Name_ProductGroup:
-                            product = Product()
-                        else:
-                            product = ShopProduct()
-                        product.set_instance(foo)
+                        product = Product()
+                        product.get_Object(foo.get(attribute_objectId))
                         product.set_attribute_value(attribute_shop, shopInstance)
                 return True
         return None
@@ -746,3 +744,5 @@ class ProductGroupBase(Object):
             attribute_delete_detailDescription: request.POST.getlist(attribute_delete_detailDescription, []),
         }
         return product
+
+

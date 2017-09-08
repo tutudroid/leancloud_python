@@ -13,7 +13,7 @@ class SaleCategoryFirst(SaleCategory):
 
     def get_attribute_saleCategorySecond(self):
         if self.instance:
-            sale = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_SaleCategoryFirst, attribute_saleCategorySecond, attribute_state, STATE_OK, limit=100)
+            sale = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_SaleCategoryFirst, attribute_saleCategorySecond, attribute_state, STATE_OK, 1, limit=100)
             if sale:
                 returnList = []
                 for foo in sale:

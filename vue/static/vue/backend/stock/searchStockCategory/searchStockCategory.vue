@@ -54,7 +54,7 @@
 		    function(item,index){
 		      firstName[index] = item.name;
 		      let secondName = [];
-		      let secondCategory = item.value;
+		      let secondCategory = item.storeCategorySecond;
 		      secondCategory.forEach(
 		        function(item,index){
 			  	secondName[index] = item;
@@ -93,7 +93,7 @@
 			  let thirdCate = this.secondCate;
 			  let first = this.second[secondCate];
 			  let second = first[thirdCate];
-		      let thirdCates = second.value;
+		      let thirdCates = second.storeCategoryThird;
 			  let addedThird = "";
 			  thirdCates.forEach(
 			    function(item){

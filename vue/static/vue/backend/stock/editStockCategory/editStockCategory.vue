@@ -5,7 +5,7 @@
     <h3 class="save link" @click="save()">保存</h3>
     <h3 class="oprate"><span class="title">分类名称</span><span class="title">--</span><span class="title">操作</span></h3>
     <div class="stockCate">
-      <div class='grandFather mainContent' v-for='fcategory in stockcategorys'><span id="f" class='glyphicon glyphicon-triangle-bottom' @click="hide()"></span><input type='text' class='grandFatherInput' :value='fcategory.name' :id="fcategory.objectId"><span class='glyphicon glyphicon-remove remove link' @click="deleteFirst()"></span><hr><div class='father' v-for='scategory in fcategory.storeCategorySecond'><span class='directLine'></span><span id="f" class='glyphicon glyphicon-triangle-bottom' @click="hide()"></span><input type='text' class='fatherInput' :value="scategory.name" :id="scategory.objectId"><span class='glyphicon glyphicon-remove remove link' @click="deleteSecond()"></span><hr><div class='son' v-for='tcategory in scategory.storeCategoryThird'><span class='directLine add'></span><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='sonInput' :value='tcategory.name' :id="tcategory.objectId"><span class='glyphicon glyphicon-remove remove link' @click="deleteThird()"></span><hr></div><div class='addThird'><span class='directLine add'></span><button class='btn btn-primary thirdAdd' @click="addThirdHtml()">添加三级子分类</button><hr></div></div><div class='addSecond'><span class='directLine'></span><button class='btn btn-primary secondAdd' @click="addSecondHtml">加二级子分类</button></div><hr  class='lastHr' style='border-top:3px solid #a00404'></div>
+      <div class='grandFather mainContent' v-for='fcategory in stockcategorys'><span id="f" class='glyphicon glyphicon-triangle-bottom' @click="hide($event)"></span><input type='text' class='grandFatherInput' :value='fcategory.name' :id="fcategory.objectId"><span class='glyphicon glyphicon-remove remove link' @click="deleteFirst($event)"></span><hr><div class='father' v-for='scategory in fcategory.storeCategorySecond'><span class='directLine'></span><span id="f" class='glyphicon glyphicon-triangle-bottom' @click="hide($event)"></span><input type='text' class='fatherInput' :value="scategory.name" :id="scategory.objectId"><span class='glyphicon glyphicon-remove remove link' @click="deleteSecond($event)"></span><hr><div class='son' v-for='tcategory in scategory.storeCategoryThird'><span class='directLine add'></span><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='sonInput' :value='tcategory.name' :id="tcategory.objectId"><span class='glyphicon glyphicon-remove remove link' @click="deleteThird($event)"></span><hr></div><div class='addThird'><span class='directLine add'></span><span class='btn btn-primary thirdAdd' @click="addThirdHtml($event)">添加三级子分类</span><hr></div></div><div class='addSecond'><span class='directLine'></span><span class='btn btn-primary secondAdd' @click="addSecondHtml">加二级子分类</span></div><hr  class='lastHr' style='border-top:3px solid #a00404'></div>
     </div>
   </div>
  </div>
@@ -32,7 +32,7 @@
     methods:{
       addFirstHtml(){
         let _this = this; 
-        let firstHtml = "<div class='grandFather mainContent'><span id='f"+this.fcount+"' class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='grandFatherInput'><span class='glyphicon glyphicon-remove remove link'></span><hr><div class='father'><span class='directLine'></span><span id='s"+this.scount+"' class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='fatherInput'><span class='glyphicon glyphicon-remove remove link'></span><hr><div class='son'><span class='directLine add'></span><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='sonInput'><span class='glyphicon glyphicon-remove remove link'></span><hr></div><div class='addThird'><span class='directLine add'></span><button id='addt"+this.scount+"' class='btn btn-primary thirdAdd'>添加三级子分类</button><hr></div></div><div class='addSecond'><span class='directLine'></span><button id='adds"+this.fcount+"' class='btn btn-primary secondAdd'>添加二级子分类</button></div><hr class='lastHr' style='border-top:3px solid #a00404'></div>";
+        let firstHtml = "<div class='grandFather mainContent'><span id='f"+this.fcount+"' class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='grandFatherInput'><span class='glyphicon glyphicon-remove remove link'></span><hr><div class='father'><span class='directLine'></span><span id='s"+this.scount+"' class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='fatherInput'><span class='glyphicon glyphicon-remove remove link'></span><hr><div class='son'><span class='directLine add'></span><span class='glyphicon glyphicon-triangle-bottom'></span><input type='text' class='sonInput'><span class='glyphicon glyphicon-remove remove link'></span><hr></div><div class='addThird'><span class='directLine add'></span><span id='addt"+this.scount+"' class='btn btn-primary thirdAdd'>添加三级子分类</span><hr></div></div><div class='addSecond'><span class='directLine'></span><span id='adds"+this.fcount+"' class='btn btn-primary secondAdd'>添加二级子分类</span></div><hr class='lastHr' style='border-top:3px solid #a00404'></div>";
       	$(firstHtml).prependTo('.stockCate');
         let secondAdd = '#adds'+this.fcount;
       	$(secondAdd).bind('click',function(event){
@@ -66,7 +66,7 @@
         let _this = this;
         let targetSecond = $(event.currentTarget).parent().parent();
       	let button = $(event.currentTarget).parent();
-      	let secondHtml = '<div class="father"><span class="directLine"></span><span id="s'+this.scount+'" class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="fatherInput"><span class="glyphicon glyphicon-remove remove link"></span><hr><div class="son"><span class="directLine add"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="sonInput"><span class="glyphicon glyphicon-remove remove link"></span><hr></div><div class="addThird"><span class="directLine add"></span><button id="addt'+this.scount+'" class="btn btn-primary thirdAdd">添加三级子分类</button><hr></div></div>';
+      	let secondHtml = '<div class="father"><span class="directLine"></span><span id="s'+this.scount+'" class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="fatherInput"><span class="glyphicon glyphicon-remove remove link"></span><hr><div class="son"><span class="directLine add"></span><span class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="sonInput"><span class="glyphicon glyphicon-remove remove link"></span><hr></div><div class="addThird"><span class="directLine add"></span><span id="addt'+this.scount+'" class="btn btn-primary thirdAdd">添加三级子分类</span><hr></div></div>';
       	$(secondHtml).insertBefore(targetSecond.children('.lastHr'));
       	$(button).insertBefore(targetSecond.children('.lastHr'));
         let thirdAdd = '#addt'+this.scount;
@@ -97,6 +97,7 @@
         });
       },
       deleteFirst(e){
+        let objectId = $(e.currentTarget).prev().attr('id');
         let grandFatherInput = $(e.currentTarget).prev();
         let grandFatherDiv = $(e.currentTarget).parent();
         if(grandFatherDiv.children('.father').length>0){
@@ -114,9 +115,10 @@
           function(){
             $.ajax({
                 type: 'post',
-                url: '/xx/xx/',
+                url: '/Product/DelStoreCategory/',
                 data: {
-                   
+                   StoreCategory: 'StoreCategoryFirst',
+                   objectId: objectId,
                 },
                 success: function (data) {
                   swal("成功删除");
@@ -130,6 +132,7 @@
         }
       },
       deleteSecond(e){
+        let objectId = $(e.currentTarget).prev().attr('id');
         let fatherInput = $(e.currentTarget).prev();
         let fatherDiv = $(e.currentTarget).parent();
         if(fatherDiv.children('.son').length>0){
@@ -147,9 +150,10 @@
           function(){
             $.ajax({
                 type: 'post',
-                url: '/xx/xx/',
+                url: '/Product/DelStoreCategory/',
                 data: {
-                   
+                   StoreCategory: 'StoreCategorySecond',
+                   objectId: objectId,
                 },
                 success: function (data) {
                   swal("成功删除");
@@ -163,6 +167,8 @@
         }
       },
       deleteThird(e){
+        let objectId = $(e.currentTarget).prev().attr('id');
+        alert(objectId);
         let sonInput = $(e.currentTarget).prev();
         let sonDiv = $(e.currentTarget).parent();
         swal({
@@ -177,9 +183,10 @@
         function(){
           $.ajax({
               type: 'post',
-              url: '/xx/xx/',
+              url: '/Product/DelStoreCategory/',
               data: {
-                 
+                 StoreCategory: 'StoreCategoryThird',
+                 objectId: objectId,
               },
               success: function (data) {
                 swal("成功删除");

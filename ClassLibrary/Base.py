@@ -93,11 +93,26 @@ def save_image(imageFile):
     return False
 
 
+def save_image_data(data, name='default'):
+    """
+    :return: 
+    """
+    if data:
+        tup = tempfile.mkstemp()
+        file = open(tup[0], 'wb+')
+        for chunk in data.chunks():
+            file.write(chunk)
+        lc_file = leancloud.File(name, data=file)
+        lc_file.save()
+        return lc_file
+    return False
+
+
 def set_file(classInstance, attribute, fileDate):
     tup = tempfile.mkstemp()
     file = open(tup[0], 'wb+')
     file.write(bytes(fileDate, encoding="utf8"))
-    lc_file = leancloud.File('detailDescription', data=file)
+    lc_file = leancloud.File(attribute, data=file)
     classInstance.set(attribute, lc_file)
     if save_data(classInstance):
         return True

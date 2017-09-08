@@ -40,37 +40,8 @@ def sortSaleCategorySecond(request):
     return render(request, 'SaleCategorySort.html', {'content': content})
 
 
-def getNewSecondSaleCategory(request, first):
-    categoryList = []
-    for second in request.POST.getlist('id_SaleTag2_' + first):
-        image = request.FILES.get('imageFile_id_SaleTag2_' + first + second)
-        briefDescription = request.POST.get('briefDescription_id_SaleTag2_' + first + second)
-        if image and briefDescription:
-            A = {
-                'name': second,
-                'imageFile': image,
-                'briefDescription': briefDescription,
-            }
-            categoryList.append(A)
-
-
-def createSecondSaleCategory(request, first):
-    categoryList = []
-    for second in request.POST.getlist('id_SaleTag_' + first+'_Son'):
-        image = request.FILES.get('imageFile_id_SaleTag_' + first + '_Son'+second)
-        briefDescription = request.POST.get('briefDescription_id_SaleTag_' + first + '_Son' + second)
-        if image and briefDescription:
-            A = {
-                'name': second,
-                'imageFile': image,
-                'briefDescription': briefDescription,
-            }
-            categoryList.append(A)
-
-
-
-
 @login_required
+@permission(ROLE_PRODUCT)
 def createSaleCategory(request):
     """
     创建销售分类
@@ -85,7 +56,8 @@ def createSaleCategory(request):
                 print('success')
     
     """
-    saleCategory = request.GET.get(Class_Name_SaleCategory)
+    storeCategory = json.loads(request.body.decode('utf-8'))
+    saleCategory = storeCategory[Class_Name_SaleCategoryFirst]
     if saleCategory:
         saleCategory = json.loads(saleCategory)
         keyList1 = keyList2 = [
@@ -100,11 +72,11 @@ def createSaleCategory(request):
                 Dict_Check(goo, keyList2)
         print(saleCategory)
         for foo in saleCategory:
-            first = SaleCategory(Class_Name_SaleCategoryFirst)
+            first = SaleCategoryFirst()
             first.create_SaleCategory(foo)
             secondStore = foo[attribute_storeCategorySecond]
             for goo in secondStore:
-                second = SaleCategory(Class_Name_SaleCategorySecond)
+                second = SaleCategorySecond()
                 second.create_SaleCategory(goo, first.get_instance())
                 first.add_attribute_relation(attribute_saleCategorySecond, second.get_instance())
     allData = get_SaleCategory_All()
@@ -149,9 +121,10 @@ def createStoreCategory(request):
     :param request: 
     :return: 
     """
-    storeCategory = request.GET.get(Class_Name_StoreCategory)
+    storeCategory = json.loads(request.body.decode('utf-8'))
+    storeCategory = storeCategory[Class_Name_StoreCategoryFirst]
+    print(storeCategory)
     if storeCategory:
-        storeCategory = json.loads(storeCategory)
         # 数据过滤
         keyList1 = keyList2 = keyList3 = [
             attribute_name,
@@ -162,7 +135,7 @@ def createStoreCategory(request):
             for goo in foo[attribute_storeCategorySecond]:
                 keyList2.append(attribute_storeCategoryThird)
                 Dict_Check(goo, keyList2)
-                for koo in goo[attribute_storeCategoryThird]:
+                for koo in goo:
                     Dict_Check(koo, keyList3)
         # 上述代码检查输入的数据是否合理------------
         for foo in storeCategory:
@@ -170,11 +143,13 @@ def createStoreCategory(request):
             first.create_StoreCategoryFirst(foo)
             secondStore = foo[attribute_storeCategorySecond]
             for goo in secondStore:
+                print(goo)
                 second = StoreCategorySecond()
                 second.create_StoreCategorySecond(goo, first.get_instance())
                 first.add_attribute_relation(attribute_storeCategorySecond, second.get_instance())
-                thirdStore = foo[attribute_storeCategoryThird]
+                thirdStore = goo[attribute_storeCategoryThird]
                 for koo in thirdStore:
+                    print(koo)
                     third = StoreCategoryThird()
                     third.create_StoreCategoryThird(koo, second.get_instance())
                     second.add_attribute_relation(attribute_storeCategoryThird, third.get_instance())

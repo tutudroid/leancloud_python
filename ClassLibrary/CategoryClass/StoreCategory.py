@@ -9,8 +9,6 @@ class StoreCategory(Object):
             self.className = name
         else:
             self.className = self.__class__.__name__
-        print(self.className)
-
 
     def get_StoreCategoryFirst(self, objectId):
         if objectId:
@@ -88,14 +86,15 @@ class StoreCategory(Object):
 
 
     def create_StoreCategory(self, data):
-        if data:
-            if data[attribute_objectId]:
+        if data[attribute_name]:
+            if attribute_objectId in data and data[attribute_objectId]:
                 self.__print_msg__('create new storeCategory')
                 self.get_Object(data[attribute_objectId])
             else:
                 self.create_Object()
             self.set_attribute_value(attribute_name, data[attribute_name])
             return True
+        return None
 
     def update_Category(self, data):
         if data:

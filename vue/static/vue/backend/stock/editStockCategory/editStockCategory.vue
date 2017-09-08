@@ -168,7 +168,6 @@
       },
       deleteThird(e){
         let objectId = $(e.currentTarget).prev().attr('id');
-        alert(objectId);
         let sonInput = $(e.currentTarget).prev();
         let sonDiv = $(e.currentTarget).parent();
         swal({
@@ -275,10 +274,10 @@
                   sonInputObject.name = sInput;
                   return sonInputObject;
                 })
-                fatherInputObject.storeCategoryThird.push(sonInputObject);
+                fatherInputObject.storeCategoryThird = sonInputObject;
                 return fatherInputObject;
             });
-            grandFatherInputObject.storeCategorySecond.push(fatherInputObject);
+            grandFatherInputObject.storeCategorySecond = fatherInputObject;
             return grandFatherInputObject;
         }); 
         let obj = {};

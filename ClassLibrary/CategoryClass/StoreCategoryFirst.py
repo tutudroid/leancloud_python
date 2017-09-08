@@ -9,7 +9,6 @@ class StoreCategoryFirst(StoreCategory):
     def __init__(self):
         super(StoreCategoryFirst, self).__init__()
         self.className = self.__class__.__name__
-        print(self.className)
 
     def get_attribute_storeCategorySecond(self):
         if self.instance:
@@ -33,9 +32,6 @@ class StoreCategoryFirst(StoreCategory):
     def create_StoreCategoryFirst(self, data):
         if data:
             self.create_StoreCategory(data)
-            if data[attribute_state] and int(data[attribute_state]) == -1:
-                self.set_attribute_state(data[attribute_state])
-                self.delete_Category()
             return True
         return None
 

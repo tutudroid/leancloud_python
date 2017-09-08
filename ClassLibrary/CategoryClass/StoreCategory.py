@@ -66,20 +66,26 @@ class StoreCategory(Object):
 
     def get_attribute_storeCategorySecond(self):
         if self.instance:
-            second = StoreCategory(Class_Name_StoreCategorySecond)
-            second.set_instance(self.instance)
-            return second.output_StoreCategorySecond()
+            store = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_StoreCategoryFirst, attribute_storeCategorySecond, attribute_state, STATE_OK)
+            if store:
+                returnList = []
+                for foo in store:
+                    second = StoreCategory(Class_Name_StoreCategorySecond)
+                    second.set_instance(foo)
+                    returnList.append(second.output_StoreCategorySecond())
+                return returnList
         return None
 
     def get_attribute_storeCategoryThird(self):
         if self.instance:
-            store = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), self.className, attribute_storeCategoryThird, attribute_state, STATE_OK)
+            store = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_StoreCategorySecond, attribute_storeCategoryThird, attribute_state, STATE_OK)
             if store:
                 returnList = []
                 for foo in store:
-                    second = StoreCategory(Class_Name_StoreCategoryThird)
-                    second.set_instance(foo)
-                    returnList.append(second.output_StoreCategory())
+                    third = StoreCategory(Class_Name_StoreCategoryThird)
+                    third.set_instance(foo)
+                    returnList.append(third.output_StoreCategory())
+                print(returnList)
                 return returnList
         return None
 

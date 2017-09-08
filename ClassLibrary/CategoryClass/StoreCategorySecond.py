@@ -19,7 +19,7 @@ class StoreCategorySecond(StoreCategory):
 
     def get_attribute_storeCategoryThird(self):
         if self.instance:
-            store = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_StoreCategorySecond, attribute_storeCategoryThird, attribute_state, STATE_OK)
+            store = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_StoreCategorySecond, attribute_storeCategoryThird, attribute_state, STATE_OK, limit=100)
             if store:
                 returnList = []
                 for foo in store:

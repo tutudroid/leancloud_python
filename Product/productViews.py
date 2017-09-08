@@ -2,8 +2,10 @@ from Error_Page import *
 from ClassLibrary.ProductClass.ProductGroup_New import ProductGroup, copy_Shop_ProductGroup
 from ClassLibrary.ShopClass.Shop_New import Shop
 from ClassLibrary.ProductClass.ShopProductGroup import ShopProductGroup
-from ClassLibrary.CategoryClass.SaleCategory import SaleCategory
-from ClassLibrary.CategoryClass.StoreCategory import StoreCategory
+from ClassLibrary.CategoryClass.SaleCategoryFirst import get_SaleCategory_All
+from ClassLibrary.CategoryClass.StoreCategoryFirst import get_StoreCategory_All
+from ClassLibrary.CategoryClass.SaleCategorySecond import SaleCategorySecond
+from ClassLibrary.CategoryClass.StoreCategoryThird import StoreCategoryThird
 from ClassLibrary.ProductClass.ProductService import ProductService
 
 
@@ -124,7 +126,7 @@ def CreateProductGroup(request):
                 productGroup1 = ProductGroup()
                 data = productGroup1.input_ProductGroup(request)
                 # 将数据保存到数据库
-                if productGroup1.create_ProductGroup(data, shop):
+                if productGroup1.create_ProductGroup(data):
                     if request.POST.get('shelf_off'):
                         ProductGroup.set_attribute_state(productGroup1, STATE_SHELF_OFF)
                     productGroupObjectId = ProductGroup.get_attribute_objectId(productGroup1)
@@ -133,8 +135,8 @@ def CreateProductGroup(request):
     if request.method == 'GET':
         # 显示创建商品页面
         data = {
-            Class_Name_StoreCategory: StoreCategory().get_StoreCategory_All(),
-            Class_Name_SaleCategory: SaleCategory().get_SaleCategory_All(),
+            Class_Name_StoreCategory: get_StoreCategory_All(),
+            Class_Name_SaleCategory: get_SaleCategory_All(),
             Class_Name_ProductService: ProductService().get_ProductService_All(),
         }
         return return_data(Class_Name_ProductGroup, data)
@@ -159,14 +161,14 @@ def DisposeProductGroup(request):
                 shop.get_Object(productGroup1.get_attribute_Object_Id(attribute_shop))
                 shop.remove_attribute_relation(attribute_productGroup, productGroup1.get_instance())
                 # 从库存中删除
-                store = StoreCategory(Class_Name_StoreCategoryThird)
+                store = StoreCategoryThird()
                 store.get_Object(productGroup1.get_attribute_Object_Id(attribute_storeCategory))
                 store.remove_attribute_relation(attribute_productGroup, productGroup1.get_instance())
                 # 从销售分类中删除
                 saleList = productGroup1.get_attribute_relation(attribute_saleCategory)
                 if saleList:
                     for foo in saleList:
-                        sale = SaleCategory(Class_Name_SaleCategorySecond)
+                        sale = SaleCategorySecond()
                         sale.set_instance(foo)
                         sale.remove_attribute_relation(attribute_productGroup, productGroup1.get_instance())
                 productGroup1.delete_ProductGroup()

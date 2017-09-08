@@ -29,7 +29,7 @@ urlpatterns = [
 
     url(r'^CreateStoreCategory/$', categoryViews.createStoreCategory, name='CreateStoreCategory'),
     url(r'^ShowStoreCategory/$', categoryViews.ShowStoreCategory, name='ShowStoreCategory'),
-    url(r'^EditStoreCategory/$', categoryViews.EditStoreCategory, name='EditStoreCategory'),
+    url(r'^DelStoreCategory/$', categoryViews.DelStoreCategory, name='DelStoreCategory'),
 
     url(r'^ShowSaleCategory/$', categoryViews.ShowSaleCategory, name='ShowSaleCategory'),
     url(r'^CreateSaleCategory/$', categoryViews.createSaleCategory, name='CreateSaleCategory'),

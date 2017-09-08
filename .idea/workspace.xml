@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0499edbb-0d6b-477c-a822-a91397b8a747" name="Default" comment="v">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategoryFirst.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategorySecond.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategory.py" afterPath="$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategory.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Initiation/Test_example.py" afterPath="$PROJECT_DIR$/Initiation/Test_example.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Account/decorators.py" afterPath="$PROJECT_DIR$/Account/decorators.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategoryFirst.py" afterPath="$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategoryFirst.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryFirst.py" afterPath="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryFirst.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategorySecond.py" afterPath="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategorySecond.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Product/categoryViews.py" afterPath="$PROJECT_DIR$/Product/categoryViews.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Product/productViews.py" afterPath="$PROJECT_DIR$/Product/productViews.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Product/urls.py" afterPath="$PROJECT_DIR$/Product/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Product/分类接口.md" afterPath="$PROJECT_DIR$/Product/分类接口.md" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -47,11 +49,36 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="categoryViews.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="分类接口.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Product/分类接口.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="425">
+                <caret line="29" column="26" lean-forward="false" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
+                <folding />
+              </first_editor>
+              <second_editor>
+                <js_state />
+              </second_editor>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Product/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="31" column="51" lean-forward="false" selection-start-line="31" selection-start-column="51" selection-end-line="31" selection-end-column="51" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="categoryViews.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Product/categoryViews.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1840">
-              <caret line="123" column="35" lean-forward="false" selection-start-line="123" selection-start-column="23" selection-end-line="123" selection-end-column="35" />
+            <state relative-caret-position="518">
+              <caret line="203" column="39" lean-forward="false" selection-start-line="203" selection-start-column="38" selection-end-line="203" selection-end-column="39" />
               <folding>
                 <element signature="e#1#25#0" expanded="true" />
               </folding>
@@ -59,24 +86,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SaleCategory.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategory.py">
+      <file leaf-file-name="shopProductViews.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Product/shopProductViews.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3960">
-              <caret line="264" column="19" lean-forward="false" selection-start-line="264" selection-start-column="19" selection-end-line="264" selection-end-column="19" />
+            <state relative-caret-position="30">
+              <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SaleCategoryFirst.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategoryFirst.py">
+      <file leaf-file-name="decorators.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Account/decorators.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1198">
-              <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#43#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-242">
+              <caret line="85" column="7" lean-forward="false" selection-start-line="85" selection-start-column="7" selection-end-line="85" selection-end-column="7" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -91,14 +116,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Test_example.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Initiation/Test_example.py">
+      <file leaf-file-name="StoreCategory.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-              <folding>
-                <element signature="e#34#58#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="0">
+              <caret line="0" column="29" lean-forward="false" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -106,55 +129,29 @@
       <file leaf-file-name="Object.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Object.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="17" column="29" lean-forward="false" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+            <state relative-caret-position="280">
+              <caret line="19" column="37" lean-forward="false" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StoreCategory.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py">
+      <file leaf-file-name="Attribute_Parameter.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Attribute_Parameter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state relative-caret-position="105">
+              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="9" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StoreCategoryFirst.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryFirst.py">
+      <file leaf-file-name="productViews.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Product/productViews.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="49" column="7" lean-forward="false" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
-              <folding>
-                <element signature="e#0#43#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StoreCategoryThird.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryThird.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
-              <caret line="46" column="19" lean-forward="false" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
-              <folding>
-                <element signature="e#0#43#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StoreCategorySecond.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategorySecond.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="30" column="19" lean-forward="false" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
-              <folding>
-                <element signature="e#0#43#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="75">
+              <caret line="5" column="58" lean-forward="false" selection-start-line="5" selection-start-column="58" selection-end-line="5" selection-end-column="58" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -210,7 +207,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ClassLibrary/BaseClass/Table.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/OrderClass/Order_New.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/OrderClass/AfterSaleServiceRecord.py" />
         <option value="$PROJECT_DIR$/Order/urls.py" />
@@ -229,7 +225,6 @@
         <option value="$PROJECT_DIR$/ClassLibrary/ShopClass/SettleInApplication.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/UserClass/User.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategoryRecommend.py" />
-        <option value="$PROJECT_DIR$/Product/分类接口.md" />
         <option value="$PROJECT_DIR$/Account/views.py" />
         <option value="$PROJECT_DIR$/Shop/settleInViews.py" />
         <option value="$PROJECT_DIR$/Shop/urls.py" />
@@ -240,11 +235,9 @@
         <option value="$PROJECT_DIR$/TmpProductGroup/urls.py" />
         <option value="$PROJECT_DIR$/TmpProductGroup/店铺草稿商品接口.md" />
         <option value="$PROJECT_DIR$/urls.py" />
-        <option value="$PROJECT_DIR$/Product/urls.py" />
         <option value="$PROJECT_DIR$/Product/商品接口.md" />
         <option value="$PROJECT_DIR$/ClassLibrary/Base.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/ProductClass/ProductDetailDescription.py" />
-        <option value="$PROJECT_DIR$/Product/productViews.py" />
         <option value="$PROJECT_DIR$/Product/shopProductViews.py" />
         <option value="$PROJECT_DIR$/Account/tool.md" />
         <option value="$PROJECT_DIR$/ClassLibrary/ProductClass/ProductGroup_New.py" />
@@ -252,15 +245,19 @@
         <option value="$PROJECT_DIR$/ClassLibrary/ProductClass/ProductGroupBase.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/ProductClass/ShopProductGroup.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryThird.py" />
-        <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategorySecond.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/BaseClass/Object.py" />
-        <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryFirst.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategory.py" />
-        <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategoryFirst.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategorySecond.py" />
         <option value="$PROJECT_DIR$/Initiation/Test_example.py" />
+        <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategoryFirst.py" />
+        <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryFirst.py" />
+        <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategorySecond.py" />
+        <option value="$PROJECT_DIR$/Account/decorators.py" />
+        <option value="$PROJECT_DIR$/Product/urls.py" />
+        <option value="$PROJECT_DIR$/Product/productViews.py" />
         <option value="$PROJECT_DIR$/Product/categoryViews.py" />
+        <option value="$PROJECT_DIR$/Product/分类接口.md" />
       </list>
     </option>
   </component>
@@ -274,8 +271,8 @@
     <handled-path value="$PROJECT_DIR$/vue/static/vue/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="834" />
-    <option name="y" value="29" />
+    <option name="x" value="483" />
+    <option name="y" value="23" />
     <option name="width" value="1339" />
     <option name="height" value="1417" />
   </component>
@@ -932,7 +929,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="834" y="29" width="1339" height="1417" extended-state="0" />
+    <frame x="483" y="23" width="1339" height="1417" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32922128" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
@@ -974,13 +971,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vue/static/vue/backend/stock/editStockCategory/editStockCategory.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-310">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vue/static/vue/backend/system/accountList/addAccount.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1024,6 +1014,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1189,14 +1182,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/Base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="872">
-          <caret line="1032" column="11" lean-forward="false" selection-start-line="1032" selection-start-column="11" selection-end-line="1032" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ClassLibrary/ProductClass/ProductDetailDescription.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="645">
@@ -1210,16 +1195,6 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Product/productViews.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-647">
-          <caret line="92" column="8" lean-forward="false" selection-start-line="92" selection-start-column="8" selection-end-line="92" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1249,14 +1224,6 @@
           <second_editor>
             <js_state />
           </second_editor>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Attribute_Parameter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1291,6 +1258,72 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryThird.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="46" column="19" lean-forward="false" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Initiation/Test_example.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding>
+            <element signature="e#34#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3960">
+          <caret line="264" column="19" lean-forward="false" selection-start-line="264" selection-start-column="19" selection-end-line="264" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/Base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="481">
+          <caret line="222" column="28" lean-forward="true" selection-start-line="222" selection-start-column="28" selection-end-line="222" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategoryFirst.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="191" lean-forward="false" selection-start-line="15" selection-start-column="182" selection-end-line="15" selection-end-column="191" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryFirst.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="194" lean-forward="false" selection-start-line="15" selection-start-column="194" selection-end-line="15" selection-end-column="194" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategorySecond.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="194" lean-forward="false" selection-start-line="21" selection-start-column="194" selection-end-line="21" selection-end-column="194" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Product/商品接口.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="SPLIT">
@@ -1306,8 +1339,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Product/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="33" column="32" lean-forward="false" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
+        <state relative-caret-position="435">
+          <caret line="31" column="51" lean-forward="false" selection-start-line="31" selection-start-column="51" selection-end-line="31" selection-end-column="51" />
           <folding />
         </state>
       </provider>
@@ -1320,72 +1353,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Product/分类接口.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="926">
-            <caret line="255" column="24" lean-forward="false" selection-start-line="255" selection-start-column="15" selection-end-line="255" selection-end-column="24" />
-            <folding />
-          </first_editor>
-          <second_editor>
-            <js_state />
-          </second_editor>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryThird.py">
+    <entry file="file://$PROJECT_DIR$/Product/productViews.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="46" column="19" lean-forward="false" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategorySecond.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="19" lean-forward="false" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state relative-caret-position="75">
+          <caret line="5" column="58" lean-forward="false" selection-start-line="5" selection-start-column="58" selection-end-line="5" selection-end-column="58" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Object.py">
+    <entry file="file://$PROJECT_DIR$/Account/decorators.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="17" column="29" lean-forward="false" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+        <state relative-caret-position="-242">
+          <caret line="85" column="7" lean-forward="false" selection-start-line="85" selection-start-column="7" selection-end-line="85" selection-end-column="7" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryFirst.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="49" column="7" lean-forward="false" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategoryFirst.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1198">
-          <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1397,31 +1377,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Initiation/Test_example.py">
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding>
-            <element signature="e#34#58#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="29" lean-forward="false" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategory.py">
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Object.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3960">
-          <caret line="264" column="19" lean-forward="false" selection-start-line="264" selection-start-column="19" selection-end-line="264" selection-end-column="19" />
+        <state relative-caret-position="280">
+          <caret line="19" column="37" lean-forward="false" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Attribute_Parameter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="9" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Product/categoryViews.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1840">
-          <caret line="123" column="35" lean-forward="false" selection-start-line="123" selection-start-column="23" selection-end-line="123" selection-end-column="35" />
+        <state relative-caret-position="518">
+          <caret line="203" column="39" lean-forward="false" selection-start-line="203" selection-start-column="38" selection-end-line="203" selection-end-column="39" />
           <folding>
             <element signature="e#1#25#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Product/分类接口.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="425">
+            <caret line="29" column="26" lean-forward="false" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
+            <folding />
+          </first_editor>
+          <second_editor>
+            <js_state />
+          </second_editor>
         </state>
       </provider>
     </entry>

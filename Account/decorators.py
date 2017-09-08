@@ -49,8 +49,36 @@ def auto_login(func):
     return secret_view
 
 
-
 def permissions(roles):
+    """
+    只允许该角色的用户登陆
+    :param roles: 
+    :return: 
+    """
+    def _permission(func):
+        @wraps(func)
+        def __permission(*args, **kwargs):
+            return func(*args, **kwargs)
+        return __permission
+    return _permission
+
+
+
+def permission(arg):
+    """
+    只允许该角色的用户登陆
+    :param arg: 
+    :return: 
+    """
+    def _permission(func):
+        @wraps(func)
+        def __permission(*args, **kwargs):
+            return func(*args, **kwargs)
+        return __permission
+    return _permission
+
+
+def permissions1(roles):
     """
     只允许该角色的用户登陆
     :param roles: 
@@ -85,7 +113,7 @@ def permissions(roles):
 
 
 
-def permission(arg):
+def permission1(arg):
     """
     只允许该角色的用户登陆
     :param arg: 

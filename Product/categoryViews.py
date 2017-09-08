@@ -185,19 +185,25 @@ def createStoreCategory(request):
 @login_required
 @permission(ROLE_PRODUCT)
 @require_http_methods(['GET'])
-def EditStoreCategory(request):
+def DelStoreCategory(request):
     """
-    编辑库存分类
+    删除
     :param request: 
     :return: 
     """
-    className = request.GET.get(Class_Name_StoreCategory)
-    if className:
-        storeCategory = StoreCategory(className)
-        data = storeCategory.input_Category(request)
-        storeCategory.update_Category(data)
-        return return_data(className, storeCategory.output_StoreCategory())
-    return illegal_access()
+    className = request.GET.get(Class_Name_StoreCategory, '')
+    objectId = request.GET.get(attribute_objectId, '')
+    if className and objectId:
+        if className == Class_Name_StoreCategoryFirst:
+            storeCategory = StoreCategoryFirst()
+        elif className == Class_Name_StoreCategorySecond:
+            storeCategory = StoreCategorySecond()
+        else:
+            storeCategory = StoreCategoryThird()
+        storeCategory.get_Object(objectId)
+        storeCategory.delete_Category()
+        return return_msg('success')
+    return return_msg('parameter is null')
 
 
 @login_required

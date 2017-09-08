@@ -13,7 +13,7 @@ class StoreCategoryFirst(StoreCategory):
 
     def get_attribute_storeCategorySecond(self):
         if self.instance:
-            store = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_StoreCategoryFirst, attribute_storeCategorySecond, attribute_state, STATE_OK, 1, limit=100)
+            store = Base.get_relation_data_and_attribute(self.instance.get(attribute_objectId), Class_Name_StoreCategoryFirst, attribute_storeCategorySecond, attribute_state, STATE_OK, 1, 100)
             if store:
                 returnList = []
                 for foo in store:
@@ -45,7 +45,7 @@ def get_StoreCategory_All():
     获得库存分类表
     :return: 
     """
-    storeCategoryFirst = Base.queryInstanceAttribute(Class_Name_StoreCategoryFirst, attribute_state, 0)
+    storeCategoryFirst = Base.queryInstanceAttribute(Class_Name_StoreCategoryFirst, attribute_state, 0, 1, 100)
     if storeCategoryFirst:
         storeCategoryList = []
         for foo in storeCategoryFirst:

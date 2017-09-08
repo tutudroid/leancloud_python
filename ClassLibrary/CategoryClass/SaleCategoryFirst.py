@@ -76,7 +76,7 @@ def get_SaleCategory_All():
     获得销售分类表
     :return: 
     """
-    saleCategoryFirst = Base.queryInstanceAttribute_and_sort_uniqueId(Class_Name_SaleCategoryFirst, attribute_state, STATE_OK)
+    saleCategoryFirst = Base.queryInstanceAttribute_and_sort_uniqueId(Class_Name_SaleCategoryFirst, attribute_state, STATE_OK, 1, limit=100)
     if saleCategoryFirst:
         saleCategoryList = []
         for foo in saleCategoryFirst:

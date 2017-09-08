@@ -220,7 +220,7 @@ def count_relation_data_and_attribute(objectId, className, relation_value, attri
     return 0
 
 
-def get_relation_data_and_attribute(objectId, className, relation_value, attribute, value, skip=None, limit=QUERY_SKIP):
+def get_relation_data_and_attribute(objectId, className, relation_value, attribute, value, skip=1, limit=QUERY_SKIP):
     """
     获得关联表的所有数据
     :param limit: 
@@ -240,7 +240,8 @@ def get_relation_data_and_attribute(objectId, className, relation_value, attribu
         query = query.equal_to(attribute, value)
         if skip and int(skip) - 1 > 0:
              query.skip((int(skip) - 1)*int(limit))
-        query.limit(int(limit))
+        else:
+            query.limit(int(QUERY_SKIP))
         try:
             query_list = query.find()
             return query_list
@@ -563,7 +564,7 @@ def count_exist_instance(className, attribute):
     return None
 
 
-def queryExistInstance(className, attribute, skip=None, limit=QUERY_SKIP):
+def queryExistInstance(className, attribute, skip=1, limit=QUERY_SKIP):
     """
     通过name获得类的实例信息
     :expand: 如果expand为空，则返回基本信息，否则，返回point指向对象的所有信息，此时，可以使用get方法获得数据。
@@ -616,7 +617,7 @@ def queryInstanceAttributeCount(className, attribute, value):
     return 0
 
 
-def queryInstanceAttribute(className, attribute, value, skip=None, limit=QUERY_SKIP):
+def queryInstanceAttribute(className, attribute, value, skip=1, limit=QUERY_SKIP):
     """
     通过name获得类的实例信息
     :expand: 如果expand为空，则返回基本信息，否则，返回point指向对象的所有信息，此时，可以使用get方法获得数据。
@@ -627,7 +628,7 @@ def queryInstanceAttribute(className, attribute, value, skip=None, limit=QUERY_S
         ClassInstance = leancloud.Object.extend(className)
         query = ClassInstance.query
         query.equal_to(attribute, value)
-        if skip and int(skip) - 1 > 0:
+        if skip and int(skip) - 1 >= 0:
             query.skip((int(skip)-1)*int(limit))
             query.limit(int(limit))
         else:
@@ -646,7 +647,7 @@ def queryInstanceAttribute(className, attribute, value, skip=None, limit=QUERY_S
     return None
 
 
-def queryInstanceAttributeGreaterOrEqual(className, attribute, value, skip=None, limit=QUERY_SKIP):
+def queryInstanceAttributeGreaterOrEqual(className, attribute, value, skip=1, limit=QUERY_SKIP):
     """
     通过name获得类的实例信息
     :expand: 如果expand为空，则返回基本信息，否则，返回point指向对象的所有信息，此时，可以使用get方法获得数据。
@@ -677,7 +678,7 @@ def queryInstanceAttributeGreaterOrEqual(className, attribute, value, skip=None,
 
 
 
-def queryInstanceAttribute_and_sort_uniqueId(className, attribute, value, skip=None, limit=QUERY_SKIP):
+def queryInstanceAttribute_and_sort_uniqueId(className, attribute, value, skip=1, limit=QUERY_SKIP):
     """
     通过name获得类的实例信息
     :expand: 如果expand为空，则返回基本信息，否则，返回point指向对象的所有信息，此时，可以使用get方法获得数据。

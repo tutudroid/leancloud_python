@@ -275,10 +275,10 @@
                   sonInputObject.name = sInput;
                   return sonInputObject;
                 })
-                fatherInputObject.storeThirdCategory.push(sonInputObject);
+                fatherInputObject.storeCategoryThird.push(sonInputObject);
                 return fatherInputObject;
             });
-            grandFatherInputObject.storeSecondCategory.push(fatherInputObject);
+            grandFatherInputObject.storeCategorySecond.push(fatherInputObject);
             return grandFatherInputObject;
         }); 
         let obj = {};

@@ -40,5 +40,8 @@ class StoreCategoryThird(StoreCategory):
         if data and storeCategorySecond:
             self.create_StoreCategory(data)
             self.set_attribute_storeCategorySecond(storeCategorySecond)
+            if data[attribute_state] and int(data[attribute_state]) == -1:
+                self.set_attribute_state(data[attribute_state])
+                self.delete_Category()
             return True
         return None

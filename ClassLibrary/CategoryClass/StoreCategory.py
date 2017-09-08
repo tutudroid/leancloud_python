@@ -120,11 +120,8 @@ class StoreCategory(Object):
             else:
                 self.create_Object()
             self.set_attribute_value(attribute_name, data[attribute_name])
-            if data[attribute_state] and int(data[attribute_state]) == -1:
-                self.set_attribute_state(data[attribute_state])
-                self.delete_Category()
             return True
-    
+
     def update_Category(self, data):
         if data:
             if data[attribute_objectId]:
@@ -137,40 +134,7 @@ class StoreCategory(Object):
         return None
 
     def delete_Category(self):
-        if self.className == Class_Name_StoreCategorySecond:
-            First = StoreCategory(Class_Name_StoreCategoryFirst)
-            firstInstance = self.get_attribute_storeCategoryFirst()
-            if firstInstance:
-                First.get_Object(firstInstance.id)
-                First.remove_attribute_relation(attribute_storeCategorySecond, self.instance)
-                return True
-        if self.className == Class_Name_StoreCategoryThird:
-            second = StoreCategory(Class_Name_StoreCategorySecond)
-            secondInstance = self.instance.get(attribute_storeCategorySecond)
-            if secondInstance:
-                second.get_Object(secondInstance.id)
-                second.remove_attribute_relation(attribute_storeCategoryThird, self.instance)
-                return True
-        return None
-
-    def create_StoreCategoryFirst(self, data):
-        if data:
-            self.create_StoreCategory(data)
-            return True
-        return None
-
-    def create_StoreCategorySecond(self, data, storeCategoryFirst):
-        if data:
-            self.create_StoreCategory(data)
-            self.set_attribute_storeCategoryFirst(storeCategoryFirst)
-            return True
-        return None
-
-    def create_StoreCategoryThird(self, data, storeCategorySecond):
-        if data and storeCategorySecond:
-            self.create_StoreCategory(data)
-            self.set_attribute_storeCategorySecond(storeCategorySecond)
-            return True
+        self.set_attribute_state(STATE_DELETE)
         return None
 
     def output_StoreCategory(self):
@@ -196,43 +160,6 @@ class StoreCategory(Object):
             data.update({attribute_storeCategorySecond: self.get_attribute_storeCategorySecond()})
             return data
         return None
-
-    def create_Store_Category(self, storeCategoryList):
-        """
-        创建库层分类表
-        :param storeCategoryList: 
-        :return: 
-        """
-        self.instance = self.instance
-        if storeCategoryList:
-            for first in storeCategoryList:
-                storeCategoryFirst = self.check_StoreCategoryFirst(first[attribute_name])
-                if not storeCategoryFirst:
-                    storeCategoryFirst = self.create_StoreCategoryFirst(first['name'])
-
-                relationFirst = storeCategoryFirst.relation('storeCategorySecond')
-                for second in first['value']:
-                    # 检查该元素是否存在
-                    storeCategorySecond = self.check_StoreCategorySecond(second['name'], storeCategoryFirst)
-                    if not storeCategorySecond:
-                        storeCategorySecond = self.create_StoreCategorySecond(second['name'], storeCategoryFirst)
-
-                    relationSecond = storeCategorySecond.relation('storeCategoryThird')
-                    # 保存所有的第三级数据，并同时将该关系加入到第二级数据中
-                    for third in second['value']:
-                        storeCategoryThird = self.check_StoreCategoryThird(third, storeCategorySecond)
-                        if not storeCategoryThird:
-                            storeCategoryThird = self.create_StoreCategoryThird(third, storeCategorySecond)
-                        relationSecond.add(storeCategoryThird)
-
-                    # 保存第二级数据
-                    if Base.save_data(storeCategorySecond):
-                        # 添加关系
-                        relationFirst.add(storeCategorySecond)
-                Base.save_data(storeCategoryFirst)
-        else:
-            Base.sys_log('storeCategoryList is null')
-
 
     def set_attribute_productGroup(self, productGroup):
         if self.instance and productGroup:

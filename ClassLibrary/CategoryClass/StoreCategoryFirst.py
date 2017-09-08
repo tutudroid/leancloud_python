@@ -33,6 +33,9 @@ class StoreCategoryFirst(StoreCategory):
     def create_StoreCategoryFirst(self, data):
         if data:
             self.create_StoreCategory(data)
+            if data[attribute_state] and int(data[attribute_state]) == -1:
+                self.set_attribute_state(data[attribute_state])
+                self.delete_Category()
             return True
         return None
 

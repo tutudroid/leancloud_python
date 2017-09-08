@@ -10,7 +10,12 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryThird.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py" afterPath="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Product/categoryViews.py" afterPath="$PROJECT_DIR$/Product/categoryViews.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/static/vue/backend/stock/editStockCategory/editStockCategory.vue" afterPath="$PROJECT_DIR$/vue/static/vue/backend/stock/editStockCategory/editStockCategory.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/static/vue/backend/stock/searchStockCategory/searchStockCategory.vue" afterPath="$PROJECT_DIR$/vue/static/vue/backend/stock/searchStockCategory/searchStockCategory.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/static/vue/backend/system/sellerAccount/companySettled.vue" afterPath="$PROJECT_DIR$/vue/static/vue/backend/system/sellerAccount/companySettled.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/static/vue/backend/system/sellerAccount/personSettled.vue" afterPath="$PROJECT_DIR$/vue/static/vue/backend/system/sellerAccount/personSettled.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/static/vue/backend/system/sellerAccount/settleForbidden.vue" afterPath="$PROJECT_DIR$/vue/static/vue/backend/system/sellerAccount/settleForbidden.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/static/vue/main.js" afterPath="$PROJECT_DIR$/vue/static/vue/main.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -74,6 +79,18 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Test_example.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Initiation/Test_example.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="638">
+              <caret line="139" column="28" lean-forward="false" selection-start-line="139" selection-start-column="28" selection-end-line="139" selection-end-column="28" />
+              <folding>
+                <element signature="e#34#58#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Object.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Object.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -84,11 +101,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StoreCategory.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StoreCategory.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="126" column="4" lean-forward="false" selection-start-line="126" selection-start-column="4" selection-end-line="126" selection-end-column="4" />
+            <state relative-caret-position="468">
+              <caret line="121" column="74" lean-forward="false" selection-start-line="121" selection-start-column="74" selection-end-line="121" selection-end-column="74" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -99,8 +116,8 @@
       <file leaf-file-name="StoreCategoryFirst.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryFirst.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+            <state relative-caret-position="555">
+              <caret line="37" column="38" lean-forward="false" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -108,11 +125,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StoreCategoryThird.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="StoreCategoryThird.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryThird.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="40" column="29" lean-forward="false" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
+            <state relative-caret-position="660">
+              <caret line="44" column="38" lean-forward="false" selection-start-line="44" selection-start-column="38" selection-end-line="44" selection-end-column="38" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -123,8 +140,8 @@
       <file leaf-file-name="StoreCategorySecond.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategorySecond.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" column="19" lean-forward="false" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+            <state relative-caret-position="510">
+              <caret line="34" column="38" lean-forward="false" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="38" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -148,21 +165,6 @@
             <state relative-caret-position="465">
               <caret line="33" column="32" lean-forward="false" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="商品接口.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Product/商品接口.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="480">
-                <caret line="134" column="26" lean-forward="false" selection-start-line="134" selection-start-column="26" selection-end-line="134" selection-end-column="26" />
-                <folding />
-              </first_editor>
-              <second_editor>
-                <js_state />
-              </second_editor>
             </state>
           </provider>
         </entry>
@@ -264,11 +266,11 @@
         <option value="$PROJECT_DIR$/ClassLibrary/ProductClass/Product.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/ProductClass/ProductGroupBase.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/ProductClass/ShopProductGroup.py" />
+        <option value="$PROJECT_DIR$/Product/categoryViews.py" />
+        <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py" />
+        <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryFirst.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategorySecond.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryThird.py" />
-        <option value="$PROJECT_DIR$/Product/categoryViews.py" />
-        <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryFirst.py" />
-        <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py" />
       </list>
     </option>
   </component>
@@ -361,6 +363,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Product" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Initiation" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1268,16 +1284,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Initiation/Test_example.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="199" column="26" lean-forward="false" selection-start-line="199" selection-start-column="26" selection-end-line="199" selection-end-column="26" />
-          <folding>
-            <element signature="e#34#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ClassLibrary/ProductClass/ProductGroup_New.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="398">
@@ -1359,13 +1365,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategorySecond.py">
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Object.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="19" lean-forward="false" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="469">
+          <caret line="179" column="12" lean-forward="false" selection-start-line="179" selection-start-column="12" selection-end-line="179" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1379,38 +1383,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Object.py">
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="179" column="12" lean-forward="false" selection-start-line="179" selection-start-column="12" selection-end-line="179" selection-end-column="12" />
-          <folding />
+        <state relative-caret-position="468">
+          <caret line="121" column="74" lean-forward="false" selection-start-line="121" selection-start-column="74" selection-end-line="121" selection-end-column="74" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryThird.py">
+    <entry file="file://$PROJECT_DIR$/Initiation/Test_example.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="40" column="29" lean-forward="false" selection-start-line="40" selection-start-column="29" selection-end-line="40" selection-end-column="29" />
+        <state relative-caret-position="638">
+          <caret line="139" column="28" lean-forward="false" selection-start-line="139" selection-start-column="28" selection-end-line="139" selection-end-column="28" />
           <folding>
-            <element signature="e#0#43#0" expanded="true" />
+            <element signature="e#34#58#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryFirst.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+        <state relative-caret-position="555">
+          <caret line="37" column="38" lean-forward="false" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py">
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategorySecond.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="126" column="4" lean-forward="false" selection-start-line="126" selection-start-column="4" selection-end-line="126" selection-end-column="4" />
+        <state relative-caret-position="510">
+          <caret line="34" column="38" lean-forward="false" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryThird.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="44" column="38" lean-forward="false" selection-start-line="44" selection-start-column="38" selection-end-line="44" selection-end-column="38" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>

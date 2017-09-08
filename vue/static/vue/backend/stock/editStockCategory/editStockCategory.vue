@@ -114,7 +114,7 @@
           },
           function(){
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/Product/DelStoreCategory/',
                 data: {
                    StoreCategory: 'StoreCategoryFirst',
@@ -149,7 +149,7 @@
           },
           function(){
             $.ajax({
-                type: 'post',
+                type: 'get',
                 url: '/Product/DelStoreCategory/',
                 data: {
                    StoreCategory: 'StoreCategorySecond',
@@ -182,7 +182,7 @@
         },
         function(){
           $.ajax({
-              type: 'post',
+              type: 'get',
               url: '/Product/DelStoreCategory/',
               data: {
                  StoreCategory: 'StoreCategoryThird',
@@ -242,7 +242,7 @@
             let fInput = $(obj).children('.grandFatherInput').val();
             grandFatherInputObject.objectId = $(obj).children('.grandFatherInput').attr('id');
             grandFatherInputObject.name = fInput;
-            grandFatherInputObject.storeSecondCategory = [];
+            grandFatherInputObject.storeCategorySecond = [];
             let foo = $(obj).children('.father');
             let fatherDiv = [];
             for(let prop in foo){
@@ -257,7 +257,7 @@
                 let sInput = $(obj).children('.fatherInput').val();
                 fatherInputObject.objectId = $(obj).children('.fatherInput').attr('id');
                 fatherInputObject.name = sInput;             
-                fatherInputObject.storeThirdCategory = [];
+                fatherInputObject.storeCategoryThird = [];
                 let foo = $(obj).children('.son');
                 let sonDiv = [];
                 for(let prop in foo){
@@ -282,8 +282,8 @@
             return grandFatherInputObject;
         }); 
         let obj = {};
-        obj.StoreCategory = [];
-        obj.StoreCategory = grandFatherInputObject;
+        obj.StoreCategoryFirst = [];
+        obj.StoreCategoryFirst = grandFatherInputObject;
         swal({
           title: "你确定更新库存分类吗?",
           text: "更新之后将无法恢复",

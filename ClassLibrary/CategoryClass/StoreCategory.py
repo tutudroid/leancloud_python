@@ -90,6 +90,7 @@ class StoreCategory(Object):
     def create_StoreCategory(self, data):
         if data:
             if data[attribute_objectId]:
+                self.__print_msg__('create new storeCategory')
                 self.get_Object(data[attribute_objectId])
             else:
                 self.create_Object()

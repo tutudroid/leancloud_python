@@ -96,6 +96,14 @@ def Dict_Check(data, keyList):
                 return return_msg('数据不完整，请检查')
     return True
 
+
+def Dict_Check1(data, keyList):
+    if keyList:
+        for key in keyList:
+            if key not in data or not data[key]:
+                return return_msg('数据不完整，请检查')
+    return True
+
 # 请求错误
 
 # 非法访问

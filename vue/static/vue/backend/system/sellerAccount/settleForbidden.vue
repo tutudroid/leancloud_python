@@ -27,7 +27,7 @@
     电子邮箱: <span class="answer">{{email}}</span>
     </div>
     <div class="IdCard">
-    身份证号: <span class="answer">{{IdCard}}</span>
+    身份证号: <span class="answer">{{idCard}}</span>
     </div>
     <div class="idCardTime">
     身份证有效期: <span class="answer">{{idCardExpireTimeStart}}至{{idCardExpireTimeEnd}}}</span>

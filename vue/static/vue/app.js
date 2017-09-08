@@ -257,7 +257,7 @@ new Vue({
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Product/ShowStoreCategory/',
           data: {
              page: 1,
           },

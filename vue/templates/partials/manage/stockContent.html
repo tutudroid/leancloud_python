@@ -5,7 +5,10 @@
 	</div>
 	
 	<div class="content editStockCategory">
-	{% include "content/editStockCategory.html" %}
+		<form>
+			{% csrf_token %}
+			{% include "content/editStockCategory.html" %}
+		</form>
 	</div>
         
 	<div class="content checkMarketCategory">

@@ -167,7 +167,7 @@
       return {
       	personMaterial:"",
       	companyMaterial:"",
-      	name:"",
+      	realName:"",
       	phoneNumber:"",
       	email:"",
       	idCard:"",

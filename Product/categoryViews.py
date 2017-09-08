@@ -85,19 +85,23 @@ def createSaleCategory(request):
 
 @login_required
 @permission(ROLE_PRODUCT)
-def EditSaleCategory(request):
+def DelSaleCategory(request):
     """
     编辑销售分类, 已经重新编写了一遍
     :param request: 
     :return: 
     """
-    className = request.GET.get(Class_Name_SaleCategory)
-    if className:
-        saleCategory = SaleCategory(className)
-        data = saleCategory.input_SaleCategory(request)
-        saleCategory.update_SaleCategory(data)
-        return return_data(className, saleCategory.output_SaleCategory())
-    return illegal_access()
+    className = request.GET.get(Class_Name_SaleCategory, '')
+    objectId = request.GET.get(attribute_objectId, '')
+    if className and objectId:
+        if className == Class_Name_SaleCategoryFirst:
+            saleCategory = SaleCategoryFirst()
+        else:
+            saleCategory = SaleCategorySecond()
+        saleCategory.get_Object(objectId)
+        saleCategory.delete_SaleCategory()
+        return return_msg('success')
+    return return_msg('parameter is null')
 
 
 @login_required

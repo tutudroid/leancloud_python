@@ -237,18 +237,7 @@ class SaleCategory(Object):
             self.set_attribute_mainImage(mainImage)
             if data[attribute_state]:
                 self.set_attribute_state(data[attribute_state])
-                self.delete_SaleCategory()
             return True
-        return None
-
-    def delete_SaleCategory(self):
-        if self.className == Class_Name_SaleCategorySecond:
-            saleFirst = SaleCategory(Class_Name_SaleCategoryFirst)
-            firstInstance = self.get_attribute_saleCategoryFirst()
-            if firstInstance:
-                saleFirst.get_Object(firstInstance.id)
-                saleFirst.remove_attribute_saleCategorySecond(self.instance)
-                return True
         return None
 
 

@@ -50,20 +50,26 @@
 	      if(addedStuff.hasClass('addedFirst')){
 
 		  }else{
-		  this.storecategory.forEach(
-		    function(item,index){
-		      firstName[index] = item.name;
-		      let secondName = [];
-		      let secondCategory = item.storeCategorySecond;
-		      secondCategory.forEach(
-		        function(item,index){
-			  	secondName[index] = item;
-			  });
-		      _this.second[index] = secondName;	      
-		      addedFirst += "<option class='addedFirst' value='"+index+"'>"+item.name+"</option>"		    
-		  });
-		  this.first = firstName;
-		  $(addedFirst).appendTo('#first');
+			  if(this.storecategory != null){
+				  this.storecategory.forEach(
+				    function(item,index){
+				      firstName[index] = item.name;
+				      let secondName = [];
+				      let secondCategory = item.storeCategorySecond;
+				      if(secondCategory != null){
+					      secondCategory.forEach(
+					        function(item,index){
+						  	secondName[index] = item;
+						  });
+				     	 _this.second[index] = secondName;	
+				      }      
+				      addedFirst += "<option class='addedFirst' value='"+index+"'>"+item.name+"</option>"		    
+				  });
+				  this.first = firstName;
+			  }else{
+			  	this.first = [];
+			  }
+			  $(addedFirst).appendTo('#first');
 		  } 
 		},
 		changeSecond(){

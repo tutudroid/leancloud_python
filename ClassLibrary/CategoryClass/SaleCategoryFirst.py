@@ -23,6 +23,10 @@ class SaleCategoryFirst(SaleCategory):
                 return returnList
         return None
 
+    def delete_SaleCategory(self):
+        self.set_attribute_state(STATE_DELETE)
+        return True
+
     def output_SaleCategoryFirst(self):
         if self.instance:
             data = self.output_SaleCategory()

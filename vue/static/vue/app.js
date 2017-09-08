@@ -251,7 +251,7 @@ new Vue({
       swal({
         title: "加载中",
         text:"你这么可爱，就等待一下呗",
-        timer: 3000,
+        timer: 4000,
         showConfirmButton: false
       });
       let _this = this;

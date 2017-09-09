@@ -85,11 +85,18 @@ def save_image(imageFile):
     :return: 
     """
     if imageFile:
+
+        fileDate = '41234424345r234523452345234'
         tup = tempfile.mkstemp()
         file = open(tup[0], 'wb+')
+
+        file = open( tup[0], 'wb+' )
+        file.write( bytes( fileDate, encoding="utf8" ) )
+        lc_file = leancloud.File( imageFile.name, data=file )
+
         for chunk in imageFile.chunks():
             file.write(chunk)
-        lc_file = leancloud.File(imageFile.name, data=file)
+        #lc_file = leancloud.File(imageFile.name, data=file)
         lc_file.save()
         return lc_file
     return False

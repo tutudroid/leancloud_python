@@ -28,9 +28,9 @@ class ProductDetailDescription(ImageBase):
         if self.instance:
             url = self.get_attribute_imageFile()
             if url:
-                # file = urllib.request.urlopen(url)
+                #file = urllib.request.urlopen(url)
                 #tmpIm = io.BytesIO(file.read())
-                # im = Image.open(tmpIm)
+                #im = Image.open(tmpIm)
                 #self.instance.set(attribute_imageWidth, int(im.size[0]))
                 #self.instance.set(attribute_imageHeight, int(im.size[1]))
                 self.__save_instance__()

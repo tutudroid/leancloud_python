@@ -5,6 +5,7 @@ import os
 import datetime
 from leancloud import LeanCloudError
 import leancloud
+import time
 
 
 QUERY_SKIP = 10
@@ -13,6 +14,7 @@ QUERY_SKIP = 10
 def sys_log(data: object):
     print('------start-------------' + sys._getframe().f_back.f_code.co_name + '--------------')
     logging.error(data)
+    logging.error(time.strftime("%Y-%m-%d %H:%M", time.localtime()))
     print('--------------------------------------------------------------------------------')
 
 

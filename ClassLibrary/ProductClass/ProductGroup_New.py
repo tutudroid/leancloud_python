@@ -135,6 +135,7 @@ def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
 
             # 设置商品组状态
             if state == STATE_SHELF_ON:
+                shopProductGroup.destroy_ProductGroup()
                 return productGroup
             else:
                 # 清理数据

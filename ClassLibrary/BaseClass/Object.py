@@ -15,6 +15,8 @@ function：
             __save_instance__()
             __print_msg__()
 """
+import sys
+import time
 from ClassLibrary import Base
 import logging
 from ClassLibrary.BaseClass.Attribute_Parameter import *
@@ -129,7 +131,6 @@ class Object(object):
                     return True
         return None
 
-
     def __save_instance__(self):
         """
         保存对象实例到 lean cloud
@@ -150,8 +151,10 @@ class Object(object):
         :return: 
         """
         print('------start---------------------------------------------------------------------')
-        logging.error(self.className)
-        logging.error(msg)
+        logging.error('call function name: '+sys._getframe().f_back.f_code.co_name)
+        logging.error('class name: '+self.className)
+        logging.error('time :'+time.strftime("%Y-%m-%d %H:%M", time.localtime()))
+        logging.error('msg: '+msg)
         print('--------------------------------------------------------------------------------')
 
     def __output_Object__(self, instance):

@@ -154,7 +154,7 @@ class Object(object):
         logging.error('call function name: '+sys._getframe().f_back.f_code.co_name)
         logging.error('class name: '+self.className)
         logging.error('time :'+time.strftime("%Y-%m-%d %H:%M", time.localtime()))
-        logging.error('msg: '+msg)
+        logging.error(msg)
         print('--------------------------------------------------------------------------------')
 
     def __output_Object__(self, instance):

@@ -91,7 +91,7 @@ def save_image(imageFile):
         for chunk in imageFile.chunks():
             file.write(chunk)
         lc_file = leancloud.File(imageFile.name, data=file)
-        lc_file.save()
+        # lc_file.save()
         return lc_file
     return False
 

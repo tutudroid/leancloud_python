@@ -88,7 +88,7 @@ def save_image(imageFile):
 
         fileDate = '41234424345r234523452345234'
         tup = tempfile.mkstemp()
-        file = open(tup[0], 'wb+')
+        #file = open(tup[0], 'wb+')
 
         file = open( tup[0], 'wb+' )
         file.write( bytes( fileDate, encoding="utf8" ) )

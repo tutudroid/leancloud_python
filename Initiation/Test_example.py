@@ -31,7 +31,7 @@ from ClassLibrary.ProductClass.ShopProductGroup import ShopProductGroup
 from ClassLibrary.ProductClass.ProductGroup_New import copy_Shop_ProductGroup
 
 
-FIRST = None
+FIRST = True
 
 
 def CreateAll(request):
@@ -162,9 +162,9 @@ def CreateAll(request):
         attribute_shopProductGroup: None,
         attribute_order: None,
         attribute_address: '街道',
-        attribute_PROVINCE: '省',
-        attribute_CITY: '市',
-        attribute_DISTRICT: '区',
+        attribute_PROVINCE: '59964ead5c497d0057e1b6e9',
+        attribute_CITY: '59964eab570c350061a4182e',
+        attribute_DISTRICT: '59964eae570c350060560eba',
         attribute_user: None,
         attribute_settleInUser: None,
         attribute_settleInCompany: None,
@@ -393,7 +393,7 @@ def CreateAll(request):
     order.set_attribute_orderProduct(orderProduct.get_instance())
     order.set_attribute_logisticInfo(logistic.get_instance())
     order.set_attribute_state(5)
-    order.set_attribute_productComment(productComment.get_instance())
+    order.add_attribute_relation(attribute_productComment, productComment.get_instance())
     order.set_attribute_shop(shop.get_instance())
     order.set_attribute_user(user.get_instance())
 
@@ -515,7 +515,7 @@ def AfterSale_Order(request):
     order.set_attribute_orderProduct(orderProduct.get_instance())
     order.set_attribute_logisticInfo(logistic.get_instance())
     order.set_attribute_state(5)
-    order.set_attribute_productComment(productComment.get_instance())
+    order.add_attribute_relation(attribute_productComment, productComment.get_instance())
     content['Order'] = order.output_Order()
 
     # 售后支持

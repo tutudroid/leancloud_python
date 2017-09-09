@@ -132,8 +132,9 @@ class Shop(Object):
         return None
 
     def get_attribute_province(self):
-        if self.instance:
-            return self.instance.get(attribute_PROVINCE)
+        if self.instance and self.instance.get(attribute_PROVINCE):
+            instance = Base.queryInstanceThroughId(Class_Name_Province, self.instance.get(attribute_PROVINCE).id)
+            return instance.get(attribute_name)
         return None
 
     def get_attribute_city(self):
@@ -251,21 +252,24 @@ class Shop(Object):
 
     def set_attribute_province(self, value):
         if self.instance and value:
-            self.instance.set(attribute_PROVINCE, value)
+            instance = Base.create_instance(Class_Name_Province, value)
+            self.instance.set(attribute_PROVINCE, instance)
             self.__save_instance__()
             return True
         return None
 
     def set_attribute_city(self, value):
         if self.instance and value:
-            self.instance.set(attribute_CITY, value)
+            instance = Base.create_instance(Class_Name_City, value)
+            self.instance.set(attribute_CITY, instance)
             self.__save_instance__()
             return True
         return None
 
     def set_attribute_district(self, value):
         if self.instance and value:
-            self.instance.set(attribute_DISTRICT, value)
+            instance = Base.create_instance(Class_Name_District, value)
+            self.instance.set(attribute_DISTRICT, instance)
             self.__save_instance__()
             return True
         return None

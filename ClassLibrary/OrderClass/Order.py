@@ -103,10 +103,15 @@ class Order(Object):
         return None
 
     def get_attribute_productComment(self):
-        if self.instance and self.instance.get(attribute_productComment):
-            productComment = ProductComment()
-            productComment.get_Object(self.instance.get(attribute_productComment).id)
-            return productComment.output_ProductComment()
+        if self.instance:
+            comment = Base.get_relation_data(self.instance.get(attribute_objectId), Class_Name_Order, attribute_productComment, 1, 100)
+            resultComment = []
+            if comment:
+                for foo in comment:
+                    productComment = ProductComment()
+                    productComment.set_instance(foo)
+                    resultComment.append(productComment.output_ProductComment())
+                return resultComment
         return None
 
     def get_attribute_orderProduct(self):

@@ -35,6 +35,9 @@ Class_Name_WebPageConfigure = 'WebPageConfigure'
 Class_Name_SpecialAreaFreight = 'SpecialAreaFreight'
 Class_Name_FreightFreeCondition = 'FreightFreeCondition'
 Class_Name_FreightModel = 'FreightModel'
+Class_Name_Province = 'AddressProvince'
+Class_Name_City = 'AddressCity'
+Class_Name_District = 'AddressDistrict'
 
 
 # base attribute

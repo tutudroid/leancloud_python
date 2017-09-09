@@ -434,8 +434,8 @@ class ProductGroupBase(Object):
                                   attribute_product, self.productName)
             Base.destroy_relation(objectId, self.className,
                                   attribute_detailDescription, Class_Name_ProductDetailDescription)
-            if self.instance.get(attribute_mainImage):
-                self.instance.get(attribute_mainImage).destroy()
+            # if self.instance.get(attribute_mainImage):
+            #    self.instance.get(attribute_mainImage).destroy()
             self.destroy_Object()
             return shopObjectId
         return None

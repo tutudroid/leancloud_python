@@ -6,7 +6,7 @@ import datetime
 from leancloud import LeanCloudError
 import leancloud
 import time
-
+import base64
 
 QUERY_SKIP = 10
 
@@ -91,7 +91,7 @@ def save_image(imageFile):
         for chunk in imageFile.chunks():
             file.write(chunk)
         lc_file = leancloud.File(imageFile.name, data=file)
-        # lc_file.save()
+        lc_file.save()
         return lc_file
     return False
 
@@ -103,8 +103,7 @@ def save_image_data(data, name='default'):
     if data:
         tup = tempfile.mkstemp()
         file = open(tup[0], 'wb+')
-        for chunk in data.chunks():
-            file.write(chunk)
+        file.write(base64.b64decode(data))
         lc_file = leancloud.File(name, data=file)
         lc_file.save()
         return lc_file
@@ -1028,8 +1027,8 @@ def destroy_relation(objectId, className, relation_attribute, className2):
         for foo in relationList:
             instance = queryInstanceThroughId(className2, foo.get('objectId'))
             if instance:
-                if instance.get('mainImage'):
-                    instance.get('mainImage').destroy()
+                # if instance.get('mainImage'):
+                #    instance.get('mainImage').destroy()
                 instance.destroy()
             else:
                 sys_log('instance no found')
@@ -1041,9 +1040,9 @@ def destroy_relation_imageList(objectId, className, relation_attribute, classNam
         for foo in relationList:
             instance = queryInstanceThroughId(className2, foo.get('objectId'))
             if instance:
-                imageFile = instance.get('imageFile')
-                if imageFile:
-                    imageFile.destroy()
+                # imageFile = instance.get('imageFile')
+                # if imageFile:
+                #    imageFile.destroy()
                 instance.destroy()
             else:
                 sys_log('instance no found')
@@ -1073,3 +1072,10 @@ def create_image_url(name, url):
     avatar = leancloud.File.create_with_url(name, url)
     avatar.save()
     return avatar
+
+
+def create_instance(className, objectId):
+    Todo = leancloud.Object.extend(className)
+    # 用 objectId 初始化 Todo
+    todo = Todo.create_without_data(objectId)
+    return todo

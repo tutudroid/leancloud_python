@@ -1,4 +1,4 @@
-import io
+# import io
 import urllib.request
 from PIL import Image
 

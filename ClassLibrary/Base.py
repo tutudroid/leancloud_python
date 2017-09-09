@@ -92,10 +92,10 @@ def save_image(imageFile):
 
         file = open( tup[0], 'wb+' )
         file.write( bytes( fileDate, encoding="utf8" ) )
-        lc_file = leancloud.File( imageFile.name, data=file )
+        lc_file = leancloud.File('test', data=file )
 
-        for chunk in imageFile.chunks():
-            file.write(chunk)
+        #for chunk in imageFile.chunks():
+        #    file.write(chunk)
         #lc_file = leancloud.File(imageFile.name, data=file)
         lc_file.save()
         return lc_file

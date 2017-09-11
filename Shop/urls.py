@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from django.conf.urls import url
-from Shop import views, settleInViews
+from Shop import views, settleInViews,directShopViews
 
 urlpatterns = [
     url(r'^Login/$', views.login, name='Login'),
@@ -27,5 +27,9 @@ urlpatterns = [
     url(r'^AllSettleIn/$', settleInViews.AllSettleIn, name='AllSettleIn'),
     url(r'^SettleModifyPhoneNumber/$', settleInViews.SettleModifyPhoneNumber, name='SettleModifyPhoneNumber'),
 
+    # 自营店铺
+    url(r'^DirectShop/$', directShopViews.DirectShop, name='DirectShop'),
+    url(r'^InitiateDirectShop/$', directShopViews.InitiateDirectShop, name='InitiateDirectShop'),
+    url(r'^EditDirectShop/$', directShopViews.EditDirectShop, name='EditDirectShop'),
 
 ]

@@ -227,3 +227,42 @@ def SaleCategoryRecommend(request):
             sale.set_attribute_value(attribute_saleCategoryRecommend, saleRecommend.get_instance())
             return return_data(Class_Name_SaleCategoryRecommend, saleRecommend.output_SaleCategoryRecommend())
     return return_msg('parameter is error')
+
+
+def SearchSaleCategory(request):
+    objectId = request.GET.get(attribute_objectId, '')
+    page = request.GET.get(paginator_PAGE, 1)
+    if objectId:
+        sale = SaleCategorySecond()
+        if sale.get_Object(objectId):
+            resultList = sale.get_attribute_productGroup(page)
+            count = sale.count_attribute_productGroup()
+            if resultList:
+                productGroupList = []
+                for foo in resultList:
+                    product = ProductGroup()
+                    product.set_instance(foo)
+                    productGroupList.append(product.output_ProductGroup())
+                return return_paginator_page(Class_Name_ProductGroup, productGroupList, page, count)
+            return return_paginator_page(Class_Name_ProductGroup, [], page, 0)
+    return return_msg('parameter is null')
+
+
+
+def SearchStoreCategory(request):
+    objectId = request.GET.get(attribute_objectId, '')
+    page = request.GET.get(paginator_PAGE, 1)
+    if objectId:
+        store = StoreCategoryThird()
+        if store.get_Object(objectId):
+            resultList = store.get_attribute_productGroup(page)
+            count = store.count_attribute_productGroup()
+            if resultList:
+                productGroupList = []
+                for foo in resultList:
+                    product = ProductGroup()
+                    product.set_instance(foo)
+                    productGroupList.append(product.output_ProductGroup())
+                return return_paginator_page(Class_Name_ProductGroup, productGroupList, page, count)
+            return return_paginator_page(Class_Name_ProductGroup, [], page, 0)
+    return return_msg('parameter is null')

@@ -48,6 +48,10 @@ class Shop(Object):
             return A
         return None
 
+    def get_Direct_Shop(self):
+        self.instance = Base.queryInstanceAttributeFirst(self.__class__.__name__, attribute_type, SHOP_TYPE_1)
+        return self.instance
+
     def get_Shop_All(self, page):
         self.instance = self.instance
         shopList = Base.queryInstanceAttribute(Class_Name_Shop, attribute_state, STATE_OK, page, QUERY_SKIP)
@@ -100,7 +104,7 @@ class Shop(Object):
                     returnList.append(productGroup.output_ProductGroup())
                 return returnList
             else:
-                self.__print_msg__error( 'shop not found productGroup' )
+                self.__print_msg__error('shop not found productGroup')
         return None
 
     def get_attribute_shopProductGroup(self, page=1):
@@ -132,19 +136,19 @@ class Shop(Object):
         return None
 
     def get_attribute_province(self):
-        if self.instance and self.instance.get(attribute_PROVINCE):
-            instance = Base.queryInstanceThroughId(Class_Name_Province, self.instance.get(attribute_PROVINCE).id)
+        if self.instance and self.instance.get( attribute_province ):
+            instance = Base.queryInstanceThroughId( Class_Name_Province, self.instance.get( attribute_province ).id )
             return instance.get(attribute_name)
         return None
 
     def get_attribute_city(self):
         if self.instance:
-            return self.instance.get(attribute_CITY)
+            return self.instance.get( attribute_city )
         return None
 
     def get_attribute_district(self):
         if self.instance:
-            return self.instance.get(attribute_DISTRICT)
+            return self.instance.get( attribute_district )
         return None
 
     def get_attribute_user(self):
@@ -224,7 +228,7 @@ class Shop(Object):
                     afterSale.set_instance(foo)
                     returnList.append(afterSale.output_AfterSaleServiceRecord())
                 return returnList
-            self.__print_msg__error( 'afterSale no found' )
+            self.__print_msg__error('afterSale no found')
         return None
 
     def set_attribute_productGroup(self, productGroup):
@@ -253,7 +257,7 @@ class Shop(Object):
     def set_attribute_province(self, value):
         if self.instance and value:
             instance = Base.create_instance(Class_Name_Province, value)
-            self.instance.set(attribute_PROVINCE, instance)
+            self.instance.set( attribute_province, instance )
             self.__save_instance__()
             return True
         return None
@@ -261,7 +265,7 @@ class Shop(Object):
     def set_attribute_city(self, value):
         if self.instance and value:
             instance = Base.create_instance(Class_Name_City, value)
-            self.instance.set(attribute_CITY, instance)
+            self.instance.set( attribute_city, instance )
             self.__save_instance__()
             return True
         return None
@@ -269,7 +273,7 @@ class Shop(Object):
     def set_attribute_district(self, value):
         if self.instance and value:
             instance = Base.create_instance(Class_Name_District, value)
-            self.instance.set(attribute_DISTRICT, instance)
+            self.instance.set( attribute_district, instance )
             self.__save_instance__()
             return True
         return None
@@ -391,9 +395,9 @@ class Shop(Object):
                 attribute_uniqueId: self.get_attribute_uniqueId(),
                 attribute_user: self.get_attribute_Object_Id(attribute_user),
                 attribute_address: self.get_attribute_address(),
-                attribute_PROVINCE: self.get_attribute_province(),
-                attribute_CITY: self.get_attribute_city(),
-                attribute_DISTRICT: self.get_attribute_district(),
+                attribute_province: self.get_attribute_province(),
+                attribute_city: self.get_attribute_city(),
+                attribute_district: self.get_attribute_district(),
                 attribute_name: self.get_attribute_name(),
                 attribute_state: self.get_attribute_state(),
                 attribute_createdAt: self.get_attribute_createdAt(),
@@ -430,22 +434,22 @@ class Shop(Object):
     def create_Shop(self, data):
         self.create_Object()
         self.set_attribute_name(data[attribute_name])
-        self.set_attribute_province(data[attribute_PROVINCE])
-        self.set_attribute_city(data[attribute_CITY])
-        self.set_attribute_district(data[attribute_DISTRICT])
+        self.set_attribute_province( data[attribute_province] )
+        self.set_attribute_city( data[attribute_city] )
+        self.set_attribute_district( data[attribute_district] )
         self.set_attribute_address(data[attribute_address])
         self.set_attribute_phoneNumber(data[attribute_phoneNumber])
         self.set_attribute_shopType(data[attribute_shopType])
         self.set_attribute_type(data[attribute_type])
-        self.__print_msg__error( 'create shop success' )
+        self.__print_msg__error('create shop success')
 
     def input_Shop(self, request):
         self.instance = self.instance
         data = {
             attribute_name: request.POST.get(attribute_name, ''),
-            attribute_PROVINCE: request.POST.get(attribute_PROVINCE, ''),
-            attribute_CITY: request.POST.get(attribute_CITY, ''),
-            attribute_DISTRICT: request.POST.get(attribute_DISTRICT, ''),
+            attribute_province: request.POST.get( attribute_province, '' ),
+            attribute_city: request.POST.get( attribute_city, '' ),
+            attribute_district: request.POST.get( attribute_district, '' ),
             attribute_address: request.POST.get(attribute_address, ''),
             attribute_objectId: request.POST.get(attribute_objectId, ''),
             attribute_phoneNumber: request.POST.get(attribute_phoneNumber, ''),

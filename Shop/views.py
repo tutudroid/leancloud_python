@@ -45,10 +45,10 @@ def EditShopDetail(request):
         shop.get_Object(data[attribute_objectId])
         if data[attribute_name]:
             shop.set_attribute_name(attribute_name)
-        elif data[attribute_CITY] and data[attribute_DISTRICT] and data[attribute_PROVINCE] and data[attribute_address]:
-            shop.set_attribute_city(data[attribute_CITY])
-            shop.set_attribute_province(data[attribute_PROVINCE])
-            shop.set_attribute_district(data[attribute_DISTRICT])
+        elif data[attribute_city] and data[attribute_district] and data[attribute_province] and data[attribute_address]:
+            shop.set_attribute_city( data[attribute_city] )
+            shop.set_attribute_province( data[attribute_province] )
+            shop.set_attribute_district( data[attribute_district] )
             shop.set_attribute_address(data[attribute_address])
     return HttpResponse('success')
 

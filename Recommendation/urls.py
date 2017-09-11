@@ -10,4 +10,7 @@ urlpatterns = [
     url(r'AddRecommendation/$', views.AddRecommendation, name='AddRecommendation'),
     url(r'EditRecommendation/$', views.EditRecommendation, name='EditRecommendation'),
     url(r'ShowRecommendation/$', views.ShowRecommendation, name='ShowRecommendation'),
+
+
+    #
 ]

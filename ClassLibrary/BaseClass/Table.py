@@ -39,7 +39,7 @@ class Table(ProductService, ImageBase):
             self.set_attribute_briefDescription(data[attribute_briefDescription])
 
         if data[attribute_imageFile]:
-            imageFile = Base.save_image(data[attribute_imageFile])
+            imageFile = Base.save_image_data(data[attribute_imageFile])
             self.set_attribute_imageFile(imageFile)
 
     def create_Table(self, data):

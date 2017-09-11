@@ -736,7 +736,7 @@ class ProductGroupBase(Object):
             attribute_productService: request.POST.getlist(attribute_productService, []),
             attribute_storeCategory: request.POST.get(attribute_storeCategory, ''),
             attribute_saleCategory: request.POST.getlist(attribute_saleCategory, []),
-            attribute_dispatchPlace: request.POST.get(attribute_PROVINCE, '') + ' '+request.POST.get(attribute_CITY, '')+' ' + request.POST.get(attribute_DISTRICT, ''),
+            attribute_dispatchPlace: request.POST.get( attribute_province, '' ) + ' ' + request.POST.get( attribute_city, '' ) + ' ' + request.POST.get( attribute_district, '' ),
             attribute_product: request.POST.get(attribute_product, ''),
             attribute_productMainImage: request.FILES.getlist(attribute_productMainImage, ''),
             attribute_delete_imageList: request.POST.getlist(attribute_delete_imageList, []),

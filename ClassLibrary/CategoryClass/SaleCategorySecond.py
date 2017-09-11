@@ -1,5 +1,6 @@
 from ClassLibrary.CategoryClass.SaleCategory import SaleCategory
 from ClassLibrary.BaseClass.Attribute_Parameter import *
+from ClassLibrary import Base
 
 
 class SaleCategorySecond(SaleCategory):
@@ -25,4 +26,16 @@ class SaleCategorySecond(SaleCategory):
             saleFirst.get_Object(firstInstance.id)
             saleFirst.remove_attribute_relation(attribute_saleCategorySecond, self.instance)
             return True
+        return None
+
+    def get_attribute_productGroup(self, page):
+        if self.instance:
+            tmpList = Base.get_relation_data(self.instance.get(attribute_objectId), Class_Name_SaleCategorySecond, attribute_productGroup, page)
+            return tmpList
+        return None
+
+    def count_attribute_productGroup(self):
+        if self.instance:
+            count = Base.count_relation_data(self.instance.get(attribute_objectId), Class_Name_SaleCategorySecond, attribute_productGroup)
+            return count
         return None

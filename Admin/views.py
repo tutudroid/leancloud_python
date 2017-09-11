@@ -99,9 +99,9 @@ def audit_shop(request):
                 attribute_shopProductGroup: None,
                 attribute_order: None,
                 attribute_address: '街道',
-                attribute_PROVINCE: '省',
-                attribute_CITY: '市',
-                attribute_DISTRICT: '区',
+                attribute_province: '省',
+                attribute_city: '市',
+                attribute_district: '区',
                 attribute_user: None,
                 attribute_settleInUser: None,
                 attribute_settleInCompany: None,
@@ -117,7 +117,7 @@ def audit_shop(request):
             shop.create_Shop(data)
 
             # 将入驻信息写入店铺
-            if shopType == SHOP_TYPE_0:
+            if shopType == SHOP_SETTLE_TYPE_0:
                 info = settleInApplication.get_infoPersonal()
                 shop.set_attribute_settleInUser(info)
                 settleIn = SettleInUser()

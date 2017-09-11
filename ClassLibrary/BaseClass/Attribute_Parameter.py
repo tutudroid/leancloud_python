@@ -161,9 +161,9 @@ attribute_settleInCompany = 'settleInCompany'
 attribute_phoneNumber = 'phoneNumber'
 attribute_shopProductGroup = 'shopProductGroup'
 attribute_shopType = 'shopType'
-attribute_PROVINCE = 'province'
-attribute_CITY = 'city'
-attribute_DISTRICT = 'district'
+attribute_province = 'province'
+attribute_city = 'city'
+attribute_district = 'district'
 attribute_type = 'type'
 
 
@@ -177,8 +177,13 @@ attribute_brandName = 'brandName'
 attribute_brandLogo = 'brandLogo'
 attribute_brandDescription = 'brandDescription'
 
-SHOP_TYPE_0 = 0  # user
-SHOP_TYPE_1 = 1  # company
+SHOP_SETTLE_TYPE_0 = 0  # user
+SHOP_SETTLE_TYPE_1 = 1  # company
+
+SHOP_TYPE_0 = 0  # third shop
+SHOP_TYPE_1 = 1  # direct shop
+
+
 
 # settleIn State
 SETTLE_IN_STATE_0 = 0  # 待审核

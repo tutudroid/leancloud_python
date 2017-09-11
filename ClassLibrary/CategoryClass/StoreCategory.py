@@ -69,10 +69,16 @@ class StoreCategory(Object):
         return None
 
 
-    def get_attribute_productGroup(self):
+    def get_attribute_productGroup(self, page):
         if self.instance:
-            tmpList = Base.get_relation_data(self.instance.get(attribute_objectId), Class_Name_StoreCategoryThird, attribute_productGroup)
+            tmpList = Base.get_relation_data(self.instance.get(attribute_objectId), Class_Name_StoreCategoryThird, attribute_productGroup, page)
             return tmpList
+        return None
+
+    def count_attribute_productGroup(self):
+        if self.instance:
+            count = Base.count_relation_data(self.instance.get(attribute_objectId), Class_Name_StoreCategoryThird, attribute_productGroup)
+            return count
         return None
 
     def remove_attribute_productGroup(self, productGroup):

@@ -2,7 +2,7 @@
 
 from django.conf.urls import url
 from Product import productViews, categoryViews
-from Product import shopProductViews
+from Product import shopProductViews, productOtherViews
 
 urlpatterns = [
 
@@ -30,15 +30,20 @@ urlpatterns = [
     url(r'^CreateStoreCategory/$', categoryViews.createStoreCategory, name='CreateStoreCategory'),
     url(r'^ShowStoreCategory/$', categoryViews.ShowStoreCategory, name='ShowStoreCategory'),
     url(r'^DelStoreCategory/$', categoryViews.DelStoreCategory, name='DelStoreCategory'),
+    url(r'^SearchStoreCategory/$', categoryViews.SearchStoreCategory, name='SearchStoreCategory'),
 
     url(r'^ShowSaleCategory/$', categoryViews.ShowSaleCategory, name='ShowSaleCategory'),
     url(r'^CreateSaleCategory/$', categoryViews.createSaleCategory, name='CreateSaleCategory'),
     url(r'^DelSaleCategory/$', categoryViews.DelSaleCategory, name='DelSaleCategory'),
-
+    url(r'^SearchSaleCategory/$', categoryViews.SearchSaleCategory, name='SearchSaleCategory' ),
     # 销售分类排序
     url(r'^sortSaleCategorySecond/$', categoryViews.sortSaleCategorySecond, name='sortSaleCategorySecond'),
     url(r'^sortSaleCategoryFirst/$', categoryViews.sortSaleCategoryFirst, name='sortSaleCategoryFirst'),
 
     url(r'^SaleCategoryRecommend/$', categoryViews.SaleCategoryRecommend, name='SaleCategoryRecommend'),
     url(r'^DelSaleCategoryRecommend/$', categoryViews.DelSaleCategoryRecommend, name='DelSaleCategoryRecommend'),
+
+    # 商品服务
+    url(r'^AllProductService/$', productOtherViews.AllProductService, name='AllProductService'),
+    url(r'^EditProductService/$', productOtherViews.EditProductService, name='EditProductService'),
 ]

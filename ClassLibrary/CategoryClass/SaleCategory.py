@@ -220,7 +220,7 @@ class SaleCategory(Object):
                 self.create_Object()
             self.set_attribute_name(data[attribute_name])
             self.set_attribute_briefDescription(data[attribute_briefDescription])
-            mainImage = Base.save_image(data[attribute_mainImage])
+            mainImage = Base.save_image_data(data[attribute_mainImage])
             self.set_attribute_mainImage(mainImage)
             if first:
                 self.set_attribute_value(attribute_saleCategoryFirst, first)
@@ -233,7 +233,7 @@ class SaleCategory(Object):
                 self.get_Object(data[attribute_objectId])
             self.set_attribute_name(data[attribute_name])
             self.set_attribute_briefDescription(data[attribute_briefDescription])
-            mainImage = Base.save_image(data[attribute_mainImage])
+            mainImage = Base.save_image_data(data[attribute_mainImage])
             self.set_attribute_mainImage(mainImage)
             if data[attribute_state]:
                 self.set_attribute_state(data[attribute_state])

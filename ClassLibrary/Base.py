@@ -7,6 +7,7 @@ from leancloud import LeanCloudError
 import leancloud
 import time
 import base64
+import re
 
 QUERY_SKIP = 10
 
@@ -119,7 +120,7 @@ def save_image_data(data, name='default'):
     """
     :return: 
     """
-    if data:
+    if data and re.findall(r'^base64', data):
         tup = tempfile.mkstemp()
         file = open(tup[0], 'wb+')
         file.write(base64.b64decode(data))

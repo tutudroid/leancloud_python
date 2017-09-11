@@ -37,12 +37,21 @@ import searchStockCategory from './backend/stock/searchStockCategory/searchStock
 //stock
 //editStockCategory
 import editStockCategory from './backend/stock/editStockCategory/editStockCategory.vue'
-//market
+//stock
 //searchMarketCategory
 import searchMarketCategory from './backend/market/searchMarketCategory/searchMarketCategory.vue'
-//market
+//stock
 //editMarketCategory
 import editMarketCategory from './backend/market/editMarketCategory/editMarketCategory.vue'
+//stock
+//selfHouse
+import selling from './backend/allProduct/selfHouse/selling.vue'
+//stock
+//selfHouse
+import house from './backend/allProduct/selfHouse/house.vue'
+//stock
+//selfHouse
+import addProduct from './backend/allProduct/selfHouse/addProduct.vue'
 
 //sellerBackend loginModule
 //register
@@ -62,6 +71,8 @@ new Vue({
     allForbiddenShops:[],
     allStockCategorys:[],
     allMarketCategorys:[],
+    allSelfSellingProducts:[],
+    allSelfHouseProducts:[],
 	},
 	components: {
 	    "changepwd":changePwd,
@@ -79,6 +90,9 @@ new Vue({
       "editmarketcategory":editMarketCategory,
 	    "registerform":registerForm,
 	    "forgetpwdform":forgetPwdForm,
+      "selfselling":selling,
+      "selfhouse":house,
+      "selfaddproduct":addProduct,
 	},
 	methods: {
 	  back(id){
@@ -281,6 +295,54 @@ new Vue({
     },
     //抓取所有的销售分类
     getAllMarketCategorys(){
+      swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 4000,
+        showConfirmButton: false
+      });
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/Product/ShowSaleCategory/',
+          data: {
+             page: 1,
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.allMarketCategorys = dataJson.SaleCategory;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+    },
+    //抓取所有的自营正在销售商品
+    getAllSelfSellingnProducts(){
+      swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 4000,
+        showConfirmButton: false
+      });
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/Product/ShowSaleCategory/',
+          data: {
+             page: 1,
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.allMarketCategorys = dataJson.SaleCategory;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+    },
+    //抓取所有的自营正在仓库商品
+    getAllSelfHouseProducts(){
       swal({
         title: "加载中",
         text:"你这么可爱，就等待一下呗",

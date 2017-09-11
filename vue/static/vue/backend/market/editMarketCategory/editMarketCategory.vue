@@ -26,7 +26,7 @@
           <div :id="'prev_file'+scategory.objectId" class="prev_container">
             <div class="prev_thumb" :style="'background-image:url('+scategory.mainImage+')'"></div>
           </div>
-          <textarea rows="7" cols="20" class="fatherDescription" ></textarea>
+          <textarea rows="7" cols="20" class="fatherDescription" >{{scategory.briefDescription}}</textarea>
           <span class='glyphicon glyphicon-remove remove link' @click="deleteSecond($event)"></span>
           <hr>
         </div>
@@ -121,7 +121,7 @@
         this.scount++;
       },
       deleteFirst(e){
-        let objectId = $(e.currentTarget).prev().attr('id');
+        let objectId = $(e.currentTarget).parent().children('.grandFatherInput').attr('id');
         let grandFatherInput = $(e.currentTarget).prev();
         let grandFatherDiv = $(e.currentTarget).parent();
         if(grandFatherDiv.children('.father').length>0){
@@ -141,7 +141,7 @@
                 type: 'get',
                 url: '/Product/DelSaleCategory/',
                 data: {
-                   StoreCategory: 'SaleCategoryFirst',
+                   SaleCategory: 'SaleCategoryFirst',
                    objectId: objectId,
                 },
                 success: function (data) {
@@ -156,7 +156,7 @@
         }
       },
       deleteSecond(e){
-        let objectId = $(e.currentTarget).prev().attr('id');
+        let objectId = $(e.currentTarget).parent().children('.fatherInput').attr('id');
         let fatherInput = $(e.currentTarget).prev();
         let fatherDiv = $(e.currentTarget).parent();
         if(fatherDiv.children('.son').length>0){
@@ -176,7 +176,7 @@
                 type: 'get',
                 url: '/Product/DelSaleCategory/',
                 data: {
-                   StoreCategory: 'SaleCategorySecond',
+                   SaleCategory: 'SaleCategorySecond',
                    objectId: objectId,
                 },
                 success: function (data) {
@@ -224,8 +224,8 @@
             grandFatherInputObject.uniqueId = $(obj).children('.grandFatherInput').attr('uniqueId');
             let fDescription = $(obj).children('textarea').val();
             grandFatherInputObject.briefDescription = fDescription;
-            if($('.grandFather').children('div[id*="prev_file"]').children('.prev_thumb').length > 0){
-              let fImage = $('.grandFather').children('div[id*="prev_file"]').children('.prev_thumb').attr('style').slice(23);
+            if($(obj).children('div[id*="prev_file"]').children('.prev_thumb').length > 0){
+              let fImage = $(obj).children('div[id*="prev_file"]').children('.prev_thumb').attr('style').slice(23);
               grandFatherInputObject.mainImage = fImage;
             }else{
               grandFatherInputObject.mainImage = "";
@@ -249,8 +249,8 @@
                 fatherInputObject.uniqueId = $(obj).children('.fatherInput').attr('uniqueId');  
                 let sDescription = $(obj).children('textarea').val();
                 fatherInputObject.briefDescription = sDescription;  
-                if($('.grandFather').children('div[id*="prev_file"]').children('.prev_thumb').length > 0){
-                  let sImage = $('.father').children('div[id*="prev_file"]').children('.prev_thumb').attr('style').slice(23);
+                if($(obj).children('div[id*="prev_file"]').children('.prev_thumb').length > 0){
+                  let sImage = $(obj).children('div[id*="prev_file"]').children('.prev_thumb').attr('style').slice(23);
                   fatherInputObject.mainImage = sImage;
                 }else{
                   fatherInputObject.mainImage = "";
@@ -265,8 +265,8 @@
           swal("你有图片没有上传");
         }else{
           let obj = {};
-          obj.StoreCategoryFirst = [];
-          obj.StoreCategoryFirst = grandFatherInputObject;
+          obj.SaleCategoryFirst = [];
+          obj.SaleCategoryFirst = grandFatherInputObject;
           swal({
             title: "你确定更新销售分类吗?",
             text: "更新之后将无法恢复",
@@ -279,7 +279,7 @@
           function(){
             $.ajax({
               type: 'POST',
-              url: '/Product/ShowSaleCategory/',
+              url: '/Product/CreateSaleCategory/',
               headers: {
                 'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
               },

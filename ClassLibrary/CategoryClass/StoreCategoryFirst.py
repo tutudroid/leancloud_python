@@ -31,6 +31,8 @@ class StoreCategoryFirst(StoreCategory):
 
     def create_StoreCategoryFirst(self, data):
         if data:
+            if self.get_Object_name(data[attribute_name]):
+                return True
             self.create_StoreCategory(data)
             return True
         return None

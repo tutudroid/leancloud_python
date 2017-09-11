@@ -32,7 +32,7 @@
         </div>
         <div class='addSecond'>
           <span class='directLine'></span>
-          <span class='btn btn-primary secondAdd' @click="addSecondHtml">添加二级子分类</span>
+          <span class='btn btn-primary secondAdd' @click="addSecondHtml($event)">添加二级子分类</span> 
           <hr  class='lastHr' style='border-top:3px solid #a00404'>
         </div>
       </div>
@@ -109,7 +109,7 @@
         let targetSecond = $(event.currentTarget).parent().parent();
       	let button = $(event.currentTarget).parent();
       	let secondHtml = '<div class="father"><span class="directLine"></span><span id="s'+this.scount+'" class="glyphicon glyphicon-triangle-bottom"></span><input type="text" class="fatherInput"><label for="file'+this.scount+'">添加或改变图片</label><input class="file" id="file'+this.scount+'" type="file" hidden><div id="prev_file'+this.scount+'" class="prev_container"></div><textarea rows="7" cols="20" class="fatherDescription"></textarea><span class="glyphicon glyphicon-remove remove link"></span><hr></div>';
-      	$(secondHtml).insertBefore(targetSecond.children('.lastHr'));
+      	$(secondHtml).insertBefore(targetSecond.children('.addSecond'));
       	$(button).insertBefore(targetSecond.children('.lastHr'));
         $('.father .remove').bind('click',function(event){
           _this.deleteSecond(event);
@@ -117,6 +117,11 @@
         let striangle = '#s'+this.scount;
         $(striangle).bind('click',function(event){
           _this.hide(event);
+        });
+        let file2 = '#file'+this.scount;
+        $(document).ready(function()
+        {
+          $(file2).preimage();
         });
         this.scount++;
       },

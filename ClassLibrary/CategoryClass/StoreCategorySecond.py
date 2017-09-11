@@ -40,7 +40,10 @@ class StoreCategorySecond(StoreCategory):
         return None
 
     def create_StoreCategorySecond(self, data, storeCategoryFirst):
-        if data:
+        if data and storeCategoryFirst:
+            if self.get_Object_name(data[attribute_name]):
+                if self.get_attribute_objectId() == storeCategoryFirst.get(attribute_objectId):
+                    return True
             self.create_StoreCategory(data)
             self.set_attribute_storeCategoryFirst(storeCategoryFirst)
             return True

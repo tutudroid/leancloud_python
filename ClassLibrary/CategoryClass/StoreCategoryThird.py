@@ -38,6 +38,9 @@ class StoreCategoryThird(StoreCategory):
 
     def create_StoreCategoryThird(self, data, storeCategorySecond):
         if data and storeCategorySecond:
+            if self.get_Object_name(data[attribute_name]):
+                if self.get_attribute_objectId() == storeCategorySecond.get(attribute_objectId):
+                    return True
             self.create_StoreCategory(data)
             self.set_attribute_storeCategorySecond(storeCategorySecond)
             return True

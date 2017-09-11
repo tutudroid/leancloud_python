@@ -88,7 +88,7 @@ class StoreCategory(Object):
     def create_StoreCategory(self, data):
         if data[attribute_name]:
             if attribute_objectId in data and data[attribute_objectId]:
-                self.__print_msg__error( 'create new storeCategory' )
+                self.__print_msg__error('create new storeCategory')
                 self.get_Object(data[attribute_objectId])
             else:
                 self.create_Object()

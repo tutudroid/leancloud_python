@@ -113,5 +113,5 @@ class SettleInApplication(Object):
             else:
                 count = Base.queryInstanceAttribute1_Attribute2_Count(self.__class__.__name__, attribute_type, int(type1), attribute_state, int(state))
             return count
-        self.__print_msg__('parameter is null')
+        self.__print_msg__error( 'parameter is null' )
         return 0

@@ -24,7 +24,7 @@
           <label v-bind:for="'file'+scategory.objectId" @click="changeImage($event)">添加或改变图片</label>
           <input class="file" :id="'file'+scategory.objectId" type="file">
           <div :id="'prev_file'+scategory.objectId" class="prev_container">
-            <div class="prev_thumb" style="'background-image:url('+scategory.mainImage+')'"></div>
+            <div class="prev_thumb" :style="'background-image:url('+scategory.mainImage+')'"></div>
           </div>
           <textarea rows="7" cols="20" class="fatherDescription" ></textarea>
           <span class='glyphicon glyphicon-remove remove link' @click="deleteSecond($event)"></span>
@@ -139,9 +139,9 @@
           function(){
             $.ajax({
                 type: 'get',
-                url: '/Product/DelStoreCategory/',
+                url: '/Product/DelSaleCategory/',
                 data: {
-                   StoreCategory: 'StoreCategoryFirst',
+                   StoreCategory: 'SaleCategoryFirst',
                    objectId: objectId,
                 },
                 success: function (data) {
@@ -174,9 +174,9 @@
           function(){
             $.ajax({
                 type: 'get',
-                url: '/Product/DelStoreCategory/',
+                url: '/Product/DelSaleCategory/',
                 data: {
-                   StoreCategory: 'StoreCategorySecond',
+                   StoreCategory: 'SaleCategorySecond',
                    objectId: objectId,
                 },
                 success: function (data) {

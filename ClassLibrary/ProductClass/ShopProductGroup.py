@@ -16,7 +16,7 @@ class ShopProductGroup(ProductGroupBase):
             if self.__save_instance__():
                 product = self.get_attribute_relation(attribute_product)
                 if product:
-                    self.__print_msg__(product)
+                    self.__print_msg__error( product )
                     for foo in product:
                         product = ShopProduct()
                         product.get_Object(foo.get(attribute_objectId))

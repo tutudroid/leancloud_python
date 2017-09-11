@@ -100,7 +100,7 @@ class Shop(Object):
                     returnList.append(productGroup.output_ProductGroup())
                 return returnList
             else:
-                self.__print_msg__('shop not found productGroup')
+                self.__print_msg__error( 'shop not found productGroup' )
         return None
 
     def get_attribute_shopProductGroup(self, page=1):
@@ -224,7 +224,7 @@ class Shop(Object):
                     afterSale.set_instance(foo)
                     returnList.append(afterSale.output_AfterSaleServiceRecord())
                 return returnList
-            self.__print_msg__('afterSale no found')
+            self.__print_msg__error( 'afterSale no found' )
         return None
 
     def set_attribute_productGroup(self, productGroup):
@@ -437,7 +437,7 @@ class Shop(Object):
         self.set_attribute_phoneNumber(data[attribute_phoneNumber])
         self.set_attribute_shopType(data[attribute_shopType])
         self.set_attribute_type(data[attribute_type])
-        self.__print_msg__('create shop success')
+        self.__print_msg__error( 'create shop success' )
 
     def input_Shop(self, request):
         self.instance = self.instance

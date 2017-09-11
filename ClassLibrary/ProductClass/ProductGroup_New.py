@@ -69,7 +69,7 @@ def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
                     description.create_Object()
                     description.copy_ProductDetailDescription(foo)
                     if not productGroup.add_attribute_relation(attribute_detailDescription, description.get_instance()):
-                        Base.sys_log('save detailDescription failed')
+                        Base.sys_log_info( 'save detailDescription failed' )
                         state = STATE_NO_FINISH
             """
             保存主图片信息
@@ -90,7 +90,7 @@ def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
                     image.create_Object()
                     image.set_attribute_value(attribute_imageFile, pic.get(attribute_imageFile))
                     if not productGroup.add_attribute_relation(attribute_imageList, image.get_instance()):
-                        Base.sys_log('save imageList failed')
+                        Base.sys_log_info( 'save imageList failed' )
                         state = STATE_NO_FINISH
 
             # 写入商品服务信息
@@ -107,7 +107,7 @@ def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
             storeCategory = StoreCategoryThird()
             storeCategory.get_Object(shopProductGroup.get_attribute_Object_Id(attribute_storeCategory))
             if not storeCategory.add_attribute_relation(attribute_productGroup, productGroup.get_instance()):
-                Base.sys_log('save storeCategory failed')
+                Base.sys_log_info( 'save storeCategory failed' )
                 state = STATE_NO_FINISH
 
             saleList = shopProductGroup.get_attribute_relation(attribute_saleCategory)
@@ -117,10 +117,10 @@ def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
                     sale = SaleCategorySecond()
                     sale.get_Object(foo.id)
                     if not productGroup.add_attribute_relation(attribute_saleCategory, sale.get_instance()):
-                        Base.sys_log('save saleCategory failed')
+                        Base.sys_log_info( 'save saleCategory failed' )
                         state = STATE_NO_FINISH
                     if not sale.add_attribute_relation(attribute_productGroup, productGroup.get_instance()):
-                        Base.sys_log('save saleCategory failed')
+                        Base.sys_log_info( 'save saleCategory failed' )
                         state = STATE_NO_FINISH
 
             # 保存商品信息
@@ -130,7 +130,7 @@ def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
                     product = copy_Shop_Product(shopProduct)
                     product.set_attribute_value(attribute_group, productGroup.get_instance())
                     if not productGroup.add_attribute_relation(attribute_product, product.get_instance()):
-                        Base.sys_log('save product failed')
+                        Base.sys_log_info( 'save product failed' )
                         state = STATE_NO_FINISH
 
             # 设置商品组状态
@@ -140,5 +140,5 @@ def copy_Shop_ProductGroup(shopProductGroup:ShopProductGroup):
             else:
                 # 清理数据
                 productGroup.destroy_ProductGroup()
-        Base.sys_log("shopProductGroup doesn't exist")
+        Base.sys_log_info( "shopProductGroup doesn't exist" )
         return None

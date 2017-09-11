@@ -35,7 +35,7 @@ class Object(object):
             instance.set(attribute_state, STATE_OK)
             self.instance = instance
             return self.__save_instance__()
-        self.__print_msg__('create object fail')
+        self.__print_msg__error( 'create object fail' )
         return None
 
     def delete_Object(self):
@@ -50,7 +50,7 @@ class Object(object):
                 self.instance.destroy()
                 return True
             except leancloud.LeanCloudError as e:
-                self.__print_msg__(e.error)
+                self.__print_msg__error( e.error )
             return True
         return None
 
@@ -141,10 +141,10 @@ class Object(object):
                 self.instance.save()
                 return self.instance
             except leancloud.LeanCloudError as e:
-                self.__print_msg__(e.error)
+                self.__print_msg__error( e.error )
         return None
 
-    def __print_msg__(self, msg):
+    def __print_msg__error(self, msg):
         """
         输出错误信息
         :param msg: 
@@ -156,6 +156,21 @@ class Object(object):
         logging.error('time :'+time.strftime("%Y-%m-%d %H:%M", time.localtime()))
         logging.error(msg)
         print('--------------------------------------------------------------------------------')
+
+
+    def __print_msg__info(self, msg):
+        """
+        输出错误信息
+        :param msg: 
+        :return: 
+        """
+        print('------start---------------------------------------------------------------------')
+        logging.info('call function name: '+sys._getframe().f_back.f_code.co_name)
+        logging.info('class name: '+self.className)
+        logging.info('time :'+time.strftime("%Y-%m-%d %H:%M", time.localtime()))
+        logging.info(msg)
+        print('--------------------------------------------------------------------------------')
+
 
     def __output_Object__(self, instance):
         """
@@ -213,7 +228,7 @@ class Object(object):
             self.instance.set(attribute, value)
             if self.__save_instance__():
                 return True
-        self.__print_msg__(attribute + ' or ' + str(value) + 'is null')
+        self.__print_msg__error( attribute + ' or ' + str( value ) + 'is null' )
         return False
 
     def get_attribute_Object_Id(self, attribute):

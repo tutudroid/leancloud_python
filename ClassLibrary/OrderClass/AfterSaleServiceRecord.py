@@ -180,11 +180,11 @@ class AfterSaleServiceRecord(LogisticsInfo):
                     if self.__save_instance__():
                         return True
                 else:
-                    Base.sys_log('save fail')
+                    Base.sys_log_info( 'save fail' )
             else:
-                Base.sys_log('value is invalid')
+                Base.sys_log_info( 'value is invalid' )
         else:
-            Base.sys_log('parameter is null')
+            Base.sys_log_info( 'parameter is null' )
         return None
 
     def get_AfterSaleServiceRecord_count(self, recordState):

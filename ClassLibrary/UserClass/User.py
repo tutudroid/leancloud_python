@@ -18,7 +18,7 @@ class _User(Object):
             if self.__save_instance__():
                 self.instance = instance
                 return self.instance
-        self.__print_msg__('create object fail')
+        self.__print_msg__error( 'create object fail' )
         return None
 
     def get_User_phoneNumber(self, phoneNumber):

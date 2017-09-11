@@ -11,11 +11,30 @@ import base64
 QUERY_SKIP = 10
 
 
-def sys_log(data: object):
-    print('------start-------------' + sys._getframe().f_back.f_code.co_name + '--------------')
+def sys_log_info(data: object):
+    """
+    打印信息输出
+    :param data: 
+    :return: 
+    """
+    print('start---------------------------------------------------------------------------')
+    logging.info(sys._getframe().f_back.f_code.co_name)
+    logging.info(data)
+    logging.info(time.strftime("%Y-%m-%d %H:%M", time.localtime()))
+    print('end-----------------------------------------------------------------------------')
+
+
+def sys_log_error(data: object):
+    """
+    打印错误信息
+    :param data: 
+    :return: 
+    """
+    print('start----------------------------------------------------------------------------')
+    logging.error(sys._getframe().f_back.f_code.co_name)
     logging.error(data)
     logging.error(time.strftime("%Y-%m-%d %H:%M", time.localtime()))
-    print('--------------------------------------------------------------------------------')
+    print('end------------------------------------------------------------------------------')
 
 
 def save_data(data):
@@ -28,8 +47,8 @@ def save_data(data):
         data.save()
         return data
     except LeanCloudError as e:
-        sys_log(e.error)
-        sys_log(data)
+        sys_log_info(e.error)
+        sys_log_info(data)
 
     return None
 
@@ -42,7 +61,7 @@ def local_image(classInstance, imageFile, attribute):
     :return: 
     """
     if classInstance is None or imageFile is None:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
         return False
     if os.path.exists(imageFile):
         print(imageFile)
@@ -62,7 +81,7 @@ def set_image(name, imageFile, value):
     :return: 
     """
     if name is None or imageFile is None or value is None:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
         return False
     tup = tempfile.mkstemp()
     file = open(tup[0], 'wb+')
@@ -126,7 +145,7 @@ def getInstanceThroughId(className, objectId):
         return
     Instance = leancloud.Object.extend(className)
     instance = Instance.create_without_data(objectId)
-    sys_log(instance)
+    sys_log_info(instance)
     return instance
 
 
@@ -147,8 +166,8 @@ def count_relation_data(objectId, className, relation_value):
                 count = query.count()
                 return count
             except LeanCloudError as e:
-                sys_log(e.error)
-    sys_log('parameter is null')
+                sys_log_info(e.error)
+    sys_log_info('parameter is null')
     return None
 
 
@@ -174,9 +193,9 @@ def get_relation_data(objectId, className, relation_value, skip=None, limit=QUER
             query_list = query.find()
             return query_list
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -204,9 +223,9 @@ def get_relation_data_and_exist(objectId, className, relation_value, attribute, 
             query_list = query.find()
             return query_list
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -231,9 +250,9 @@ def count_relation_data_and_attribute(objectId, className, relation_value, attri
 
             return count
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return 0
 
 
@@ -263,9 +282,9 @@ def get_relation_data_and_attribute(objectId, className, relation_value, attribu
             query_list = query.find()
             return query_list
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -295,9 +314,9 @@ def get_relation_data_and_attribute_and_sort_uniqueId(objectId, className, relat
             query_list = query.find()
             return query_list
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -321,9 +340,9 @@ def count_relation_data_greater_attribute(objectId, className, relation_value, a
             count = query2.count()
             return count
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return 0
 
 
@@ -352,9 +371,9 @@ def get_relation_data_greater_attribute(objectId, className, relation_value, att
             query_list = query.find()
             return query_list
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -392,9 +411,9 @@ def query_relation_data_greater_and_less_attribute(objectId, className, queryCla
                 return query_list
 
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -427,9 +446,9 @@ def get_relation_data_greater_and_less_attribute(objectId, className, queryClass
             query_list = query.find()
             return query_list
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -462,9 +481,9 @@ def get_relation_data_and_attribute_two(objectId, className, relation_value, att
             query_list = query.find()
             return query_list
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -486,12 +505,12 @@ def count_relation_data_and_exist(objectId, className, relation_value, attribute
         query = query.exists(attribute)
         try:
             count = query.count()
-            sys_log(count)
+            sys_log_info(count)
             return count
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -512,9 +531,9 @@ def get_relation_first(objectId, className, relation_value):
             query_list = query.first()
             return query_list
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -531,9 +550,9 @@ def queryInstanceThroughId(className, ID):
             result_list = query.get(ID)
             return result_list
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -553,12 +572,12 @@ def queryInstanceThroughName(className, attribute, value):
             if len(query_list) > 0:
                 return query_list
             else:
-                sys_log('none found')
+                sys_log_info('none found')
                 return None
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -572,12 +591,12 @@ def count_exist_instance(className, attribute):
             if count:
                 return count
             else:
-                sys_log('none found')
+                sys_log_info('none found')
                 return None
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -601,12 +620,12 @@ def queryExistInstance(className, attribute, skip=1, limit=QUERY_SKIP):
             if len(query_list) > 0:
                 return query_list
             else:
-                sys_log('none found')
+                sys_log_info('none found')
                 return None
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -625,12 +644,12 @@ def queryInstanceAttributeCount(className, attribute, value):
             if count:
                 return count
             else:
-                sys_log('none found')
+                sys_log_info('none found')
                 return 0
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return 0
 
 
@@ -655,12 +674,12 @@ def queryInstanceAttribute(className, attribute, value, skip=1, limit=QUERY_SKIP
             if len(query_list) > 0:
                 return query_list
             else:
-                sys_log('none found')
+                sys_log_info('none found')
                 return None
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -685,12 +704,12 @@ def queryInstanceAttributeGreaterOrEqual(className, attribute, value, skip=1, li
             if len(query_list) > 0:
                 return query_list
             else:
-                sys_log('none found')
+                sys_log_info('none found')
                 return None
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -717,12 +736,12 @@ def queryInstanceAttribute_and_sort_uniqueId(className, attribute, value, skip=1
             if len(query_list) > 0:
                 return query_list
             else:
-                sys_log('none found')
+                sys_log_info('none found')
                 return None
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -741,12 +760,12 @@ def queryInstanceAttributeFirst(className, attribute, value):
             if query_list:
                 return query_list
             else:
-                sys_log('none found')
+                sys_log_info('none found')
                 return None
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -768,12 +787,12 @@ def queryInstanceAttribute1_Attribute2_Count(className, attribute, value, attrib
             if count:
                 return count
             else:
-                sys_log('none found')
+                sys_log_info('none found')
                 return 0
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -801,12 +820,12 @@ def queryInstanceAttribute1_Attribute2(className, attribute, value, attribute2, 
             if query_list:
                 return query_list
             else:
-                sys_log('none found')
+                sys_log_info('none found')
                 return None
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -829,12 +848,12 @@ def queryInstanceAttribute1_Attribute2_First(className, attribute, value, attrib
             if query_list:
                 return query_list
             else:
-                sys_log('none found')
+                sys_log_info('none found')
                 return None
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -858,12 +877,12 @@ def queryInstance_A1_A2_A3_First(className, attribute, value, attribute1, value1
             if query_list:
                 return query_list
             else:
-                sys_log('none found')
+                sys_log_info('none found')
                 return None
         except LeanCloudError as e:
-            sys_log(e.error)
+            sys_log_info(e.error)
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
     return None
 
 
@@ -891,7 +910,7 @@ def queryAllInstance(className, element, skip=None, limit=QUERY_SKIP):
         query_list = query.find()
         return query_list
     except LeanCloudError as e:
-        sys_log(e.error)
+        sys_log_info(e.error)
     return None
 
 
@@ -911,12 +930,12 @@ def getClassThroughName(className, name, value, expandList=None):
         # 这里include有问题，见leancloud文档
         for expand in expandList:
             query.include(expand)
-        sys_log(expandList)
+        sys_log_info(expandList)
     try:
         query_list = query.find()
         return query_list
     except LeanCloudError as e:
-        sys_log(e.error)
+        sys_log_info(e.error)
     return None
 
 
@@ -945,7 +964,7 @@ def searchClassThroughKey(className, name, key):
         else:
             return None
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
 
 
 def searchClassThroughTag(tagClass, tagObjectId, searchClass, searchAttribute):
@@ -957,7 +976,7 @@ def searchClassThroughTag(tagClass, tagObjectId, searchClass, searchAttribute):
         query.find()
         return query
     else:
-        sys_log('parameter is null')
+        sys_log_info('parameter is null')
         return None
 
 
@@ -1031,7 +1050,7 @@ def destroy_relation(objectId, className, relation_attribute, className2):
                 #    instance.get('mainImage').destroy()
                 instance.destroy()
             else:
-                sys_log('instance no found')
+                sys_log_info('instance no found')
 
 
 def destroy_relation_imageList(objectId, className, relation_attribute, className2):
@@ -1045,7 +1064,7 @@ def destroy_relation_imageList(objectId, className, relation_attribute, classNam
                 #    imageFile.destroy()
                 instance.destroy()
             else:
-                sys_log('instance no found')
+                sys_log_info('instance no found')
 
 
 def create_network_image(instance, attr):

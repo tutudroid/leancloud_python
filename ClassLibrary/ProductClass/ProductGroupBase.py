@@ -140,12 +140,12 @@ class ProductGroupBase(Object):
                         }
                         return A
                     else:
-                        self.__print_msg__('storeCategoryFirst is not existed')
+                        self.__print_msg__error( 'storeCategoryFirst is not existed' )
                 else:
-                    self.__print_msg__('storeCategorySecond is not existed')
+                    self.__print_msg__error( 'storeCategorySecond is not existed' )
             else:
-                self.__print_msg__('storeCategoryThird is not existed')
-        self.__print_msg__('parameter is null')
+                self.__print_msg__error( 'storeCategoryThird is not existed' )
+        self.__print_msg__error( 'parameter is null' )
         return None
 
     def get_attribute_saleCategory(self):
@@ -341,7 +341,7 @@ class ProductGroupBase(Object):
             if self.__save_instance__():
                 product = self.get_attribute_relation(attribute_product)
                 if product:
-                    self.__print_msg__(product)
+                    self.__print_msg__error( product )
                     for foo in product:
                         product = Product()
                         product.get_Object(foo.get(attribute_objectId))
@@ -475,7 +475,7 @@ class ProductGroupBase(Object):
         store = storeCategory.get_Object(data[attribute_storeCategory])
 
         if not self.set_attribute_storeCategory(store):
-            Base.sys_log('save storeCategory failed')
+            Base.sys_log_info( 'save storeCategory failed' )
             state = STATE_NO_FINISH
 
         if self.className == Class_Name_ProductGroup and not storeCategory.set_attribute_productGroup(self.instance):
@@ -489,7 +489,7 @@ class ProductGroupBase(Object):
                 self.set_attribute_saleCategory(sale)
                 # 将商品组写入到对应的销售关系中
                 if not self.set_attribute_saleCategory(sale):
-                    Base.sys_log('save saleCategory failed')
+                    Base.sys_log_info( 'save saleCategory failed' )
                     state = STATE_NO_FINISH
                 if self.className == Class_Name_ProductGroup and not saleCategory.set_attribute_productGroup(self.instance):
                     state = STATE_NO_FINISH
@@ -504,7 +504,7 @@ class ProductGroupBase(Object):
                 self.set_attribute_imageList(image)
                 self.set_attribute_mainImage(productImage.get_imageFile())
             else:
-                Base.sys_log('save mainImage failed')
+                Base.sys_log_info( 'save mainImage failed' )
                 state = STATE_NO_FINISH
 
         # 获得写入的图片列表
@@ -516,7 +516,7 @@ class ProductGroupBase(Object):
                 if productImage.set_attribute_imageFile(productImage.get_imageFile()):
                     self.set_attribute_imageList(image)
                 else:
-                    Base.sys_log('save imageList failed')
+                    Base.sys_log_info( 'save imageList failed' )
                     state = STATE_NO_FINISH
 
         # 写入商品服务信息
@@ -539,14 +539,14 @@ class ProductGroupBase(Object):
                     product = ShopProduct()
                 product.create_Product(foo, self.instance, data[attribute_productMainImage])
                 if not self.set_attribute_product(product.instance):
-                    Base.sys_log('save product failed')
+                    Base.sys_log_info( 'save product failed' )
                     state = STATE_NO_FINISH
 
         # 设置商品组状态
         if self.__save_instance__():
             if state == STATE_SHELF_ON:
                 return self.instance
-        Base.sys_log('productGroup save failed')
+        Base.sys_log_info( 'productGroup save failed' )
         # 删除保存失败的对象
         self.destroy_ProductGroup()
         return None
@@ -595,7 +595,7 @@ class ProductGroupBase(Object):
                 storeCategory = StoreCategory(Class_Name_StoreCategoryThird)
                 store = storeCategory.get_Object(data[attribute_storeCategory])
                 if not self.set_attribute_storeCategory(store):
-                    Base.sys_log('save storeCategory failed')
+                    Base.sys_log_info( 'save storeCategory failed' )
                 if self.className == Class_Name_ProductGroup and not storeCategory.set_attribute_productGroup(self.instance):
                     pass
             """
@@ -621,7 +621,7 @@ class ProductGroupBase(Object):
                     self.set_attribute_saleCategory(sale)
                     # 将商品组写入到对应的销售关系中
                     if not self.set_attribute_saleCategory(sale):
-                        Base.sys_log('save saleCategory failed')
+                        Base.sys_log_info( 'save saleCategory failed' )
                     if self.className == Class_Name_ProductGroup and not saleCategory.set_attribute_productGroup(self.instance):
                         pass
             """
@@ -648,7 +648,7 @@ class ProductGroupBase(Object):
                     self.set_attribute_imageList(image)
                     self.set_attribute_mainImage(productImage.get_imageFile())
                 else:
-                    Base.sys_log('save mainImage failed')
+                    Base.sys_log_info( 'save mainImage failed' )
             """
             更新图片列表
             """
@@ -668,7 +668,7 @@ class ProductGroupBase(Object):
                     if productImage.set_attribute_imageFile(productImage.get_imageFile()):
                         self.set_attribute_imageList(image)
                     else:
-                        Base.sys_log('save imageList failed')
+                        Base.sys_log_info( 'save imageList failed' )
 
 
             # 删除旧的商品服务信息
@@ -709,9 +709,9 @@ class ProductGroupBase(Object):
                     else:
                         product.create_Product(foo, self.instance, data[attribute_productMainImage])
                         if not self.set_attribute_product(product.instance):
-                            Base.sys_log('save product failed')
+                            Base.sys_log_info( 'save product failed' )
         else:
-            Base.sys_log('objectId is null')
+            Base.sys_log_info( 'objectId is null' )
 
     def input_ProductGroup(self, request):
         self.instance = self.instance

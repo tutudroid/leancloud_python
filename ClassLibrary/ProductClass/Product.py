@@ -73,7 +73,7 @@ class Product(Object):
         if self.instance:
             tmpList = Base.get_relation_data_and_attribute(self.get_attribute_objectId(), self.__class__.__name__, attribute_comment, attribute, value,
                                                            skip, limit)
-            Base.sys_log(tmpList)
+            Base.sys_log_info( tmpList )
             return tmpList
         return None
 
@@ -172,8 +172,8 @@ class Product(Object):
             if self.__save_instance__():
                 return True
             else:
-                Base.sys_log('product delete failed')
-        Base.sys_log('product or productGroup is null')
+                Base.sys_log_info( 'product delete failed' )
+        Base.sys_log_info( 'product or productGroup is null' )
         return None
 
     def update_Product(self, data, imageFileList):
@@ -200,7 +200,7 @@ class Product(Object):
                             oldMainImage.destroy()
                         # 写入新的图片
                         if Base.set_image(self.instance, mainImage, attribute_mainImage) is False:
-                            Base.sys_log('product save mainImage failed')
+                            Base.sys_log_info( 'product save mainImage failed' )
             return self.instance
         return None
 
@@ -216,7 +216,7 @@ class Product(Object):
     def create_Product(self, data, group, imageFileList):
         if data and group:
             if self.find_Product(group, data[attribute_style]):
-                Base.sys_log('this product has existed')
+                Base.sys_log_info( 'this product has existed' )
                 return None
             print(data)
             if self.create_Object():
@@ -232,7 +232,7 @@ class Product(Object):
                         if stringSeries == data[attribute_mainImage].split('\\')[-1]:
                             print('success')
                             if not Base.set_image(self.instance, mainImage, attribute_mainImage):
-                                Base.sys_log('product save mainImage failed')
+                                Base.sys_log_info( 'product save mainImage failed' )
                                 self.instance.destroy_Product()
                                 return None
                 else:

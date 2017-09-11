@@ -28,7 +28,7 @@ RETURN_SECOND_RECOMMEND_LIST = 'recommendList'
 
 
 def FUNCTION_OUTPUT_DATA(data):
-    Base.sys_log(data)
+    Base.sys_log_info( data )
 
 
 def getRequestData1(request):
@@ -136,7 +136,7 @@ def AllRecommendation(request):
     content.update({'paginator': paginator1})
 
     content['data']['recommendList'] = Recommend.get_Recommend_All(page)
-    Base.sys_log(content)
+    Base.sys_log_info( content )
     return render(request, 'AllRecommendation.html', {'content': content, })
 
 
@@ -154,7 +154,7 @@ def ShowRecommendation(request):
     query = Recommend.get_Recommend(objectId)
     if query:
         content['recommend'] = Recommend.output_Recommend(query)
-    Base.sys_log(content)
+    Base.sys_log_info( content )
     return render(request, 'ShowRecommendation.html', {'content': content})
 
 
@@ -170,7 +170,7 @@ def EditRecommendation(request):
     if request.method == 'POST':
         objectId = request.POST.get('objectId')
         if request.POST.get('_EditAndSave'):
-            Base.sys_log(request.POST)
+            Base.sys_log_info( request.POST )
 
             tagList = getRequestData1(request)
             if tagList:
@@ -186,5 +186,5 @@ def EditRecommendation(request):
     query = Recommend.get_Recommend(objectId)
     if query:
         content['data']['recommend'] = Recommend.output_Recommend(query)
-    Base.sys_log(content)
+    Base.sys_log_info( content )
     return render(request, 'EditRecommendation.html', {'content': content, })

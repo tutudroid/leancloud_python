@@ -116,7 +116,7 @@ class SaleCategory(Object):
             relation.remove(productGroup)
             self.__save_instance__()
             return True
-        Base.sys_log('sale or productGroup is null')
+        Base.sys_log_info( 'sale or productGroup is null' )
         return None
 
     def remove_attribute_saleCategorySecond(self, saleSecond):
@@ -173,7 +173,7 @@ class SaleCategory(Object):
             categoryImage.set(attribute_imageFile, saleRecommend.get(attribute_mainImage))
             Base.save_data(categoryImage)
         else:
-            Base.sys_log('parameter is null')
+            Base.sys_log_info( 'parameter is null' )
 
 
     def get_attribute_saleCategoryRecommend(self):
@@ -184,7 +184,7 @@ class SaleCategory(Object):
                 sale = SaleCategory().set_instance(foo)
                 saleRecommend.append(sale.output_Class_Name_SaleCategoryRecommend())
             return saleRecommend
-        Base.sys_log('saleCategoryRecommend is null')
+        Base.sys_log_info( 'saleCategoryRecommend is null' )
         return None
 
     def get_second_sale_category(self):
@@ -207,9 +207,9 @@ class SaleCategory(Object):
                     secondSale.append(A)
                 return secondSale
             else:
-                Base.sys_log('second sale is null')
+                Base.sys_log_info( 'second sale is null' )
         else:
-            Base.sys_log('first sale object id is null')
+            Base.sys_log_info( 'first sale object id is null' )
         return None
 
     def create_SaleCategory(self, data, first=None):

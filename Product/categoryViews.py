@@ -56,10 +56,8 @@ def createSaleCategory(request):
                 print('success')
     
     """
-    storeCategory = json.loads(request.body.decode('utf-8'))
-    saleCategory = storeCategory[Class_Name_SaleCategoryFirst]
+    saleCategory = json.loads(request.body.decode('utf-8'))
     if saleCategory:
-        saleCategory = json.loads(saleCategory)
         keyList1 = keyList2 = [
             attribute_name,
             attribute_briefDescription,

@@ -322,19 +322,19 @@ new Vue({
       swal({
         title: "加载中",
         text:"你这么可爱，就等待一下呗",
-        timer: 4000,
+        timer: 2000,
         showConfirmButton: false
       });
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/Product/ShowSaleCategory/',
+          url: '/xx/xx/',
           data: {
              page: 1,
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.allMarketCategorys = dataJson.SaleCategory;           
+            _this.allSelfSellingnProducts = dataJson.xx;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')
@@ -346,19 +346,19 @@ new Vue({
       swal({
         title: "加载中",
         text:"你这么可爱，就等待一下呗",
-        timer: 4000,
+        timer: 2000,
         showConfirmButton: false
       });
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/Product/ShowSaleCategory/',
+          url: '/xx/xx/',
           data: {
              page: 1,
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.allMarketCategorys = dataJson.SaleCategory;           
+            _this.allMarketCategorys = dataJson.xx;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')

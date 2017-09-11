@@ -116,8 +116,9 @@ class Object(object):
 
     def set_attribute_mainImage(self, value):
         if self.instance and value:
-            if self.instance.get(attribute_mainImage):
-                self.instance.get(attribute_mainImage).destory()
+            if isinstance(self.instance.get(attribute_mainImage), ISINSTANCE_FILE):
+                # self.instance.get(attribute_mainImage).destory()
+                pass
             self.instance.set(attribute_mainImage, value)
             if self.__save_instance__():
                 return True

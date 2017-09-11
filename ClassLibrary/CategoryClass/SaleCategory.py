@@ -217,6 +217,12 @@ class SaleCategory(Object):
             if attribute_objectId in data and data[attribute_objectId]:
                 self.get_Object(data[attribute_objectId])
             else:
+                if self.get_Object_name(data[attribute_name]):
+                    if first:
+                        if self.get_attribute_objectId() == first.get(attribute_objectId):
+                            return True
+                    else:
+                        return True
                 self.create_Object()
             self.set_attribute_name(data[attribute_name])
             self.set_attribute_briefDescription(data[attribute_briefDescription])

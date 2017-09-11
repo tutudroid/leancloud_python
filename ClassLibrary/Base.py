@@ -116,11 +116,12 @@ def save_image(imageFile):
     return False
 
 
-def save_image_data(data, name='default'):
+def save_image_data(data, name='default.jpg'):
     """
     :return: 
     """
-    if data and re.findall(r'^base64', data):
+    if data and re.findall(r'^data:image/jpeg;base64,', data):
+        data = data[23:]
         tup = tempfile.mkstemp()
         file = open(tup[0], 'wb+')
         file.write(base64.b64decode(data))

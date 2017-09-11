@@ -57,6 +57,8 @@ def createSaleCategory(request):
     
     """
     saleCategory = json.loads(request.body.decode('utf-8'))
+    saleCategory = saleCategory[Class_Name_SaleCategoryFirst]
+    print(saleCategory)
     if saleCategory:
         keyList1 = keyList2 = [
             attribute_name,
@@ -64,15 +66,16 @@ def createSaleCategory(request):
             attribute_mainImage,
         ]
         for foo in saleCategory:
-            keyList1.append(attribute_storeCategorySecond)
+            keyList1.append(attribute_saleCategorySecond)
             Dict_Check(foo, keyList2)
-            for goo in foo[attribute_storeCategorySecond]:
-                Dict_Check(goo, keyList2)
+            if attribute_saleCategorySecond in foo:
+                for goo in foo[attribute_saleCategorySecond]:
+                    Dict_Check(goo, keyList2)
         print(saleCategory)
         for foo in saleCategory:
             first = SaleCategoryFirst()
             first.create_SaleCategory(foo)
-            secondStore = foo[attribute_storeCategorySecond]
+            secondStore = foo[attribute_saleCategorySecond]
             for goo in secondStore:
                 second = SaleCategorySecond()
                 second.create_SaleCategory(goo, first.get_instance())

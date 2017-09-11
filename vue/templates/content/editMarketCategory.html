@@ -1,10 +1,10 @@
 <div class="contentMenu">
 	<ul class="nav nav-pills">
-	  <li role="presentation" class="active"><a href="#" id="mpstockMarketEditCategory">编辑分类</a></li>
+	  <li role="presentation"><a href="#" id="mpstockMarketEditCategory" @click="getAllMarketCategorys()">管理销售分类大本营</a></li>
 	</ul>
 
 	<div class="mp mpstockMarketEditCategory used">
-	  {% include "content/stock/category/marketCategory/editCategory.html" %}
+	  <editmarketcategory :marketcategorys="allMarketCategorys"></editmarketcategory>
 	</div>
 </div>
 

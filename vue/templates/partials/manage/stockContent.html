@@ -1,7 +1,7 @@
 <div class="container">
 
 	<div class="content checkStockCategory used">
-	{% include "content/checkStockCategory.html" %}
+		{% include "content/checkStockCategory.html" %}
 	</div>
 	
 	<div class="content editStockCategory">
@@ -12,23 +12,26 @@
 	</div>
         
 	<div class="content checkMarketCategory">
-	{% include "content/checkMarketCategory.html" %}
+		{% include "content/checkMarketCategory.html" %}
 	</div>
 	
 	<div class="content editMarketCategory">
-	{% include "content/editMarketCategory.html" %}
+		<form>
+			{% csrf_token %}
+			{% include "content/editMarketCategory.html" %}
+		</form>
 	</div>
 	
 	<div class="content selfProduct">
-	{% include "content/selfProduct.html" %}
+		{% include "content/selfProduct.html" %}
 	</div>
 	
 	<div class="content sellerProduct">
-	{% include "content/sellerProduct.html" %}
+		{% include "content/sellerProduct.html" %}
 	</div>
 	
 	<div class="content productSearch">
-	{% include "content/productSearch.html" %}
+		{% include "content/productSearch.html" %}
 	</div>
 	
 	

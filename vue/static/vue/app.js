@@ -37,6 +37,12 @@ import searchStockCategory from './backend/stock/searchStockCategory/searchStock
 //stock
 //editStockCategory
 import editStockCategory from './backend/stock/editStockCategory/editStockCategory.vue'
+//market
+//searchMarketCategory
+import searchMarketCategory from './backend/market/searchMarketCategory/searchMarketCategory.vue'
+//market
+//editMarketCategory
+import editMarketCategory from './backend/market/editMarketCategory/editMarketCategory.vue'
 
 //sellerBackend loginModule
 //register
@@ -55,6 +61,7 @@ new Vue({
     allAuditShops:[],
     allForbiddenShops:[],
     allStockCategorys:[],
+    allMarketCategorys:[],
 	},
 	components: {
 	    "changepwd":changePwd,
@@ -68,6 +75,8 @@ new Vue({
 	    "login":login,
 	    "searchstockcategory":searchStockCategory,
 	    "editstockcategory":editStockCategory,
+      "searchmarketcategory":searchMarketCategory,
+      "editmarketcategory":editMarketCategory,
 	    "registerform":registerForm,
 	    "forgetpwdform":forgetPwdForm,
 	},
@@ -264,6 +273,30 @@ new Vue({
           success: function (data) {
             let dataJson = JSON.parse(data);
             _this.allStockCategorys = dataJson.StoreCategory;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+    },
+    //抓取所有的销售分类
+    getAllMarketCategorys(){
+      swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 4000,
+        showConfirmButton: false
+      });
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/Product/ShowSaleCategory/',
+          data: {
+             page: 1,
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.allMarketCategorys = dataJson.SaleCategory;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')

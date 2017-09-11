@@ -315,74 +315,76 @@
   }
 </script>
 
-<style>
-  .addBtn{
-    border-radius: 10px;
-    width: 170px;
-    background-color: antiquewhite;
-    margin-top: 20px;
-    border: 2px solid;
-    font-size: 20px;
-    cursor:pointer;
-  }
-  .title{
-    margin-right: 300px;
-    font-size: large;
-  }
-  .oprate{
-    background-color: burlywood;
-  }
-  .fatherInput{
-    position: relative;
-    left: 50px;
-  }
-  .sonInput{
-    position: relative;
-    left: 100px;
-  }
-  .thirdAdd{
-    position: relative;
-    left: 100px;
-  }
-  .secondAdd{
-    position: relative;
-    left:50px;
-  }
-  .directLine{
-    width: 30px;
-    height: 20px;
-    display: inline-block;
-    border-bottom: 2px solid;
-    border-left: 2px solid;
-    position: absolute;
-    left: 10px;
-  }
-  .father .glyphicon-triangle-bottom,.father .glyphicon-triangle-right{
-    position:relative;
-    left: 45px;
-  }
-  .directLine.add{
-    left: 55px;
-  }
-  .son .glyphicon-triangle-bottom,.son .glyphicon-triangle-right{
-    position:relative;
-    left:95px;
-  }
-  .remove{
-    position: relative;
-    left: 440px;
-    top: 5px;
-  }
-  .mainContent{
-    position: relative;
-    left: 40px;
-    top: 10px;
-  }
-  .hideCategory{
-    display:none;
-  }
-  .showCategory{
-    display:initial;
+<style lang="scss">
+  .editStockCategory{
+    .addBtn{
+      border-radius: 10px;
+      width: 170px;
+      background-color: antiquewhite;
+      margin-top: 20px;
+      border: 2px solid;
+      font-size: 20px;
+      cursor:pointer;
+    }
+    .title{
+      margin-right: 300px;
+      font-size: large;
+    }
+    .oprate{
+      background-color: burlywood;
+    }
+    .fatherInput{
+      position: relative;
+      left: 50px;
+    }
+    .sonInput{
+      position: relative;
+      left: 100px;
+    }
+    .thirdAdd{
+      position: relative;
+      left: 100px;
+    }
+    .secondAdd{
+      position: relative;
+      left:50px;
+    }
+    .directLine{
+      width: 30px;
+      height: 20px;
+      display: inline-block;
+      border-bottom: 2px solid;
+      border-left: 2px solid;
+      position: absolute;
+      left: 10px;
+    }
+    .father .glyphicon-triangle-bottom,.father .glyphicon-triangle-right{
+      position:relative;
+      left: 45px;
+    }
+    .directLine.add{
+      left: 55px;
+    }
+    .son .glyphicon-triangle-bottom,.son .glyphicon-triangle-right{
+      position:relative;
+      left:95px;
+    }
+    .remove{
+      position: relative;
+      left: 440px;
+      top: 5px;
+    }
+    .mainContent{
+      position: relative;
+      left: 40px;
+      top: 10px;
+    }
+    .hideCategory{
+      display:none;
+    }
+    .showCategory{
+      display:initial;
+    }
   }
 </style>
 

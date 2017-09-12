@@ -393,7 +393,6 @@ class ProductGroupBase(Object):
                 attribute_dispatchPlace: self.get_attribute_dispatchPlace(),
                 attribute_commentCount: self.get_attribute_comment_count(attribute_state, STATE_OK)
             }
-            print(data)
             return data
         return None
 
@@ -588,14 +587,15 @@ class ProductGroupBase(Object):
                         self.set_attribute_detailDescription(detailDescription)
 
             if data[attribute_storeCategory]:
-                oldStoreCategory = StoreCategory()
-                if oldStoreCategory.get_StoreCategoryThird(productGroup.get(attribute_storeCategory).get(attribute_objectId)):
-                    oldStoreCategory.remove_attribute_productGroup(productGroup)
+                if self.className == Class_Name_ProductGroup:
+                    oldStoreCategory = StoreCategory()
+                    if oldStoreCategory.get_StoreCategoryThird(self.get_attribute_Object_Id(attribute_storeCategory)):
+                        oldStoreCategory.remove_attribute_productGroup(self.get_instance())
 
                 storeCategory = StoreCategory(Class_Name_StoreCategoryThird)
                 store = storeCategory.get_Object(data[attribute_storeCategory])
                 if not self.set_attribute_storeCategory(store):
-                    Base.sys_log_info( 'save storeCategory failed' )
+                    Base.sys_log_info('save storeCategory failed')
                 if self.className == Class_Name_ProductGroup and not storeCategory.set_attribute_productGroup(self.instance):
                     pass
             """
@@ -604,15 +604,15 @@ class ProductGroupBase(Object):
             # 增加新的关系
             if data[attribute_saleCategory]:
                 # 清除旧的关系，增加新的关系
-                relationSaleCategory = productGroup.relation(attribute_saleCategory)
-                oldSaleCategory = Base.get_relation_data(self.get_attribute_objectId(), self.className, attribute_saleCategory)
-                if oldSaleCategory:
-                    for foo in oldSaleCategory:
-                        saleCategorySecond = SaleCategory()
-                        if saleCategorySecond.get_SaleCategorySecond(foo.get(attribute_objectId)):
-                            saleCategorySecond.remove_attribute_productGroup(productGroup)
-                            relationSaleCategory.remove(saleCategorySecond.get_instance())
-                    self.__save_instance__()
+                if self.className == Class_Name_ProductGroup:
+                    oldSaleCategory = self.get_attribute_relation(attribute_saleCategory)
+                    if oldSaleCategory:
+                        for foo in oldSaleCategory:
+                            saleCategorySecond = SaleCategory()
+                            if saleCategorySecond.get_SaleCategorySecond(foo.get(attribute_objectId)):
+                                saleCategorySecond.remove_attribute_productGroup(self.get_instance())
+                                self.remove_attribute_relation(attribute_saleCategory, saleCategorySecond.get_instance())
+                        self.__save_instance__()
 
                 for foo in data[attribute_saleCategory]:
                     # 将销售关系写入到商品类中
@@ -621,7 +621,7 @@ class ProductGroupBase(Object):
                     self.set_attribute_saleCategory(sale)
                     # 将商品组写入到对应的销售关系中
                     if not self.set_attribute_saleCategory(sale):
-                        Base.sys_log_info( 'save saleCategory failed' )
+                        Base.sys_log_info('save saleCategory failed')
                     if self.className == Class_Name_ProductGroup and not saleCategory.set_attribute_productGroup(self.instance):
                         pass
             """
@@ -668,17 +668,15 @@ class ProductGroupBase(Object):
                     if productImage.set_attribute_imageFile(productImage.get_imageFile()):
                         self.set_attribute_imageList(image)
                     else:
-                        Base.sys_log_info( 'save imageList failed' )
+                        Base.sys_log_info('save imageList failed')
 
 
             # 删除旧的商品服务信息
-            relationProductService = productGroup.relation(attribute_productService)
-            oldProductService = Base.get_relation_data(productGroup.get(attribute_objectId), self.className, attribute_productService)
+            oldProductService = self.get_attribute_relation(attribute_productService)
             if oldProductService:
                 for foo in oldProductService:
                     productService = Base.queryInstanceThroughId(Class_Name_ProductService, foo.get(attribute_objectId))
-                    relationProductService.remove(productService)
-                Base.save_data(productGroup)
+                    self.remove_attribute_relation(attribute_productService, productService)
 
             # 写入商品服务信息
             if data[attribute_productService]:
@@ -709,9 +707,9 @@ class ProductGroupBase(Object):
                     else:
                         product.create_Product(foo, self.instance, data[attribute_productMainImage])
                         if not self.set_attribute_product(product.instance):
-                            Base.sys_log_info( 'save product failed' )
+                            Base.sys_log_info('save product failed')
         else:
-            Base.sys_log_info( 'objectId is null' )
+            Base.sys_log_info('objectId is null')
 
     def input_ProductGroup(self, request):
         self.instance = self.instance

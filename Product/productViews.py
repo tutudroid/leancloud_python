@@ -17,21 +17,21 @@ def ProductGroupDetail(request):
     :param request: 
     :return: 
     """
-    objectId = request.GET.get(attribute_objectId)
+    objectId = request.GET.get(attribute_objectId, '')
     if objectId:
         productGroup = ProductGroup()
         if productGroup.get_Object(objectId):
             productGroupData = productGroup.output_ProductGroup()
             content = PROFILE_INIT()
             content['productGroup'] = productGroupData
-            return render( request, 'NewProductDetail.html', {'content': content} )
+            return render(request, 'NewProductDetail.html', {'content': content})
     return return_msg('parameter is error')
 
 
 @login_required
 @require_http_methods(['GET'])
 def ProductGroupBriefDetail(request):
-    objectId = request.GET.get(attribute_objectId)
+    objectId = request.GET.get(attribute_objectId, '')
     if objectId:
         productGroup = ProductGroup()
         if productGroup.get_Object(objectId):
@@ -49,7 +49,7 @@ def ShopAllProductGroup(request):
     :return: 
     """
     state = request.GET.get(attribute_state, 0)
-    objectId = request.GET.get(attribute_objectId)
+    objectId = request.GET.get(attribute_objectId, '')
     page = request.GET.get(paginator_PAGE)
     shop = Shop()
     if shop.get_Object(objectId) and state is not None:
@@ -83,9 +83,9 @@ def ShopAllShopProductGroup(request):
 @permissions([ROLE_PRODUCT])
 @require_http_methods(['GET'])
 def AuditProductGroup(request):
-    objectId = request.GET.get(attribute_objectId)
+    objectId = request.GET.get(attribute_objectId, '')
     shopProductGroup = ShopProductGroup()
-    state = request.GET.get(attribute_state)
+    state = request.GET.get(attribute_state, -1)
     if shopProductGroup.get_Object(objectId) and 0 <= int(state) <= 1:
 
         # 通过审核
@@ -98,7 +98,7 @@ def AuditProductGroup(request):
             shop.get_Object(shopObjectId)
 
             # 将productGroup关联到shop中
-            if shop.add_attribute_relation(attribute_productGroup, productGroup1):
+            if shop.add_attribute_relation(attribute_productGroup, productGroup1.get_instance()):
                 shopProductGroup.destroy_ProductGroup()
                 return return_msg('success')
             else:
@@ -117,11 +117,11 @@ def CreateProductGroup(request):
     :param request: 
     :return: 
     """
+    shop = Shop()
     if request.method == 'POST':
         # 增加商品到店铺中
         # 创建商品组
         shopObjectId = request.POST.get('shopObjectId', '')
-        shop = Shop()
         if shopObjectId and shop.get_Object(shopObjectId):
             if request.POST.get('shelf_on') or request.POST.get('shelf_off'):
                 # 从前端获取数据
@@ -137,16 +137,19 @@ def CreateProductGroup(request):
                     return HttpResponseRedirect('/Product/ProductGroupDetail/?objectId='+productGroupObjectId)
     if request.method == 'GET' and request.GET.get('shopObjectId'):
         content = PROFILE_INIT()
-        # 显示创建商品页面
-        data = {
-            'current_role': 'ProductAdmin',
-            'shopObjectId': request.GET.get('shopObjectId'),
-            'storeCategory': get_StoreCategory_All(),
-            'saleCategory': get_SaleCategory_All(),
-            'productService': ProductService().get_ProductService_All(),
-        }
-        content['data'] = data
-        return render(request, 'NewCreateProduct.html', {'content': content})
+        if shop.get_Object(request.GET.get('shopObjectId')):
+            # 显示创建商品页面
+            data = {
+                'current_role': 'ProductAdmin',
+                'shopObjectId': request.GET.get('shopObjectId'),
+                'storeCategory': get_StoreCategory_All(),
+                'saleCategory': get_SaleCategory_All(),
+                'productService': ProductService().get_ProductService_All(),
+                'brand': shop.get_attribute_brand(),
+                'freightModel': shop.get_attribute_freightModel(),
+            }
+            content['data'] = data
+            return render(request, 'NewCreateProduct.html', {'content': content})
     return illegal_access()
 
 
@@ -172,25 +175,32 @@ def EditProductGroup(request):
         if objectId:
             # 产生数据，输出到前端
             if productGroup.get_Object(objectId):
-                content = {
-                    'profile': {
-                        'current_role':'ProductAdmin'
-                    },
-                    'shopObjectId': request.GET.get('shopObjectId'),
-                    'storeCategory': get_StoreCategory_All(),
-                    'saleCategory': get_SaleCategory_All(),
-                    'productService': ProductService().get_ProductService_All(),
-                    'productGroup': productGroup.output_ProductGroup(),
-                    'range': range( 1, 100 ),
-                }
-                print(content['productGroup']['saleCategory'])
-                print(content['saleCategory'])
-                productList = content['productGroup']['product']
-                content['productList'] = productList
-                content['propertyOption'] = productGroup.get_attribute(attribute_propertyOption)
-                return render(request, 'NewEditProduct.html', {'content': content})
+                shopObjectId = productGroup.get_attribute_Object_Id(attribute_shop)
+                shop = Shop()
+                if shop.get_Object(shopObjectId):
+                    content = {
+                        'profile': {
+                            'current_role': 'ProductAdmin'
+                        },
+                        'productGroup': productGroup.output_ProductGroup(),
+                        'range': range(1, 100),
+                    }
+                    data = {
+                        'current_role': 'ProductAdmin',
+                        'shopObjectId': request.GET.get( 'shopObjectId' ),
+                        'storeCategory': get_StoreCategory_All(),
+                        'saleCategory': get_SaleCategory_All(),
+                        'productService': ProductService().get_ProductService_All(),
+                        'brand': shop.get_attribute_brand(),
+                        'freightModel': shop.get_attribute_freightModel(),
+                    }
+                    content['data'] = data
+                    productList = content['productGroup']['product']
+                    content['productList'] = productList
+                    content['propertyOption'] = productGroup.get_attribute(attribute_propertyOption)
+                    return render(request, 'NewEditProduct.html', {'content': content})
     content['message'] = '数据无效，请重新提交'
-    return render( request, 'result.html', {'content': content} )
+    return render(request, 'result.html', {'content': content})
 
 
 @login_required

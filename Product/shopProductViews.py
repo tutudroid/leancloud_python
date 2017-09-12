@@ -16,11 +16,11 @@ def CreateShopProductGroup(request):
     :param request: 
     :return: 
     """
+    shop = Shop()
     if request.method == 'POST':
         # 增加商品到店铺中
         # 创建商品组
         shopObjectId = request.POST.get('shopObjectId', '')
-        shop = Shop()
         if shopObjectId and shop.get_Object(shopObjectId):
             # 从前端获取数据
             productGroup1 = ShopProductGroup()
@@ -28,7 +28,7 @@ def CreateShopProductGroup(request):
             # 将数据保存到数据库
             if productGroup1.create_ProductGroup(data):
                 productGroup1.set_attribute_value(attribute_shop, shop.get_instance())
-                shop.add_attribute_relation(attribute_productGroup, productGroup1.get_instance())
+                shop.add_attribute_relation(attribute_shopProductGroup, productGroup1.get_instance())
                 productGroupObjectId = productGroup1.get_attribute_objectId()
                 return HttpResponseRedirect('/Product/ShopProductGroupDetail/?objectId='+productGroupObjectId)
     if request.method == 'GET' and request.GET.get('shopObjectId'):
@@ -40,6 +40,8 @@ def CreateShopProductGroup(request):
             'storeCategory': get_StoreCategory_All(),
             'saleCategory': get_SaleCategory_All(),
             'productService': ProductService().get_ProductService_All(),
+            'brand': shop.get_attribute_brand(),
+            'freightModel': shop.get_attribute_freightModel(),
         }
         content['data'] = data
         return render(request, 'NewCreateProduct.html', {'content': content})
@@ -54,16 +56,46 @@ def EditShopProductGroup(request):
     :param request: 
     :return: 
     """
+    content = PROFILE_INIT()
+    productGroup = ShopProductGroup()
     objectId = request.POST.get(attribute_objectId)
     if request.method == "POST" and objectId:
         # 获得productGroupObjectId
-        productGroup = ShopProductGroup()
         if productGroup.get_Object(objectId):
             data = productGroup.input_ProductGroup(request)
             productGroup.update_ProductGroup(data)
             return HttpResponseRedirect(reverse("Product:ShopProductGroupDetail")+'?objectId='+objectId)
-        return return_msg('no found productGroup')
-    return return_msg('parameter is error')
+    if request.method == 'GET':
+        objectId = request.GET.get(attribute_objectId)
+        if objectId:
+            # 产生数据，输出到前端
+            if productGroup.get_Object(objectId):
+                shopObjectId = productGroup.get_attribute_Object_Id(attribute_shop)
+                shop = Shop()
+                if shop.get_Object(shopObjectId):
+                    content = {
+                        'profile': {
+                            'current_role': 'Shop'
+                        },
+                        'productGroup': productGroup.output_ProductGroup(),
+                        'range': range(1, 100),
+                    }
+                    data = {
+                        'current_role': 'Shop',
+                        'shopObjectId': request.GET.get( 'shopObjectId' ),
+                        'storeCategory': get_StoreCategory_All(),
+                        'saleCategory': get_SaleCategory_All(),
+                        'productService': ProductService().get_ProductService_All(),
+                        'brand': shop.get_attribute_brand(),
+                        'freightModel': shop.get_attribute_freightModel(),
+                    }
+                    content['data'] = data
+                    productList = content['productGroup']['product']
+                    content['productList'] = productList
+                    content['propertyOption'] = productGroup.get_attribute(attribute_propertyOption)
+                    return render(request, 'NewEditProduct.html', {'content': content})
+    content['message'] = '数据无效，请重新提交'
+    return render(request, 'result.html', {'content': content})
 
 
 @login_required
@@ -80,6 +112,7 @@ def ShopProductGroupDetail(request):
         shopProductGroup = ShopProductGroup()
         if shopProductGroup.get_Object(objectId):
             data = shopProductGroup.output_ProductGroup()
-            return return_data(Class_Name_ShopProductGroup, data)
-        return return_msg('no found shopProductGroup')
+            content = PROFILE_INIT()
+            content['productGroup'] = data
+            return render(request, 'NewProductDetail.html', {'content': content})
     return return_msg('parameter is error')

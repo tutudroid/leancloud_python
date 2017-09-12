@@ -1036,7 +1036,7 @@ function change(photo1, filename) {
             <table>
                 <td>
                     <div style=" margin: 10px; padding: 10px;">
-                        {% for firstlevel in content.storeCategory %}
+                        {% for firstlevel in content.data.storeCategory %}
                             <label class="radio">
                                 <input type="radio" onclick="clickFirstLevel1({{ forloop.counter }})" name="_checkbox_product_name1" value="{{ firstlevel.name }}"
                                     {% if content.productGroup.storeCategory.storeCategoryFirst.objectId == firstlevel.objectId %}
@@ -1050,7 +1050,7 @@ function change(photo1, filename) {
                 </td>
                 <td>
                     <div style=" margin: 10px; padding: 10px;">
-                        {% for firstlevel in content.storeCategory %}
+                        {% for firstlevel in content.data.storeCategory %}
                             {% if content.productGroup.storeCategory.storeCategoryFirst.objectId == firstlevel.objectId %}
                                 <div  id="_secondLevel{{ forloop.counter }}" style="display: block;" name="_firstShowOne">
                                 {% else %}
@@ -1076,7 +1076,7 @@ function change(photo1, filename) {
                 </td>
                 <td>
                     <div style="margin: 10px; padding: 10px;">
-                        {% for firstlevel in content.storeCategory %}
+                        {% for firstlevel in content.data.storeCategory %}
                                 {% for secondlevel in firstlevel.storeCategorySecond %}
                                 <div>
                                     {% if content.productGroup.storeCategory.storeCategoryFirst.objectId == firstlevel.objectId and secondlevel.objectId == content.productGroup.storeCategory.storeCategorySecond.objectId %}
@@ -1117,7 +1117,7 @@ function change(photo1, filename) {
                     <table>
                     <td>
                         <div style="margin: 10px; padding: 10px; width: 200px;">
-                        {% for firstlevel in content.saleCategory %}
+                        {% for firstlevel in content.data.saleCategory %}
                             <label class="radio">
                                 <input type="radio" id="_checkbox_sale_name1{{ forloop.counter }}" onclick="clickFirstLevel2({{ forloop.counter }})" name="_checkbox_sale_name1" value="{{ firstlevel.name }}"
                                     {% if firstlevel.name == content.productGroup.saleCategory.saleCategoryFirst.name %}
@@ -1131,7 +1131,7 @@ function change(photo1, filename) {
                     </td>
                     <td>
                        <div style="margin: 10px; padding: 10px;width: 200px; ">
-                        {% for firstlevel in content.saleCategory %}
+                        {% for firstlevel in content.data.saleCategory %}
                             <div id="_secondLevel2{{ forloop.counter }}" name="_secondShow"
                                  {% if firstlevel.objectId == content.productGroup.saleCategory.saleCategoryFirst.objectId %}
                                     style="display: block;"
@@ -1891,7 +1891,7 @@ function change(photo1, filename) {
                 <h2 class="second">商品服务</h2>
                 <hr>
                 <ul>
-                    {% for foo in content.productService %}
+                    {% for foo in content.data.productService %}
                         <li>
                             <input type="checkbox" class='productService' id="productService" name="productService" value="{{ foo.objectId }}"
                                     {% for goo in content.productGroup.productService %}
@@ -1905,7 +1905,8 @@ function change(photo1, filename) {
 
                 </ul>
             </div>
-
+            {% include 'ShopBrand.html' %}
+            {% include 'ShopFreightModel.html' %}
             <div style="margin-top: 40px">
 
 

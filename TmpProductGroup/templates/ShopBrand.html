@@ -1,0 +1,18 @@
+<div style="margin-top: 40px">
+    <h2 class="second">商品品牌</h2>
+    <hr>
+    <div>
+        <ul>
+            {% for foo in content.data.brand %}
+                <li>
+                    <input type="radio" class="brand" id="brand" name="brand" value="{{ foo.objectId }}"
+                        {% if foo.objectId == content.productGroup.brand.objectId %}
+                            checked
+                        {% endif %}
+                    >{{ foo.name }}
+                </li>
+            {% endfor %}
+
+        </ul>
+    </div>
+</div>

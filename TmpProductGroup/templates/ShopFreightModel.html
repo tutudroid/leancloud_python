@@ -1,0 +1,17 @@
+<div style="margin-top: 40px">
+    <h2 class="second">运费</h2>
+    <hr>
+    <div>
+        <ul>
+        {% for foo in content.data.freightModel %}
+        <li>
+            <input type="radio" class="freightModel" id="freightModel" name="freightModel" value="{{ foo.objectId }}"
+                   {% if foo.objectId == content.productGroup.freightModel.objectId %}
+                        checked
+                   {% endif %}
+            >{{ foo.name }}
+        </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>

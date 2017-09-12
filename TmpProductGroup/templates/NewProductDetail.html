@@ -44,6 +44,12 @@
             min-height: 1px;
             margin-left: 20px;
         }
+        .span6{
+            width: 420px;
+            float: left;
+            min-height: 1px;
+            margin-left: 20px;
+        }
     </style>
     <div id="">
         <h1>发布商品</h1>
@@ -293,7 +299,16 @@
 
                 </ul>
             </div>
-
+            <div>
+                <h2 class="second">品牌</h2>
+                <hr>
+                <p>{{ content.productGroup.brand.name }}</p>
+            </div>
+            <div>
+                <h2 class="second">运费</h2>
+                <hr>
+                <p>{{ content.productGroup.freightModel.name }}</p>
+            </div>
             <div style="margin-top: 40px">
 
 
@@ -306,11 +321,12 @@
                             <div class="span2">
                                 {{ foo.SpecName }}
                             </div>
+                        </td>
+                            <td class="row">
                             <div class="span6">
                                 {{ foo.SpecContent }}
                             </div>
                         </td>
-
                         </tr>
                     {% endfor %}
                 </table>

@@ -242,7 +242,7 @@ function change(photo1, filename) {
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
     <script language="javascript">
        function check(){
-            if($('#_productService').is(':checked')){
+            if($('.productService').is(':checked')){
             } else
             {
                 alert("请选择商品服务");
@@ -1370,13 +1370,14 @@ function change(photo1, filename) {
                 <ul>
                     {% for foo in content.data.productService %}
                         <li>
-                            <input type="checkbox" id="_productService" name="productService" value="{{ foo.objectId }}" checked>{{ foo.name }}
+                            <input type="checkbox" class="productService" id="productService" name="productService" value="{{ foo.objectId }}" checked>{{ foo.name }}
                         </li>
                     {% endfor %}
 
                 </ul>
             </div>
-
+            {% include 'ShopBrand.html' %}
+            {% include 'ShopFreightModel.html' %}
             <div style="margin-top: 40px">
 
 

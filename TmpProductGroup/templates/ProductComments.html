@@ -16,19 +16,37 @@
     font-size: 15px;
     font-family: STSong;
 }
-</style>
 
+</style>
+    <style>
+        .row {
+            margin-left: -20px;
+        }
+        .span2{
+            width: 140px;
+            float: left;
+            min-height: 1px;
+            margin-left: 20px;
+        }
+        .span4{
+            width: 400px;
+            float: left;
+            min-height: 1px;
+            margin-left: 20px;
+        }
+    </style>
 {% for foo in content.productGroup.comment %}
     <div class="row">
         <div class="span2">
             <img src="{{ foo.userAvatar }}" width="100px" height="100px">
         </div>
-        <div class="span8">
-            <div class="FirstComment">
-                <label class="label-left-comment">{{ foo.userNickName }}</label>
-                <label class="label-right-comment">{{ foo.createdAt }}</label>
-                <div style="clear: both;"></div>
-            </div>
+        <div class="span4">
+            <label class="label-left-comment">{{ foo.userNickName }}</label>
+            <label class="label-right-comment">{{ foo.createdAt }}</label>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+        <div class="row">
             <div class=" SecondComment">
                 {{ foo.content }}
             </div>
@@ -38,11 +56,10 @@
                     <img src="{{ image.imageFile }}" width="100px" height="100px">
                 {% endfor %}
             </div>
-            <div>
+            <div class=" FirstComment">
                 {{ foo.productStyle }}
             </div>
         </div>
-    </div>
 
     <hr>
 {% endfor %}

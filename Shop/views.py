@@ -226,3 +226,13 @@ def EditFreight(request):
         shop.get_Object(shopObjectId)
         shop.add_attribute_relation(attribute_freightModel, freight.get_instance())
     return return_msg(freight.output_FreightModel())
+
+
+@require_http_methods(['GET'])
+def AllActivities(request):
+    return return_msg('parameter is error')
+
+
+@require_http_methods(['POST'])
+def EditActivities(request):
+    return return_msg()

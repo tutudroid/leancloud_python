@@ -20,6 +20,10 @@ urlpatterns = [
     url(r'^AllFreight/$', views.AllFreight, name='AllFreight'),
     url(r'^EditFreight/$', views.EditFreight, name='EditFreight'),
 
+    # 所有活动
+    url(r'^AllActivities/$', views.AllActivities, name='AllActivities'),
+    url(r'^EditActivities/$', views.EditActivities, name='EditActivities'),
+
     url(r'^AllForbiddenShop/$', views.AllForbiddenShop, name='AllForbiddenShop'),
 
     url(r'^CreateSettleIn/$', settleInViews.CreateSettleIn, name='CreateSettleIn'),

@@ -1,14 +1,245 @@
-{% extends 'ProductAdminPage.html' %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+    <title>萌生活</title>
+      <meta name="referrer" content="origin-when-crossorigin">
+  </head>
+
+  <body>
+    <style>
+        .row {
+            margin-left: -20px;
+        }
+        .span2{
+            width: 140px;
+            float: left;
+            min-height: 1px;
+            margin-left: 20px;
+        }
+    </style>
+    <noscript>
+    <p>本页面需要浏览器支持(启用)JavaScript。
+    </noscript>
+    <div class="container">
 
 {% load static %}
 {% block content %}
-    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vue/node_modules/jquery/dist/jquery.js' %}"></script>
+    <script type="text/javascript">
+    /**
+ * Created by kang on 2017/8/1.
+ */
+
+
+function createStyleTag(num){
+    var parent=document.getElementById(id_createTag);
+    var newDiv = document.createElement('table');
+    newDiv.innerHTML = '<tr>\
+                            \<td><input type="text" class="input-medium" name="first_style" id="first_style_'+num+'" placeholder="颜色（最多四个字）">\
+                            </td><td></td><td></td>\
+                            <td><input type="button" name="delete_style_tag"></td>\
+                            </tr>\
+                            <tr>\
+                                <td>\
+                                    <input type="text" class="input-medium" name="second_style_'+num+'" id="" class="" >\
+                                </td>\
+                                <td>\
+                                    <input type="text" class="input-medium" name="second_style_'+num+'" id="" class="">\
+                                </td>\
+                                <td>\
+                                    <input type="text" class="input-medium" name="second_style_'+num+'" id="" class="">\
+                                </td>\
+                                <td>\
+                                    <input type="text" class="input-medium" name="second_style_'+num+'" id="" class="">\
+                                </td>\
+                            </tr>\
+                            <tr>\
+                                <td>\
+                                    <input type="text" class="input-medium" name="second_style_'+num+'" id="" class="">\
+                                </td>\
+                                <td>\
+                                    <input type="text" class="input-medium" name="second_style_'+num+'" id="" class="">\
+                                </td>\
+                                <td>\
+                                    <input type="text" class="input-medium" name="second_style_'+num+'" id="" class="">\
+                                </td>\
+                                <td>\
+                                    <input type="text" class="input-medium" name="second_style_'+num+'" id="" class="">\
+                                </td>\
+                            </tr>';
+    if(parent !== null )
+        parent.appendChild(newDiv);
+}
+
+
+
+//删除某个标签
+function clickButtonDeleteTag(parent, name) {
+    var parentElement = document.getElementById(parent);
+    var deleteElement = document.getElementById(name);
+    if(deleteElement !== null)
+        parentElement.removeChild(deleteElement);
+    else
+        alert('delete对象不存在');
+}
+
+
+function loadImage(num){
+    if (change('_image_'+num, '_imageFile_'+num))
+    {
+        var parentId = '_first_'+num;
+        var parent=document.getElementById(parentId);
+        var newDiv = document.createElement('input');
+        newDiv.setAttribute('type', 'button');
+        newDiv.setAttribute('id', '_delete_'+num);
+        newDiv.setAttribute('value', '删除');
+        newDiv.setAttribute('class', 'btn delete_image');
+        newDiv.setAttribute('style', 'width: 140px');
+        //newDiv.onclick = function(e){
+            /*
+            *
+            * var parent = document.getElementById('_image_'+num);
+            while(parent.hasChildNodes()) //当div下还存在子节点时 循环继续
+            {
+                parent.removeChild(parent.firstChild);
+            }
+            clickButtonDeleteTag('_first_'+num, '_delete_'+num);
+            if (document.getElementById('_idHidden_'+num))
+                document.getElementById('_idHidden_'+num).style.display = 'block';
+            * */
+
+        //};
+        if(parent !== null )
+            parent.appendChild(newDiv);
+        document.getElementById('_idHidden_'+num).style.display = 'none';
+    }
+}
+
+
+function deleteTag(parent, name) {
+    var parentElement = document.getElementById(parent);
+    var deleteElement = document.getElementById(name);
+    if(deleteElement !== null)
+        parentElement.removeChild(deleteElement);
+    else
+        alert('delete对象不存在');
+}
+
+
+//选择商品分类
+function clickFirstLevel1(number) {
+    var list = document.getElementsByName('_firstShowOne');
+    /*控制分类标签的显示*/
+    number = number - 1;
+    for(var i=0; i<list.length; i++)
+        if (i === number)
+        {
+            list[i].style.display = 'block';
+            firstElement = list[i].firstElementChild.firstElementChild;
+            firstElement.checked = true;
+            clickSecondLevel1(number+1,1);
+        }
+        else
+            list[i].style.display = 'none';
+}
+
+function clickSecondLevel1(pnumber,number) {
+    var list = document.getElementsByName('_firstShowTwo');
+    for(var i=0; i<list.length; i++)
+        list[i].style.display = 'none';
+    var show = document.getElementById('_firstShowTwo'+pnumber+number);
+    show.style.display = 'block';
+    firstElement = show.firstElementChild.firstElementChild;
+    firstElement.checked = true;
+    //checkboxChooseOne('_checkbox_product_name2', '_checkbox_product_name2'+pnumber+number);
+}
+
+//添加销售类别
+function clickFirstLevel2(number) {
+    var list = document.getElementsByName('_secondShow');
+    /*控制分类标签的显示*/
+    number = number - 1;
+    for(var i=0; i<list.length; i++)
+        if (i === number)
+        {
+            list[i].style.display = 'block';
+            firstElement = list[i].firstElementChild.firstElementChild;
+            firstElement.checked = true;
+        }
+        else
+            list[i].style.display = 'none';
+
+}
+
+
+//上传图片
+function change(photo1, filename) {
+    var pic = document.getElementById(photo1);
+    var fileObj = document.getElementById(filename);
+
+    //判断多个输入文件的后缀是否是文件
+
+    var i;
+    for(i=0;i<fileObj.files.length;i++)
+    {
+        var ext = fileObj.files[i].type;
+         // gif在IE浏览器暂时无法显示
+         if(ext!=='image/jpeg'){
+             alert("图片的格式必须为jpg或者jpeg格式！");
+             return false;
+         }
+    }
+    for(var i=0; i<fileObj.files.length; i++){
+        var image = document.createElement('img');
+        var photo = photo1+'_child_'+i;
+        image.setAttribute('id', photo);
+        image.setAttribute('class','div_inline_image');
+        pic.appendChild(image);
+        var file = fileObj.files[i];
+         var isIE = navigator.userAgent.match(/MSIE/)!= null,
+             isIE6 = navigator.userAgent.match(/MSIE 6.0/)!= null;
+         if(isIE) {
+            // IE6浏览器设置img的src为本地路径可以直接显示图片
+              if (isIE6) {
+                     file.select();
+                    var reallocalPath = document.selection.createRange().text;
+                    pic.src = reallocalPath;
+                 }else {
+                    var windowURL = window.URL || window.webkitURL;
+                    var dataURL;
+                    if(file) {
+                         dataURL = windowURL.createObjectURL(file);
+                         jQuery("#"+photo).attr('src',dataURL);
+                    }
+                 }
+         }else {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e){
+                var pic = document.getElementById(photo);
+                pic.height= '130';
+                pic.width= '150';
+                pic.src=this.result;
+            }
+         }
+    }
+    var clear = document.createElement('div');
+    clear.setAttribute('style', 'clear:both;');
+    pic.appendChild(clear);
+    return true;
+}
+
+    </script>
     <script language="javascript">
 
     //确认检查
     function check(){
 
-            if($('#_productService').is(':checked')){
+            if($('.productService').is(':checked')){
             } else
             {
                 alert("请选择商品服务");
@@ -198,16 +429,6 @@
    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-    <script src="{% static 'js/distpicker.data.js' %}"></script>
-        <script src="{% static 'js/distpicker.js' %}"></script>
-        <script>
-            $("#distpicker").distpicker({
-                    province:'{{ content.productGroup.dispatchPlace.province }}',
-                    city:'{{ content.productGroup.dispatchPlace.city }}',
-                    district: '{{ content.productGroup.dispatchPlace.district }}'
-                });
-        </script>
-    <script type="text/javascript" src="{% static 'app/js_createNewProduct.js' %}"></script>
     <script>
 
         function createStyleTag(num){
@@ -797,12 +1018,11 @@
         <form enctype="multipart/form-data" method="POST" action="{% url 'Product:EditProductGroup' %}?timestamp={{ content.time }}" onsubmit="return check();" >
         {% endif %}
         {% if content.profile.current_role == 'Shop' %}
-        <form enctype="multipart/form-data" method="POST" action="{% url 'TmpProductGroup:EditProductGroup' %}?timestamp={{ content.time }}" onsubmit="return check();">
+        <form enctype="multipart/form-data" method="POST" action="{% url 'Product:EditShopProductGroup' %}?timestamp={{ content.time }}" onsubmit="return check();">
         {% endif %}
 
             {% csrf_token %}
-            <input type="hidden" name="productGroupObjectId" value="{{ content.productGroup.objectId }}">
-            <input type="hidden" name="_shopObjectId" value="{{ content.shop.shopObjectId }}">
+            <input type="hidden" name="objectId" value="{{ content.productGroup.objectId }}">
             <input type="hidden" id="productInfor" value="{{ content.productList }}">
             <input type="hidden" name="propertyOption" id="propertyOption" value="{{ content.propertyOption }}">
             <input type="hidden" id="product" name="product" >
@@ -816,10 +1036,10 @@
             <table>
                 <td>
                     <div style=" margin: 10px; padding: 10px;">
-                        {% for firstlevel in content.data.storeCategory %}
+                        {% for firstlevel in content.storeCategory %}
                             <label class="radio">
                                 <input type="radio" onclick="clickFirstLevel1({{ forloop.counter }})" name="_checkbox_product_name1" value="{{ firstlevel.name }}"
-                                    {% if content.productGroup.storeCategory.storeCategoryFirst == firstlevel.name %}
+                                    {% if content.productGroup.storeCategory.storeCategoryFirst.objectId == firstlevel.objectId %}
                                     checked
                                     {% endif %}
                                     >
@@ -830,18 +1050,18 @@
                 </td>
                 <td>
                     <div style=" margin: 10px; padding: 10px;">
-                        {% for firstlevel in content.data.storeCategory %}
-                            {% if content.productGroup.storeCategory.storeCategoryFirst == firstlevel.name %}
+                        {% for firstlevel in content.storeCategory %}
+                            {% if content.productGroup.storeCategory.storeCategoryFirst.objectId == firstlevel.objectId %}
                                 <div  id="_secondLevel{{ forloop.counter }}" style="display: block;" name="_firstShowOne">
                                 {% else %}
                                 <div  id="_secondLevel{{ forloop.counter }}" style="display: none;" name="_firstShowOne" >
                             {% endif %}
 
-                                {% for secondlevel in firstlevel.value %}
+                                {% for secondlevel in firstlevel.storeCategorySecond %}
                                     <label class="radio">
                                         <input type="radio" id="_checkbox_product_name2{{ forloop.parentloop.counter }}{{ forloop.counter }}"
                                                        onclick="clickSecondLevel1({{ forloop.parentloop.counter }},{{ forloop.counter }})" name="_checkbox_product_name2" value="{{ secondlevel.name }}"
-                                        {% if content.productGroup.storeCategory.storeCategoryFirst == firstlevel.name and secondlevel.name == content.productGroup.storeCategory.storeCategorySecond %} checked{% endif %}
+                                        {% if content.productGroup.storeCategory.storeCategoryFirst.objectId == firstlevel.objectId and secondlevel.objectId == content.productGroup.storeCategory.storeCategorySecond.objectId %} checked{% endif %}
                                             >
                                         {{ secondlevel.name }}
                                     </label>
@@ -856,20 +1076,20 @@
                 </td>
                 <td>
                     <div style="margin: 10px; padding: 10px;">
-                        {% for firstlevel in content.data.storeCategory %}
-                                {% for secondlevel in firstlevel.value %}
+                        {% for firstlevel in content.storeCategory %}
+                                {% for secondlevel in firstlevel.storeCategorySecond %}
                                 <div>
-                                    {% if content.productGroup.storeCategory.storeCategoryFirst == firstlevel.name and secondlevel.name == content.productGroup.storeCategory.storeCategorySecond %}
+                                    {% if content.productGroup.storeCategory.storeCategoryFirst.objectId == firstlevel.objectId and secondlevel.objectId == content.productGroup.storeCategory.storeCategorySecond.objectId %}
                                         <div id="_firstShowTwo{{ forloop.parentloop.counter }}{{ forloop.counter }}" style="display: block;" name="_firstShowTwo" >
                                         {% else %}
                                         <div id="_firstShowTwo{{ forloop.parentloop.counter }}{{ forloop.counter }}" style="display: none;" name="_firstShowTwo" >
                                     {% endif %}
 
-                                    {% for thirdlevel in secondlevel.value %}
+                                    {% for thirdlevel in secondlevel.storeCategoryThird %}
                                     <label class="radio">
                                          <input type="radio" name="storeCategory" id="_checkbox_product_name3{{ forloop.parentloop.parentloop.counter }}{{ forloop.parentloop.counter }}{{ forloop.counter }}"
                                                value="{{ thirdlevel.objectId }}"
-                                            {% if content.productGroup.storeCategory.storeCategoryFirst == firstlevel.name and secondlevel.name == content.productGroup.storeCategory.storeCategorySecond and thirdlevel.name == content.productGroup.storeCategory.storeCategoryThird %}
+                                            {% if content.productGroup.storeCategory.storeCategoryFirst.objectId == firstlevel.objectId and secondlevel.objectId == content.productGroup.storeCategory.storeCategorySecond.objectId and thirdlevel.objectId == content.productGroup.storeCategory.storeCategoryThird.objectId %}
                                             checked
                                             {% endif %}
                                             >
@@ -897,10 +1117,10 @@
                     <table>
                     <td>
                         <div style="margin: 10px; padding: 10px; width: 200px;">
-                        {% for firstlevel in content.data.saleCategory %}
+                        {% for firstlevel in content.saleCategory %}
                             <label class="radio">
                                 <input type="radio" id="_checkbox_sale_name1{{ forloop.counter }}" onclick="clickFirstLevel2({{ forloop.counter }})" name="_checkbox_sale_name1" value="{{ firstlevel.name }}"
-                                    {% if firstlevel.name == content.productGroup.saleCategory.saleCategoryFirst %}
+                                    {% if firstlevel.name == content.productGroup.saleCategory.saleCategoryFirst.name %}
                                         checked
                                     {% endif %}
                                 >
@@ -911,20 +1131,20 @@
                     </td>
                     <td>
                        <div style="margin: 10px; padding: 10px;width: 200px; ">
-                        {% for firstlevel in content.data.saleCategory %}
+                        {% for firstlevel in content.saleCategory %}
                             <div id="_secondLevel2{{ forloop.counter }}" name="_secondShow"
-                                 {% if firstlevel.name == content.productGroup.saleCategory.saleCategoryFirst %}
+                                 {% if firstlevel.objectId == content.productGroup.saleCategory.saleCategoryFirst.objectId %}
                                     style="display: block;"
                                 {% else %}
                                     style="display: none;"
                                 {% endif %}
                             >
 
-                            {% for secondlevel in firstlevel.value %}
+                            {% for secondlevel in firstlevel.saleCategorySecond %}
                                 <label class="radio">
                                 <input type="radio" name="saleCategory" id="_checkbox_sale_name2{{ forloop.parentloop.counter }}{{ forloop.counter }}"
                                           value="{{ secondlevel.objectId }}"
-                                    {% if secondlevel.name == content.productGroup.saleCategory.saleCategorySecond and firstlevel.name == content.productGroup.saleCategory.saleCategoryFirst %}
+                                    {% if secondlevel.objectId == content.productGroup.saleCategory.saleCategorySecond.objectId and firstlevel.objectId == content.productGroup.saleCategory.saleCategoryFirst.objectId %}
                                         checked
                                     {% endif %}
                                     >
@@ -955,6 +1175,9 @@
                 </div>
             </div>
             <p></p>
+    <!--
+        <script src="{% static 'js/distpicker.data.js' %}"></script>
+        <script src="{% static 'js/distpicker.js' %}"></script>
             <div style="margin-top: 40px">
                 <div style="margin-top: 40px">
                 <h2 class="second">商品发货地</h2>
@@ -983,7 +1206,7 @@
                         });
                     </script>
             </div>
-
+            -->
             <p></p>
 
             <div style="margin-top: 40px">
@@ -997,14 +1220,14 @@
                                 <input id="_imageFile_1" type="file" name="mainImage"  onchange="loadImage(1);" />
                             </div>
                             <div id="_image_1">
-                                <img height="130" width="150" src="{{ content.productGroup.mainImage.url }}">
+                                <img height="130" width="150" src="{{ content.productGroup.mainImage }}">
                                 <input type="hidden" name="mainImage_old" value="{{ content.productGroup.mainImage.objectId }}">
                             </div>
                             <input type="button" id="_delete_1" value="删除" class="btn delete_image" style="width:140px">
                         </div>
                     </div>
                 {% for foo in content.productGroup.imageList %}
-                    {% if foo.image.url != content.productGroup.mainImage.url %}
+                    {% if foo.imageFile != content.productGroup.mainImage %}
                      <div style="margin: 20px;" class="span2">
                         <div id="_first_{{ forloop.counter |add:1 }}" class="div_inline " >
                             <div class="btn btn-primary btn-upload" id="_idHidden_{{ forloop.counter|add:1 }}" style="display: none;">
@@ -1012,7 +1235,7 @@
                                 <input id="_imageFile_{{ forloop.counter|add:1 }}" type="file" name="imageList"  onchange="loadImage({{ forloop.counter|add:1 }});" />
                             </div>
                             <div id="_image_{{ forloop.counter|add:1 }}">
-                                <img height="130" width="150" src="{{ foo.image.url }}">
+                                <img height="130" width="150" src="{{ foo.imageFile }}">
                                 <input type="hidden" name="imageList_old" value="{{ foo.objectId }}">
                             </div>
                             <input type="button" id="_delete_{{ forloop.counter|add:1 }}" value="删除" class="btn delete_image" style="width:140px">
@@ -1668,9 +1891,9 @@
                 <h2 class="second">商品服务</h2>
                 <hr>
                 <ul>
-                    {% for foo in content.data.productService %}
+                    {% for foo in content.productService %}
                         <li>
-                            <input type="checkbox" id="_productService" name="productService" value="{{ foo.objectId }}"
+                            <input type="checkbox" class='productService' id="productService" name="productService" value="{{ foo.objectId }}"
                                     {% for goo in content.productGroup.productService %}
                                         {% if goo.objectId == foo.objectId %}
                                             checked
@@ -1801,13 +2024,8 @@
 
     </div>
     <hr>
-    <div>
-        {% if content.profile.current_role == 'ProductAdmin' %}
-            <a onclick="" href="{% url 'Shop:AllShop' %}?objectId={{ content.data.shopObjectId  }}&&timestamp={{ content.time }}">返回店铺</a>
-        {% endif %}
-        {% if content.profile.current_role == 'Shop' %}
-            <a onclick="" href="{% url 'Shop:AllShop' %}?objectId={{ content.data.shopObjectId  }}&&timestamp={{ content.time }}">返回店铺</a>
-        {% endif %}
+{% endblock %}
 
     </div>
-{% endblock %}
+  </body>
+</html>

@@ -22,7 +22,9 @@ def ProductGroupDetail(request):
         productGroup = ProductGroup()
         if productGroup.get_Object(objectId):
             productGroupData = productGroup.output_ProductGroup()
-            return return_data(Class_Name_ProductGroup, productGroupData)
+            content = PROFILE_INIT()
+            content['productGroup'] = productGroupData
+            return render( request, 'NewProductDetail.html', {'content': content} )
     return return_msg('parameter is error')
 
 
@@ -129,18 +131,66 @@ def CreateProductGroup(request):
                 if productGroup1.create_ProductGroup(data):
                     if request.POST.get('shelf_off'):
                         ProductGroup.set_attribute_state(productGroup1, STATE_SHELF_OFF)
+                    productGroup1.set_attribute_value(attribute_shop, shop.get_instance())
+                    shop.add_attribute_relation(attribute_productGroup, productGroup1.get_instance())
                     productGroupObjectId = ProductGroup.get_attribute_objectId(productGroup1)
                     return HttpResponseRedirect('/Product/ProductGroupDetail/?objectId='+productGroupObjectId)
-                return return_msg('msg is error')
-    if request.method == 'GET':
+    if request.method == 'GET' and request.GET.get('shopObjectId'):
+        content = PROFILE_INIT()
         # 显示创建商品页面
         data = {
-            Class_Name_StoreCategory: get_StoreCategory_All(),
-            Class_Name_SaleCategory: get_SaleCategory_All(),
-            Class_Name_ProductService: ProductService().get_ProductService_All(),
+            'current_role': 'ProductAdmin',
+            'shopObjectId': request.GET.get('shopObjectId'),
+            'storeCategory': get_StoreCategory_All(),
+            'saleCategory': get_SaleCategory_All(),
+            'productService': ProductService().get_ProductService_All(),
         }
-        return return_data(Class_Name_ProductGroup, data)
+        content['data'] = data
+        return render(request, 'NewCreateProduct.html', {'content': content})
+    return illegal_access()
 
+
+@login_required
+@permissions([ROLE_PRODUCT])
+def EditProductGroup(request):
+    """
+    编辑商品组
+    :param request: 
+    :return: 
+    """
+    content = PROFILE_INIT()
+    productGroup = ProductGroup()
+    objectId = request.POST.get(attribute_objectId)
+    if request.method == "POST" and objectId:
+        # 获得productGroupObjectId
+        if productGroup.get_Object(objectId):
+            data = productGroup.input_ProductGroup(request)
+            productGroup.update_ProductGroup(data)
+            return HttpResponseRedirect(reverse("Product:ProductGroupDetail")+'?objectId='+objectId)
+    if request.method == 'GET':
+        objectId = request.GET.get('objectId')
+        if objectId:
+            # 产生数据，输出到前端
+            if productGroup.get_Object(objectId):
+                content = {
+                    'profile': {
+                        'current_role':'ProductAdmin'
+                    },
+                    'shopObjectId': request.GET.get('shopObjectId'),
+                    'storeCategory': get_StoreCategory_All(),
+                    'saleCategory': get_SaleCategory_All(),
+                    'productService': ProductService().get_ProductService_All(),
+                    'productGroup': productGroup.output_ProductGroup(),
+                    'range': range( 1, 100 ),
+                }
+                print(content['productGroup']['saleCategory'])
+                print(content['saleCategory'])
+                productList = content['productGroup']['product']
+                content['productList'] = productList
+                content['propertyOption'] = productGroup.get_attribute(attribute_propertyOption)
+                return render(request, 'NewEditProduct.html', {'content': content})
+    content['message'] = '数据无效，请重新提交'
+    return render( request, 'result.html', {'content': content} )
 
 
 @login_required
@@ -173,26 +223,6 @@ def DisposeProductGroup(request):
                         sale.remove_attribute_relation(attribute_productGroup, productGroup1.get_instance())
                 productGroup1.delete_ProductGroup()
                 return return_msg('success')
-        return return_msg('no found productGroup')
-    return return_msg('parameter is error')
-
-
-@login_required
-@permissions([ROLE_PRODUCT])
-def EditProductGroup(request):
-    """
-    编辑商品组
-    :param request: 
-    :return: 
-    """
-    objectId = request.POST.get(attribute_objectId)
-    if request.method == "POST" and objectId:
-        # 获得productGroupObjectId
-        productGroup = ProductGroup()
-        if productGroup.get_Object(objectId):
-            data = productGroup.input_ProductGroup(request)
-            productGroup.update_ProductGroup(data)
-            return HttpResponseRedirect(reverse("Product:ProductGroupDetail")+'?objectId='+objectId)
         return return_msg('no found productGroup')
     return return_msg('parameter is error')
 

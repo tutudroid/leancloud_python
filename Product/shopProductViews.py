@@ -22,25 +22,28 @@ def CreateShopProductGroup(request):
         shopObjectId = request.POST.get('shopObjectId', '')
         shop = Shop()
         if shopObjectId and shop.get_Object(shopObjectId):
-            if request.POST.get('shelf_on') or request.POST.get('shelf_off'):
-                # 从前端获取数据
-                productGroup1 = ShopProductGroup()
-                data = productGroup1.input_ProductGroup(request)
-                # 将数据保存到数据库
-                if productGroup1.create_ProductGroup(data):
-                    if request.POST.get('shelf_off'):
-                        productGroup1.set_attribute_state(STATE_SHELF_OFF)
-                    productGroupObjectId = productGroup1.get_attribute_objectId()
-                    return HttpResponseRedirect('/Product/ShopProductGroupDetail/?objectId='+productGroupObjectId)
-                return return_msg('msg is error')
-    if request.method == 'GET':
+            # 从前端获取数据
+            productGroup1 = ShopProductGroup()
+            data = productGroup1.input_ProductGroup(request)
+            # 将数据保存到数据库
+            if productGroup1.create_ProductGroup(data):
+                productGroup1.set_attribute_value(attribute_shop, shop.get_instance())
+                shop.add_attribute_relation(attribute_productGroup, productGroup1.get_instance())
+                productGroupObjectId = productGroup1.get_attribute_objectId()
+                return HttpResponseRedirect('/Product/ShopProductGroupDetail/?objectId='+productGroupObjectId)
+    if request.method == 'GET' and request.GET.get('shopObjectId'):
+        content = PROFILE_INIT()
         # 显示创建商品页面
         data = {
-            Class_Name_StoreCategory: get_StoreCategory_All(),
-            Class_Name_SaleCategory: get_SaleCategory_All(),
-            Class_Name_ProductService: ProductService().get_ProductService_All(),
+            'current_role': 'Shop',
+            'shopObjectId': request.GET.get('shopObjectId'),
+            'storeCategory': get_StoreCategory_All(),
+            'saleCategory': get_SaleCategory_All(),
+            'productService': ProductService().get_ProductService_All(),
         }
-        return return_data(Class_Name_ProductGroup, data)
+        content['data'] = data
+        return render(request, 'NewCreateProduct.html', {'content': content})
+    return illegal_access()
 
 
 @login_required

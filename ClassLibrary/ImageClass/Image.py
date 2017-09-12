@@ -31,7 +31,7 @@ class ImageBase(Object):
     def save_ImageFile(self, data):
         if data:
             self.instance = self.instance
-            return Base.save_image_data(data)
+            return Base.save_image(data)
 
     def create_Image(self, data):
         if data:

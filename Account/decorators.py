@@ -145,8 +145,22 @@ def permission1(arg):
         return __permission
     return _permission
 
-
 def not_permission(arg):
+    """
+    限制该角色的用户登陆
+    :param arg: 
+    :return: 
+    """
+    def _permission(func):
+        @wraps(func)
+        def __permission(*args, **kwargs):
+            return func(*args, **kwargs)
+        return __permission
+
+    return _permission
+
+
+def not_permission1(arg):
     """
     限制该角色的用户登陆
     :param arg: 

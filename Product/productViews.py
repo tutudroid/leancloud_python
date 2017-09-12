@@ -247,7 +247,18 @@ def ShowComments(request):
         productGroup.get_Object(objectId)
         comment = productGroup.get_attribute_comment(attribute_state, STATE_OK, int(page))
         commentCount = productGroup.get_attribute_comment_count(attribute_state, STATE_OK)
-        return return_paginator_page(Class_Name_ProductComment, comment, page, commentCount)
+
+        content = {
+            'productGroup': {
+                'objectId': objectId,
+                'comment': comment,
+            },
+            'paginator': {
+                'page': page,
+                'page_num': int(commentCount/10)+1,
+            }
+        }
+        return render(request, 'ProductComments.html', {'content': content})
     return return_msg('parameter is error')
 
 

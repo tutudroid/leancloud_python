@@ -1,0 +1,96 @@
+
+<style>
+.label-left-comment{
+    display: block;
+    float: left;
+}
+.label-right-comment{
+    display: block;
+    float: right;
+}
+.FirstComment{
+    font-size: 25px;
+    font-family: STHeiti;
+}
+.SecondComment{
+    font-size: 15px;
+    font-family: STSong;
+}
+</style>
+
+{% for foo in content.productGroup.comment %}
+    <div class="row">
+        <div class="span2">
+            <img src="{{ foo.userAvatar }}" width="100px" height="100px">
+        </div>
+        <div class="span8">
+            <div class="FirstComment">
+                <label class="label-left-comment">{{ foo.userNickName }}</label>
+                <label class="label-right-comment">{{ foo.createdAt }}</label>
+                <div style="clear: both;"></div>
+            </div>
+            <div class=" SecondComment">
+                {{ foo.content }}
+            </div>
+
+            <div>
+                {% for image in foo.imageList %}
+                    <img src="{{ image.imageFile }}" width="100px" height="100px">
+                {% endfor %}
+            </div>
+            <div>
+                {{ foo.productStyle }}
+            </div>
+        </div>
+    </div>
+
+    <hr>
+{% endfor %}
+
+<script type="text/javascript">
+    $(function () {
+        $('.paginator_a').click(function () {
+            var page = 1;
+            if($(this).is('#paginator_previous')){
+                page={{ content.paginator.page|add:-1 }};
+            }else if($(this).is('#paginator_next')){
+                page={{ content.paginator.page|add:1 }};
+            }else if($(this).is('#paginator_last')){
+                page={{ content.paginator.page_num }};
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: '/Product/ShowComments/',
+                data: {
+                    'page_num': {{ content.paginator.page_num }},
+                    'objectId': '{{ content.productGroup.objectId }}',
+                    'page': page
+                },
+                success: function(data) {
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                },
+                complete:function(XMLHttpRequest){
+                    $("#comments").html(XMLHttpRequest.responseText);
+                }
+            });
+        });
+    });
+</script>
+
+
+ <div class="pagination" >
+    <span class="step-links">
+        <a class="paginator_a" id="paginator_first" href="javascript:void(0)" > 1</a>
+    {% if content.paginator.page > 1 %}
+        <a class="paginator_a" id="paginator_previous" href="javascript:void(0)" > {{ content.paginator.page| add:-1 }}</a>
+    {% endif %}
+        ...{{ content.paginator.page }}...
+
+    {% if content.paginator.page < content.paginator.page_num %}
+        <a class="paginator_a" id="paginator_next" href="javascript:void(0)" >{{ content.paginator.page|add:1 }}</a>
+    {% endif %}
+    <a class="paginator_a" id="paginator_last" href="javascript:void(0)"  >{{ content.paginator.page_num }}</a>
+</span>
+</div>

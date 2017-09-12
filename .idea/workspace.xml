@@ -5,22 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0499edbb-0d6b-477c-a822-a91397b8a747" name="Default" comment="v">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/TmpProductGroup/templates/ShopBrand.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/TmpProductGroup/templates/ShopFreightModel.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TmpProductGroup/templates/old_AddProduct.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TmpProductGroup/templates/old_CreateProductGroup.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TmpProductGroup/templates/old_EditProductGroup.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TmpProductGroup/templates/old_EditProductShop.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TmpProductGroup/templates/old_ModifyPhotoGroup.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TmpProductGroup/templates/old_ProductDetail.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/TmpProductGroup/templates/old_ProductGroupDetail.html" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/TmpProductGroup/templates/ProductComments.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/ProductClass/ProductGroupBase.py" afterPath="$PROJECT_DIR$/ClassLibrary/ProductClass/ProductGroupBase.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Product/productViews.py" afterPath="$PROJECT_DIR$/Product/productViews.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Product/shopProductViews.py" afterPath="$PROJECT_DIR$/Product/shopProductViews.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TmpProductGroup/productViews.py" afterPath="$PROJECT_DIR$/TmpProductGroup/productViews.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TmpProductGroup/templates/NewCreateProduct.html" afterPath="$PROJECT_DIR$/TmpProductGroup/templates/NewCreateProduct.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TmpProductGroup/templates/NewEditProduct.html" afterPath="$PROJECT_DIR$/TmpProductGroup/templates/NewEditProduct.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Product/商品接口.md" afterPath="$PROJECT_DIR$/Product/商品接口.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TmpProductGroup/templates/NewProductDetail.html" afterPath="$PROJECT_DIR$/TmpProductGroup/templates/NewProductDetail.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -61,28 +49,47 @@
       <file leaf-file-name="productViews.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Product/productViews.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1307">
-              <caret line="87" column="43" lean-forward="false" selection-start-line="87" selection-start-column="28" selection-end-line="87" selection-end-column="43" />
+            <state relative-caret-position="1078">
+              <caret line="257" column="48" lean-forward="false" selection-start-line="257" selection-start-column="48" selection-end-line="257" selection-end-column="48" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="shopProductViews.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Product/shopProductViews.py">
+      <file leaf-file-name="ProductGroupBase.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ClassLibrary/ProductClass/ProductGroupBase.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="433">
-              <caret line="65" column="33" lean-forward="true" selection-start-line="65" selection-start-column="33" selection-end-line="65" selection-end-column="33" />
+            <state relative-caret-position="589">
+              <caret line="227" column="58" lean-forward="false" selection-start-line="227" selection-start-column="58" selection-end-line="227" selection-end-column="58" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="categoryViews.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Product/categoryViews.py">
+      <file leaf-file-name="NewEditProduct.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/NewEditProduct.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1312">
-              <caret line="257" column="42" lean-forward="false" selection-start-line="257" selection-start-column="42" selection-end-line="257" selection-end-column="42" />
+            <state relative-caret-position="430">
+              <caret line="1958" column="67" lean-forward="false" selection-start-line="1958" selection-start-column="64" selection-end-line="1958" selection-end-column="67" />
+              <folding>
+                <element signature="n#style#0;n#div#9;n#form#0;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#div#9;n#form#0;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#style#0;n#div#11;n#form#0;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <marker date="1505197281000" expanded="false" signature="51792:51808" ph="..." />
+                <marker date="1505197281000" expanded="false" signature="51939:53184" ph="..." />
+                <marker date="1505197281000" expanded="false" signature="52177:52189" ph="..." />
+                <marker date="1505197281000" expanded="false" signature="52444:52456" ph="..." />
+                <marker date="1505197281000" expanded="false" signature="52724:52736" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ShopFreightModel.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/ShopFreightModel.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="89" lean-forward="false" selection-start-line="7" selection-start-column="89" selection-end-line="7" selection-end-column="89" />
               <folding />
             </state>
           </provider>
@@ -98,71 +105,61 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StoreCategory.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py">
+      <file leaf-file-name="NewCreateProduct.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/NewCreateProduct.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
-              <caret line="83" column="37" lean-forward="false" selection-start-line="83" selection-start-column="8" selection-end-line="83" selection-end-column="37" />
+            <state relative-caret-position="430">
+              <caret line="1093" column="72" lean-forward="false" selection-start-line="1093" selection-start-column="69" selection-end-line="1093" selection-end-column="72" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="productViews.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TmpProductGroup/productViews.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="33" column="57" lean-forward="false" selection-start-line="33" selection-start-column="57" selection-end-line="33" selection-end-column="57" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NewEditProduct.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/NewEditProduct.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="598">
-              <caret line="1893" column="47" lean-forward="false" selection-start-line="1893" selection-start-column="47" selection-end-line="1893" selection-end-column="47" />
-              <folding>
-                <element signature="n#div#9;n#form#0;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#div#10;n#form#0;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <marker date="1505197281000" expanded="false" signature="51792:51808" ph="..." />
-                <marker date="1505197281000" expanded="false" signature="51939:53184" ph="..." />
-                <marker date="1505197281000" expanded="false" signature="52177:52189" ph="..." />
-                <marker date="1505197281000" expanded="false" signature="52444:52456" ph="..." />
-                <marker date="1505197281000" expanded="false" signature="52724:52736" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NewProductDetail.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="NewProductDetail.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/NewProductDetail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3293">
-              <caret line="47" column="25" lean-forward="true" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="25" />
+            <state relative-caret-position="489">
+              <caret line="76" column="84" lean-forward="true" selection-start-line="76" selection-start-column="84" selection-end-line="76" selection-end-column="84" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ShopFreightModel.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/ShopFreightModel.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="89" lean-forward="false" selection-start-line="7" selection-start-column="89" selection-end-line="7" selection-end-column="89" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
+      <file leaf-file-name="店铺草稿商品接口.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TmpProductGroup/店铺草稿商品接口.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="0">
+                <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                <folding />
+              </first_editor>
+              <second_editor>
+                <js_state />
+              </second_editor>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Object.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Object.py">
+      <file leaf-file-name="商品接口.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Product/商品接口.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="15">
+                <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+                <folding />
+              </first_editor>
+              <second_editor>
+                <js_state />
+              </second_editor>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProductComments.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/ProductComments.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="559">
-              <caret line="183" column="34" lean-forward="false" selection-start-line="183" selection-start-column="16" selection-end-line="183" selection-end-column="34" />
+            <state relative-caret-position="1153">
+              <caret line="91" column="116" lean-forward="true" selection-start-line="91" selection-start-column="8" selection-end-line="91" selection-end-column="116" />
               <folding />
             </state>
           </provider>
@@ -181,7 +178,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>self</find>
       <find>limit=None</find>
       <find>limit=Q</find>
       <find>count</find>
@@ -193,7 +189,6 @@
       <find>self.</find>
       <find>password</find>
       <find>'{&quot;provider&quot;: &quot;qiniu&quot;}'</find>
-      <find>url</find>
       <find>@permission</find>
       <find>self.get_</find>
       <find>request.POST.g</find>
@@ -211,6 +206,8 @@
       <find>sDescription</find>
       <find>attribute_</find>
       <find>productService</find>
+      <find>url</find>
+      <find>add</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -219,12 +216,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Shop/settleInViews.py" />
-        <option value="$PROJECT_DIR$/Shop/views.py" />
         <option value="$PROJECT_DIR$/TmpProductGroup/urls.py" />
         <option value="$PROJECT_DIR$/TmpProductGroup/店铺草稿商品接口.md" />
         <option value="$PROJECT_DIR$/urls.py" />
-        <option value="$PROJECT_DIR$/Product/商品接口.md" />
         <option value="$PROJECT_DIR$/Account/tool.md" />
         <option value="$PROJECT_DIR$/ClassLibrary/ProductClass/ShopProductGroup.py" />
         <option value="$PROJECT_DIR$/Error_Page.py" />
@@ -264,12 +258,15 @@
         <option value="$PROJECT_DIR$/TmpProductGroup/templates/NewCreateProduct.html" />
         <option value="$PROJECT_DIR$/TmpProductGroup/templates/ShopBrand.html" />
         <option value="$PROJECT_DIR$/TmpProductGroup/productViews.py" />
-        <option value="$PROJECT_DIR$/Product/productViews.py" />
         <option value="$PROJECT_DIR$/TmpProductGroup/templates/NewEditProduct.html" />
         <option value="$PROJECT_DIR$/Product/shopProductViews.py" />
         <option value="$PROJECT_DIR$/TmpProductGroup/templates/ShopFreightModel.html" />
         <option value="$PROJECT_DIR$/ClassLibrary/ProductClass/ProductGroupBase.py" />
+        <option value="$PROJECT_DIR$/TmpProductGroup/templates/productComments.html" />
+        <option value="$PROJECT_DIR$/TmpProductGroup/templates/ProductComments.html" />
+        <option value="$PROJECT_DIR$/Product/productViews.py" />
         <option value="$PROJECT_DIR$/TmpProductGroup/templates/NewProductDetail.html" />
+        <option value="$PROJECT_DIR$/Product/商品接口.md" />
       </list>
     </option>
   </component>
@@ -406,25 +403,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TmpProductGroup" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TmpProductGroup" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
+              <option name="myItemId" value="Product" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -439,6 +418,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Product" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -982,57 +965,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vue/templates/seller/sellerControl.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Product/商品接口.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="0">
-            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor>
-            <js_state />
-          </second_editor>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/Base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1695">
-          <caret line="122" column="35" lean-forward="false" selection-start-line="122" selection-start-column="35" selection-end-line="122" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#10#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryThird.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="38" column="26" lean-forward="false" selection-start-line="38" selection-start-column="26" selection-end-line="38" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Account/账户管理.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="326">
-            <caret line="22" column="2" lean-forward="true" selection-start-line="22" selection-start-column="2" selection-end-line="22" selection-end-column="17" />
-            <folding />
-          </first_editor>
-          <second_editor>
-            <js_state />
-          </second_editor>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Account/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -1265,14 +1197,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Product/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="23" column="62" lean-forward="true" selection-start-line="23" selection-start-column="62" selection-end-line="23" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Error_Page.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="732">
@@ -1321,19 +1245,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/NewCreateProduct.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="793">
-          <caret line="1378" column="0" lean-forward="false" selection-start-line="1378" selection-start-column="0" selection-end-line="1379" selection-end-column="49" />
-          <folding>
-            <element signature="n#div#4;n#form#0;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#5;n#form#0;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#7;n#form#0;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#8;n#form#0;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Product/categoryViews.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1312">
@@ -1358,20 +1269,83 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/ShopFreightModel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="89" lean-forward="false" selection-start-line="7" selection-start-column="89" selection-end-line="7" selection-end-column="89" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategory.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="448">
           <caret line="83" column="37" lean-forward="false" selection-start-line="83" selection-start-column="8" selection-end-line="83" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Product/shopProductViews.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="433">
+          <caret line="65" column="33" lean-forward="false" selection-start-line="65" selection-start-column="33" selection-end-line="65" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Product/templates/ProductComment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/ProductClass/ProductComment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="439">
+          <caret line="43" column="8" lean-forward="false" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Product/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="27" column="47" lean-forward="false" selection-start-line="27" selection-start-column="47" selection-end-line="27" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/ProductClass/ProductGroupBase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="589">
+          <caret line="227" column="58" lean-forward="false" selection-start-line="227" selection-start-column="58" selection-end-line="227" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/NewCreateProduct.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="1093" column="72" lean-forward="false" selection-start-line="1093" selection-start-column="69" selection-end-line="1093" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/NewEditProduct.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="1958" column="67" lean-forward="false" selection-start-line="1958" selection-start-column="64" selection-end-line="1958" selection-end-column="67" />
+          <folding>
+            <element signature="n#style#0;n#div#9;n#form#0;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#div#9;n#form#0;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#11;n#form#0;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1505197281000" expanded="false" signature="51792:51808" ph="..." />
+            <marker date="1505197281000" expanded="false" signature="51939:53184" ph="..." />
+            <marker date="1505197281000" expanded="false" signature="52177:52189" ph="..." />
+            <marker date="1505197281000" expanded="false" signature="52444:52456" ph="..." />
+            <marker date="1505197281000" expanded="false" signature="52724:52736" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/ShopFreightModel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="89" lean-forward="false" selection-start-line="7" selection-start-column="89" selection-end-line="7" selection-end-column="89" />
           <folding />
         </state>
       </provider>
@@ -1384,51 +1358,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Product/shopProductViews.py">
+    <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/ProductComments.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="65" column="33" lean-forward="true" selection-start-line="65" selection-start-column="33" selection-end-line="65" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ClassLibrary/ProductClass/ProductGroupBase.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1743">
-          <caret line="597" column="38" lean-forward="false" selection-start-line="597" selection-start-column="38" selection-end-line="597" selection-end-column="38" />
+        <state relative-caret-position="1153">
+          <caret line="91" column="116" lean-forward="true" selection-start-line="91" selection-start-column="8" selection-end-line="91" selection-end-column="116" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Product/productViews.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1307">
-          <caret line="87" column="43" lean-forward="false" selection-start-line="87" selection-start-column="28" selection-end-line="87" selection-end-column="43" />
+        <state relative-caret-position="1078">
+          <caret line="257" column="48" lean-forward="false" selection-start-line="257" selection-start-column="48" selection-end-line="257" selection-end-column="48" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/NewEditProduct.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="1893" column="47" lean-forward="false" selection-start-line="1893" selection-start-column="47" selection-end-line="1893" selection-end-column="47" />
-          <folding>
-            <element signature="n#div#9;n#form#0;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#10;n#form#0;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <marker date="1505197281000" expanded="false" signature="51792:51808" ph="..." />
-            <marker date="1505197281000" expanded="false" signature="51939:53184" ph="..." />
-            <marker date="1505197281000" expanded="false" signature="52177:52189" ph="..." />
-            <marker date="1505197281000" expanded="false" signature="52444:52456" ph="..." />
-            <marker date="1505197281000" expanded="false" signature="52724:52736" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TmpProductGroup/templates/NewProductDetail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3293">
-          <caret line="47" column="25" lean-forward="true" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="25" />
+        <state relative-caret-position="489">
+          <caret line="76" column="84" lean-forward="true" selection-start-line="76" selection-start-column="84" selection-end-line="76" selection-end-column="84" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TmpProductGroup/店铺草稿商品接口.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor>
+            <js_state />
+          </second_editor>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Product/商品接口.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="15">
+            <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor>
+            <js_state />
+          </second_editor>
         </state>
       </provider>
     </entry>

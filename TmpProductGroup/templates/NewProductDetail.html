@@ -62,13 +62,10 @@
                 <div id="id_storeCategory_parent">
 
                 </div>
-                <table>
-                    <tr>
-                        <td>{{ content.productGroup.storeCategory.storeCategoryFirst.name }}</td>
-                        <td>{{ content.productGroup.storeCategory.storeCategorySecond.name }}</td>
-                        <td>{{ content.productGroup.storeCategory.storeCategoryThird.name }}</td>
-                    </tr>
-                </table>
+                <p>{{ content.productGroup.storeCategory.storeCategoryFirst.name }} >
+                    {{ content.productGroup.storeCategory.storeCategorySecond.name }} >
+                    {{ content.productGroup.storeCategory.storeCategoryThird.name }}
+                </p>
             </div>
 
             <p></p>
@@ -76,16 +73,10 @@
                 <h2 class="second">销售类别</h2>
                 <hr>
                 <div id="_saleContainer">
-                <table>
-                        <tr>
-                            <td>
-                                {{ content.productGroup.saleCategory.saleCategoryFirst.name }}
-                            </td>
-                            <td>
-                                {{ content.productGroup.saleCategory.saleCategorySecond.name }}
-                            </td>
-                        </tr>
-                </table>
+                <p>
+                    {{ content.productGroup.saleCategory.saleCategoryFirst.name }} >
+                    {{ content.productGroup.saleCategory.saleCategorySecond.name }}
+                </p>
                 </div>
             </div>
             <div style="margin-top: 40px">
@@ -358,32 +349,33 @@
                     {% endfor %}
                 </div>
             </div>
-        <style>
-    .label-left-comment{
-        display: block;
-        float: left;
-    }
-    .label-right-comment{
-        display: block;
-        float: right;
-    }
-    .FirstComment{
-        font-size: 25px;
-        font-family: STHeiti;
-    }
-    .SecondComment{
-        font-size: 15px;
-        font-family: STSong;
-    }
-    </style>
-    {% if content.productGroup.productCommentList %}
-        <h2 class="second"> 商品评论</h2>
+
+     <script type="text/javascript">
+            $(function () {
+                $('.showProductComment').click(function () {
+                    var page = 1;
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Product/ShowComments/',
+                        data: {
+                            'objectId': '{{ content.productGroup.objectId }}',
+                            'page': page
+                        },
+                        success: function(data) {
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        },
+                        complete:function(XMLHttpRequest){
+                            $("#comments").html(XMLHttpRequest.responseText);
+                        }
+                    });
+                });
+            });
+        </script>
+        <h2 class="second"> <a class="showProductComment" id="showProductComment" href="javascript:void(0)" >商品评论（{{ content.productGroup.commentCount }}）</a></h2>
         <hr>
         <div id="comments">
-        {% include 'ProductComment.html'%}
         </div>
-
-    {% endif %}
 
 
     </div>

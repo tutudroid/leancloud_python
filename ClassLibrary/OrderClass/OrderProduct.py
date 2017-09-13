@@ -38,49 +38,49 @@ class OrderProduct(Object):
     def set_attribute_productGroup(self, value):
         if self.instance and value:
             self.instance.set(attribute_productGroup, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_groupName(self, value):
         if self.instance and value:
             self.instance.set(attribute_groupName, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_product(self, value):
         if self.instance and value:
             self.instance.set(attribute_product, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_productStyle(self, value):
         if self.instance and value:
             self.instance.set(attribute_productStyle, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_productMainImage(self, value):
         if self.instance and value:
             self.instance.set(attribute_productMainImage, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_productPrice(self, value):
         if self.instance and value:
             self.instance.set(attribute_productPrice, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_productCount(self, value):
         if self.instance and value:
             self.instance.set(attribute_productCount, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 

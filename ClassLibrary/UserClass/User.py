@@ -15,10 +15,10 @@ class _User(Object):
             instance.set(attribute_state, STATE_OK)
             instance.set(attribute_username, username)
             instance.set(attribute_password, 'password')
-            if self.__save_instance__():
+            if self.save_instance():
                 self.instance = instance
                 return self.instance
-        self.__print_msg__error( 'create object fail' )
+        self.print_msg__error( 'create object fail' )
         return None
 
     def get_User_phoneNumber(self, phoneNumber):
@@ -95,14 +95,14 @@ class _User(Object):
     def set_attribute_shop(self, shop):
         if self.instance and shop:
             self.instance.set(attribute_shop, shop)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def set_attribute_forbidden(self, value):
         if self.instance:
             self.instance.set(attribute_forbidden, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -110,21 +110,21 @@ class _User(Object):
     def set_attribute_username(self, value):
         if self.instance and value:
             self.instance.set(attribute_username, value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def set_attribute_password(self, password):
         if self.instance and password:
             self.instance.set(attribute_password, password)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def set_attribute_mobilePhoneNumber(self, mobilePhoneNumber):
         if self.instance and mobilePhoneNumber:
             self.instance.set(attribute_mobilePhoneNumber, mobilePhoneNumber)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -143,7 +143,7 @@ class _User(Object):
             role.get_Object_attribute_name(attribute_name, name)
             relation = self.instance.relation(attribute_role)
             relation.add(role.get_instance())
-            if self.__save_instance__():
+            if self.save_instance():
                 role.set_attribute_users(self.instance)
                 return True
         return None
@@ -152,7 +152,7 @@ class _User(Object):
         if self.instance and value:
             avator = Base.save_image(value)
             self.instance.set(attribute_avatar, avator)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 

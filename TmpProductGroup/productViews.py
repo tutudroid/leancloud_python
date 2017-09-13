@@ -4,10 +4,7 @@ from Error_Page import *
 from ClassLibrary.ProductClass.ShopProductGroup import ShopProductGroup
 from ClassLibrary.ShopClass.Shop_New import Shop
 from ClassLibrary.ProductClass.ProductService import ProductService
-from ClassLibrary.CategoryClass.SaleCategory import SaleCategory
-from ClassLibrary.CategoryClass.StoreCategory import StoreCategory
-from ClassLibrary.ProductClass.ShopProduct import ShopProduct
-
+from ClassLibrary import Base
 
 
 
@@ -74,6 +71,11 @@ def ShopProductGroupDetail(request):
     :param request: 
     :return: 
     """
+    Base.sys_log_info(request.data)
+    Base.sys_log_info(request.stream)
+    Base.sys_log_info(request.context_type)
+    Base.sys_log_info(request.body)
+
     objectId = request.GET.get(attribute_objectId, '')
     if objectId:
         shopProductGroup = ShopProductGroup()

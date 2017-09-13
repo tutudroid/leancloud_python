@@ -24,7 +24,7 @@ class ImageBase(Object):
     def set_attribute_imageFile(self, imageFile):
         if self.instance and imageFile:
             self.instance.set(attribute_imageFile, imageFile)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -41,5 +41,5 @@ class ImageBase(Object):
             instance.set(attribute_state, self.state)
             instance.set(attribute_imageFile, imageFile)
             self.instance = instance
-            return self.__save_instance__()
+            return self.save_instance()
         return None

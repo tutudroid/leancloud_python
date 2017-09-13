@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'Initiation',
     'TmpProductGroup',
     'vue',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -115,6 +116,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
+REST_FRAMEWORK = {
+
+}
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -133,15 +138,11 @@ STATIC_URL = '/static/'
 
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
 )
 
-APP = ''
-# 本地测试时，使用本地的这个地址
-if STATICFILES_DIRS != '/home/leanengine/app':
-    APP = ''
 
-STATIC_ROOT = BASE_DIR + '/app/vue/static/'
+STATIC_ROOT = BASE_DIR + '/app/static/'
+# STATIC_ROOT = BASE_DIR + '/app/vue/static/'
               #'/Users/kang/Documents/python/test/Account/static/'
 
 

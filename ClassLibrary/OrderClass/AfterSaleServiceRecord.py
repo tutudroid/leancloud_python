@@ -43,28 +43,28 @@ class AfterSaleServiceRecord(LogisticsInfo):
     def set_attribute_orderProduct(self, value):
         if self.instance and value:
             self.instance.set(attribute_orderProduct, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_order(self, value):
         if self.instance and value:
             self.instance.set(attribute_order, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_user(self, value):
         if self.instance and value:
             self.instance.set(attribute_user, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_shop(self, value):
         if self.instance and value:
             self.instance.set(attribute_shop, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -72,7 +72,7 @@ class AfterSaleServiceRecord(LogisticsInfo):
         if self.instance:
             relation = self.instance.relation(attribute_imageList)
             relation.add(imageFile)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -139,14 +139,14 @@ class AfterSaleServiceRecord(LogisticsInfo):
     def set_attribute_afterSaleProgress(self, value):
         if self.instance and value:
             self.instance.set(attribute_afterSaleProgress, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_afterSaleSupport(self, value):
         if self.instance and value:
             self.instance.set(attribute_afterSaleSupport, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -177,7 +177,7 @@ class AfterSaleServiceRecord(LogisticsInfo):
                                 # 已退款
                                 afterSaleSupport.set_attribute_state(SERVICE_STATE_2)
                     self.instance.set(attribute_state, int(value))
-                    if self.__save_instance__():
+                    if self.save_instance():
                         return True
                 else:
                     Base.sys_log_info( 'save fail' )
@@ -258,7 +258,7 @@ class AfterSaleServiceRecord(LogisticsInfo):
                 image = AfterSaleServiceImage()
                 image.create_Image(foo)
                 self.set_attribute_imageList(image.get_instance())
-        if self.__save_instance__():
+        if self.save_instance():
             return service.id
 
     @staticmethod

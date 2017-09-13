@@ -26,34 +26,34 @@ class AfterSaleSupport(Object):
     def set_attribute_serviceState(self, value):
         if self.instance and 0 <= int(value) <= 3:
             self.instance.set(attribute_serviceState, int(value))
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_orderProduct(self, value):
         if self.instance and value:
             self.instance.set(attribute_orderProduct, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_order(self, value):
         if self.instance and value:
             self.instance.set(attribute_order, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_user(self, value):
         if self.instance and value:
             self.instance.set(attribute_user, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_shop(self, value):
         if self.instance and value:
             self.instance.set(attribute_shop, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None

@@ -47,28 +47,28 @@ class SettleInApplication(Object):
     def set_attribute_type(self, value):
         if self.instance:
             self.instance.set(attribute_type, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_user(self, value):
         if self.instance:
             self.instance.set(attribute_user, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_InfoPersonal(self, value):
         if self.instance:
             self.instance.set(attribute_infoPersonal, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_InfoCompany(self, value):
         if self.instance:
             self.instance.set(attribute_infoCompany, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -113,5 +113,5 @@ class SettleInApplication(Object):
             else:
                 count = Base.queryInstanceAttribute1_Attribute2_Count(self.__class__.__name__, attribute_type, int(type1), attribute_state, int(state))
             return count
-        self.__print_msg__error( 'parameter is null' )
+        self.print_msg__error( 'parameter is null' )
         return 0

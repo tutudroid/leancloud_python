@@ -10,7 +10,7 @@ class _Role(Object):
         if self.instance:
             relation = self.instance.relation(attribute_users)
             relation.add(value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 

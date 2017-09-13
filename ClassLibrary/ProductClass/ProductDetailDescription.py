@@ -33,7 +33,7 @@ class ProductDetailDescription(ImageBase):
                 im = Image.open(tmpIm)
                 self.instance.set(attribute_imageWidth, int(im.size[0]))
                 self.instance.set(attribute_imageHeight, int(im.size[1]))
-                self.__save_instance__()
+                self.save_instance()
 
     def output_productDetailDescription(self):
         if self.instance:

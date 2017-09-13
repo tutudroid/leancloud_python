@@ -72,35 +72,35 @@ class ProductComment(Object):
     def set_attribute_priority(self, value):
         if self.instance:
             self.instance.set(attribute_priority, value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def set_attribute_userAvatar(self, value):
         if self.instance:
             self.instance.set(attribute_userAvatar, value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def set_attribute_userNickName(self, value):
         if self.instance:
             self.instance.set(attribute_userNickName, value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def set_attribute_content(self, value):
         if self.instance:
             self.instance.set(attribute_content, value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def set_attribute_productStyle(self, value):
         if self.instance:
             self.instance.set(attribute_productStyle, value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -108,7 +108,7 @@ class ProductComment(Object):
         if self.instance:
             relation = self.instance.relation(attribute_imageList)
             relation.add(value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -116,14 +116,14 @@ class ProductComment(Object):
     def set_attribute_user(self, value):
         if self.instance:
             self.instance.set(attribute_user, value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def set_attribute_orderProduct(self, value):
         if self.instance:
             self.instance.set(attribute_orderProduct, value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 

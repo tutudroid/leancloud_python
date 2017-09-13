@@ -19,9 +19,9 @@ def sys_log_info(data: object):
     :return: 
     """
     print('start---------------------------------------------------------------------------')
-    logging.info(sys._getframe().f_back.f_code.co_name)
-    logging.info(data)
-    logging.info(time.strftime("%Y-%m-%d %H:%M", time.localtime()))
+    logging.error(sys._getframe().f_back.f_code.co_name)
+    logging.error(data)
+    logging.error(time.strftime("%Y-%m-%d %H:%M", time.localtime()))
     print('end-----------------------------------------------------------------------------')
 
 

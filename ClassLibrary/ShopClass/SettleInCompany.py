@@ -75,7 +75,7 @@ class SettleInCompany(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_businessLicense):
                 self.instance.set(attribute_businessLicense, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -83,7 +83,7 @@ class SettleInCompany(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_managerRealName):
                 self.instance.set(attribute_managerRealName, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -91,7 +91,7 @@ class SettleInCompany(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_managerEmail):
                 self.instance.set(attribute_managerEmail, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -99,7 +99,7 @@ class SettleInCompany(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_managerPhoneNumber):
                 self.instance.set(attribute_managerPhoneNumber, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -107,7 +107,7 @@ class SettleInCompany(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_uniformSocialCreditCode):
                 self.instance.set(attribute_uniformSocialCreditCode, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -115,7 +115,7 @@ class SettleInCompany(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_legalPersonName):
                 self.instance.set(attribute_legalPersonName, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -123,7 +123,7 @@ class SettleInCompany(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_legalPersonEmail):
                 self.instance.set(attribute_legalPersonEmail, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -131,7 +131,7 @@ class SettleInCompany(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_legalPersonPhoneNumber):
                 self.instance.set(attribute_legalPersonPhoneNumber, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -139,7 +139,7 @@ class SettleInCompany(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_legalPersonIdCard):
                 self.instance.set(attribute_legalPersonIdCard, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -147,7 +147,7 @@ class SettleInCompany(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_legalPersonExpireTimeStart):
                 self.instance.set(attribute_legalPersonExpireTimeStart, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -155,7 +155,7 @@ class SettleInCompany(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_legalPersonExpireTimeEnd):
                 self.instance.set(attribute_legalPersonExpireTimeEnd, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -164,7 +164,7 @@ class SettleInCompany(SettleIn):
             imageFile = Base.save_image(value)
             if imageFile:
                 self.instance.set(attribute_legalPersonFrontIdCard, imageFile)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -173,7 +173,7 @@ class SettleInCompany(SettleIn):
             imageFile = Base.save_image(value)
             if imageFile:
                 self.instance.set(attribute_legalPersonBackIdCard, imageFile)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 

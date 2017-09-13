@@ -7,16 +7,19 @@ from ClassLibrary.CategoryClass.StoreCategoryFirst import get_StoreCategory_All
 from ClassLibrary.CategoryClass.SaleCategorySecond import SaleCategorySecond
 from ClassLibrary.CategoryClass.StoreCategoryThird import StoreCategoryThird
 from ClassLibrary.ProductClass.ProductService import ProductService
+from ClassLibrary import Base
 
 
 @login_required
-@require_http_methods(['GET'])
+@require_http_methods(['GET', 'DELETE'])
 def ProductGroupDetail(request):
     """
     商品组详情
     :param request: 
     :return: 
     """
+    Base.sys_log_info(request.method)
+
     objectId = request.GET.get(attribute_objectId, '')
     if objectId:
         productGroup = ProductGroup()

@@ -114,7 +114,7 @@ class Product(Object):
     def set_attribute_group(self, productGroup):
         if productGroup and self.instance:
             self.instance.set(attribute_group, productGroup)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -122,27 +122,27 @@ class Product(Object):
     def set_attribute_mainImage(self, mainImage):
         if mainImage and self.instance:
             self.instance.set(attribute_mainImage, mainImage)
-            self.__save_instance__()
+            self.save_instance()
 
     def set_attribute_price(self, price):
         if price and self.instance:
             self.instance.set(attribute_price, float(price))
-            self.__save_instance__()
+            self.save_instance()
 
     def set_attribute_stockCount(self, stockCount):
         if stockCount and self.instance:
             self.instance.set(attribute_stockCount, int(stockCount))
-            self.__save_instance__()
+            self.save_instance()
 
     def set_attribute_limitCount(self, limitCount):
         if limitCount and self.instance:
             self.instance.set(attribute_limitCount, int(limitCount))
-            self.__save_instance__()
+            self.save_instance()
 
     def set_attribute_style(self, style):
         if style and self.instance:
             self.instance.set(attribute_style, style)
-            self.__save_instance__()
+            self.save_instance()
 
 
     def delete_Product(self, productGroup):
@@ -169,7 +169,7 @@ class Product(Object):
                                         }
                                         styleBackup.append(A)
             self.instance.set(attribute_styleBackUp, styleBackup)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
             else:
                 Base.sys_log_info( 'product delete failed' )
@@ -180,14 +180,14 @@ class Product(Object):
         if self.instance and data:
             if data[attribute_price] and float(self.instance.get(attribute_price)) != float(data[attribute_price]):
                 self.instance.set(attribute_price, float(data[attribute_price]))
-                self.__save_instance__()
+                self.save_instance()
             if data[attribute_stockCount] and int(self.instance.get(attribute_stockCount)) != int(data[attribute_stockCount]):
                 self.instance.set(attribute_stockCount, int(data[attribute_stockCount]))
                 self.instance.set(attribute_limitCount, int(data[attribute_stockCount]))
-                self.__save_instance__()
+                self.save_instance()
             if data[attribute_style] and self.instance.get(attribute_style) != data[attribute_style]:
                 self.instance.set(attribute_style, data[attribute_style])
-                self.__save_instance__()
+                self.save_instance()
             # 写入主图片
             if data[attribute_mainImage]:
                 for mainImage in imageFileList:

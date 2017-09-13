@@ -19,14 +19,14 @@ class WebPageConfigure(Object):
     def set_attribute_code(self, value):
         if self.instance and value:
             self.instance.set(attribute_code, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_url(self, value):
         if self.instance and value:
             self.instance.set(attribute_url, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 

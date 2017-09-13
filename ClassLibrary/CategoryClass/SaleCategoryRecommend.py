@@ -10,7 +10,7 @@ class SaleCategoryRecommend(Object):
     def set_attribute_productGroup(self, value):
         if self.instance and value:
             self.instance.set(attribute_productGroup, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 

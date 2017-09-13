@@ -17,7 +17,7 @@ class LogisticsInfo( Object ):
             self.instance.set(attribute_shipperName, logisticInfo.shipperName)
             self.instance.set(attribute_logisticCode, logisticInfo.logisticsCode)
             self.instance.set(attribute_state, STATE_OK)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -58,28 +58,28 @@ class LogisticsInfo( Object ):
     def set_attribute_shipperCode(self, value):
         if self.instance:
             self.instance.set(attribute_shipperCode, value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def set_attribute_shipperName(self, value):
         if self.instance:
             self.instance.set(attribute_shipperName, value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def set_attribute_logisticsCode(self, value):
         if self.instance:
             self.instance.set(attribute_logisticCode, value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def set_attribute_traces(self, value):
         if self.instance:
             self.instance.set(attribute_traces, value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 

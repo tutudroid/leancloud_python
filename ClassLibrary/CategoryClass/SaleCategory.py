@@ -71,7 +71,7 @@ class SaleCategory(Object):
     def set_attribute_saleCategoryFirst(self, first):
         if self.instance and first:
             self.instance.set(attribute_saleCategoryFirst, first)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -79,7 +79,7 @@ class SaleCategory(Object):
         if self.instance and second:
             relation = self.instance.relation(attribute_saleCategorySecond)
             relation.add(second)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -91,7 +91,7 @@ class SaleCategory(Object):
     def set_attribute_uniqueId(self, uniqueId):
         if self.instance and uniqueId:
             self.instance.set(attribute_uniqueId, int(uniqueId))
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -99,14 +99,14 @@ class SaleCategory(Object):
     def set_attribute_briefDescription(self, briefDescription):
         if self.instance and briefDescription:
             self.instance.set(attribute_briefDescription, briefDescription)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def set_attribute_categoryType(self, categoryType):
         if self.instance:
             self.instance.set(attribute_categoryType, int(categoryType))
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -114,7 +114,7 @@ class SaleCategory(Object):
         if self.instance and productGroup:
             relation = self.instance.relation(attribute_productGroup)
             relation.remove(productGroup)
-            self.__save_instance__()
+            self.save_instance()
             return True
         Base.sys_log_info( 'sale or productGroup is null' )
         return None
@@ -123,7 +123,7 @@ class SaleCategory(Object):
         if self.instance and saleSecond:
             relation = self.instance.relation(attribute_productGroup)
             relation.remove(saleSecond)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -132,7 +132,7 @@ class SaleCategory(Object):
             # 将商品组写入到对应的销售关系中
             relationProductGroup = self.instance.relation(attribute_productGroup)
             relationProductGroup.add(productGroup)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -166,7 +166,7 @@ class SaleCategory(Object):
             Base.save_data(saleRecommend)
             relation = self.instance.relation(attribute_saleCategoryRecommend)
             relation.add(saleRecommend)
-            self.__save_instance__()
+            self.save_instance()
 
             CategoryImage = leancloud.Object.extend(Class_Name_SaleCategoryImage)
             categoryImage = CategoryImage()

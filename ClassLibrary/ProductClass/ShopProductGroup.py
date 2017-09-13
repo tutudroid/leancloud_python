@@ -13,10 +13,10 @@ class ShopProductGroup(ProductGroupBase):
     def set_attribute_shop(self, shopInstance):
         if self.instance and shopInstance:
             self.instance.set(attribute_shop, shopInstance)
-            if self.__save_instance__():
+            if self.save_instance():
                 product = self.get_attribute_relation(attribute_product)
                 if product:
-                    self.__print_msg__error( product )
+                    self.print_msg__error( product )
                     for foo in product:
                         product = ShopProduct()
                         product.get_Object(foo.get(attribute_objectId))

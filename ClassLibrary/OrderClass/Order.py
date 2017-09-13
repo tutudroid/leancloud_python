@@ -129,7 +129,7 @@ class Order(Object):
     def set_attribute_orderState(self, orderState):
         if self.instance and 0 <= int(orderState) <= 7:
             self.instance.set(attribute_orderSate, int(orderState))
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -137,35 +137,35 @@ class Order(Object):
         if self.instance:
             relation = self.instance.relation(attribute_orderProduct)
             relation.add(value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_logisticInfo(self, value):
         if self.instance:
             self.instance.set(attribute_logisticInfo, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_shop(self, value):
         if self.instance:
             self.instance.set(attribute_shop, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_user(self, value):
         if self.instance:
             self.instance.set(attribute_user, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_productComment(self, value):
         if self.instance:
             self.instance.set(attribute_productComment, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -211,77 +211,77 @@ class Order(Object):
     def set_attribute_pingppOrderId(self, value):
         if self.instance:
             self.instance.set(attribute_pingppOrderId, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_receiverName(self, value):
         if self.instance:
             self.instance.set(attribute_receiverName, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_receiverPhoneNumber(self, value):
         if self.instance:
             self.instance.set(attribute_receiverPhoneNumber, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_receiverAddress(self, value):
         if self.instance:
             self.instance.set(attribute_receiverAddress, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_finalPrice(self, value):
         if self.instance:
             self.instance.set(attribute_finalPrice, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_freight(self, value):
         if self.instance:
             self.instance.set(attribute_freight, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_cancelTime(self, value):
         if self.instance:
             self.instance.set(attribute_cancelTime, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_paymentTime(self, value):
         if self.instance:
             self.instance.set(attribute_paymentTime, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_deliveryTime(self, value):
         if self.instance:
             self.instance.set(attribute_deliveryTime, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_refundTime(self, value):
         if self.instance:
             self.instance.set(attribute_refundTime, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_receiveTime(self, value):
         if self.instance:
             self.instance.set(attribute_receiveTime, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 

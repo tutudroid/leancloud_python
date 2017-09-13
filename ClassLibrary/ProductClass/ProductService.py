@@ -14,7 +14,7 @@ class ProductService(Object):
     def set_attribute_briefDescription(self, brief):
         if self.instance and brief:
             self.instance.set(attribute_briefDescription, brief)
-            self.__save_instance__()
+            self.save_instance()
 
     def get_ProductService_All(self):
         self.instance = self.instance

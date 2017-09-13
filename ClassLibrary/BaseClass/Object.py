@@ -34,14 +34,14 @@ class Object(object):
             instance = INSTANCE()
             instance.set(attribute_state, STATE_OK)
             self.instance = instance
-            return self.__save_instance__()
-        self.__print_msg__error( 'create object fail' )
+            return self.save_instance()
+        self.print_msg__error( 'create object fail' )
         return None
 
     def delete_Object(self):
         if self.instance:
             self.instance.set(attribute_state, STATE_DELETE)
-            return self.__save_instance__()
+            return self.save_instance()
         return None
 
     def destroy_Object(self):
@@ -50,7 +50,7 @@ class Object(object):
                 self.instance.destroy()
                 return True
             except leancloud.LeanCloudError as e:
-                self.__print_msg__error( e.error )
+                self.print_msg__error( e.error )
             return True
         return None
 
@@ -120,7 +120,7 @@ class Object(object):
                 # self.instance.get(attribute_mainImage).destory()
                 pass
             self.instance.set(attribute_mainImage, value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -128,11 +128,11 @@ class Object(object):
         if self.instance:
             if state != self.instance.get(attribute_state):
                 self.instance.set(attribute_state, state)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
-    def __save_instance__(self):
+    def save_instance(self):
         """
         保存对象实例到 lean cloud
         :return: 
@@ -142,10 +142,10 @@ class Object(object):
                 self.instance.save()
                 return self.instance
             except leancloud.LeanCloudError as e:
-                self.__print_msg__error( e.error )
+                self.print_msg__error( e.error )
         return None
 
-    def __print_msg__error(self, msg):
+    def print_msg__error(self, msg):
         """
         输出错误信息
         :param msg: 
@@ -159,7 +159,7 @@ class Object(object):
         print('--------------------------------------------------------------------------------')
 
 
-    def __print_msg__info(self, msg):
+    def print_msg__info(self, msg):
         """
         输出错误信息
         :param msg: 
@@ -173,7 +173,7 @@ class Object(object):
         print('--------------------------------------------------------------------------------')
 
 
-    def __output_Object__(self, instance):
+    def output_Object(self, instance):
         """
         用于输出point对象的基本数据
         :param instance: 当前对象中指针指向的对象
@@ -195,13 +195,13 @@ class Object(object):
     def set_attribute_name(self, name):
         if self.instance and name:
             self.instance.set(attribute_name, name)
-            self.__save_instance__()
+            self.save_instance()
 
     def remove_attribute_relation(self, attribute_relation, value):
         if self.instance and value:
             relation = self.instance.relation(attribute_relation)
             relation.remove(value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -209,7 +209,7 @@ class Object(object):
         if self.instance and attribute_relation and value:
             relation = self.instance.relation(attribute_relation)
             relation.add(value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -227,9 +227,9 @@ class Object(object):
     def set_attribute_value(self, attribute, value):
         if self.instance and attribute and value is not None:
             self.instance.set(attribute, value)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
-        self.__print_msg__error( attribute + ' or ' + str( value ) + 'is null' )
+        self.print_msg__error( attribute + ' or ' + str( value ) + 'is null' )
         return False
 
     def get_attribute_Object_Id(self, attribute):

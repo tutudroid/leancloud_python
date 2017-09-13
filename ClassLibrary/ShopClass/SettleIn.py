@@ -40,7 +40,7 @@ class SettleIn(Object):
         if self.instance:
             if value != self.instance.get(attribute_alipay):
                 self.instance.set(attribute_alipay, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -51,7 +51,7 @@ class SettleIn(Object):
                 shop.set(attribute_settleInUser, self.instance)
             else:
                 shop.set(attribute_settleInCompany, self.instance)
-            if self.__save_instance__() and Base.save_data(shop):
+            if self.save_instance() and Base.save_data( shop ):
                 return True
         return None
 
@@ -60,7 +60,7 @@ class SettleIn(Object):
         if self.instance:
             if value != self.instance.get(attribute_shopName):
                 self.instance.set(attribute_shopName, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -68,7 +68,7 @@ class SettleIn(Object):
         if self.instance:
             if value != self.instance.get(attribute_brandName):
                 self.instance.set(attribute_brandName, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -76,7 +76,7 @@ class SettleIn(Object):
         if self.instance:
             if value != self.instance.get(attribute_brandLogo):
                 self.instance.set(attribute_brandLogo, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -84,7 +84,7 @@ class SettleIn(Object):
         if self.instance:
             if value != self.instance.get(attribute_brandDescription):
                 self.instance.set(attribute_brandDescription, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 

@@ -273,5 +273,49 @@
         </form>
         <hr>
 </div>
+
+<div>
+    <hr>
+        <h2>Rest delete test</h2>
+            <script type="text/javascript">
+                $(function () {
+                    $("#btnRest").click(function() {
+                        $.ajax({
+                            type: "DELETE",
+                            url: "{% url 'Product:ProductGroupDetail' %}",
+                            //contentType: "application/json; charset=utf-8",
+                            headers: {
+                                 'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+                            },
+                            data: {
+                                objectId: '59a68609a0bb9f0064018395',
+                                page: '1',
+                                type: '1'
+
+                            },
+                            //dataType: "json",
+                            success: function (message) {
+                                if (message > 0) {
+
+                                    alert("请求已提交！我们会尽快与您取得联系");
+                                }
+                            },
+                            error: function (message) {
+                                alert("提交数据失败！");
+                            }
+                        });
+                    });
+                });
+
+            </script>
+            <form enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+                <div>
+                    <input type="file" name="imageFile" id="imageFile">
+                    <input type="button" id="btnRest" value="btnRest">
+                </div>
+        </form>
+        <hr>
+</div>
 </body>
 </html>

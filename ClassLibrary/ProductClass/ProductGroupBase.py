@@ -39,7 +39,7 @@ class ProductGroupBase(Object):
     def set_attribute_propertyOption(self, pro):
         if self.instance and pro:
             self.instance.set(attribute_propertyOption, pro)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -68,7 +68,7 @@ class ProductGroupBase(Object):
             if productService:
                 for foo in productService:
                     service = ProductService()
-                    productServiceList.append(service.__output_Object__(foo))
+                    productServiceList.append( service.output_Object( foo ) )
                 return productServiceList
         return None
 
@@ -76,7 +76,7 @@ class ProductGroupBase(Object):
         if self.instance and productService:
             relation = self.instance.relation(attribute_productService)
             relation.add(productService)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -84,13 +84,13 @@ class ProductGroupBase(Object):
         if self.instance and self.instance.get(attribute_ip):
             foo = Base.queryInstanceThroughId(Class_Name_IPTable, self.instance.get(attribute_ip).id)
             if foo:
-                return self.__output_Object__(foo)
+                return self.output_Object( foo )
         return None
 
     def set_attribute_ip(self, ip):
         if self.instance and ip:
             self.instance.set(attribute_ip, ip)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -123,7 +123,7 @@ class ProductGroupBase(Object):
         if product and self.instance:
             relation = self.instance.relation(attribute_product)
             relation.remove(product)
-            self.__save_instance__()
+            self.save_instance()
 
     def get_attribute_storeCategory(self):
         if self.instance and self.instance.get(attribute_storeCategory):
@@ -140,12 +140,12 @@ class ProductGroupBase(Object):
                         }
                         return A
                     else:
-                        self.__print_msg__error( 'storeCategoryFirst is not existed' )
+                        self.print_msg__error( 'storeCategoryFirst is not existed' )
                 else:
-                    self.__print_msg__error( 'storeCategorySecond is not existed' )
+                    self.print_msg__error( 'storeCategorySecond is not existed' )
             else:
-                self.__print_msg__error( 'storeCategoryThird is not existed' )
-        self.__print_msg__error( 'parameter is null' )
+                self.print_msg__error( 'storeCategoryThird is not existed' )
+        self.print_msg__error( 'parameter is null' )
         return None
 
     def get_attribute_saleCategory(self):
@@ -172,20 +172,20 @@ class ProductGroupBase(Object):
         if self.instance and product:
             relation = self.instance.relation(attribute_product)
             relation.add(product)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def get_attribute_brand(self):
         if self.instance and self.instance.get(attribute_brand):
             brand = Base.queryInstanceThroughId(Class_Name_BrandTable, self.instance.get(attribute_brand).id)
-            return self.__output_Object__(brand)
+            return self.output_Object( brand )
         return None
 
     def set_attribute_brand(self, brand):
         if self.instance and brand:
             self.instance.set(attribute_brand, brand)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -295,7 +295,7 @@ class ProductGroupBase(Object):
     def set_attribute_storeCategory(self, storeCategory):
         if self.instance and storeCategory:
             self.instance.set(attribute_storeCategory, storeCategory)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -303,7 +303,7 @@ class ProductGroupBase(Object):
         if self.instance and saleCategory:
             relationSaleCategory = self.instance.relation(attribute_saleCategory)
             relationSaleCategory.add(saleCategory)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -311,37 +311,37 @@ class ProductGroupBase(Object):
         if self.instance and image:
             relation = self.instance.relation(attribute_imageList)
             relation.add(image)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return False
 
     def set_attribute_mainImage(self, mainImage):
         if self.instance and mainImage:
             self.instance.set(attribute_mainImage, mainImage)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def set_attribute_briefDescription(self, detail):
         if self.instance and detail:
             self.instance.set(attribute_briefDescription, detail)
-            self.__save_instance__()
+            self.save_instance()
 
     def set_attribute_detailDescription(self, detail):
         if self.instance and detail:
             relation = self.instance.relation(attribute_detailDescription)
             relation.add(detail)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_shop(self, shopInstance):
         if self.instance and shopInstance:
             self.instance.set(attribute_shop, shopInstance)
-            if self.__save_instance__():
+            if self.save_instance():
                 product = self.get_attribute_relation(attribute_product)
                 if product:
-                    self.__print_msg__error( product )
+                    self.print_msg__error( product )
                     for foo in product:
                         product = Product()
                         product.get_Object(foo.get(attribute_objectId))
@@ -352,7 +352,7 @@ class ProductGroupBase(Object):
     def set_attribute_price(self, price):
         if self.instance:
             self.instance.set(attribute_price, int(price))
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -360,7 +360,7 @@ class ProductGroupBase(Object):
         if self.instance and value:
             relation = self.instance.relation(attribute_comment)
             relation.add(value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -542,7 +542,7 @@ class ProductGroupBase(Object):
                     state = STATE_NO_FINISH
 
         # 设置商品组状态
-        if self.__save_instance__():
+        if self.save_instance():
             if state == STATE_SHELF_ON:
                 return self.instance
         Base.sys_log_info( 'productGroup save failed' )
@@ -612,7 +612,7 @@ class ProductGroupBase(Object):
                             if saleCategorySecond.get_SaleCategorySecond(foo.get(attribute_objectId)):
                                 saleCategorySecond.remove_attribute_productGroup(self.get_instance())
                                 self.remove_attribute_relation(attribute_saleCategory, saleCategorySecond.get_instance())
-                        self.__save_instance__()
+                        self.save_instance()
 
                 for foo in data[attribute_saleCategory]:
                     # 将销售关系写入到商品类中

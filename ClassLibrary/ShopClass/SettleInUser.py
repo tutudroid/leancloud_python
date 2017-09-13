@@ -57,7 +57,7 @@ class SettleInUser(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_realName):
                 self.instance.set(attribute_realName, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -65,7 +65,7 @@ class SettleInUser(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_phoneNumber):
                 self.instance.set(attribute_phoneNumber, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -74,7 +74,7 @@ class SettleInUser(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_email):
                 self.instance.set(attribute_email, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -82,7 +82,7 @@ class SettleInUser(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_idCard):
                 self.instance.set(attribute_idCard, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -90,7 +90,7 @@ class SettleInUser(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_idCardExpireTimeStart):
                 self.instance.set(attribute_idCardExpireTimeStart, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -98,7 +98,7 @@ class SettleInUser(SettleIn):
         if self.instance:
             if value != self.instance.get(attribute_idCardExpireTimeEnd):
                 self.instance.set(attribute_idCardExpireTimeEnd, value)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -107,7 +107,7 @@ class SettleInUser(SettleIn):
             imageFile = Base.save_image(value)
             if imageFile:
                 self.instance.set(attribute_handIdCard, imageFile)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -116,7 +116,7 @@ class SettleInUser(SettleIn):
             imageFile = Base.save_image(value)
             if imageFile:
                 self.instance.set(attribute_frontIdCard, imageFile)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 
@@ -125,7 +125,7 @@ class SettleInUser(SettleIn):
             imageFile = Base.save_image(value)
             if imageFile:
                 self.instance.set(attribute_backIdCard, imageFile)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
         return None
 

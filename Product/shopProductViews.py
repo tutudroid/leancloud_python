@@ -1,11 +1,12 @@
 
 from Error_Page import *
-
+from ClassLibrary import Base
 from ClassLibrary.ProductClass.ShopProductGroup import ShopProductGroup
 from ClassLibrary.ShopClass.Shop_New import Shop
 from ClassLibrary.ProductClass.ProductService import ProductService
 from ClassLibrary.CategoryClass.SaleCategoryFirst import get_SaleCategory_All
 from ClassLibrary.CategoryClass.StoreCategoryFirst import get_StoreCategory_All
+from rest_framework import routers
 
 
 @login_required
@@ -99,7 +100,7 @@ def EditShopProductGroup(request):
 
 
 @login_required
-@require_http_methods(['GET'])
+@require_http_methods(['GET', 'DELETE'])
 @permissions([ROLE_SHOP, ROLE_PRODUCT])
 def ShopProductGroupDetail(request):
     """
@@ -107,6 +108,7 @@ def ShopProductGroupDetail(request):
     :param request: 
     :return: 
     """
+
     objectId = request.GET.get(attribute_objectId, '')
     if objectId:
         shopProductGroup = ShopProductGroup()

@@ -104,7 +104,7 @@ class Shop(Object):
                     returnList.append(productGroup.output_ProductGroup())
                 return returnList
             else:
-                self.__print_msg__error('shop not found productGroup')
+                self.print_msg__error( 'shop not found productGroup' )
         return None
 
     def get_attribute_shopProductGroup(self, page=1):
@@ -228,14 +228,14 @@ class Shop(Object):
                     afterSale.set_instance(foo)
                     returnList.append(afterSale.output_AfterSaleServiceRecord())
                 return returnList
-            self.__print_msg__error('afterSale no found')
+            self.print_msg__error( 'afterSale no found' )
         return None
 
     def set_attribute_productGroup(self, productGroup):
         if self.instance and productGroup:
             relation = self.instance.relation(attribute_productGroup)
             relation.add(productGroup)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -243,14 +243,14 @@ class Shop(Object):
         if self.instance and productGroup:
             relation = self.instance.relation(attribute_shopProductGroup)
             relation.add(productGroup)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_address(self, value):
         if self.instance and value:
             self.instance.set(attribute_address, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -258,7 +258,7 @@ class Shop(Object):
         if self.instance and value:
             instance = Base.create_instance(Class_Name_Province, value)
             self.instance.set( attribute_province, instance )
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -266,7 +266,7 @@ class Shop(Object):
         if self.instance and value:
             instance = Base.create_instance(Class_Name_City, value)
             self.instance.set( attribute_city, instance )
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -274,14 +274,14 @@ class Shop(Object):
         if self.instance and value:
             instance = Base.create_instance(Class_Name_District, value)
             self.instance.set( attribute_district, instance )
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_user(self, value):
         if self.instance and value:
             self.instance.set(attribute_user, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -289,28 +289,28 @@ class Shop(Object):
     def set_attribute_settleInUser(self, value):
         if self.instance and value:
             self.instance.set(attribute_settleInUser, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_settleInCompany(self, value):
         if self.instance and value:
             self.instance.set(attribute_settleInCompany, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_phoneNumber(self, value):
         if self.instance and value:
             self.instance.set(attribute_phoneNumber, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_shopType(self, value):
         if self.instance and value is not None:
             self.instance.set(attribute_shopType, int(value))
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -318,7 +318,7 @@ class Shop(Object):
         if self.instance and value:
             relation = self.instance.relation(attribute_brand)
             relation.add(value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -326,7 +326,7 @@ class Shop(Object):
         if self.instance and value:
             relation = self.instance.relation(attribute_order)
             relation.add(value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -334,28 +334,28 @@ class Shop(Object):
         if self.instance and value:
             relation = self.instance.relation(attribute_afterSaleServiceRecord)
             relation.add(value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_type(self, value):
         if self.instance and value:
             self.instance.set(attribute_type, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_freightModel(self, value):
         if self.instance and value:
             self.instance.set(attribute_freightModel, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
     def set_attribute_mainImage(self, value):
         if self.instance and value:
             self.instance.set(attribute_mainImage, value)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -441,7 +441,7 @@ class Shop(Object):
         self.set_attribute_phoneNumber(data[attribute_phoneNumber])
         self.set_attribute_shopType(data[attribute_shopType])
         self.set_attribute_type(data[attribute_type])
-        self.__print_msg__error('create shop success')
+        self.print_msg__error( 'create shop success' )
 
     def input_Shop(self, request):
         self.instance = self.instance

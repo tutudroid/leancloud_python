@@ -86,7 +86,7 @@ class StoreCategory(Object):
         if productGroup and self.instance:
             relation = self.instance.relation(attribute_productGroup)
             relation.remove(productGroup)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
@@ -94,7 +94,7 @@ class StoreCategory(Object):
     def create_StoreCategory(self, data):
         if data[attribute_name]:
             if attribute_objectId in data and data[attribute_objectId]:
-                self.__print_msg__error('create new storeCategory')
+                self.print_msg__error( 'create new storeCategory' )
                 self.get_Object(data[attribute_objectId])
             else:
                 self.create_Object()
@@ -132,14 +132,14 @@ class StoreCategory(Object):
         if self.instance and productGroup:
             relationProductGroup = self.instance.relation(attribute_productGroup)
             relationProductGroup.add(productGroup)
-            if self.__save_instance__():
+            if self.save_instance():
                 return True
         return None
 
     def set_attribute_storeCategoryFirst(self, first):
         if self.instance and first:
             self.instance.set(attribute_storeCategoryFirst, first)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 
@@ -148,11 +148,11 @@ class StoreCategory(Object):
             if self.className == Class_Name_StoreCategoryFirst:
                 relation = self.instance.relation(attribute_storeCategorySecond)
                 relation.add(second)
-                if self.__save_instance__():
+                if self.save_instance():
                     return True
             if self.className == Class_Name_StoreCategoryThird:
                 self.instance.set(attribute_storeCategorySecond, second)
-                self.__save_instance__()
+                self.save_instance()
             return True
         return None
 
@@ -160,7 +160,7 @@ class StoreCategory(Object):
         if self.instance and third:
             relation = self.instance.relation(attribute_storeCategoryThird)
             relation.add(third)
-            self.__save_instance__()
+            self.save_instance()
             return True
         return None
 

@@ -1,6 +1,9 @@
 <div class="contentMenu">
 	<ul class="nav nav-pills">
-	  <li role="presentation" class="active"><a href="#">订单搜索</a></li>
+	  <li role="presentation" ><a href="#" id="mpsellerOrderSearch" @click="getOrderSearch()">订单搜索</a></li>
 	</ul>
+	<div class="mp mpsellerOrderSearch used">
+		<ordersearch :ordersearch="orderSearch"></ordersearch>
+	</div>
 </div>
 

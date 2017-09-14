@@ -1,22 +1,11 @@
 <div class="contentMenu">
 	<ul class="nav nav-pills">
-	  <li role="presentation" class="active"><a href="#" id="mpselfShopBrandCheck">查看品牌信息及关联商品</a></li>
-	  <li role="presentation"><a href="#" id="mpselfShopBrandAdd">添加品牌</a></li>
-	  <li role="presentation"><a href="#" id="mpselfShopBrandChange">修改品牌</a></li>
-	  <li role="presentation"><a href="#" id="mpselfShopBrandDelete">删除品牌</a></li>
+	  <li role="presentation" class="active"><a href="#" id="mpselfShopBrandCheck">品牌列表</a></li>
 	</ul>
 
 	<div class="mp mpselfShopBrandCheck used">
-	  
+	  <brandlist :brandlists="allSelfShopBrandLists"></brandlist>
 	</div>
-	<div class="mp mpselfShopBrandAdd">
-	  {% include "content/selfShop/brand/selfBrand/addBrand.html" %}
-	</div>
-	<div class="mp mpselfShopBrandChange">
-	  {% include "content/selfShop/brand/selfBrand/changeBrand.html" %}
-	</div>
-	<div class="mp mpselfShopBrandDelete">
-	  {% include "content/selfShop/brand/selfBrand/deleteBrand.html" %}
-	</div>
+
 </div>
 

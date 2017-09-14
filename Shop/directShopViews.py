@@ -42,9 +42,14 @@ def InitiateDirectShop(request):
 @require_http_methods(['GET'])
 def EditDirectShop(request):
     """
+        {
+        shopName: xxx,
+        phoneNumber: xxx,
+    }
+    :retur
     """
     objectId = request.GET.get(attribute_objectId, '')
-    name = request.GET.get(attribute_name, '')
+    name = request.GET.get(attribute_shopName, '')
     phoneNumber = request.GET.get(attribute_phoneNumber, '')
     if objectId and name and len(phoneNumber) == 11 and phoneNumber.isdigit():
         shop = Shop()

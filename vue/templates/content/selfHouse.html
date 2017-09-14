@@ -1,11 +1,17 @@
 <div class="contentMenu">
 	<ul class="nav nav-pills">
-	  <li role="presentation" class="active"><a href="#">待受理</a></li>
-	  <li role="presentation"><a href="#">待退货</a></li>
-	  <li role="presentation"><a href="#">退货中</a></li>
-	  <li role="presentation"><a href="#">已退款</a></li>
-	  <li role="presentation"><a href="#">未通过</a></li>
-	  <li role="presentation"><a href="#">已取消</a></li>
+	  <li role="presentation"><a href="#" id="mpselfafterservice" @click="getSelfafterservice()">自营的商店列表</a></li>
 	</ul>
+	<div class="mp mpselfafterservice used">
+	  <selfafterservice :service="selfAfterService"></selfafterservice>	
+	</div>
 </div>
 
+<!--<div class="content selfHouse used">
+	<selfafterservice :service="selfAfterService"></selfafterservice>	
+
+	</div>
+	
+	<div class="content sellerHouse">
+	<sellerafterservice :service="sellerAfterService"></sellerafterservice>	
+	</div>

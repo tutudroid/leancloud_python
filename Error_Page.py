@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 import leancloud
 from django.shortcuts import render
 from django.core.urlresolvers import reverse

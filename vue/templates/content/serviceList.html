@@ -1,0 +1,9 @@
+<div class="contentMenu">
+	<ul class="nav nav-pills">
+	  <li role="presentation"><a href="#" id="mpserviceList" @click="getServiceList()">基础服务列表</a></li>
+	</ul>
+
+	<div class="mp mpserviceList used">
+		<servicelist :servicelist="serviceList"></servicelist>
+	</div>
+</div>	

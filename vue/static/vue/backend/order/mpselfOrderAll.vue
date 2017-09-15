@@ -10,7 +10,7 @@
 				<span class="th">总价</span>
 				<span class="th">操作</span>
 			</div>
-			<div class="content container result" >
+			<div class="content container result" v-for="o in selforderall">
 				<div class="row head">
 					<div class="col-md-3">订单号:{{o.uniqueId}}</div>		
 					<div class="col-md-3">下单时间:{{o.created_at}}</div>		

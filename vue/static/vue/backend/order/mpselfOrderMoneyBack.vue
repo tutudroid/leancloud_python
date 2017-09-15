@@ -22,7 +22,7 @@
 					<div class="col-md-2">{{o.user.name}}</div>
 					<div class="col-md-1">{{m.orderState}}</div>		
 					<div class="col-md-1">{{m.productPrice*m.productCount}}</div>
-					<div class="col-md-1 link" @click="toggle('detail',o.uniqueId,m.user,o.receiverName,o.receiverPhoneNumber,o.receiverAddress,o.orderProduct)">查看详情</div>		
+					<div class="col-md-1 link" @click="toggle('detail',m.orderState,o.orderUniqueId,o.shop.uniqueId,m.user,o.receiverName,o.receiverPhoneNumber,o.receiverAddress,o.orderProduct)">查看详情</div>		
 				</div>
 			</div>
 		</div>
@@ -30,7 +30,7 @@
 			<h2>订单状态：{{orderState}}</h2>
 			<hr>
 			<div class="operate">
-				<span class="sendGood myBtn" @click="checkAfterService(uniqueId)">查看售后记录</span>
+				<span class="sendGood myBtn" @click="checkAfterService(orderUniqueId)">查看售后记录</span>
 			</div>
 			<div class="customerInfo">
 				<h3>买家信息</h3>
@@ -46,8 +46,8 @@
 				<h3>订单信息</h3>、
 				<hr>
 				<div>
-					<h4>订单号:{{uniqueId}}</h4>
-					<h4>创建时间:{{created_at}}</h4>
+					<h4>订单号:{{orderUniqueId}}</h4>
+					<h4>创建时间:{{}}</h4>
 				</div>
 			</div>
 			<div class="orderProducts container">
@@ -96,7 +96,7 @@
 		        			</tr>
 		        		</tbody>
 		        	</table>
-		        	<h4>订单号：{{uniqueId}}</h4>
+		        	<h4>订单号：{{orderUniqueId}}</h4>
 		        	<h4>申请时间：{{AfterSaleServiceRecord.created_at}}</h4>
 		        </div>
 		        <div class="process">
@@ -131,7 +131,7 @@
 		        		<hr>
 		        	</div>
 		        </div>
-		        <div class="applyDetail">
+		        <div class="applyDetail" v-if="AfterSaleServiceRecord.length > 0">
 		        	<h3>申请单详情</h3>
 		        	<div class="order">
 		        		<h4>申请时间：{{AfterSaleServiceRecord.created_at}}</h4>
@@ -179,12 +179,16 @@
 				orderProduct:[],
 				totalPrice:0,
 				AfterSaleServiceRecord:{},
+				orderUniqueId:"",
+				orderState:"",
 			}
 		},
 		props:["selfordermoneyback"],
 		methods:{
-			toggle(detail="",id,user,receiverName,receiverPhoneNumber,receiverAddress,orderProduct){
+			toggle(detail="",state="",oid="",id="",user="",receiverName="",receiverPhoneNumber="",receiverAddress="",orderProduct=""){
 				if(detail == "detail"){
+					this.orderState = state;
+					this.orderUniqueId = oid;
 					this.uniqueId = id;
 					this.user = user;
 					this.receiverName = receiverName;
@@ -208,14 +212,15 @@
 				let _this = this;
 				let ok = 0;
 				$.ajax({
-				  type: 'xx',
-				  url: '/xx/xx/',
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
 				  data: {
-				     uniqueId:id,
+				     objectId:id,
+				     state:-1
 				  },
 				  success: function (data) {
 				    let dataJson = JSON.parse(data);
-				    _this.AfterSaleServiceRecord = dataJson.xx;
+				    _this.AfterSaleServiceRecord = dataJson;
 				    ok = 1;
 				    
 				  },

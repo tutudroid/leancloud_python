@@ -18,6 +18,6 @@ python3 manage.py collectstatic
 git push
 
 # 部署代码到服务器
-lean deploy
+# lean deploy
 # 本地测试
 lean up

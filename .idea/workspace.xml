@@ -6,19 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0499edbb-0d6b-477c-a822-a91397b8a747" name="Default" comment="v">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/ShopClass/Shop_New.py" afterPath="$PROJECT_DIR$/ClassLibrary/ShopClass/Shop_New.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shop/directShopViews.py" afterPath="$PROJECT_DIR$/Shop/directShopViews.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/app.js" afterPath="$PROJECT_DIR$/static/vue/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/businessOperation/categoryRecommendation.vue" afterPath="$PROJECT_DIR$/static/vue/backend/businessOperation/categoryRecommendation.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/businessOperation/serviceList.vue" afterPath="$PROJECT_DIR$/static/vue/backend/businessOperation/serviceList.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/market/searchMarketCategory/searchMarketCategory.vue" afterPath="$PROJECT_DIR$/static/vue/backend/market/searchMarketCategory/searchMarketCategory.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/order/mpselfOrderAll.vue" afterPath="$PROJECT_DIR$/static/vue/backend/order/mpselfOrderAll.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/selfManage/brandList.vue" afterPath="$PROJECT_DIR$/static/vue/backend/selfManage/brandList.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/selfManage/freightModel.vue" afterPath="$PROJECT_DIR$/static/vue/backend/selfManage/freightModel.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/selfSetting/initialSetting.vue" afterPath="$PROJECT_DIR$/static/vue/backend/selfSetting/initialSetting.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/selfSetting/selfShopInfoMana.vue" afterPath="$PROJECT_DIR$/static/vue/backend/selfSetting/selfShopInfoMana.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/sellersetting/brandList.vue" afterPath="$PROJECT_DIR$/static/vue/backend/sellersetting/brandList.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/main.js" afterPath="$PROJECT_DIR$/static/vue/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Recommendation/__init__.py" afterPath="$PROJECT_DIR$/Recommendation/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script_update.sh" afterPath="$PROJECT_DIR$/script_update.sh" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -55,11 +44,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shop/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="207" column="4" lean-forward="false" selection-start-line="207" selection-start-column="4" selection-end-line="207" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Recommendation/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="35" column="143" lean-forward="false" selection-start-line="35" selection-start-column="143" selection-end-line="35" selection-end-column="143" />
+            <state relative-caret-position="0">
+              <caret line="0" column="3" lean-forward="false" selection-start-line="0" selection-start-column="3" selection-end-line="0" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -75,11 +74,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="script_update.sh" pinned="false" current-in-tab="false">
+      <file leaf-file-name="script_update.sh" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/script_update.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="11" lean-forward="false" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+            <state relative-caret-position="300">
+              <caret line="20" column="2" lean-forward="false" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -88,8 +87,8 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Shop/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="34" column="44" lean-forward="false" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
+            <state relative-caret-position="270">
+              <caret line="19" column="43" lean-forward="false" selection-start-line="19" selection-start-column="43" selection-end-line="19" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -99,13 +98,23 @@
         <entry file="file://$PROJECT_DIR$/Shop/directShopViews.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="990">
-              <caret line="69" column="19" lean-forward="true" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
+              <caret line="69" column="19" lean-forward="false" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Shop_New.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="settleInViews.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shop/settleInViews.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1267">
+              <caret line="165" column="19" lean-forward="false" selection-start-line="165" selection-start-column="19" selection-end-line="165" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Shop_New.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ClassLibrary/ShopClass/Shop_New.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="521">
@@ -119,7 +128,7 @@
         <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Attribute_Parameter.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="439">
-              <caret line="167" column="0" lean-forward="true" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
+              <caret line="167" column="0" lean-forward="false" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -221,12 +230,12 @@
         <option value="$PROJECT_DIR$/Recommendation/urls.py" />
         <option value="$PROJECT_DIR$/Recommendation/views.py" />
         <option value="$PROJECT_DIR$/Shop/urls.py" />
-        <option value="$PROJECT_DIR$/Recommendation/__init__.py" />
-        <option value="$PROJECT_DIR$/script_update.sh" />
         <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/Shop/directShopViews.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/BaseClass/Attribute_Parameter.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/ShopClass/Shop_New.py" />
+        <option value="$PROJECT_DIR$/Recommendation/__init__.py" />
+        <option value="$PROJECT_DIR$/script_update.sh" />
       </list>
     </option>
   </component>
@@ -240,8 +249,8 @@
     <handled-path value="$PROJECT_DIR$/static/vue/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="54" />
-    <option name="y" value="128" />
+    <option name="x" value="42" />
+    <option name="y" value="23" />
     <option name="width" value="3022" />
     <option name="height" value="1417" />
   </component>
@@ -902,7 +911,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="54" y="128" width="3022" height="1417" extended-state="0" />
+    <frame x="42" y="23" width="3022" height="1417" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13825503" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
@@ -1211,16 +1220,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Shop/settleInViews.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2370">
-          <caret line="165" column="19" lean-forward="false" selection-start-line="165" selection-start-column="19" selection-end-line="165" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#24#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Recommendation/Recommend.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1271,36 +1270,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Shop/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="281" column="14" lean-forward="false" selection-start-line="281" selection-start-column="14" selection-end-line="281" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#24#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/Account/test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Recommendation/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="35" column="143" lean-forward="false" selection-start-line="35" selection-start-column="143" selection-end-line="35" selection-end-column="143" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/script_update.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="11" lean-forward="false" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
           <folding />
         </state>
       </provider>
@@ -1313,18 +1286,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Shop/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="34" column="44" lean-forward="false" selection-start-line="34" selection-start-column="44" selection-end-line="34" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Shop/directShopViews.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="990">
-          <caret line="69" column="19" lean-forward="true" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
+          <caret line="69" column="19" lean-forward="false" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -1332,7 +1297,7 @@
     <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Attribute_Parameter.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="439">
-          <caret line="167" column="0" lean-forward="true" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
+          <caret line="167" column="0" lean-forward="false" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1341,6 +1306,46 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="521">
           <caret line="51" column="97" lean-forward="false" selection-start-line="51" selection-start-column="97" selection-end-line="51" selection-end-column="97" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Recommendation/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="3" lean-forward="false" selection-start-line="0" selection-start-column="3" selection-end-line="0" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shop/settleInViews.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1267">
+          <caret line="165" column="19" lean-forward="false" selection-start-line="165" selection-start-column="19" selection-end-line="165" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shop/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="19" column="43" lean-forward="false" selection-start-line="19" selection-start-column="43" selection-end-line="19" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shop/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="207" column="4" lean-forward="false" selection-start-line="207" selection-start-column="4" selection-end-line="207" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/script_update.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="2" lean-forward="false" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
           <folding />
         </state>
       </provider>

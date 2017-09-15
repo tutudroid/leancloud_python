@@ -7,18 +7,25 @@
 				</thead>
 				<tbody>
 					<tr v-for="s in service" @click="toggle(s)">                                     
-						<td>s.shop</td>
-						<td>s.state0.count</td>
-						<td>s.state2.count</td>
-						<td>s.state3.count</td>
+						<td>{{s.shop}}</td>
+						<td>{{s.state0.count}}</td>
+						<td>{{s.state2.count}}</td>
+						<td>{{s.state3.count}}</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<div class="all hide">
 			<div class="orderSearchVue">
+				<span class="link" @click="toggle()">返回</span>
+				<span class="all" @click="all()">全部</span>
+				<span class="waitingDealing" @click="waitingDealing()">待受理</span>
+				<span class="waitingBackGood" @click="waitingBackGood()">待退货</span>
+				<span class="backGoodOnTheRoad" @click="backGoodOnTheRoad()">退货中</span>
+				<span class="refund" @click="refund()">已退款</span>
+				<span class="nopass" @click="nopass()">未通过</span>
+				<span class="cancel" @click="cancel()">已取消</span>
 				<div class="results">
-					<span class="link" @click="toggle()">返回</span>
 					<div class="shown">
 						<div class="title">
 							<span class="th">商品</span>
@@ -48,42 +55,79 @@
 							</div>
 						</div>
 					</div>
-					<div class="hideSecond">
+					<div class="hideSecond" v-if="servi.length>0">
 							<h2>申请单详情</h2>
 							<hr>
 							<span class="link" @click="toggleSecond($event)">返回</span>
 							<div class="aboutApply">
-								<h4>申请时间：{{s.created_at}}</h4>
-				        		<h4>订单号：{{s.order.uniqueId}}</h4>
-				        		<h4>申请单号：{{s.uniqueId}}</h4>
-				        		<h4>申请人：{{s.user.name}}</h4>
+								<h4>申请时间：{{servi.created_at}}</h4>
+				        		<h4>订单号：{{servi.order.uniqueId}}</h4>
+				        		<h4>申请单号：{{servi.uniqueId}}</h4>
+				        		<h4>申请人：{{servi.user.name}}</h4>
 							</div>
 							<hr>
 							<div class="aboutImage">
-								<h4><img :src="s.orderProduct.productMainImage"></h4>
-				        		<h4 class="name">{{s.orderProduct.groupName}}</h4>
-				        		<h4 class="material">{{s.orderProduct.productStyle}}</h4>
-				        		<h4 class="price">{{s.orderProduct.productPrice }}</h4>
-				        		<h4 class="amount">{{s.refundProductCount }}</h4>
+								<h4><img :src="servi.orderProduct.productMainImage"></h4>
+				        		<h4 class="name">{{servi.orderProduct.groupName}}</h4>
+				        		<h4 class="material">{{servi.orderProduct.productStyle}}</h4>
+				        		<h4 class="price">{{servi.orderProduct.productPrice }}</h4>
+				        		<h4 class="amount">{{servi.refundProductCount }}</h4>
 							</div>
 							<hr>
 							<div class="reason">
-								<div class="reason">原因：{{s.refundReasonDetail}}</div>
-				        		<div class="desc">描述：{{s.refundReasonDetail}}</div>
-				        		<div class="imageList"><img v-for="i in s.imageList" :src="i.imageFile"></div>
+								<div class="reason">原因：{{servi.refundReasonDetail}}</div>
+				        		<div class="desc">描述：{{servi.refundReasonDetail}}</div>
+				        		<div class="imageList"><img v-for="i in servi.imageList" :src="i.imageFile"></div>
 							</div>
 							<hr>
 							<div class="person">
-								<h4 class="contactPerson">联系人:{{s.contactName}}</h4>
-							    <h4 class="phone">手机号：{{s.contactPhone }}</h4>
+								<h4 class="contactPerson">联系人:{{servi.contactName}}</h4>
+							    <h4 class="phone">手机号：{{servi.contactPhone }}</h4>
 							</div>
 							<hr>
 							<div class="option">
 								<h3>处理申请</h3>
 								<hr>
-								<span class="link myBtn" @click="backMoney(s.uniqueId)" v-if="s.state==0 || s.state==6">直接退款</span>
-								<span class="link myBtn" @click="backStuff(s.uniqueId)" v-if="s.state==0 || s.state==6">退货</span>
-								<span class="link myBtn" @click="refuse(s.uniqueId)" v-if="s.state==0 || s.state==6">拒绝</span>
+								<span data-target="#backMoney" data-toggle="modal" class="link myBtn"  v-if="servi.state==0 || servi.state==6">直接退款</span>
+									<div class="modal fade" tabindex="-1" role="dialog" id="backMoney">
+									  <div class="modal-dialog" role="document">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									        <h4 class="modal-title">直接退款</h4>
+									      </div>
+									      <div class="modal-body">
+									        <label>请输入退款金额：￥</label><input type="number" v-model="backMoneyAmount">
+									      </div>
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+									        <button type="button" class="btn btn-primary" @click="backMoney(servi.uniqueId)">确认退款</button>
+									      </div>
+									    </div><!-- /.modal-content -->
+									  </div><!-- /.modal-dialog -->
+									</div><!-- /.modal -->
+								<span data-target="#backStuff" data-toggle="modal" class="link myBtn"  v-if="servi.state==0 || servi.state==6">退货</span>\
+									<div class="modal fade" tabindex="-1" role="dialog" id="backStuff">
+									  <div class="modal-dialog" role="document">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									        <h4 class="modal-title">退货</h4>
+									      </div>
+									      <div class="modal-body">
+									        <label>退货收件人</label><input type="number" v-model="backStuffPerson">
+									        <label>退货收件人手机</label><input type="number" v-model="backStuffPhone">
+									        <label>退货地址</label><input type="number" v-model="backStuffAddr">
+									        <label>详细地址</label><input type="number" v-model="backStuffDetail">
+									      </div>
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+									        <button type="button" class="btn btn-primary" @click="backStuff(servi.uniqueId)">确认发货</button>
+									      </div>
+									    </div><!-- /.modal-content -->
+									  </div><!-- /.modal-dialog -->
+									</div><!-- /.modal -->
+								<span class="link myBtn" @click="refuse(servi.uniqueId)" v-if="servi.state==0 || servi.state==6">拒绝</span>
 							</div>
 
 							<span class="link" data-toggle="collapse" data-target="#collapse">查看订单</span>
@@ -307,7 +351,7 @@
 							</div>
 					</div>
 
-					<div class="process hideSecond">
+					<div class="process hideSecond" v-if="servi.length>0 ">
 						<div class="afterRecord">
 							<span class="link" @click="toggleSecond($event)">返回</span>
 				        	<h3>售后记录</h3>
@@ -316,22 +360,22 @@
 				        			<th>商品</th><th>单价</th><th>数量</th><th>买家</th><th>售后状态</th><th>原因</th>
 				        		</thead>
 				        		<tbody>
-				        			<tr v-for="p in s.orderProduct">
+				        			<tr v-for="p in servi.orderProduct">
 				        				<td>{{p.groupName}}</td>
 				        				<td>{{p.productPrice}}</td>
 				        				<td>{{p.productCount}}</td>
 				        				<td>{{user.name}}</td>
-				        				<td>{{s.state}}</td>
-				        				<td>{{s.refundReasonDetail}}</td>
+				        				<td>{{servi.state}}</td>
+				        				<td>{{servi.refundReasonDetail}}</td>
 				        			</tr>
 				        		</tbody>
 				        	</table>
 				        	<h4>订单号：{{uniqueId}}</h4>
-				        	<h4>申请时间：{{s.created_at}}</h4>
+				        	<h4>申请时间：{{servi.created_at}}</h4>
 				        </div>
 				        <div class="process">
 				        	<h3>售后进度</h3>
-				        	<div v-for="process in s.afterSaleProgress">
+				        	<div v-for="process in servi.afterSaleProgress">
 				        		<div class="time">{{process.AcceptTime}}</div>
 				        		<div class="reason">{{process.AcceptStation}}</div>
 				        		<div v-if="process.recordState=='2'">
@@ -410,22 +454,29 @@
 				comments:[],
 				///////////////////////////////
 				servi:{},
+				////////////////////
+				backMoneyAmount:"",
+				backStuffPerson:"",
+				backStuffPhone:"",
+				backStuffAddr:"",
+				backStuffDetail:"",
 			}
 		},
-		props:["service"],
+		props:["service","selfshopid"],
 		methods:{
 			checkAfterService(id){
 				let _this = this;
 				let ok = 0;
 				$.ajax({
-				  type: 'xx',
-				  url: '/xx/xx/',
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
 				  data: {
-				     uniqueId:id,
+				     objectId:_this.selfshopid, 
+				     state:-1
 				  },
 				  success: function (data) {
 				    let dataJson = JSON.parse(data);
-				    _this.AfterSaleServiceRecord = dataJson.xx;
+				    _this.AfterSaleServiceRecord = dataJson;
 				    ok = 1;
 				    
 				  },
@@ -455,15 +506,18 @@
 		        },
 		        function(){
 		          $.ajax({
-		            type: 'xx',
-		            url: '/xx/xx/',
+		            type: 'post',
+		            url: '/Order/DisplaceOrder/',
 		            headers: {
 		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
 		            },
 		            contentType: "application/json; charset=utf-8",
 		            dataType: "json",
 		            data: {
-
+		            	objectId:_this.selfshopid, 
+		            	shipperCode:"xxxxxxx", 
+		            	shipperName:_this.sendCompany, 
+		            	logisticsCode:_this.sendNumber
 		            },
 		            success: function (data) {
 		              swal("发货成功");
@@ -534,13 +588,320 @@
 				hide.addClass('hideSecond');
 			},
 			backMoney(id){
-
+				swal({
+		          title: "你确定直接退款吗?",
+		          text: "",
+		          type: "warning",
+		          showCancelButton: true,
+		          confirmButtonColor: "#DD6B55",
+		          confirmButtonText: "是的,我要直接退款!",
+		          closeOnConfirm: false
+		        },
+		        function(){
+		          $.ajax({
+		            type: 'post',
+		            url: '/AfterSale/CancelDisplacedRefund/',
+		            headers: {
+		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+		            },
+		            contentType: "application/json; charset=utf-8",
+		            dataType: "json",
+		            data: {
+		            	objectId:_this.selfshopid, 
+		            },
+		            success: function (data) {
+		              swal("发货成功");
+		            },
+		            error: function(XMLHttpRequest, textStatus, errorThrown) {
+		              swal("发货失败");
+		            },           
+		          });
+		        });
 			},
 			backStuff(id){
-
+				swal({
+		          title: "你确定直接退货吗?",
+		          text: "",
+		          type: "warning",
+		          showCancelButton: true,
+		          confirmButtonColor: "#DD6B55",
+		          confirmButtonText: "是的,我要直接退货!",
+		          closeOnConfirm: false
+		        },
+		        function(){
+		          $.ajax({
+		            type: 'post',
+		            url: '/Order/DisplaceOrder/',
+		            headers: {
+		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+		            },
+		            contentType: "application/json; charset=utf-8",
+		            dataType: "json",
+		            data: {
+		            	objectId:_this.selfshopid, 
+		            	shipperCode:"xxxxxxx", 
+		            	shipperName:_this.sendCompany, 
+		            	logisticsCode:_this.sendNumber
+		            },
+		            success: function (data) {
+		              swal("发货成功");
+		            },
+		            error: function(XMLHttpRequest, textStatus, errorThrown) {
+		              swal("发货失败");
+		            },           
+		          });
+		        });
 			},
 			refuse(id){
-
+				swal({
+		          title: "你确定拒绝它吗?",
+		          text: "",
+		          type: "warning",
+		          showCancelButton: true,
+		          confirmButtonColor: "#DD6B55",
+		          confirmButtonText: "是的,我要拒绝它!",
+		          closeOnConfirm: false
+		        },
+		        function(){
+		          $.ajax({
+		            type: 'post',
+		            url: '/Order/DisplaceOrder/',
+		            headers: {
+		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+		            },
+		            contentType: "application/json; charset=utf-8",
+		            dataType: "json",
+		            data: {
+		            	objectId:_this.selfshopid, 
+		            	shipperCode:"xxxxxxx", 
+		            	shipperName:_this.sendCompany, 
+		            	logisticsCode:_this.sendNumber
+		            },
+		            success: function (data) {
+		              swal("发货成功");
+		            },
+		            error: function(XMLHttpRequest, textStatus, errorThrown) {
+		              swal("发货失败");
+		            },           
+		          });
+		        });
+			},
+			all(){
+				let _this = this;
+				let ok = 0;
+				$.ajax({
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
+				  data: {
+				     objectId:_this.selfshopid, 
+				     state:-1
+				  },
+				  success: function (data) {
+				    let dataJson = JSON.parse(data);
+				    _this.servi = dataJson;
+				    ok = 1;
+				    
+				  },
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   swal('抓取不到数据')
+				  },
+				});
+				swal({
+					title: "抓取售后记录信息中",
+					text:"你这么可爱，就等待一下呗",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				if(ok == 1){
+					
+				}
+			
+			},
+			waitingDealing(){
+				let _this = this;
+				let ok = 0;
+				$.ajax({
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
+				  data: {
+				     objectId:_this.selfshopid, 
+				     state:0
+				  },
+				  success: function (data) {
+				    let dataJson = JSON.parse(data);
+				    _this.servi = dataJson;
+				    ok = 1;
+				    
+				  },
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   swal('抓取不到数据')
+				  },
+				});
+				swal({
+					title: "抓取售后记录信息中",
+					text:"你这么可爱，就等待一下呗",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				if(ok == 1){
+					
+				}
+			
+			},
+			waitingBackGood(){
+				let _this = this;
+				let ok = 0;
+				$.ajax({
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
+				  data: {
+				     objectId:_this.selfshopid, 
+				     state:2
+				  },
+				  success: function (data) {
+				    let dataJson = JSON.parse(data);
+				    _this.servi = dataJson;
+				    ok = 1;
+				    
+				  },
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   swal('抓取不到数据')
+				  },
+				});
+				swal({
+					title: "抓取售后记录信息中",
+					text:"你这么可爱，就等待一下呗",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				if(ok == 1){
+					
+				}
+			
+			},
+			backGoodOnTheRoad(){
+				let _this = this;
+				let ok = 0;
+				$.ajax({
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
+				  data: {
+				     objectId:_this.selfshopid, 
+				     state:3
+				  },
+				  success: function (data) {
+				    let dataJson = JSON.parse(data);
+				    _this.servi = dataJson;
+				    ok = 1;
+				    
+				  },
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   swal('抓取不到数据')
+				  },
+				});
+				swal({
+					title: "抓取售后记录信息中",
+					text:"你这么可爱，就等待一下呗",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				if(ok == 1){
+					
+				}
+			
+			},
+			refund(){
+				let _this = this;
+				let ok = 0;
+				$.ajax({
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
+				  data: {
+				     objectId:_this.selfshopid, 
+				     state:4
+				  },
+				  success: function (data) {
+				    let dataJson = JSON.parse(data);
+				    _this.servi = dataJson;
+				    ok = 1;
+				    
+				  },
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   swal('抓取不到数据')
+				  },
+				});
+				swal({
+					title: "抓取售后记录信息中",
+					text:"你这么可爱，就等待一下呗",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				if(ok == 1){
+					
+				}
+			
+			},
+			nopass(){
+				let _this = this;
+				let ok = 0;
+				$.ajax({
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
+				  data: {
+				     objectId:_this.selfshopid, 
+				     state:1
+				  },
+				  success: function (data) {
+				    let dataJson = JSON.parse(data);
+				    _this.servi = dataJson;
+				    ok = 1;
+				    
+				  },
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   swal('抓取不到数据')
+				  },
+				});
+				swal({
+					title: "抓取售后记录信息中",
+					text:"你这么可爱，就等待一下呗",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				if(ok == 1){
+					
+				}
+			
+			},
+			cancel(){
+				let _this = this;
+				let ok = 0;
+				$.ajax({
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
+				  data: {
+				     objectId:_this.selfshopid, 
+				     state:5
+				  },
+				  success: function (data) {
+				    let dataJson = JSON.parse(data);
+				    _this.servi = dataJson;
+				    ok = 1;
+				    
+				  },
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   swal('抓取不到数据')
+				  },
+				});
+				swal({
+					title: "抓取售后记录信息中",
+					text:"你这么可爱，就等待一下呗",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				if(ok == 1){
+					
+				}
+			
 			},
 		},
 	}

@@ -22,7 +22,7 @@
 					<div class="col-md-2">{{o.user.name}}</div>
 					<div class="col-md-1">{{m.orderState}}</div>		
 					<div class="col-md-1">{{m.productPrice*m.productCount}}</div>
-					<div class="col-md-1 link" @click="toggle('detail',o.uniqueId,m.user,o.receiverName,o.receiverPhoneNumber,o.receiverAddress,o.orderProduct)">查看详情</div>		
+					<div class="col-md-1 link" @click="toggle('detail',o.shop.uniqueId,m.user,o.receiverName,o.receiverPhoneNumber,o.receiverAddress,o.orderProduct)">查看详情</div>		
 				</div>
 			</div>
 		</div>
@@ -145,15 +145,18 @@
 		        },
 		        function(){
 		          $.ajax({
-		            type: 'xx',
-		            url: '/xx/xx/',
+		            type: 'post',
+		            url: '/Order/DisplaceOrder/',
 		            headers: {
 		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
 		            },
 		            contentType: "application/json; charset=utf-8",
 		            dataType: "json",
 		            data: {
-
+		            	objectId:id, 
+		            	shipperCode:"xxxxxxx", 
+		            	shipperName:_this.sendCompany, 
+		            	logisticsCode:_this.sendNumber
 		            },
 		            success: function (data) {
 		              swal("发货成功");

@@ -17,8 +17,8 @@ urlpatterns = [
     url(r'^AllBrand/$', views.AllBrand, name='AllBrand'),
     url(r'^EditBrand/$', views.EditBrand, name='EditBrand'),
     # 所有运费模版
-    url(r'^AllFreight/$', views.AllFreight, name='AllFreight'),
-    url(r'^EditFreight/$', views.EditFreight, name='EditFreight'),
+    url(r'^AllFreightModel/$', views.AllFreight, name='AllFreightModel'),
+    url(r'^EditFreightModel/$', views.EditFreight, name='EditFreightModel'),
 
     # 所有活动
     url(r'^AllActivities/$', views.AllActivities, name='AllActivities'),

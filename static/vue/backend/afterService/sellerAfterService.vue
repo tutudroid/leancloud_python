@@ -5,20 +5,27 @@
 				<thead>
 					<th>商家名</th><th>待受理</th><th>待退货</th><th>退货中</th>
 				</thead>
-				<tbody>
+				<tbody v-if="service.length>0">
 					<tr v-for="s in service" @click="toggle(s)">                                     
-						<td>s.shop</td>
-						<td>s.state0.count</td>
-						<td>s.state2.count</td>
-						<td>s.state3.count</td>
+						<td>{{s.shop}}</td>
+						<td>{{s.state0.count}}</td>
+						<td>{{s.state2.count}}</td>
+						<td>{{s.state3.count}}</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<div class="all hide">
+		<div class="all hide" v-if="servi.length>0">
 			<div class="orderSearchVue">
-				<div class="results">
 					<span class="link" @click="toggle()">返回</span>
+					<span class="all" @click="all(s.shop.objectId)">全部</span>
+					<span class="waitingDealing" @click="waitingDealing(s.shop.objectId)">待受理</span>
+					<span class="waitingBackGood" @click="waitingBackGood(s.shop.objectId)">待退货</span>
+					<span class="backGoodOnTheRoad" @click="backGoodOnTheRoad(s.shop.objectId)">退货中</span>
+					<span class="refund" @click="refund(s.shop.objectId)">已退款</span>
+					<span class="nopass" @click="nopass(s.shop.objectId)">未通过</span>
+					<span class="cancel" @click="cancel(s.shop.objectId)">已取消</span>
+					<div class="results">
 					<div class="shown">
 						<div class="title">
 							<span class="th">商品</span>
@@ -48,7 +55,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="hideSecond">
+					<div class="hideSecond" v-if="s.length>0">
 							<h2>申请单详情</h2>
 							<hr>
 							<span class="link" @click="toggleSecond($event)">返回</span>
@@ -307,7 +314,7 @@
 							</div>
 					</div>
 
-					<div class="process hideSecond">
+					<div class="process hideSecond" v-if="s.length>0">
 						<div class="afterRecord">
 							<span class="link" @click="toggleSecond($event)">返回</span>
 				        	<h3>售后记录</h3>
@@ -534,15 +541,323 @@
 				hide.addClass('hideSecond');
 			},
 			backMoney(id){
-
+				swal({
+		          title: "你确定直接退款吗?",
+		          text: "",
+		          type: "warning",
+		          showCancelButton: true,
+		          confirmButtonColor: "#DD6B55",
+		          confirmButtonText: "是的,我要直接退款!",
+		          closeOnConfirm: false
+		        },
+		        function(){
+		          $.ajax({
+		            type: 'post',
+		            url: '/AfterSale/CancelDisplacedRefund/',
+		            headers: {
+		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+		            },
+		            contentType: "application/json; charset=utf-8",
+		            dataType: "json",
+		            data: {
+		            	objectId:id, 
+		            },
+		            success: function (data) {
+		              swal("发货成功");
+		            },
+		            error: function(XMLHttpRequest, textStatus, errorThrown) {
+		              swal("发货失败");
+		            },           
+		          });
+		        });
 			},
 			backStuff(id){
-
+				swal({
+		          title: "你确定直接退货吗?",
+		          text: "",
+		          type: "warning",
+		          showCancelButton: true,
+		          confirmButtonColor: "#DD6B55",
+		          confirmButtonText: "是的,我要直接退货!",
+		          closeOnConfirm: false
+		        },
+		        function(){
+		          $.ajax({
+		            type: 'post',
+		            url: '/Order/DisplaceOrder/',
+		            headers: {
+		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+		            },
+		            contentType: "application/json; charset=utf-8",
+		            dataType: "json",
+		            data: {
+		            	objectId:id, 
+		            	shipperCode:"xxxxxxx", 
+		            	shipperName:_this.sendCompany, 
+		            	logisticsCode:_this.sendNumber
+		            },
+		            success: function (data) {
+		              swal("发货成功");
+		            },
+		            error: function(XMLHttpRequest, textStatus, errorThrown) {
+		              swal("发货失败");
+		            },           
+		          });
+		        });
 			},
 			refuse(id){
-
+				swal({
+		          title: "你确定拒绝它吗?",
+		          text: "",
+		          type: "warning",
+		          showCancelButton: true,
+		          confirmButtonColor: "#DD6B55",
+		          confirmButtonText: "是的,我要拒绝它!",
+		          closeOnConfirm: false
+		        },
+		        function(){
+		          $.ajax({
+		            type: 'post',
+		            url: '/Order/DisplaceOrder/',
+		            headers: {
+		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
+		            },
+		            contentType: "application/json; charset=utf-8",
+		            dataType: "json",
+		            data: {
+		            	objectId:id, 
+		            	shipperCode:"xxxxxxx", 
+		            	shipperName:_this.sendCompany, 
+		            	logisticsCode:_this.sendNumber
+		            },
+		            success: function (data) {
+		              swal("发货成功");
+		            },
+		            error: function(XMLHttpRequest, textStatus, errorThrown) {
+		              swal("发货失败");
+		            },           
+		          });
+		        });
+			},
+			all(id){
+				let _this = this;
+				let ok = 0;
+				$.ajax({
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
+				  data: {
+				     objectId:id, 
+				     state:-1
+				  },
+				  success: function (data) {
+				    let dataJson = JSON.parse(data);
+				    _this.servi = dataJson;
+				    ok = 1;
+				    
+				  },
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   swal('抓取不到数据')
+				  },
+				});
+				swal({
+					title: "抓取售后记录信息中",
+					text:"你这么可爱，就等待一下呗",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				if(ok == 1){
+					
+				}
+			
+			},
+			waitingDealing(id){
+				let _this = this;
+				let ok = 0;
+				$.ajax({
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
+				  data: {
+				     objectId:id, 
+				     state:0
+				  },
+				  success: function (data) {
+				    let dataJson = JSON.parse(data);
+				    _this.servi = dataJson;
+				    ok = 1;
+				    
+				  },
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   swal('抓取不到数据')
+				  },
+				});
+				swal({
+					title: "抓取售后记录信息中",
+					text:"你这么可爱，就等待一下呗",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				if(ok == 1){
+					
+				}
+			
+			},
+			waitingBackGood(id){
+				let _this = this;
+				let ok = 0;
+				$.ajax({
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
+				  data: {
+				     objectId:id, 
+				     state:2
+				  },
+				  success: function (data) {
+				    let dataJson = JSON.parse(data);
+				    _this.servi = dataJson;
+				    ok = 1;
+				    
+				  },
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   swal('抓取不到数据')
+				  },
+				});
+				swal({
+					title: "抓取售后记录信息中",
+					text:"你这么可爱，就等待一下呗",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				if(ok == 1){
+					
+				}
+			
+			},
+			backGoodOnTheRoad(id){
+				let _this = this;
+				let ok = 0;
+				$.ajax({
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
+				  data: {
+				     objectId:id, 
+				     state:3
+				  },
+				  success: function (data) {
+				    let dataJson = JSON.parse(data);
+				    _this.servi = dataJson;
+				    ok = 1;
+				    
+				  },
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   swal('抓取不到数据')
+				  },
+				});
+				swal({
+					title: "抓取售后记录信息中",
+					text:"你这么可爱，就等待一下呗",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				if(ok == 1){
+					
+				}
+			
+			},
+			refund(id){
+				let _this = this;
+				let ok = 0;
+				$.ajax({
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
+				  data: {
+				     objectId:id, 
+				     state:4
+				  },
+				  success: function (data) {
+				    let dataJson = JSON.parse(data);
+				    _this.servi = dataJson;
+				    ok = 1;
+				    
+				  },
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   swal('抓取不到数据')
+				  },
+				});
+				swal({
+					title: "抓取售后记录信息中",
+					text:"你这么可爱，就等待一下呗",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				if(ok == 1){
+					
+				}
+			
+			},
+			nopass(id){
+				let _this = this;
+				let ok = 0;
+				$.ajax({
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
+				  data: {
+				     objectId:id, 
+				     state:1
+				  },
+				  success: function (data) {
+				    let dataJson = JSON.parse(data);
+				    _this.servi = dataJson;
+				    ok = 1;
+				    
+				  },
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   swal('抓取不到数据')
+				  },
+				});
+				swal({
+					title: "抓取售后记录信息中",
+					text:"你这么可爱，就等待一下呗",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				if(ok == 1){
+					
+				}
+			
+			},
+			cancel(id){
+				let _this = this;
+				let ok = 0;
+				$.ajax({
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
+				  data: {
+				     objectId:id, 
+				     state:5
+				  },
+				  success: function (data) {
+				    let dataJson = JSON.parse(data);
+				    _this.servi = dataJson;
+				    ok = 1;
+				    
+				  },
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   swal('抓取不到数据')
+				  },
+				});
+				swal({
+					title: "抓取售后记录信息中",
+					text:"你这么可爱，就等待一下呗",
+					timer: 2000,
+					showConfirmButton: false
+				});
+				if(ok == 1){
+					
+				}
+			
 			},
 		},
+
 	}
 </script>
 <style type="text/css" lang="scss">

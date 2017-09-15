@@ -101,7 +101,7 @@ freightmodels
 		        },
 		        function(){
 		          $.ajax({
-		            type: 'get',
+		            type: 'post',
 		            url: '/Shop/EditFreightModel/',
 		            headers: {
 		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
@@ -135,7 +135,7 @@ freightmodels
 		        },
 		        function(){
 		          $.ajax({
-		            type: 'get',
+		            type: 'post',
 		            url: '/Shop/EditFreightModel/',
 		            headers: {
 		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
@@ -171,7 +171,7 @@ freightmodels
 		        },
 		        function(){
 		          $.ajax({
-		            type: 'get',
+		            type: 'post',
 		            url: '/Shop/DeleteFreightModel/',
 		            headers: {
 		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')

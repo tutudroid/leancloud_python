@@ -860,13 +860,13 @@ new Vue({
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Shop/DirectShop/',
           data: {
-      
+           
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.selfAfterService = dataJson.xx;           
+            _this.selfAfterService = dataJson.Order;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')
@@ -883,13 +883,14 @@ new Vue({
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Shop/AllSettleIn/',
           data: {
-      
+            state:2,
+            type:0,
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.sellerAfterService = dataJson.xx;           
+            _this.sellerAfterService = dataJson;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')

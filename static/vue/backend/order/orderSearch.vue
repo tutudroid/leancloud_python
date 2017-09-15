@@ -7,7 +7,7 @@
 			<label>商品编号：</label><input type="text" v-model="orderProduct">
 			<label>创建时间：</label><input type="date" v-model="start">至<input type="date" v-model="end">
 			<label>订单状态：</label><input type="text" v-model="state">
-			<span class="myBtn">搜索</span>
+			<span class="btn btn-primary ">搜索</span>
 		</div>
 		<div class="results">
 
@@ -127,7 +127,7 @@
 							        		<hr>
 							        	</div>
 							        </div>
-							        <div class="applyDetail">
+							        <div class="applyDetail" v-if="AfterSaleServiceRecord.length>0">
 							        	<h3>申请单详情</h3>
 							        	<div class="order">
 							        		<h4>申请时间：{{AfterSaleServiceRecord.created_at}}</h4>
@@ -309,14 +309,14 @@
 				let _this = this;
 				let ok = 0;
 				$.ajax({
-				  type: 'xx',
-				  url: '/xx/xx/',
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
 				  data: {
 				     uniqueId:id,
 				  },
 				  success: function (data) {
 				    let dataJson = JSON.parse(data);
-				    _this.AfterSaleServiceRecord = dataJson.xx;
+				    _this.AfterSaleServiceRecord = dataJson;
 				    ok = 1;
 				    
 				  },
@@ -346,15 +346,18 @@
 		        },
 		        function(){
 		          $.ajax({
-		            type: 'xx',
-		            url: '/xx/xx/',
+		            type: 'post',
+		            url: '/Order/DisplaceOrder/',
 		            headers: {
 		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
 		            },
 		            contentType: "application/json; charset=utf-8",
 		            dataType: "json",
 		            data: {
-
+		            	objectId:id, 
+		            	shipperCode:"xxxxxxx", 
+		            	shipperName:_this.sendCompany, 
+		            	logisticsCode:_this.sendNumber
 		            },
 		            success: function (data) {
 		              swal("发货成功");

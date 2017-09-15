@@ -7,8 +7,8 @@
 				</thead>
 				<tbody>
 					<tr v-for="s in allshops" @click="getAllOrder()">
-						<td>s.name</td>
-						<td>s.brand.name</td>
+						<td>{{s.name}}</td>
+						<td>{{s.brand.name}}</td>
 						<td><img :src="s.brand.imageFile"></td>
 					</tr>
 				</tbody>
@@ -908,14 +908,14 @@
 				let _this = this;
 				let ok = 0;
 				$.ajax({
-				  type: 'xx',
-				  url: '/xx/xx/',
+				  type: 'get',
+				  url: '/AfterSale/AfterSale/',
 				  data: {
 				     uniqueId:id,
 				  },
 				  success: function (data) {
 				    let dataJson = JSON.parse(data);
-				    _this.AfterSaleServiceRecord = dataJson.xx;
+				    _this.AfterSaleServiceRecord = dataJson;
 				    ok = 1;
 				    
 				  },
@@ -945,15 +945,18 @@
 		        },
 		        function(){
 		          $.ajax({
-		            type: 'xx',
-		            url: '/xx/xx/',
+		            type: 'post',
+		            url: '/Order/DisplaceOrder/',
 		            headers: {
 		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
 		            },
 		            contentType: "application/json; charset=utf-8",
 		            dataType: "json",
 		            data: {
-
+		            	objectId:id, 
+		            	shipperCode:"xxxxxxx", 
+		            	shipperName:_this.sendCompany, 
+		            	logisticsCode:_this.sendNumber
 		            },
 		            success: function (data) {
 		              swal("发货成功");
@@ -1008,13 +1011,14 @@
 				let ok = 0;
 				$.ajax({
 				  type: 'get',
-				  url: '/xx/xx/',
+				  url: '/Order/AllOrder/',
 				  data: {
-
+				  	objectId:_this.selfShopId, 
+            		state:-1,
 				  },
 				  success: function (data) {
 				    let dataJson = JSON.parse(data);
-				    _this.orderAll = dataJson.xx;       
+				    _this.orderAll = dataJson;       
 				    ok = 1;    
 				  },
 				  error: function(XMLHttpRequest, textStatus, errorThrown) {

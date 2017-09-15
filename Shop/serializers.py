@@ -8,5 +8,3 @@ class SettleSerializer(serializers.Serializer):
     brandLogo = serializers.CharField(default=False)
     brandDescription = serializers.CharField()
     alipay = serializers.CharField(cdefault='alipay', max_length=20)
-
-    def create

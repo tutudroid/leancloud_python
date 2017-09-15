@@ -5,7 +5,7 @@ from ClassLibrary.ShopClass.SettleInCompany import SettleInCompany
 from ClassLibrary.ShopClass.Shop_New import Shop
 from ClassLibrary.ShopClass.SettleInApplication import SettleInApplication
 from ClassLibrary.UserClass.User import _User
-
+from rest_framework.views import APIView
 
 @login_required
 #@permission(ROLE_ADMINISTRATOR)
@@ -124,3 +124,48 @@ def SettleModifyPhoneNumber(request):
     return return_msg('parameter is error')
 
 
+class SettleIn(APIView):
+    def get(self, request):
+        """
+        显示所有入驻店铺
+        :param request: 
+        :return: 
+        """
+        pass
+
+    def post(self, request):
+        """
+        创建新的入驻信息
+        :param request: 
+        :return: 
+        """
+        pass
+
+
+class SettleInDetail(APIView):
+    def get(self, request, objectId):
+        """
+        获得某个店铺的入驻信息
+        :param request: 
+        :param objectId: 
+        :return: 
+        """
+        pass
+
+    def put(self, request, objectId):
+        """
+        更新某个店铺的入驻信息
+        :param request: 
+        :param objectId: 
+        :return: 
+        """
+        pass
+
+    def delete(self, request, objectId):
+        """
+        删除某个店铺的入驻信息
+        :param request: 
+        :param objectId: 
+        :return: 
+        """
+        pass

@@ -52,6 +52,81 @@ import house from './backend/allProduct/selfHouse/house.vue'
 //stock
 //selfHouse
 import addProduct from './backend/allProduct/selfHouse/addProduct.vue'
+//selfShop
+//initial selfshop
+import initialSelfShop from './backend/selfSetting/initialSetting.vue'
+//selfShop
+//selfShop information management
+import selfShopInfoMana from './backend/selfSetting/selfShopInfoMana.vue'
+//selfshop
+//freight model
+import freightModel from './backend/selfManage/freightModel.vue'
+//selfshop
+//activity management
+import activityMana from './backend/selfManage/activityMana.vue'
+//selfshop
+//brandList
+import selfBrandList from './backend/selfManage/brandList.vue'
+//sellershop
+//brandList
+import sellerBrandList from './backend/sellerSetting/brandList.vue'
+//business operation
+//mpcategoryRecommendation
+import homepageSetting from './backend/businessOperation/homepageSetting.vue'
+//business operation
+//mpcategoryRecommendation
+import categoryRecommendation from './backend/businessOperation/categoryRecommendation.vue'
+//business operation
+//mpcategoryRecommendation
+import serviceList from './backend/businessOperation/serviceList.vue'
+//business operation
+//mpcategoryRecommendation
+import bussinessTeamAppUser from './backend/businessOperation/bussinessTeamAppUser.vue'
+//business operation
+//mpcategoryRecommendation
+import bussinessTeamSeller from './backend/businessOperation/bussinessTeamSeller.vue'
+//ORDER
+//ALL
+import mpselfOrderAll from './backend/order/mpselfOrderAll.vue'
+//ORDER
+//mpselfOrderWaitingMoney
+import mpselfOrderWaitingMoney from './backend/order/mpselfOrderWaitingMoney.vue'
+//ORDER
+//mpselfOrderOnTheRoad
+import mpselfOrderOnTheRoad from './backend/order/mpselfOrderOnTheRoad.vue'
+//ORDER
+//mpselfOrderMoneyBack
+import mpselfOrderMoneyBack from './backend/order/mpselfOrderMoneyBack.vue'
+//ORDER
+//mpselfOrderCustomerWaiting
+import mpselfOrderCustomerWaiting from './backend/order/mpselfOrderCustomerWaiting.vue'
+//ORDER
+//mpselfOrderWaitingComment
+import mpselfOrderWaitingComment from './backend/order/mpselfOrderWaitingComment.vue'
+//ORDER
+//mpselfOrderFinish
+import mpselfOrderFinish from './backend/order/mpselfOrderFinish.vue'
+//ORDER
+//mpselfOrderCancel
+import mpselfOrderCancel from './backend/order/mpselfOrderCancel.vue'
+//order
+//sellerOrder
+import mpsellerOrder from './backend/order/mpsellerOrder.vue'
+//order
+//ordersearch
+import orderSearch from './backend/order/orderSearch.vue'
+//afterservice
+//selfshop
+import selfAfterService from './backend/afterService/selfAfterService.vue'
+//afterservice
+//sellershop
+import sellerAfterService from './backend/afterService/sellerAfterService.vue'
+//selfInfoCenter
+//info
+import selfCenter from './backend/selfCenter/selfCenter.vue'
+//selfInfoCenter
+//changePwd
+import selfCenterChangePwd from './backend/selfCenter/selfCenterChangePwd.vue'
 
 //sellerBackend loginModule
 //register
@@ -73,6 +148,24 @@ new Vue({
     allMarketCategorys:[],
     allSelfSellingProducts:[],
     allSelfHouseProducts:[],
+    selfShopInfoMana:{},
+    selfShopFreightModels:[],
+    allActivityModels:[],
+    allSelfShopBrandLists:[],
+    allShops:[],
+    serviceList:[],
+    selfOrderAll:[],
+    selfOrderWaitingMoney:[],
+    selfOrderOnTheRoad:[],
+    selfOrderMoneyBack:[],
+    selfOrderCustomerWaiting:[],
+    selfOrderWaitingComment:[],
+    selfOrderFinish:[],
+    selfOrderCancel:[],
+    orderSearch:[],
+    selfAfterService:[],
+    sellerAfterService:[],
+    selfCenter:{},
 	},
 	components: {
 	    "changepwd":changePwd,
@@ -93,6 +186,31 @@ new Vue({
       "selfselling":selling,
       "selfhouse":house,
       "selfaddproduct":addProduct,
+      "initialselfshop":initialSelfShop,
+      "selfshopinfomana":selfShopInfoMana,
+      "freightmodel":freightModel,
+      "activitymana":activityMana,
+      "selfbrandlist":selfBrandList,
+      "sellerbrandlist":sellerBrandList,
+      "homepagesetting":homepageSetting,
+      "categoryrecommendation":categoryRecommendation,
+      "servicelist":serviceList,
+      "bussinessteamappuser":bussinessTeamAppUser,
+      "bussinessteamseller":bussinessTeamSeller,
+      "mpselforderall":mpselfOrderAll,
+      "mpselforderwaitingmoney":mpselfOrderWaitingMoney,
+      "mpselforderontheroad":mpselfOrderOnTheRoad,
+      "mpselfordermoneyback":mpselfOrderMoneyBack,
+      "mpselfordercustomerwaiting":mpselfOrderCustomerWaiting,
+      "mpselforderwaitingcomment":mpselfOrderWaitingComment,
+      "mpselforderfinish":mpselfOrderFinish,
+      "mpselfordercancel":mpselfOrderCancel,
+      "mpsellerorder":mpsellerOrder,
+      "ordersearch":orderSearch,
+      "selfafterservice":selfAfterService,
+      "sellerafterservice":sellerAfterService,
+      "selfcenter":selfCenter,
+      "selfcenterchangepwd":selfCenterChangePwd,
 	},
 	methods: {
 	  back(id){
@@ -116,12 +234,6 @@ new Vue({
 
 	  //抓取所有的系统用户
 	  allSysuser(){
-  		swal({
-  		  title: "加载中",
-  		  text:"你这么可爱，就等待一下呗",
-  		  timer: 2000,
-  		  showConfirmButton: false
-  		});
 		 let _this = this;
        $.ajax({
           type: 'GET',
@@ -137,15 +249,15 @@ new Vue({
            swal('抓取不到数据')
           },
       });
-  	},
-    //抓取所有的客户端配置
-    getAllClientConfigs(){
-      swal({
+       swal({
         title: "加载中",
         text:"你这么可爱，就等待一下呗",
         timer: 2000,
         showConfirmButton: false
       });
+  	},
+    //抓取所有的客户端配置
+    getAllClientConfigs(){
      let _this = this;
        $.ajax({
           type: 'GET',
@@ -162,15 +274,15 @@ new Vue({
            swal('抓取不到数据')
           },
       });
-    },
-    //抓取所有的个体商户
-    getAllPersonShops(){
-      swal({
+       swal({
         title: "加载中",
         text:"你这么可爱，就等待一下呗",
         timer: 2000,
         showConfirmButton: false
       });
+    },
+    //抓取所有的个体商户
+    getAllPersonShops(){
       let _this = this;
        $.ajax({
           type: 'get',
@@ -189,15 +301,15 @@ new Vue({
            swal('抓取不到数据')
           },
       });
-    },
-    //抓取所有的企业商户
-    getAllCompanyShops(){
-      swal({
+       swal({
         title: "加载中",
         text:"你这么可爱，就等待一下呗",
         timer: 2000,
         showConfirmButton: false
       });
+    },
+    //抓取所有的企业商户
+    getAllCompanyShops(){
       let _this = this;
        $.ajax({
           type: 'get',
@@ -216,15 +328,15 @@ new Vue({
            swal('抓取不到数据')
           },
       });
-    },
-    //抓取所有的待审核商户
-    getAllAuditShops(){
-      swal({
+       swal({
         title: "加载中",
         text:"你这么可爱，就等待一下呗",
         timer: 2000,
         showConfirmButton: false
       });
+    },
+    //抓取所有的待审核商户
+    getAllAuditShops(){
       let _this = this;
        $.ajax({
           type: 'get',
@@ -243,15 +355,15 @@ new Vue({
            swal('抓取不到数据')
           },
       });
-    },
-    //抓取所有的禁用商户
-    getAllForbiddenShops(){
-      swal({
+       swal({
         title: "加载中",
         text:"你这么可爱，就等待一下呗",
         timer: 2000,
         showConfirmButton: false
       });
+    },
+    //抓取所有的禁用商户
+    getAllForbiddenShops(){
       let _this = this;
        $.ajax({
           type: 'get',
@@ -268,15 +380,15 @@ new Vue({
            swal('抓取不到数据')
           },
       });
+       swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
     },
     //抓取所有的库存分类
     getAllStockCategorys(){
-      swal({
-        title: "加载中",
-        text:"你这么可爱，就等待一下呗",
-        timer: 4000,
-        showConfirmButton: false
-      });
       let _this = this;
        $.ajax({
           type: 'get',
@@ -292,15 +404,15 @@ new Vue({
             swal('抓取不到数据')
           },
       });
-    },
-    //抓取所有的销售分类
-    getAllMarketCategorys(){
-      swal({
+       swal({
         title: "加载中",
         text:"你这么可爱，就等待一下呗",
         timer: 4000,
         showConfirmButton: false
       });
+    },
+    //抓取所有的销售分类
+    getAllMarketCategorys(){
       let _this = this;
        $.ajax({
           type: 'get',
@@ -316,15 +428,15 @@ new Vue({
             swal('抓取不到数据')
           },
       });
+       swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 4000,
+        showConfirmButton: false
+      });
     },
     //抓取所有的自营正在销售商品
     getAllSelfSellingnProducts(){
-      swal({
-        title: "加载中",
-        text:"你这么可爱，就等待一下呗",
-        timer: 2000,
-        showConfirmButton: false
-      });
       let _this = this;
        $.ajax({
           type: 'get',
@@ -340,15 +452,15 @@ new Vue({
             swal('抓取不到数据')
           },
       });
-    },
-    //抓取所有的自营正在仓库商品
-    getAllSelfHouseProducts(){
-      swal({
+       swal({
         title: "加载中",
         text:"你这么可爱，就等待一下呗",
         timer: 2000,
         showConfirmButton: false
       });
+    },
+    //抓取所有的自营正在仓库商品
+    getAllSelfHouseProducts(){
       let _this = this;
        $.ajax({
           type: 'get',
@@ -364,7 +476,430 @@ new Vue({
             swal('抓取不到数据')
           },
       });
+       swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
     },
+    //抓取自营店信息
+    getSelfShopInfoMana(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/Shop/DirectShop/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.selfShopInfoMana = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    //抓取运费模版信息
+    getSelfShopFreightModels(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/Shop/AllFreightModel/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.SelfShopFreightModels = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getAllActivityModels(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.SelfShopFreightModels = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getAllSelfShopBrandLists(){
+       let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.allSelfShopBrandLists = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getAllShops(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.allShops = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getServiceList(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.serviceList = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getSelfOrderAll(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.selfOrderAll = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getSelfOrderWaitingMoney(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.selfOrderWaitingMoney = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getSelfOrderOnTheRoad(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.selfOrderOnTheRoad = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getSelfOrderMoneyBack(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.selfOrderMoneyBack = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getSelfOrderCustomerWaiting(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.selfOrderCustomerWaiting = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getSelfOrderWaitingComment(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.selfOrderWaitingComment = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getSelfOrderFinish(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.selfOrderFinish = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getSelfOrderCancel(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.selfOrderCancel = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getOrderSearch(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.orderSearch = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getSelfAfterService(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.selfAfterService = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getSellerAfterService(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.sellerAfterService = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    getSelf(){
+      let _this = this;
+       $.ajax({
+          type: 'get',
+          url: '/xx/xx/',
+          data: {
+      
+          },
+          success: function (data) {
+            let dataJson = JSON.parse(data);
+            _this.selfCenter = dataJson.xx;           
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            swal('抓取不到数据')
+          },
+      });
+        swal({
+        title: "加载中",
+        text:"你这么可爱，就等待一下呗",
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+
   }
 
 });

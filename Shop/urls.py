@@ -36,4 +36,13 @@ urlpatterns = [
     url(r'^InitiateDirectShop/$', directShopViews.InitiateDirectShop, name='InitiateDirectShop'),
     url(r'^EditDirectShop/$', directShopViews.EditDirectShop, name='EditDirectShop'),
 
+
+    url(r'^(?P<shopObjectId>[0-9a-z]+)/brand/$', views.brand.as_view(), name='brand'),
+    url(r'^(?P<shopObjectId>[0-9a-z]+)/brand/(?P<objectId>[0-9a-z]+)$', views.brandDetail.as_view(), name='brand'),
+    url(r'^/shop/$', views.shop.as_view(), name='shop'),
+    url(r'^/shopDetail/(?P<shopObjectId>[0-9a-z]+)/$', views.shopDetail.as_view(), name='shopDetail'),
+    url(r'^SettleInDetail/$', settleInViews.SettleInDetail.as_view(), name='SettleInDetail'),
+    url(r'^SettleIn/$', settleInViews.SettleIn.as_view(), name='SettleIn'),
+
+
 ]

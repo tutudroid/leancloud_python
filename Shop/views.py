@@ -4,7 +4,7 @@ from ClassLibrary.UserClass.User import _User
 from ClassLibrary.ShopClass.BrandTable import BrandTable
 from ClassLibrary.Frieght.FreightModel import FreightModel
 from ClassLibrary.ShopClass.SettleInApplication import SettleInApplication
-
+from rest_framework.views import APIView
 
 
 def login(request):
@@ -178,6 +178,7 @@ def AllForbiddenShop(request):
     return return_msg('parameter is error')
 
 
+
 @require_http_methods(['GET'])
 def AllBrand(request):
     page = request.GET.get(paginator_PAGE, 1)
@@ -236,3 +237,105 @@ def AllActivities(request):
 @require_http_methods(['POST'])
 def EditActivities(request):
     return return_msg()
+
+
+
+class brand(APIView):
+    def get(self, request):
+        """
+        显示所有店铺品牌
+        :param request: 
+        :return: 
+        """
+        pass
+
+    def post(self, request):
+        """
+        创建新的品牌
+        :param request: 
+        :return: 
+        """
+        pass
+
+
+class brandDetail(APIView):
+    def get(self, request, objectId):
+        """
+        获得品牌信息
+        :param request: 
+        :param objectId: 
+        :return: 
+        """
+        pass
+
+    def put(self, request, objectId):
+        """
+        更新品牌信息
+        :param request: 
+        :param objectId: 
+        :return: 
+        """
+        pass
+
+    def delete(self, request, objectId):
+        """
+        删除某个品牌
+        :param request: 
+        :param objectId: 
+        :return: 
+        """
+        pass
+
+
+
+class shop(APIView):
+    def get(self, request):
+        """
+        显示所有店铺信息
+        :param request: 
+        :return: 
+        """
+        pass
+
+    def post(self, request):
+        """
+        创建新的店铺
+        :param request: 
+        :return: 
+        """
+        pass
+
+
+class shopDetail(APIView):
+    def get(self, request, objectId):
+        """
+        显示店铺详情
+        :param request: 
+        :param objectId: 
+        :return: 
+        """
+        pass
+
+    def put(self, request, objectId):
+        """
+        更新店铺信息
+        :param request: 
+        :param objectId: 
+        :return: 
+        """
+        pass
+
+    def delete(self, request, objectId):
+        """
+        删除某个店铺
+        :param request: 
+        :param objectId: 
+        :return: 
+        """
+        pass
+
+
+"""
+shop/objectId/brand/objectId
+
+"""

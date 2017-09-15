@@ -8,6 +8,3 @@ class Settle(models.Model):
     brandLogo = models.CharField(default=False)
     brandDescription = models.CharField()
     alipay = models.CharField(cdefault='alipay', max_length=20)
-
-    class Meta:
-        ord

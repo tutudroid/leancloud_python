@@ -188,3 +188,24 @@ def EditRecommendation(request):
         content['data']['recommend'] = Recommend.output_Recommend(query)
     Base.sys_log_info( content )
     return render(request, 'EditRecommendation.html', {'content': content, })
+
+from rest_framework.views import APIView
+
+
+class recommend(APIView):
+    def get(self, request):
+        pass
+
+    def post(self, request):
+        pass
+
+
+class recommendDetail(APIView):
+    def get(self, request, objectId):
+        pass
+
+    def put(self, request, objectId):
+        pass
+
+    def delete(self, request, objectId):
+        pass

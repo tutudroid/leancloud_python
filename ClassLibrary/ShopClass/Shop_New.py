@@ -49,7 +49,7 @@ class Shop(Object):
         return None
 
     def get_Direct_Shop(self):
-        self.instance = Base.queryInstanceAttributeFirst(self.__class__.__name__, attribute_type, SHOP_TYPE_1)
+        self.instance = Base.queryInstanceAttributeFirst(self.__class__.__name__, attribute_shopType, SHOP_TYPE_1)
         return self.instance
 
     def get_Shop_All(self, page):

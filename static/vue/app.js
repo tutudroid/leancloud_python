@@ -45,13 +45,13 @@ import searchMarketCategory from './backend/market/searchMarketCategory/searchMa
 import editMarketCategory from './backend/market/editMarketCategory/editMarketCategory.vue'
 //stock
 //selfHouse
-import selling from './backend/allProduct/selfHouse/selling.vue'
+import selling from './backend/allproduct/selfHouse/selling.vue'
 //stock
 //selfHouse
-import house from './backend/allProduct/selfHouse/house.vue'
+import house from './backend/allproduct/selfHouse/house.vue'
 //stock
 //selfHouse
-import addProduct from './backend/allProduct/selfHouse/addProduct.vue'
+import addProduct from './backend/allproduct/selfHouse/addProduct.vue'
 //selfShop
 //initial selfshop
 import initialSelfShop from './backend/selfSetting/initialSetting.vue'
@@ -166,6 +166,7 @@ new Vue({
     selfAfterService:[],
     sellerAfterService:[],
     selfCenter:{},
+    selfShopId:"1",
 	},
 	components: {
 	    "changepwd":changePwd,
@@ -212,6 +213,22 @@ new Vue({
       "selfcenter":selfCenter,
       "selfcenterchangepwd":selfCenterChangePwd,
 	},
+  created:function(){
+      $.ajax({
+          type: 'GET',
+          url: '/Shop/DirectShop/',
+          data: {
+              
+          },
+          success: function (data) {
+            let rdata = JSON.parse(data);
+            _this.selfShopId = rdata.objectId;
+          },
+         error: function(XMLHttpRequest, textStatus, errorThrown) {
+           swal('抓取不到数据')
+          },
+      });
+  },
 	methods: {
 	  back(id){
 	   var firstChild = $(id+" div.shown");
@@ -514,7 +531,7 @@ new Vue({
           type: 'get',
           url: '/Shop/AllFreightModel/',
           data: {
-      
+            objectId:_this.selfshopid,
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
@@ -535,13 +552,13 @@ new Vue({
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Shop/xx/',
           data: {
       
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.SelfShopFreightModels = dataJson.xx;           
+            _this.SelfShopFreightModels = dataJson;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')
@@ -558,9 +575,9 @@ new Vue({
        let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Shop/AllBrand/',
           data: {
-      
+             objectId:_this.selfShopId,
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
@@ -581,13 +598,14 @@ new Vue({
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Shop/AllSettleIn/',
           data: {
-      
+            state:2,
+            type:1,
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.allShops = dataJson.xx;           
+            _this.allShops = dataJson.SettleInApplication;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')
@@ -604,13 +622,13 @@ new Vue({
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Product/AllProductService/',
           data: {
       
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.serviceList = dataJson.xx;           
+            _this.serviceList = dataJson.ProductService;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')
@@ -627,13 +645,14 @@ new Vue({
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Order/AllOrder/',
           data: {
-      
+            objectId:_this.selfShopId, 
+            state:-1,
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.selfOrderAll = dataJson.xx;           
+            _this.selfOrderAll = dataJson.Order;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')
@@ -650,13 +669,14 @@ new Vue({
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Order/AllOrder/',
           data: {
-      
+            objectId:_this.selfShopId, 
+            state:0
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.selfOrderWaitingMoney = dataJson.xx;           
+            _this.selfOrderWaitingMoney = dataJson.Order;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')
@@ -673,13 +693,14 @@ new Vue({
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Order/AllOrder/',
           data: {
-      
+            objectId:this.selfShopId, 
+            state:2
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.selfOrderOnTheRoad = dataJson.xx;           
+            _this.selfOrderOnTheRoad = dataJson.Order;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')
@@ -696,13 +717,14 @@ new Vue({
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Order/AllOrder/',
           data: {
-      
+            objectId:_this.selfShopId,
+            state:6
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.selfOrderMoneyBack = dataJson.xx;           
+            _this.selfOrderMoneyBack = dataJson.Order;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')
@@ -719,13 +741,14 @@ new Vue({
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Order/AllOrder/',
           data: {
-      
+            objectId:_this.selfShopId,
+            state:1
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.selfOrderCustomerWaiting = dataJson.xx;           
+            _this.selfOrderCustomerWaiting = dataJson.Order;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')
@@ -742,13 +765,14 @@ new Vue({
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Order/AllOrder/',
           data: {
-      
+            objectId:this.selfShopId,
+            state:4
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.selfOrderWaitingComment = dataJson.xx;           
+            _this.selfOrderWaitingComment = dataJson.Order;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')
@@ -765,13 +789,14 @@ new Vue({
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Order/AllOrder/',
           data: {
-      
+            objectId:this.selfShopId,
+            state:3
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.selfOrderFinish = dataJson.xx;           
+            _this.selfOrderFinish = dataJson.Order;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')
@@ -788,13 +813,14 @@ new Vue({
       let _this = this;
        $.ajax({
           type: 'get',
-          url: '/xx/xx/',
+          url: '/Order/AllOrder/',
           data: {
-      
+            objectId:this.selfShopId,
+            state:5
           },
           success: function (data) {
             let dataJson = JSON.parse(data);
-            _this.selfOrderCancel = dataJson.xx;           
+            _this.selfOrderCancel = dataJson.Order;           
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
             swal('抓取不到数据')
@@ -899,8 +925,8 @@ new Vue({
         showConfirmButton: false
       });
     },
-
-  }
+    //
+  },
 
 });
 

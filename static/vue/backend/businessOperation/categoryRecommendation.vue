@@ -1,6 +1,6 @@
 <template>
 	<div class="categoryRecommendationVue">
-		<div class="content shown">
+		<div class="shown">
 			<label>推荐分类</label>
 			<select v-model="recommendation" @change="searchProduct()">
 				<option disabled value="">请选择你要搜索的推荐分类</option>
@@ -33,7 +33,6 @@
 		</div>
 		<div class="addProduct add hide">
 			<span class="link" @click="toggle()">返回</span>
-			<form class="form-inline">
 				  <div class="form-group">
 				    <label>商品编号</label>
 				    <input class="form-control" v-model="uniqueId">					  
@@ -50,25 +49,25 @@
 				  </div>
 				  <div class="form-group">
 				    <label>品牌</label>
-				    <input class="form-control" v-model="brandName">					  
+				    <input class="form-control" v-model="brandname">					  
 				  </div>
 				  <div class="form-group">
 				    <label>库存分类</label>
 						<div class="form-group" >
-							<select class="form-control" id="first" v-model="firstCate"  @click="clickFirst()" @change="changeSecond()">
+							<select class="form-control" id="firstSt" v-model="firstCatestock"  @click="clickFirst()" @change="changeSecond()">
 							    <option disabled value="">请选择一级分类</option>
 								<option disabled value="">--------</option>
 								<option disabled value="">--------</option>
 							</select>
 						</div>
 						<div class="form-group">
-						    <select class="form-control" id="second" v-model="secondCate" @change="changeThird()">
+						    <select class="form-control" id="secondSt" v-model="secondCatestock" @change="changeThird()">
 						        <option disabled value="">必须先选择一级分类</option>
 						    </select>
 								<option value="">"不选"</option>
 						</div>
 						<div class="form-group">
-							<select class="form-control" id="third" v-model="thirdCate">
+							<select class="form-control" id="third" v-model="thirdCatestock">
 							    <option disabled value="">必须先选择二级分类</option>
 								<option value="">"不选"</option>
 							</select>
@@ -87,14 +86,14 @@
 				  <div class="form-group">
 				    <label>销售分类</label>
 					    <div class="form-group" >
-							<select class="form-control" id="first" v-model="firstCate" @click="clickSaleFirst()" @change="changeSaleSecond()">
+							<select class="form-control" id="firstSa" v-model="firstCate" @click="clickSaleFirst()" @change="changeSaleSecond()">
 							    <option disabled value="">请选择一级分类</option>
 								<option disabled value="">--------</option>
 								<option disabled value="">--------</option>
 							</select>
 						</div>
 						<div class="form-group">			
-						    <select class="form-control" id="second" v-model="secondCate">
+						    <select class="form-control" id="secondSa" v-model="secondCate">
 						        <option disabled value="">必须先选择一级分类</option>
 								<option value="">"不选"</option>
 						    </select>
@@ -123,7 +122,6 @@
 					  </tbody>
 					</table>
 				  </div>		
-			</form> 
 		</div>
 	</div>
 </template>
@@ -134,14 +132,18 @@
 				recommendation:"",
 				products:[],
 				//////////
+				firststock:[],
+				secondstock:[],
 				first:[],
 				second:[],
-				firstCate:"",
-				secondCate:"",
-				thirdCate:"",
+				firstCatestock:"",
+				secondCatestock:"",
+				thirdCatestock:"",
 				storecategory:[],
 				//////////
 				marketcategorys:[],
+				firstCate:"",
+				secondCate:"",
 				//////////
 				uniqueId:"",
 				name:"",
@@ -151,6 +153,9 @@
 				saleCount:"",
 				saleCount_end:"",
 				searchAdds:[],
+				saleok:0,
+				stockok:0,
+				brandname:"",
 			}
 		},
 		methods:{
@@ -228,8 +233,8 @@
 		        },
 		        function(){
 		          $.ajax({
-		            type: 'xx',
-		            url: '/xx/xx/',
+		            type: 'post',
+		            url: '/Product/DelCategoryRecommend/',
 		            headers: {
 		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
 		            },
@@ -261,8 +266,8 @@
 		        },
 		        function(){
 		          $.ajax({
-		            type: 'xx',
-		            url: '/xx/xx/',
+		            type: 'get',
+		            url: '/Product/SaleCategoryRecommend/',
 		            headers: {
 		              'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').prop('value')
 		            },
@@ -283,71 +288,77 @@
 			},
 			//stockCate
 				clickFirst(){	
-				  let _this = this;
-				  let ok = 0;
-			       $.ajax({
-			          type: 'get',
-			          url: '/Product/ShowStoreCategory/',
-			          data: {
-			             page: 1,
-			          },
-			          success: function (data) {
-			            let dataJson = JSON.parse(data);
-			            _this.storecategory = dataJson.StoreCategory;      
-			            ok = 1;     
-			          },
-			          error: function(XMLHttpRequest, textStatus, errorThrown) {
-			            swal('抓取不到数据')
-			          },
-			      });			
+				  let _this = this;				  
+			       
 				  let firstName = [];
 				  let addedFirst = "";
 				  let addedStuff = $('.addedFirst');
-			      if(addedStuff.hasClass('addedFirst') || ok == 0){
+			      if(this.stockok == 1){
 
 				  }else{
-					  if(this.storecategory != null){
-						  this.storecategory.forEach(
-						    function(item,index){
-						      firstName[index] = item.name;
-						      let secondName = [];
-						      let secondCategory = item.storeCategorySecond;
-						      if(secondCategory != null){
-							      secondCategory.forEach(
-							        function(item,index){
-								  	secondName[index] = item;
+				  		$.ajax({
+				          type: 'get',
+				          url: '/Product/ShowStoreCategory/',
+				          data: {
+				             page: 1,
+				          },
+				          success: function (data) {
+				            let dataJson = JSON.parse(data);
+				            _this.storecategory = dataJson.StoreCategory;      
+				            _this.stockok = 1;     
+				            	if(_this.storecategory != null){
+								  _this.storecategory.forEach(
+								    function(item,index){
+								      firstName[index] = item.name;
+								      let secondName = [];
+								      let secondCategory = item.storeCategorySecond;
+								      if(secondCategory != null){
+									      secondCategory.forEach(
+									        function(item,index){
+										  	secondName[index] = item;
+										  });
+								     	 _this.secondstock[index] = secondName;	
+								      }      
+								      addedFirst += "<option class='stockaddedFirst' value='"+index+"'>"+item.name+"</option>";	    
 								  });
-						     	 _this.second[index] = secondName;	
-						      }      
-						      addedFirst += "<option class='addedFirst' value='"+index+"'>"+item.name+"</option>"		    
-						  });
-						  this.first = firstName;
-					  }else{
-					  	this.first = [];
-					  }
-					  $(addedFirst).appendTo('#first');
+								  _this.firststock = firstName;
+							  }else{
+							  	_this.firststock = [];
+							  }
+							  if($('.stockaddedFirst').hasClass('stockaddClass')){
+
+							  }else{
+							  	$(addedFirst).appendTo('select#firstSt');
+							  }
+							  
+				          },
+				          error: function(XMLHttpRequest, textStatus, errorThrown) {
+				            swal('抓取不到数据')
+				          },
+				      });		
+				      swal({
+				        title: "正在加载库存分类，仅加载一次",
+				        text:"你这么可爱，就等待一下呗",
+				        timer: 4000,
+				        showConfirmButton: false
+				      });						  
 				  } 
-				  swal({
-			        title: "正在加载库存分类，仅加载一次",
-			        text:"你这么可爱，就等待一下呗",
-			        timer: 3000,
-			        showConfirmButton: false
-			      });
+				  
 				},
 				changeSecond(){
-				  let addedStuff = $('.addedSecond');
-				  if(addedStuff.hasClass('addedSecond')){
-				    $( ".addedSecond" ).remove();
+				  let addedStuff = $('.stockaddedSecond');
+				  if(addedStuff.hasClass('stockaddedSecond')){
+				    $( ".stockaddedSecond" ).remove();
 				  }
-			      let secondCate = this.firstCate;
-				  let secondCates = this.second[secondCate];
+			      let secondCate = this.firstCatestock;
+				  let secondCates = this.secondstock[secondCate];
 				  let addedSecond = "";
 				  secondCates.forEach(
 				    function(item,index){
-				      addedSecond += "<option class='addedSecond' value='"+index+"'>"+item.name+"</option>";
+				      addedSecond += "<option class='stockaddedSecond' value='"+index+"'>"+item.name+"</option>";
 				  });
-				  $(addedSecond).appendTo('#second');
-				  if(this.secondCate != ""){
+				  $(addedSecond).appendTo('#secondSt');
+				  if(this.secondCatestock != ""){
 				    this.changeThird();
 				  }	        
 		       },
@@ -356,19 +367,20 @@
 				  if(addedStuff.hasClass('addedThird')){
 				    $( ".addedThird" ).remove();
 				  }
-			      let secondCate = this.firstCate;
-				  if(this.secondCate != ""){
-					  let thirdCate = this.secondCate;
-					  let first = this.second[secondCate];
-					  let second = first[thirdCate];
-				      let thirdCates = second.storeCategoryThird;
+			      let secondCate = this.firstCatestock;
+				  if(this.secondCatestock != ""){
+					  let thirdCatestock = this.secondCatestock;
+					  let first = this.secondstock[secondCate];
+					  let second = first[thirdCatestock];
+				      let thirdCatestocks = second.storeCategoryThird;
 					  let addedThird = "";
-					  thirdCates.forEach(
+					  thirdCatestocks.forEach(
 					    function(item){
 					      addedThird += "<option class='addedThird' value='"+item.id+"'>"+item.name+"</option>";
+					      console.log(addedThird);
 					    }
 					  );
-					 $(addedThird).appendTo('#third');
+					 $(addedThird).appendTo('select#third');
 				  }        
 		       },  
 		    //stockCate
@@ -376,72 +388,74 @@
 		    //saleCate
 			    clickSaleFirst(){	
 			      let _this = this;
-				  let ok = 0;
-			       $.ajax({
-			          type: 'get',
-			          url: '/Product/ShowSaleCategory/',
-			          data: {
-			             page: 1,
-			          },
-			          success: function (data) {
-			            let dataJson = JSON.parse(data);
-			            _this.marketcategorys = dataJson.SaleCategory;      
-			            ok = 1;     
-			          },
-			          error: function(XMLHttpRequest, textStatus, errorThrown) {
-			            swal('抓取不到数据')
-			          },
-			      });
+			       
 				  let firstName = [];
 				  let addedFirst = "";
 				  let addedStuff = $('.addedFirst');
-			      if(addedStuff.hasClass('addedFirst')){
+			      if(this.saleok == 1){
 
 				  }else{
-					  if(this.marketcategorys != null){
-						  this.marketcategorys.forEach(
-						    function(item,index){
-						      firstName[index] = item.name;
-						      let secondName = [];
-						      let secondCategory = item.saleCategorySecond;
-						      if(secondCategory != null){
-							      secondCategory.forEach(
-							        function(item,index){
-								  	secondName[index] = item;
-								  });
-						     	 _this.second[index] = secondName;	
-						      }      
-						      addedFirst += "<option class='addedFirst' value='"+index+"'>"+item.name+"</option>"	
-						  });
-						  this.first = firstName;
-					  }else{
-					  	this.first = [];
-					  }
-					  $(addedFirst).appendTo('select#first');
+					  	$.ajax({
+				          type: 'get',
+				          url: '/Product/ShowSaleCategory/',
+				          data: {
+				             page: 1,
+				          },
+				          success: function (data) {
+				            let dataJson = JSON.parse(data);
+				            _this.marketcategorys = dataJson.SaleCategory;      
+				            _this.saleok = 1;   
+				            if(_this.marketcategorys != null){
+							  _this.marketcategorys.forEach(
+							    function(item,index){
+							      firstName[index] = item.name;
+							      let secondName = [];
+							      let secondCategory = item.saleCategorySecond;
+							      if(secondCategory != null){
+								      secondCategory.forEach(
+								        function(item,index){
+									  	secondName[index] = item;
+									  });
+							     	 _this.second[index] = secondName;	
+							      }      
+							      addedFirst += "<option class='saleaddedFirst' value='"+index+"'>"+item.name+"</option>"	
+								});
+								_this.first = firstName;
+							}else{
+								_this.first = [];
+							}
+						  	if($('.saleaddedFirst').hasClass('saleaddedFirst')){
+
+						  	}else{
+						  		$(addedFirst).appendTo('select#firstSa');
+						  	}  
+				          },
+				          error: function(XMLHttpRequest, textStatus, errorThrown) {
+				            swal('抓取不到数据')
+				          },
+				      });					  
+					  swal({
+				        title: "正在加载销售分类，仅加载一次",
+				        text:"你这么可爱，就等待一下呗",
+				        timer: 4000,
+				        showConfirmButton: false
+				      });
 				  } 
-				  swal({
-			        title: "正在加载销售分类，仅加载一次",
-			        text:"你这么可爱，就等待一下呗",
-			        timer: 3000,
-			        showConfirmButton: false
-			      });
+				  
 				},
 				changeSaleSecond(){
-				  let addedStuff = $('.addedSecond');
-				  if(addedStuff.hasClass('addedSecond')){
-				    $( ".addedSecond" ).remove();
+				  let addedStuff = $('.saleaddedSecond');
+				  if(addedStuff.hasClass('saleaddedSecond')){
+				    $( ".saleaddedSecond" ).remove();
 				  }
 			      let secondCate = this.firstCate;
 				  let secondCates = this.second[secondCate];
 				  let addedSecond = "";
 				  secondCates.forEach(
 				    function(item,index){
-				      addedSecond += "<option class='addedSecond' value='"+index+"'>"+item.name+"</option>";
+				      addedSecond += "<option class='saleaddedSecond' value='"+index+"'>"+item.name+"</option>";
 				  });
-				  $(addedSecond).appendTo('select#second');
-				  if(this.secondCate != ""){
-				    this.changeThird();
-				  }	        
+				  $(addedSecond).appendTo('select#secondSa');    
 		       },
 		    //saleCate
 		},

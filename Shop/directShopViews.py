@@ -62,7 +62,7 @@ def EditDirectShop(request):
 
 @login_required
 #@permission(ROLE_ADMINISTRATOR)
-@require_http_methods(['POST'])
+@require_http_methods(['GET'])
 def DirectShop(request):
     """
     """

@@ -30,7 +30,7 @@
 				managerPhone:"",
 			}
 		},
-		props:["selfshop"],
+		props:["selfshop","selfshopid"],
 		methods:{
 			toggle(){
 				let shown = $('.shown');
@@ -63,8 +63,9 @@
 		            contentType: "application/json; charset=utf-8",
 		            dataType: "json",
 		            data: {
-		            	selfShopName:_this.selfShopName,
-		            	managerPhone:_this.managerPhone,
+		            	objectId:_this.selfshopid,
+					    shopName: _this.selfShopName,
+					    phoneNumber: _this.managerPhone,
 		            },
 		            success: function (data) {
 		              swal("信息已经修改");

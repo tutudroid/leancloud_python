@@ -1,14 +1,13 @@
-brandlists
 <template>
 	<div class="selfBrandListVue">
 		<div class="shown">
-			<span class="link" @click="toggleAdd('.add')">添加品牌</span>
+			<span class="link" @click="toggle('.add')">添加品牌</span>
 			<table class="table table-striped">
 				<thead>
 					<th>品牌名</th><th>品牌Logo</th><th>简介</th><th>编辑</th>
 				</thead>
 				<tbody>
-					<tr v-for="brand in brandlists"><td>brand.name</td><td><img src="brand.imageFile"></td><td>brand.breifDescription</td><td @click="revise('.revise',brand.objectId,brand.name,brand.imageFile,brand.breifDescription)">修改</td></tr>
+					<tr v-for="brand in brandlists"><td>brand.name</td><td><img src="brand.imageFile"></td><td>brand.breifDescription</td><td @click="toggle('.revise',brand.objectId,brand.name,brand.imageFile,brand.breifDescription)">修改</td></tr>
 				</tbody>
 			</table>
 		</div>
@@ -52,7 +51,7 @@ brandlists
 			    <label for="brandDesc">品牌简介</label>
 			    <input type="text" class="form-control" id="brandDesc" v-model="brandDesc">
 			  </div>
-			  <span class="btn btn-default" @click="addBrand()">确定</span>
+			  <span class="btn btn-default" @click="revise()">确定</span>
 		</div>
 	</div>	
 </template>

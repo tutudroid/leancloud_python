@@ -76,10 +76,7 @@
 		    function(item,index){
 		      addedSecond += "<option class='addedSecond' value='"+index+"'>"+item.name+"</option>";
 		  });
-		  $(addedSecond).appendTo('select#second');
-		  if(this.secondCate != ""){
-		    this.changeThird();
-		  }	        
+		  $(addedSecond).appendTo('select#second');      
        },
     },
 

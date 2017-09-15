@@ -65,11 +65,11 @@
 		            contentType: "application/json; charset=utf-8",
 		            dataType: "json",
 		            data: {
-		            	selfShopName:this.selfShopName,
-						managerPhone:this.managerPhone,
-						brandName:this.brandName,
-						brandDesc:this.brandDesc,
-						brandLogo:brandLogo,
+		            	shopName:_this.selfShopName,
+						phoneNumber:_this.managerPhone,
+						name:_this.brandName,
+						briefDescription:_this.brandDesc,
+						imageFile:brandLogo,
 		            },
 		            success: function (data) {
 		              swal("自营商店已经初始化成功");

@@ -4,6 +4,10 @@
 	</ul>
 
 	<div class="mp mpserviceList used">
-		<servicelist :servicelist="serviceList"></servicelist>
+		<form>
+			{%csrf_token%}
+			<servicelist :servicelist="serviceList"></servicelist>
+			}
+		</form>		
 	</div>
 </div>	

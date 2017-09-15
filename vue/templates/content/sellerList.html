@@ -1,10 +1,10 @@
 <div class="contentMenu">
 	<ul class="nav nav-pills">
-	  <li role="presentation" class="active"><a href="#" id="mpsellerShopBrandCheck">查看所有商家</a></li>
+	  <li role="presentation" ><a href="#" id="mpsellerShopBrandCheck" @click="getAllShops()">查看所有商家</a></li>
 	</ul>
 
 	<div class="mp mpsellerShopBrandCheck used">
-	  <sellerbrandlist :allshops="allShops"></sellerbrandlist>
+	  <sellerbrandlist :allshops="allShops" :selfshopid="selfShopId"></sellerbrandlist>
 	</div>
 
 </div>

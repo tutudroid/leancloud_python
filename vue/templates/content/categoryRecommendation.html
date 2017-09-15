@@ -4,7 +4,12 @@
 	</ul>
 
 	<div class="mp mpcategoryRecommendation used">
-		<categoryrecommendation></categoryrecommendation>
+		<form>
+			{%csrf_token%}
+			<categoryrecommendation></categoryrecommendation>
+			}
+		</form>
+		
 	</div>
 </div>
 

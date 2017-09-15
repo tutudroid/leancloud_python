@@ -1,15 +1,15 @@
 <div class="contentMenu">
 	<ul class="nav nav-pills">
-	  <li role="presentation" ><a href="#" id="mpselfOrderAll">全部</a></li>
-	  <li role="presentation" ><a href="#" id="mpselfOrderWaitingMoney">待付款</a></li>
-	  <li role="presentation" ><a href="#" id="mpselfOrderOnTheRoad">已发货</a></li>
-	  <li role="presentation" ><a href="#" id="mpselfOrderMoneyBack">已退款</a></li>
-	  <li role="presentation" ><a href="#" id="mpselfOrderCustomerWaiting">待收货</a></li>
-	  <li role="presentation" ><a href="#" id="mpselfOrderWaitingComment">待评价</a></li>
-	  <li role="presentation" ><a href="#" id="mpselfOrderFinish">已完成</a></li>
-	  <li role="presentation" ><a href="#" id="mpselfOrderCancel">已取消</a></li>
+	  <li role="presentation" ><a href="#" id="mpselfOrderAll" @click="getSelfOrderAll()">全部</a></li>
+	  <li role="presentation" ><a href="#" id="mpselfOrderWaitingMoney" @click="getSelfOrderWaitingMoney()">待付款</a></li>
+	  <li role="presentation" ><a href="#" id="mpselfOrderOnTheRoad" @click="getSelfOrderOnTheRoad()">待收货</a></li>
+	  <li role="presentation" ><a href="#" id="mpselfOrderMoneyBack" @click="getSelfOrderMoneyBack()">已退款</a></li>
+	  <li role="presentation" ><a href="#" id="mpselfOrderCustomerWaiting" @click="getSelfOrderCustomerWaiting()">待发货</a></li>
+	  <li role="presentation" ><a href="#" id="mpselfOrderWaitingComment" @click="getSelfOrderWaitingComment()">待评价</a></li>
+	  <li role="presentation" ><a href="#" id="mpselfOrderFinish" @click="getSelfOrderFinish()">已完成</a></li>
+	  <li role="presentation" ><a href="#" id="mpselfOrderCancel" @click="getSelfOrderCancel()">已取消</a></li>
 	</ul>
-	<div class="mp mpcategoryRecommendation used">
+	<div class="mp mpselfOrderAll used">
 		<mpselforderall :selforderall="selfOrderAll"></mpselforderall>
 	</div>
 	<div class="mp mpselfOrderWaitingMoney">

@@ -295,7 +295,11 @@ class shop(APIView):
         :param request: 
         :return: 
         """
-        pass
+        page = request.GET.get(paginator_PAGE, 1)
+        shop = Shop()
+        shopList = shop.get_Shop_All(page)
+        count = shop.count_Shop_All()
+        return return_paginator_page(Class_Name_Shop, shopList, page, count)
 
     def post(self, request):
         """

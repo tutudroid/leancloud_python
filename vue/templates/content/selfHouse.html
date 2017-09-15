@@ -1,17 +1,8 @@
 <div class="contentMenu">
 	<ul class="nav nav-pills">
-	  <li role="presentation"><a href="#" id="mpselfafterservice" @click="getSelfafterservice()">自营的商店列表</a></li>
+	  <li role="presentation"><a href="#" id="mpselfafterservice" @click="getSelfAfterService()">自营的商店列表</a></li>
 	</ul>
 	<div class="mp mpselfafterservice used">
-	  <selfafterservice :service="selfAfterService"></selfafterservice>	
+	  <selfafterservice :service="selfAfterService" :selfshopid="selfShopId"></selfafterservice>	
 	</div>
 </div>
-
-<!--<div class="content selfHouse used">
-	<selfafterservice :service="selfAfterService"></selfafterservice>	
-
-	</div>
-	
-	<div class="content sellerHouse">
-	<sellerafterservice :service="sellerAfterService"></sellerafterservice>	
-	</div>

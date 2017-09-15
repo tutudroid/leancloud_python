@@ -6,18 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0499edbb-0d6b-477c-a822-a91397b8a747" name="Default" comment="v">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Recommendation/__init__.py" afterPath="$PROJECT_DIR$/Recommendation/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/app.js" afterPath="$PROJECT_DIR$/static/vue/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/afterService/selfAfterService.vue" afterPath="$PROJECT_DIR$/static/vue/backend/afterService/selfAfterService.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/afterService/sellerAfterService.vue" afterPath="$PROJECT_DIR$/static/vue/backend/afterService/sellerAfterService.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/order/mpselfOrderAll.vue" afterPath="$PROJECT_DIR$/static/vue/backend/order/mpselfOrderAll.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/order/mpselfOrderCustomerWaiting.vue" afterPath="$PROJECT_DIR$/static/vue/backend/order/mpselfOrderCustomerWaiting.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/order/mpselfOrderMoneyBack.vue" afterPath="$PROJECT_DIR$/static/vue/backend/order/mpselfOrderMoneyBack.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/order/mpsellerOrder.vue" afterPath="$PROJECT_DIR$/static/vue/backend/order/mpsellerOrder.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/order/orderSearch.vue" afterPath="$PROJECT_DIR$/static/vue/backend/order/orderSearch.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/backend/selfManage/freightModel.vue" afterPath="$PROJECT_DIR$/static/vue/backend/selfManage/freightModel.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/main.js" afterPath="$PROJECT_DIR$/static/vue/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/index.html" afterPath="$PROJECT_DIR$/vue/templates/index.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -64,71 +52,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Recommendation/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/vue/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1138">
-              <caret line="114" column="6" lean-forward="false" selection-start-line="114" selection-start-column="6" selection-end-line="114" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1003">
-              <caret line="140" column="18" lean-forward="false" selection-start-line="140" selection-start-column="18" selection-end-line="140" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="script_update.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/script_update.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="2" lean-forward="false" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Shop/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="19" column="43" lean-forward="false" selection-start-line="19" selection-start-column="43" selection-end-line="19" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="directShopViews.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Shop/directShopViews.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="990">
-              <caret line="69" column="19" lean-forward="false" selection-start-line="69" selection-start-column="19" selection-end-line="69" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="settleInViews.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Shop/settleInViews.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1267">
-              <caret line="165" column="19" lean-forward="false" selection-start-line="165" selection-start-column="19" selection-end-line="165" selection-end-column="19" />
+            <state relative-caret-position="718">
+              <caret line="86" column="41" lean-forward="false" selection-start-line="86" selection-start-column="34" selection-end-line="86" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -982,8 +910,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="42" y="23" width="3022" height="1417" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13825503" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13825503" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329927" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962668" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1022,33 +951,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Initiation/templates/Init_index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Initiation/初始化数据库接口.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="0">
-            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor>
-            <js_state />
-          </second_editor>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Initiation/Init_Prepare_Views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Initiation/templates/test_class.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1388,18 +1290,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Shop/views.py">
+    <entry file="file://$PROJECT_DIR$/vue/templates/partials/manage/finance.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="207" column="4" lean-forward="false" selection-start-line="207" selection-start-column="4" selection-end-line="207" selection-end-column="4" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/script_update.sh">
+    <entry file="file://$PROJECT_DIR$/vue/templates/content/finance.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="2" lean-forward="false" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1412,10 +1314,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/vue/templates/partials/manage/financeContent.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="31" lean-forward="false" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/script_update.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="2" lean-forward="false" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shop/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="207" column="4" lean-forward="false" selection-start-line="207" selection-start-column="4" selection-end-line="207" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/vue/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1138">
-          <caret line="114" column="6" lean-forward="false" selection-start-line="114" selection-start-column="6" selection-end-line="114" selection-end-column="6" />
+        <state relative-caret-position="718">
+          <caret line="86" column="41" lean-forward="false" selection-start-line="86" selection-start-column="34" selection-end-line="86" selection-end-column="41" />
           <folding />
         </state>
       </provider>

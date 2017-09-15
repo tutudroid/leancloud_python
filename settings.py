@@ -138,7 +138,7 @@ STATIC_URL = '/static/'
 
 
 STATICFILES_DIRS = (
-    'vue/static/'
+    'vue/static/',
 )
 
 

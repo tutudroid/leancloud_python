@@ -10,7 +10,7 @@
 				<span class="th">总价</span>
 				<span class="th">操作</span>
 			</div>
-			<div class="content container result" v-for="o in selforderall">
+			<div class="content container result" >
 				<div class="row head">
 					<div class="col-md-3">订单号:{{o.uniqueId}}</div>		
 					<div class="col-md-3">下单时间:{{o.created_at}}</div>		
@@ -22,11 +22,12 @@
 					<div class="col-md-2">{{o.user.name}}</div>
 					<div class="col-md-1">{{m.orderState}}</div>		
 					<div class="col-md-1">{{m.productPrice*m.productCount}}</div>
-					<div class="col-md-1 link" @click="toggle('detail',m.user,o.receiverName,o.receiverPhoneNumber,o.receiverAddress,o.orderProduct)">查看详情</div>		
+					<div class="col-md-1 link" @click="toggle('detail',m.orderState,m.user,o.receiverName,o.receiverPhoneNumber,o.receiverAddress,o.orderProduct)">查看详情</div>		
 				</div>
 			</div>
 		</div>
 		<div class="hide">
+			<span class="link" @click="toggle()">返回</span>
 			<h2>订单状态：{{orderState}}</h2>
 			<hr>
 			<div class="operate">
@@ -81,12 +82,14 @@
 				receiverAddress:"",
 				orderProduct:[],
 				totalPrice:0,
+				orderState:"",
 			}
 		},
 		props:["selforderall"],
 		methods:{
-			toggle(detail="",user,receiverName,receiverPhoneNumber,receiverAddress,orderProduct){
+			toggle(detail="",state="",user="",receiverName="",receiverPhoneNumber="",receiverAddress="",orderProduct=""){
 				if(detail == "detail"){
+					this.orderState = state;
 					this.user = user;
 					this.receiverName = receiverName;
 					this.receiverPhoneNumber = receiverPhoneNumber;

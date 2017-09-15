@@ -42,7 +42,7 @@ freightmodels
 				fee:"",
 			}
 		},
-		props:["freightmodels"],
+		props:["freightmodels","selfshopid"],
 		methods:{
 			toggle(){
 				let hide = $('.freightModelsVue').children('.one');
@@ -61,7 +61,7 @@ freightmodels
 				this.modelFee = "";
 				this.modelName = "";
 				this.fee = "";
-				let shown = $('.shown');
+				let shown = $('.one');
 				let hideAddNew = $('.addNew');
 				if(shown.hasClass('shown')){
 					shown.removeClass('shown').addClass('hide');
@@ -72,7 +72,7 @@ freightmodels
 				
 			},
 			toggleRevise(){
-				let shown = $('.shown');
+				let shown = $('.one');
 				let hideRevise = $('.revise');
 				if(shown.hasClass('shown')){
 					shown.removeClass('shown').addClass('hide');
@@ -108,10 +108,10 @@ freightmodels
 		            },
 		            contentType: "application/json; charset=utf-8",
 		            dataType: "json",
-		            data: {
-		            	modelName:_this.modelName,
-		            	modelFee:_this.modelFee,
-		            	fee:_this.fee,		
+		            data: {		      
+		            	name:_this.modelName,
+		            	isFreightFree:_this.modelFee,
+		            	freight:_this.fee,		
 		            },
 		            success: function (data) {
 		              swal("运费模版已经修改");
@@ -143,9 +143,10 @@ freightmodels
 		            contentType: "application/json; charset=utf-8",
 		            dataType: "json",
 		            data: {
-		            	modelName:_this.modelName,
-		            	modelFee:_this.modelFee,
-		            	fee:_this.fee,		
+		            	objectId:_this.selfshopid,
+		            	name:_this.modelName,
+		            	isFreightFree:_this.modelFee,
+		            	freight:_this.fee,		
 		            },
 		            success: function (data) {
 		              swal("运费模版已经新增");

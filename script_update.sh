@@ -4,7 +4,7 @@ pwd
 git pull
 cd -
 pwd
-cp -r ../vue/vue/* vue/
+cp -r ../vue/vue/* vue/static/vue/
 git add .
 if [ -n "$1" ];then
     git commit -m "$1"

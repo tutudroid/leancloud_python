@@ -138,11 +138,12 @@ STATIC_URL = '/static/'
 
 
 STATICFILES_DIRS = (
+    'vue/static/'
 )
 
 
 STATIC_ROOT = BASE_DIR + '/app/static/'
-#STATIC_ROOT = BASE_DIR + '/app/vue/static/'
+# STATIC_ROOT = BASE_DIR + '/app/vue/static/'
               #'/Users/kang/Documents/python/test/Account/static/'
 
 

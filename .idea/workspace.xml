@@ -49,7 +49,6 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/vue/backend/system/sellerAccount/personSettled.vue" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/vue/backend/system/sellerAccount/settleForbidden.vue" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/vue/backend/system/sellerAccount/settleWaitingForPass.vue" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vue/favicon.ico" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/vue/lib/linkedList.js" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/vue/login/login.vue" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/vue/main.js" afterPath="" />
@@ -13050,8 +13049,18 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="589">
-              <caret line="62" column="19" lean-forward="false" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="19" />
+            <state relative-caret-position="1003">
+              <caret line="140" column="17" lean-forward="true" selection-start-line="140" selection-start-column="17" selection-end-line="140" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="script_update.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/script_update.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -13170,6 +13179,7 @@
   </component>
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/static/vue/node_modules" />
+    <handled-path value="$PROJECT_DIR$/vue/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="535" />
@@ -14143,13 +14153,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/script_update.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -14267,10 +14270,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/script_update.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="62" column="19" lean-forward="false" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="19" />
+        <state relative-caret-position="1003">
+          <caret line="140" column="17" lean-forward="true" selection-start-line="140" selection-start-column="17" selection-end-line="140" selection-end-column="17" />
           <folding />
         </state>
       </provider>

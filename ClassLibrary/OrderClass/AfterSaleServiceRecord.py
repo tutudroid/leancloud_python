@@ -33,7 +33,11 @@ class AfterSaleServiceRecord(LogisticsInfo):
             objectId = self.instance.get(attribute_order).get('id')
             order = Base.queryInstanceThroughId(Class_Name_Order, objectId)
             if order:
-                return order.get(attribute_uniqueId)
+                data = {
+                    attribute_uniqueId: order.get(attribute_uniqueId),
+                    attribute_objectId: order.get(attribute_objectId)
+                }
+                return data
         return None
 
     def get_attribute_orderProduct(self):
@@ -230,7 +234,7 @@ class AfterSaleServiceRecord(LogisticsInfo):
                 attribute_logisticCode: self.get_attribute_logisticCode(),
                 attribute_createdAt: self.get_attribute_createdAt(),
                 attribute_objectId: self.get_attribute_objectId(),
-                attribute_order: self.get_attribute_Object_Id(attribute_order),
+                attribute_order: self.get_attribute_order(),
                 attribute_orderProduct: self.get_attribute_orderProduct(),
                 attribute_afterSaleProgress: self.get_attribute_afterSaleProgress(),
                 attribute_state: self.get_attribute_state(),

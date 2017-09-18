@@ -5,154 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0499edbb-0d6b-477c-a822-a91397b8a747" name="Default" comment="v">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vue/templates/content/finance1.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vue/static/vue/main.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.leancloud/current_app_id" afterPath="$PROJECT_DIR$/.leancloud/current_app_id" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.leancloud/recent_linked_apps" afterPath="$PROJECT_DIR$/.leancloud/recent_linked_apps" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shop/urls.py" afterPath="$PROJECT_DIR$/Shop/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Shop/views.py" afterPath="$PROJECT_DIR$/Shop/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ClassLibrary/OrderClass/AfterSaleServiceRecord.py" afterPath="$PROJECT_DIR$/ClassLibrary/OrderClass/AfterSaleServiceRecord.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/vue/main.js" afterPath="$PROJECT_DIR$/static/vue/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/admin/base_site.html" afterPath="$PROJECT_DIR$/vue/templates/admin/base_site.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/SellerBrandList.html" afterPath="$PROJECT_DIR$/vue/templates/content/SellerBrandList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/accountList.html" afterPath="$PROJECT_DIR$/vue/templates/content/accountList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/activityModel.html" afterPath="$PROJECT_DIR$/vue/templates/content/activityModel.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/addMarketCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/addMarketCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/addStockCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/addStockCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/appUser.html" afterPath="$PROJECT_DIR$/vue/templates/content/appUser.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/appUserInform.html" afterPath="$PROJECT_DIR$/vue/templates/content/appUserInform.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/brandList.html" afterPath="$PROJECT_DIR$/vue/templates/content/brandList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/brandManagement.html" afterPath="$PROJECT_DIR$/vue/templates/content/brandManagement.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/categoryRecommendation.html" afterPath="$PROJECT_DIR$/vue/templates/content/categoryRecommendation.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/changePassword.html" afterPath="$PROJECT_DIR$/vue/templates/content/changePassword.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/checkMarketCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/checkMarketCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/checkStockCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/checkStockCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/clientPageConfig.html" afterPath="$PROJECT_DIR$/vue/templates/content/clientPageConfig.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/deleteMarketCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/deleteMarketCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/deleteStockCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/deleteStockCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/editMarketCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/editMarketCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/editStockCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/editStockCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/finance.html" afterPath="$PROJECT_DIR$/vue/templates/content/finance.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/freightModel.html" afterPath="$PROJECT_DIR$/vue/templates/content/freightModel.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/homepageSetting.html" afterPath="$PROJECT_DIR$/vue/templates/content/homepageSetting.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/initialSelfShop.html" afterPath="$PROJECT_DIR$/vue/templates/content/initialSelfShop.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/logManagement.html" afterPath="$PROJECT_DIR$/vue/templates/content/logManagement.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/logicFeeModel.html" afterPath="$PROJECT_DIR$/vue/templates/content/logicFeeModel.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/logicFeeSetting.html" afterPath="$PROJECT_DIR$/vue/templates/content/logicFeeSetting.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/logicFree.html" afterPath="$PROJECT_DIR$/vue/templates/content/logicFree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/logicFreeModel.html" afterPath="$PROJECT_DIR$/vue/templates/content/logicFreeModel.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/orderSearch.html" afterPath="$PROJECT_DIR$/vue/templates/content/orderSearch.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/productSearch.html" afterPath="$PROJECT_DIR$/vue/templates/content/productSearch.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/securitySetting.html" afterPath="$PROJECT_DIR$/vue/templates/content/securitySetting.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfAccount.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfAccount.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfHouse.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfHouse.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfInformation.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfInformation.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfOrder.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfOrder.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfProduct.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfProduct.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/brandAddLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/brandAddLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/brandChangeLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/brandChangeLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/brandCheckLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/brandCheckLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/brandDeleteLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/brandDeleteLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/selfBrand/addBrand.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/selfBrand/addBrand.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/selfBrand/changeBrand.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/selfBrand/changeBrand.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/selfBrand/checkBrand.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/selfBrand/checkBrand.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/selfBrand/deleteBrand.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/brand/selfBrand/deleteBrand.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/logicFeeModal/addModal.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/logicFeeModal/addModal.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/logicFeeModal/changeModal.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/logicFeeModal/changeModal.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/logicFeeModal/deleteModal.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/logicFeeModal/deleteModal.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/logicFeeModal/modalAddLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/logicFeeModal/modalAddLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/logicFeeModal/modalChangeLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/logicFeeModal/modalChangeLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/logicFeeModal/modalDeleteLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/logicFeeModal/modalDeleteLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShop/logicFreeModal/logicFree.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShop/logicFreeModal/logicFree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/selfShopInfoMana.html" afterPath="$PROJECT_DIR$/vue/templates/content/selfShopInfoMana.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/seller.html" afterPath="$PROJECT_DIR$/vue/templates/content/seller.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerAccount.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerAccount.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerHouse.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerHouse.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerInform.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerInform.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerList.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerLogicFeeModel.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerLogicFeeModel.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerLogicFreeModel.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerLogicFreeModel.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerOrder.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerOrder.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerProduct.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerProduct.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/brandAddLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/brandAddLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/brandChangeLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/brandChangeLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/brandCheckLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/brandCheckLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/brandDeleteLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/brandDeleteLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/selfBrand/addBrand.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/selfBrand/addBrand.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/selfBrand/changeBrand.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/selfBrand/changeBrand.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/selfBrand/checkBrand.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/selfBrand/checkBrand.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/selfBrand/deleteBrand.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/brand/selfBrand/deleteBrand.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/logicFeeModal/addModal.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/logicFeeModal/addModal.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/logicFeeModal/changeModal.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/logicFeeModal/changeModal.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/logicFeeModal/deleteModal.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/logicFeeModal/deleteModal.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/logicFeeModal/modalAddLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/logicFeeModal/modalAddLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/logicFeeModal/modalChangeLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/logicFeeModal/modalChangeLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/logicFeeModal/modalDeleteLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/logicFeeModal/modalDeleteLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/sellerShop/logicFreeModal/logicFree.html" afterPath="$PROJECT_DIR$/vue/templates/content/sellerShop/logicFreeModal/logicFree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/serviceList.html" afterPath="$PROJECT_DIR$/vue/templates/content/serviceList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/statistics.html" afterPath="$PROJECT_DIR$/vue/templates/content/statistics.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/category/categoryAddLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/category/categoryAddLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/category/categoryCheckLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/category/categoryCheckLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/category/marketCategory/addCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/category/marketCategory/addCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/category/marketCategory/checkCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/category/marketCategory/checkCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/category/marketCategory/deleteCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/category/marketCategory/deleteCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/category/marketCategory/editCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/category/marketCategory/editCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/category/stockCategory/addCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/category/stockCategory/addCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/category/stockCategory/checkCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/category/stockCategory/checkCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/category/stockCategory/deleteCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/category/stockCategory/deleteCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/category/stockCategory/editCategory.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/category/stockCategory/editCategory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/productSearch/productSearch.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/productSearch/productSearch.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/selfProduct/addProduct.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/selfProduct/addProduct.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/selfProduct/house.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/selfProduct/house.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/selfProduct/selling.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/selfProduct/selling.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/sellerProduct/addProduct.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/sellerProduct/addProduct.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/sellerProduct/house.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/sellerProduct/house.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/sellerProduct/selling.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/sellerProduct/selling.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/stock/sellerProduct/thumnailPhoto.html" afterPath="$PROJECT_DIR$/vue/templates/content/stock/sellerProduct/thumnailPhoto.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/accountList/addManager.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/accountList/addManager.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/accountList/bussinessManager.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/accountList/bussinessManager.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/accountList/changePwd.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/accountList/changePwd.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/accountList/productManager.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/accountList/productManager.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/accountList/serverManager.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/accountList/serverManager.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/accountList/tableLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/accountList/tableLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/appUser/searchUser.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/appUser/searchUser.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/appUser/userInformation.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/appUser/userInformation.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/securitySetting/changePassword.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/securitySetting/changePassword.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/selfAccount/addAccount.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/selfAccount/addAccount.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/selfAccount/manageAccount.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/selfAccount/manageAccount.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/sellerAccount/company.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/sellerAccount/company.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/sellerAccount/done.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/sellerAccount/done.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/sellerAccount/forbidden.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/sellerAccount/forbidden.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/sellerAccount/notYet.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/sellerAccount/notYet.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/sellerAccount/person.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/sellerAccount/person.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/content/system/sellerAccount/tableLayout.html" afterPath="$PROJECT_DIR$/vue/templates/content/system/sellerAccount/tableLayout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/index.html" afterPath="$PROJECT_DIR$/vue/templates/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/layout/app.html" afterPath="$PROJECT_DIR$/vue/templates/layout/app.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/login.html" afterPath="$PROJECT_DIR$/vue/templates/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/headerNav.html" afterPath="$PROJECT_DIR$/vue/templates/partials/headerNav.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/bussinessTeam.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/bussinessTeam.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/bussinessTeamContent.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/bussinessTeamContent.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/finance.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/finance.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/financeContent.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/financeContent.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/order.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/order.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/orderContent.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/orderContent.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/selfCenter.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/selfCenter.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/selfCenterContent.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/selfCenterContent.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/selfShop.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/selfShop.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/selfShopContent.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/selfShopContent.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/sellerShop.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/sellerShop.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/sellerShopContent.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/sellerShopContent.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/service.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/service.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/serviceContent.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/serviceContent.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/statistics.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/statistics.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/statisticsContent.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/statisticsContent.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/stock.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/stock.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/stockContent.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/stockContent.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/system.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/system.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/partials/manage/systemContent.html" afterPath="$PROJECT_DIR$/vue/templates/partials/manage/systemContent.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/seller/sellerLogin/forgetPwd.html" afterPath="$PROJECT_DIR$/vue/templates/seller/sellerLogin/forgetPwd.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/seller/sellerLogin/register.html" afterPath="$PROJECT_DIR$/vue/templates/seller/sellerLogin/register.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vue/templates/seller/sellerLogin/sellerLogin.html" afterPath="$PROJECT_DIR$/vue/templates/seller/sellerLogin/sellerLogin.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -192,7 +47,7 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Shop/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="559">
+            <state relative-caret-position="4395">
               <caret line="299" column="32" lean-forward="false" selection-start-line="299" selection-start-column="32" selection-end-line="299" selection-end-column="32" />
               <folding />
             </state>
@@ -217,8 +72,8 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="42" column="37" lean-forward="true" selection-start-line="42" selection-start-column="37" selection-end-line="42" selection-end-column="37" />
+            <state relative-caret-position="510">
+              <caret line="42" column="37" lean-forward="false" selection-start-line="42" selection-start-column="37" selection-end-line="42" selection-end-column="37" />
               <folding>
                 <element signature="e#16#57#0" expanded="true" />
               </folding>
@@ -246,31 +101,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base_site.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vue/templates/admin/base_site.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Shop_New.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Shop_New.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ClassLibrary/ShopClass/Shop_New.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="634">
-              <caret line="405" column="35" lean-forward="true" selection-start-line="405" selection-start-column="35" selection-end-line="405" selection-end-column="35" />
+            <state relative-caret-position="630">
+              <caret line="405" column="35" lean-forward="false" selection-start-line="405" selection-start-column="35" selection-end-line="405" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Attribute_Parameter.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Attribute_Parameter.py">
+      <file leaf-file-name="AfterSaleServiceRecord.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ClassLibrary/OrderClass/AfterSaleServiceRecord.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="167" column="0" lean-forward="false" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
+            <state relative-caret-position="-2537">
+              <caret line="35" column="51" lean-forward="false" selection-start-line="35" selection-start-column="51" selection-end-line="35" selection-end-column="51" />
+              <folding>
+                <element signature="e#0#43#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Object.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Object.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="984">
+              <caret line="234" column="8" lean-forward="false" selection-start-line="234" selection-start-column="8" selection-end-line="234" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -290,7 +147,7 @@
         <entry file="file://$PROJECT_DIR$/Shop/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="615">
-              <caret line="42" column="22" lean-forward="true" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
+              <caret line="42" column="22" lean-forward="false" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -347,7 +204,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Product/分类接口.md" />
         <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/SaleCategory.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryFirst.py" />
         <option value="$PROJECT_DIR$/ClassLibrary/CategoryClass/StoreCategoryThird.py" />
@@ -398,6 +254,7 @@
         <option value="$PROJECT_DIR$/vue/templates/index.html" />
         <option value="$PROJECT_DIR$/Shop/views.py" />
         <option value="$PROJECT_DIR$/Shop/urls.py" />
+        <option value="$PROJECT_DIR$/ClassLibrary/OrderClass/AfterSaleServiceRecord.py" />
       </list>
     </option>
   </component>
@@ -412,8 +269,8 @@
     <handled-path value="$PROJECT_DIR$/vue/static/vue/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="769" />
-    <option name="y" value="57" />
+    <option name="x" value="71" />
+    <option name="y" value="23" />
     <option name="width" value="2489" />
     <option name="height" value="1417" />
   </component>
@@ -454,6 +311,38 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="untitled">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="$USER_HOME$/PycharmProjects/untitled">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="AppMeng-V1.3">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="$USER_HOME$/Desktop/kangpeng/AppMeng-Server/AppMeng-V1.3">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -490,40 +379,40 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Admin" />
+              <option name="myItemId" value="ClassLibrary" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
           <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="untitled">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="$USER_HOME$/PycharmProjects/untitled">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ClassLibrary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="OrderClass" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="AppMeng-V1.3">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="$USER_HOME$/Desktop/kangpeng/AppMeng-Server/AppMeng-V1.3">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -1024,10 +913,10 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="769" y="57" width="2489" height="1417" extended-state="0" />
+    <frame x="71" y="23" width="2489" height="1417" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14017163" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14098896" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329927" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962668" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1066,21 +955,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Product/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/rest_framework/mixins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="22" column="40" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/gevent/baseserver.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -1099,7 +973,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="423">
           <caret line="359" column="19" lean-forward="false" selection-start-line="359" selection-start-column="19" selection-end-line="359" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1107,7 +980,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="42" column="6" lean-forward="false" selection-start-line="42" selection-start-column="6" selection-end-line="42" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1115,7 +987,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="792">
           <caret line="236" column="50" lean-forward="false" selection-start-line="236" selection-start-column="50" selection-end-line="236" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1123,9 +994,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="22" column="45" lean-forward="true" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
-          <folding>
-            <element signature="e#17#49#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1133,7 +1001,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1018">
           <caret line="149" column="24" lean-forward="false" selection-start-line="149" selection-start-column="24" selection-end-line="149" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1170,7 +1037,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="838">
           <caret line="96" column="27" lean-forward="false" selection-start-line="96" selection-start-column="27" selection-end-line="96" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1185,7 +1051,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="22" column="3" lean-forward="false" selection-start-line="22" selection-start-column="3" selection-end-line="26" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1193,7 +1058,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="795">
           <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="59" selection-end-column="66" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1215,7 +1079,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="4" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1244,7 +1107,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="14" column="52" lean-forward="false" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1252,7 +1114,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="35" lean-forward="true" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1330,7 +1191,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="16" column="4" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1344,7 +1204,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Attribute_Parameter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
+        <state relative-caret-position="2505">
           <caret line="167" column="0" lean-forward="false" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
           <folding />
         </state>
@@ -1362,7 +1222,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
           <caret line="117" column="8" lean-forward="false" selection-start-line="117" selection-start-column="8" selection-end-line="117" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1376,8 +1235,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="42" column="37" lean-forward="true" selection-start-line="42" selection-start-column="37" selection-end-line="42" selection-end-column="37" />
+        <state relative-caret-position="510">
+          <caret line="42" column="37" lean-forward="false" selection-start-line="42" selection-start-column="37" selection-end-line="42" selection-end-column="37" />
           <folding>
             <element signature="e#16#57#0" expanded="true" />
           </folding>
@@ -1408,14 +1267,14 @@
     <entry file="file://$PROJECT_DIR$/Shop/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
-          <caret line="42" column="22" lean-forward="true" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
+          <caret line="42" column="22" lean-forward="false" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Shop/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="559">
+        <state relative-caret-position="4395">
           <caret line="299" column="32" lean-forward="false" selection-start-line="299" selection-start-column="32" selection-end-line="299" selection-end-column="32" />
           <folding />
         </state>
@@ -1423,9 +1282,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ClassLibrary/ShopClass/Shop_New.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="634">
-          <caret line="405" column="35" lean-forward="true" selection-start-line="405" selection-start-column="35" selection-end-line="405" selection-end-column="35" />
+        <state relative-caret-position="630">
+          <caret line="405" column="35" lean-forward="false" selection-start-line="405" selection-start-column="35" selection-end-line="405" selection-end-column="35" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/BaseClass/Object.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="984">
+          <caret line="234" column="8" lean-forward="false" selection-start-line="234" selection-start-column="8" selection-end-line="234" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClassLibrary/OrderClass/AfterSaleServiceRecord.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2537">
+          <caret line="35" column="51" lean-forward="false" selection-start-line="35" selection-start-column="51" selection-end-line="35" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -5,6 +5,7 @@ from ClassLibrary.ImageClass.AfterSaleServiceImage import AfterSaleServiceImage
 from ClassLibrary.OrderClass.OrderProduct import OrderProduct
 import time
 
+
 class AfterSaleServiceRecord(LogisticsInfo):
     def __init__(self):
         super(AfterSaleServiceRecord, self).__init__()
@@ -28,8 +29,11 @@ class AfterSaleServiceRecord(LogisticsInfo):
         return None
 
     def get_attribute_order(self):
-        if self.instance:
-            return self.instance.get(attribute_order)
+        if self.instance and self.instance.get(attribute_order):
+            objectId = self.instance.get(attribute_order).get('id')
+            order = Base.queryInstanceThroughId(Class_Name_Order, objectId)
+            if order:
+                return order.get(attribute_uniqueId)
         return None
 
     def get_attribute_orderProduct(self):
@@ -227,7 +231,7 @@ class AfterSaleServiceRecord(LogisticsInfo):
                 attribute_createdAt: self.get_attribute_createdAt(),
                 attribute_objectId: self.get_attribute_objectId(),
                 attribute_order: self.get_attribute_Object_Id(attribute_order),
-                attribute_orderProduct: self.get_attribute_Object_Id(attribute_orderProduct),
+                attribute_orderProduct: self.get_attribute_orderProduct(),
                 attribute_afterSaleProgress: self.get_attribute_afterSaleProgress(),
                 attribute_state: self.get_attribute_state(),
             }

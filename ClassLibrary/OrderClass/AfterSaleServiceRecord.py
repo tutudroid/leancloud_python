@@ -30,7 +30,7 @@ class AfterSaleServiceRecord(LogisticsInfo):
 
     def get_attribute_order(self):
         if self.instance and self.instance.get(attribute_order):
-            objectId = self.instance.get(attribute_order).get('id')
+            objectId = self.instance.get(attribute_order).id
             order = Base.queryInstanceThroughId(Class_Name_Order, objectId)
             if order:
                 data = {

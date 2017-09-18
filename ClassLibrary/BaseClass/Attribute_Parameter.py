@@ -40,6 +40,7 @@ Class_Name_City = 'AddressCity'
 Class_Name_District = 'AddressDistrict'
 
 
+
 # base attribute
 attribute_objectId = 'objectId'
 attribute_uniqueId = 'uniqueId'

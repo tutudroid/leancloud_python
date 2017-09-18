@@ -159,7 +159,7 @@ class Object(object):
         print('--------------------------------------------------------------------------------')
 
 
-    def print_msg__info(self, msg):
+    def print_msg__info(self, ):
         """
         输出错误信息
         :param msg: 

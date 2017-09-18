@@ -43,7 +43,7 @@ def get_StoreCategory_All():
     获得库存分类表
     :return: 
     """
-    storeCategoryFirst = Base.queryInstanceAttribute(Class_Name_StoreCategoryFirst, attribute_state, 0, 1, 100)
+    storeCategoryFirst = Base.queryInstanceAttribute(Class_Name_StoreCategoryFirst, attribute_state, STATE_OK, 1, 100)
     if storeCategoryFirst:
         storeCategoryList = []
         for foo in storeCategoryFirst:

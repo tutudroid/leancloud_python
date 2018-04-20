@@ -1,5 +1,7 @@
 # Django-getting-started
 
+这是我第一个Django练习项目。
+
 一个简单的使用 Django 的 Python 应用。
 可以运行在 LeanEngine Python 运行时环境。
 
